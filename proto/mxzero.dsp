@@ -22,6 +22,6 @@ b0(x) = ptype * m(x) + (1.0 - ptype);
 b1(x) = ptype + m(x) * (1.0 - ptype);
 a1(x) = ptype * m(x);
 
-filter(x) = x : fi.tf1(b0(x), b1(x), a1(x));
+filter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) : fi.dcblocker;
 
 process = filter,filter;
