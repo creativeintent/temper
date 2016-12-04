@@ -6,9 +6,12 @@ psmooth = hslider("Smoothing", 0.5, 0.0, 1.0, 0.001);
 ptype = hslider("Filter Type", 0, 0, 1, 1.0);
 ptransfer = hslider("Transfer Type", 0, 0, 3, 1.0);
 
+// A hard-coded example of a linear piecewise function from a waveshaper control.
+ws = ba.bpf.start(-1.0, -1.0) : ba.bpf.point(-0.6, 0.7) : ba.bpf.point(0.7, -0.6) : ba.bpf.end(1.0, 1.0);
+
 // Currently supporting the identity function, tanh, and two chebychev polynomial
 // transfer functions for waveshaping the modulator.
-transfer = _ <: _,ma.tanh,ma.chebychev(2),ma.chebychev(4) : ba.selectn(4, ptransfer);
+transfer = _ <: _,ma.tanh,ma.chebychev(2),ws : ba.selectn(4, ptransfer);
 
 // Both the one-zero and the allpass filter are stable for `|m(x)| <= 1`, so
 // we clamp the driven input signal here.
