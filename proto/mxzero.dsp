@@ -13,9 +13,10 @@ ws = ba.bpf.start(-1.0, -1.0) : ba.bpf.point(-0.6, 0.7) : ba.bpf.point(0.7, -0.6
 // transfer functions for waveshaping the modulator.
 transfer = _ <: _,ma.tanh,ma.chebychev(2),ws : ba.selectn(4, ptransfer);
 
-// Both the one-zero and the allpass filter are stable for `|m(x)| <= 1`, so
-// we clamp the driven input signal here.
-drive(x) = x : *(pdrive) : +(poffset) : min(1.0) : max(-1.0);
+// Both the one-zero and the allpass filter are stable for `|m(x)| <= 1`, but
+// should not linger near +/-1.0 for very long. We therefore clamp the driven
+// signal with a tanh function to ensure smooth coefficient calculation.
+drive(x) = x : *(pdrive) : +(poffset) : ma.tanh;
 
 // This signal drives the coefficients of the filter.
 m(x) = drive(x) : transfer : si.smooth(psmooth);
