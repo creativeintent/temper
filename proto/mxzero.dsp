@@ -3,7 +3,7 @@ import("stdfaust.lib");
 pdrive = hslider("Drive", 1.0, -10.0, 10.0, 0.001);
 poffset = hslider("Offset", 0.0, -1.0, 1.0, 0.001);
 psmooth = hslider("Smoothing", 0.5, 0.0, 1.0, 0.001);
-ptype = hslider("Filter Type", 0, 0, 1, 1.0);
+ptype = hslider("Filter Type", 0.5, 0.0, 1.0, 0.001);
 ptransfer = hslider("Transfer Type", 0, 0, 3, 1.0);
 
 // A hard-coded example of a linear piecewise function from a waveshaper control.
