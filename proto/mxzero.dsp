@@ -4,14 +4,21 @@ pdrive = hslider("Drive", 1.0, -10.0, 10.0, 0.001);
 poffset = hslider("Offset", 0.0, -1.0, 1.0, 0.001);
 psmooth = hslider("Smoothing", 0.5, 0.0, 1.0, 0.001);
 ptype = hslider("Filter Type", 0.5, 0.0, 1.0, 0.001);
-ptransfer = hslider("Transfer Type", 0, 0, 3, 1.0);
+ptransfer = hslider("Transfer Type", 0.0, 0.0, 3.0, 0.001);
 
-// A hard-coded example of a linear piecewise function from a waveshaper control.
-ws = ba.bpf.start(-1.0, -1.0) : ba.bpf.point(-0.6, 0.7) : ba.bpf.point(0.7, -0.6) : ba.bpf.end(1.0, 1.0);
+// A utility function which creates a triangular window of width 2 and height 1
+// centered about `c` with zero value everywhere outside the window.
+triwinat(c, x) = max(0, 1 - abs(x - c));
 
-// Currently supporting the identity function, tanh, and two chebychev polynomial
-// transfer functions for waveshaping the modulator.
-transfer = _ <: _,ma.tanh,ma.chebychev(2),ws : ba.selectn(4, ptransfer);
+// Our wave shaping curve is a chebychev polynomial with coefficients decided
+// by the `ptransfer` input control applied through a series of triangular
+// window functions.
+transfer = ma.chebychevpoly((0, 0, w1, w2, w3, w4)) with {
+	w1 = triwinat(0, ptransfer);
+	w2 = triwinat(1, ptransfer);
+	w3 = triwinat(2, ptransfer);
+	w4 = triwinat(3, ptransfer);
+};
 
 // Both the one-zero and the allpass filter are stable for `|m(x)| <= 1`, but
 // should not linger near +/-1.0 for very long. We therefore clamp the driven
