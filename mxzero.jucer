@@ -26,9 +26,9 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" vst3Folder="">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="mxzero"
-                       osxArchitecture="64BitUniversal"/>
+                       osxArchitecture="64BitUniversal" headerPath="/usr/local/include"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="mxzero"
-                       osxArchitecture="64BitUniversal"/>
+                       osxArchitecture="64BitUniversal" headerPath="/usr/local/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
