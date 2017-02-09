@@ -10,6 +10,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "MxzDsp.cpp"
 
 
 //==============================================================================
@@ -25,6 +26,7 @@ MxzeroAudioProcessor::MxzeroAudioProcessor()
                        )
 #endif
 {
+    m_dsp = new MxzDsp();
 }
 
 MxzeroAudioProcessor::~MxzeroAudioProcessor()
@@ -87,8 +89,7 @@ void MxzeroAudioProcessor::changeProgramName (int index, const String& newName)
 //==============================================================================
 void MxzeroAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    m_dsp->init(sampleRate);
 }
 
 void MxzeroAudioProcessor::releaseResources()
@@ -135,14 +136,8 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        float* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
-    }
+    // Hand the guts of the processing off to the Faust implementation
+    m_dsp->compute(buffer.getNumSamples(), buffer.getArrayOfWritePointers(), buffer.getArrayOfWritePointers());
 }
 
 //==============================================================================

@@ -13,6 +13,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include "faust/dsp/dsp.h"
+
 
 //==============================================================================
 /**
@@ -57,6 +59,8 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    ScopedPointer<dsp> m_dsp;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessor)
 };
