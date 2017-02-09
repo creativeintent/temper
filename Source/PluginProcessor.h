@@ -59,6 +59,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    AudioProcessorValueTreeState m_params;
     ScopedPointer<dsp> m_dsp;
 
     //==============================================================================

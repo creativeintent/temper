@@ -16,17 +16,26 @@
 //==============================================================================
 MxzeroAudioProcessor::MxzeroAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", AudioChannelSet::stereo(), true)
-                     #endif
-                       )
+: AudioProcessor (BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+                  .withInput  ("Input",  AudioChannelSet::stereo(), true)
+#endif
+                  .withOutput ("Output", AudioChannelSet::stereo(), true)
+#endif
+                  ),
+m_params (*this, nullptr)
+#else
+: m_params (*this, nullptr)
 #endif
 {
     m_dsp = new MxzDsp();
+
+    // Initialize the FaustUIBridge
+
+    // Initialize the AudioProcessorValueTreeState root
+    ValueTree root (Identifier("MXZ"));
+    m_params.state = root;
 }
 
 MxzeroAudioProcessor::~MxzeroAudioProcessor()
@@ -148,21 +157,22 @@ bool MxzeroAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* MxzeroAudioProcessor::createEditor()
 {
-    return new MxzeroAudioProcessorEditor (*this);
+    return new MxzeroAudioProcessorEditor (*this, m_params);
 }
 
 //==============================================================================
 void MxzeroAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    ScopedPointer<XmlElement> xml (m_params.state.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void MxzeroAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    if (xmlState != nullptr)
+        if (xmlState->hasTagName (m_params.state.getType()))
+            m_params.state = ValueTree::fromXml (*xmlState);
 }
 
 //==============================================================================
