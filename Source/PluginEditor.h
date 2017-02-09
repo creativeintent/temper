@@ -14,6 +14,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 
+typedef AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 
 //==============================================================================
 /**
@@ -34,6 +35,22 @@ private:
     MxzeroAudioProcessor& processor;
 
     AudioProcessorValueTreeState& m_vts;
+
+    // Sliders and listeners
+    Slider driveSlider;
+    ScopedPointer<SliderAttachment> driveAttachment;
+
+    Slider offsetSlider;
+    ScopedPointer<SliderAttachment> offsetAttachment;
+
+    Slider smoothingSlider;
+    ScopedPointer<SliderAttachment> smoothingAttachment;
+
+    Slider filterTypeSlider;
+    ScopedPointer<SliderAttachment> filterTypeAttachment;
+
+    Slider transferTypeSlider;
+    ScopedPointer<SliderAttachment> transferTypeAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessorEditor)
 };
