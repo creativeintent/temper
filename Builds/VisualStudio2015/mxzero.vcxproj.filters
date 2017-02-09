@@ -379,6 +379,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\FaustUIBridge.cpp">
+      <Filter>mxzero\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MxzDsp.cpp">
       <Filter>mxzero\Source</Filter>
     </ClCompile>
@@ -2208,6 +2211,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\FaustUIBridge.h">
+      <Filter>mxzero\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\PluginProcessor.h">
       <Filter>mxzero\Source</Filter>
     </ClInclude>

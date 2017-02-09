@@ -12,6 +12,9 @@
               companyName="Creative Intent" companyWebsite="http://www.creativeintent.co">
   <MAINGROUP id="NQTBxz" name="mxzero">
     <GROUP id="{29549935-F76D-270B-CF22-913999456CE7}" name="Source">
+      <FILE id="UuoykJ" name="FaustUIBridge.cpp" compile="1" resource="0"
+            file="Source/FaustUIBridge.cpp"/>
+      <FILE id="WOgbWW" name="FaustUIBridge.h" compile="0" resource="0" file="Source/FaustUIBridge.h"/>
       <FILE id="bXhXHd" name="MxzDsp.cpp" compile="1" resource="0" file="Source/MxzDsp.cpp"/>
       <FILE id="zqfjaI" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
