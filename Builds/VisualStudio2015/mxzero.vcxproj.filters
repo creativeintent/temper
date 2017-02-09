@@ -379,6 +379,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\MxzDsp.cpp">
+      <Filter>mxzero\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
       <Filter>mxzero\Source</Filter>
     </ClCompile>
