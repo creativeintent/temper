@@ -32,6 +32,8 @@ m_params (*this, nullptr)
     m_dsp = new MxzDsp();
 
     // Initialize the FaustUIBridge
+    m_bridge = new FaustUIBridge(m_params);
+    m_dsp->buildUserInterface(m_bridge);
 
     // Initialize the AudioProcessorValueTreeState root
     ValueTree root (Identifier("MXZ"));

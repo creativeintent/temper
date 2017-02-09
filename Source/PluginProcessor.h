@@ -12,6 +12,7 @@
 #define PLUGINPROCESSOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "FaustUIBridge.h"
 
 #include "faust/dsp/dsp.h"
 
@@ -61,6 +62,7 @@ public:
 private:
     AudioProcessorValueTreeState m_params;
     ScopedPointer<dsp> m_dsp;
+    ScopedPointer<FaustUIBridge> m_bridge;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessor)

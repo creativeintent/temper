@@ -1,10 +1,10 @@
 import("stdfaust.lib");
 
-pdrive = hslider("Drive", 1.0, -10.0, 10.0, 0.001);
-poffset = hslider("Offset", 0.0, -1.0, 1.0, 0.001);
-psmooth = hslider("Smoothing", 0.5, 0.0, 1.0, 0.001);
-ptype = hslider("Filter Type", 0.5, 0.0, 1.0, 0.001);
-ptransfer = hslider("Transfer Type", 0.0, 0.0, 3.0, 0.001);
+pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001);
+poffset = hslider("offset", 0.0, -1.0, 1.0, 0.001);
+psmooth = hslider("smoothing", 0.5, 0.0, 1.0, 0.001);
+ptype = hslider("filterType", 0.5, 0.0, 1.0, 0.001);
+ptransfer = hslider("transferType", 0.0, 0.0, 3.0, 0.001);
 
 // A utility function which creates a triangular window of width 2 and height 1
 // centered about `c` with zero value everywhere outside the window.
