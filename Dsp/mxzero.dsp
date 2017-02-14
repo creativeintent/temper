@@ -35,4 +35,4 @@ a1(x) = ptype * m(x);
 
 filter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) : fi.dcblocker;
 
-process = filter,filter;
+process = filter;

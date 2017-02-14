@@ -29,11 +29,16 @@ m_params (*this, nullptr)
 : m_params (*this, nullptr)
 #endif
 {
-    m_dsp = new MxzDsp();
-
     // Initialize the FaustUIBridge
     m_bridge = new FaustUIBridge(m_params);
-    m_dsp->buildUserInterface(m_bridge);
+
+    // Initialize the dsp units
+    for (int i = 0; i < getTotalNumInputChannels(); ++i)
+    {
+        MxzDsp* dsp = new MxzDsp();
+        dsp->buildUserInterface(m_bridge);
+        m_dsps.add(dsp);
+    }
 
     // Initialize the AudioProcessorValueTreeState root
     ValueTree root (Identifier("MXZ"));
@@ -100,7 +105,8 @@ void MxzeroAudioProcessor::changeProgramName (int index, const String& newName)
 //==============================================================================
 void MxzeroAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    m_dsp->init(sampleRate);
+    for (int i = 0; i < m_dsps.size(); ++i)
+        m_dsps.getUnchecked(i)->init(sampleRate);
 }
 
 void MxzeroAudioProcessor::releaseResources()
@@ -148,7 +154,11 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
         buffer.clear (i, 0, buffer.getNumSamples());
 
     // Hand the guts of the processing off to the Faust implementation
-    m_dsp->compute(buffer.getNumSamples(), buffer.getArrayOfWritePointers(), buffer.getArrayOfWritePointers());
+    float** channelData = buffer.getArrayOfWritePointers();
+    const int numSamples = buffer.getNumSamples();
+
+    for (int i = 0; i < totalNumInputChannels; ++i)
+        m_dsps.getUnchecked(i)->compute(numSamples, channelData + i, channelData + i);
 }
 
 //==============================================================================

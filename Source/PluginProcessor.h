@@ -61,7 +61,7 @@ public:
 
 private:
     AudioProcessorValueTreeState m_params;
-    ScopedPointer<dsp> m_dsp;
+    OwnedArray<dsp> m_dsps;
     ScopedPointer<FaustUIBridge> m_bridge;
 
     //==============================================================================

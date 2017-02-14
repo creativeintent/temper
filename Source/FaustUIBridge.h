@@ -30,6 +30,27 @@ private:
     float* m_zone;
 };
 
+//==============================================================================
+/**
+ This struct associates an AudioProcessorParameter id with a FaustUIBridgeListener
+ object which as been attached to the valueTreeState.
+ */
+struct ParameterListenerPair
+{
+    //==============================================================================
+    /** Constructor.
+
+     @param parameterId    The String Id of the AudioProcessorParameter.
+
+     @param listener       The attached FaustUIBridgeListener.
+     */
+    ParameterListenerPair(String parameterId, FaustUIBridgeListener* listener)
+        : paramId(parameterId), listener(listener) {};
+
+    String paramId;
+    FaustUIBridgeListener* listener;
+};
+
 class FaustUIBridge : public UI
 {
 
@@ -67,6 +88,10 @@ private:
     // A reference to the AudioProcessor's value tree so that we can map the faust
     // UI parameters to AudioProcessor parameters.
     AudioProcessorValueTreeState& valueTreeState;
+
+    // Maintain an array associating AudioProcessorParameters to the Listeners that have been
+    // installed on those parameters.
+    Array<ParameterListenerPair> listenerAssignments;
 
     // And an array of listeners to ensure the mapping between internal value tree values
     // match the float* zone members of the faust implementation.

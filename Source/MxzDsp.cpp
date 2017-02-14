@@ -87,19 +87,15 @@ class MxzDsp : public dsp {
 	float 	fRec2[2];
 	float 	fRec1[2];
 	float 	fRec0[2];
-	float 	fVec1[2];
-	float 	fRec5[2];
-	float 	fRec4[2];
-	float 	fRec3[2];
 	int fSamplingFreq;
 
   public:
 	virtual void metadata(Meta* m) { 
+		m->declare("signals.lib/name", "Faust Signal Routing Library");
+		m->declare("signals.lib/version", "0.0");
 		m->declare("name", "mxzero");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/version", "0.0");
-		m->declare("signals.lib/name", "Faust Signal Routing Library");
-		m->declare("signals.lib/version", "0.0");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.0");
 		m->declare("maths.lib/author", "GRAME");
@@ -107,8 +103,8 @@ class MxzDsp : public dsp {
 		m->declare("maths.lib/license", "LGPL with exception");
 	}
 
-	virtual int getNumInputs() { return 2; }
-	virtual int getNumOutputs() { return 2; }
+	virtual int getNumInputs() { return 1; }
+	virtual int getNumOutputs() { return 1; }
 	static void classInit(int samplingFreq) {
 	}
 	virtual void instanceConstants(int samplingFreq) {
@@ -126,10 +122,6 @@ class MxzDsp : public dsp {
 		for (int i=0; i<2; i++) fRec2[i] = 0;
 		for (int i=0; i<2; i++) fRec1[i] = 0;
 		for (int i=0; i<2; i++) fRec0[i] = 0;
-		for (int i=0; i<2; i++) fVec1[i] = 0;
-		for (int i=0; i<2; i++) fRec5[i] = 0;
-		for (int i=0; i<2; i++) fRec4[i] = 0;
-		for (int i=0; i<2; i++) fRec3[i] = 0;
 	}
 	virtual void init(int samplingFreq) {
 		classInit(samplingFreq);
@@ -160,43 +152,27 @@ class MxzDsp : public dsp {
 		float 	fSlow1 = float(fslider1);
 		float 	fSlow2 = (1.0f - fSlow1);
 		float 	fSlow3 = float(fslider2);
-		float 	fSlow4 = max((float)0, (1 - fabsf(fSlow3)));
+		float 	fSlow4 = max((float)0, (1 - fabsf((fSlow3 + -2))));
 		float 	fSlow5 = float(fslider3);
 		float 	fSlow6 = float(fslider4);
-		float 	fSlow7 = max((float)0, (1 - fabsf((fSlow3 + -2))));
+		float 	fSlow7 = max((float)0, (1 - fabsf(fSlow3)));
 		float 	fSlow8 = max((float)0, (1 - fabsf((fSlow3 + -1))));
 		float 	fSlow9 = max((float)0, (1 - fabsf((fSlow3 + -3))));
 		float 	fSlow10 = (1.0f - fSlow0);
 		FAUSTFLOAT* input0 = input[0];
-		FAUSTFLOAT* input1 = input[1];
 		FAUSTFLOAT* output0 = output[0];
-		FAUSTFLOAT* output1 = output[1];
 		for (int i=0; i<count; i++) {
 			float fTemp0 = (float)input0[i];
 			fVec0[0] = fTemp0;
 			float fTemp1 = tanhf((fSlow5 + (fSlow6 * fVec0[0])));
 			float fTemp2 = faustpower<2>(fTemp1);
 			float fTemp3 = ((2 * fTemp2) + -1);
-			float fTemp4 = (1 - (4 * (fTemp2 * (1 - fTemp3))));
-			fRec2[0] = ((fSlow1 * fRec2[1]) + (fSlow2 * (((fSlow4 * fTemp3) + (fSlow7 * fTemp4)) + (fTemp1 * ((fSlow8 * ((2 * fTemp3) + -1)) + (fSlow9 * (1 - (2 * (fTemp3 - fTemp4)))))))));
+			float fTemp4 = (1 - (2 * (fTemp2 * (0 - (2 * (fTemp3 + -1))))));
+			fRec2[0] = ((fSlow1 * fRec2[1]) + (fSlow2 * ((fSlow4 * fTemp4) + ((fSlow7 * fTemp3) + (fTemp1 * ((fSlow8 * ((2 * fTemp3) + -1)) + (fSlow9 * (1 - (2 * (fTemp3 - fTemp4))))))))));
 			fRec1[0] = (((fRec1[1] * (0 - (fSlow0 * fRec2[0]))) + (fVec0[0] * (1.0f - (fSlow0 * (1 - fRec2[0]))))) + (fVec0[1] * (fSlow0 + (fSlow10 * fRec2[0]))));
 			fRec0[0] = (((0.995f * fRec0[1]) + fRec1[0]) - fRec1[1]);
 			output0[i] = (FAUSTFLOAT)fRec0[0];
-			float fTemp5 = (float)input1[i];
-			fVec1[0] = fTemp5;
-			float fTemp6 = tanhf((fSlow5 + (fSlow6 * fVec1[0])));
-			float fTemp7 = faustpower<2>(fTemp6);
-			float fTemp8 = ((2 * fTemp7) + -1);
-			float fTemp9 = (1 - (4 * (fTemp7 * (1 - fTemp8))));
-			fRec5[0] = ((fSlow1 * fRec5[1]) + (fSlow2 * (((fSlow4 * fTemp8) + (fTemp6 * ((fSlow8 * ((2 * fTemp8) + -1)) + (fSlow9 * (1 - (2 * (fTemp8 - fTemp9))))))) + (fSlow7 * fTemp9))));
-			fRec4[0] = ((fRec4[1] * (0 - (fSlow0 * fRec5[0]))) + ((fVec1[1] * (fSlow0 + (fSlow10 * fRec5[0]))) + (fVec1[0] * ((fSlow0 * (fRec5[0] + -1)) + 1.0f))));
-			fRec3[0] = (((0.995f * fRec3[1]) + fRec4[0]) - fRec4[1]);
-			output1[i] = (FAUSTFLOAT)fRec3[0];
 			// post processing
-			fRec3[1] = fRec3[0];
-			fRec4[1] = fRec4[0];
-			fRec5[1] = fRec5[0];
-			fVec1[1] = fVec1[0];
 			fRec0[1] = fRec0[0];
 			fRec1[1] = fRec1[0];
 			fRec2[1] = fRec2[0];
