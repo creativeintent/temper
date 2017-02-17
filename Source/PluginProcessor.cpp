@@ -29,6 +29,8 @@ m_params (*this, nullptr)
 : m_params (*this, nullptr)
 #endif
 {
+    m_restriction = new RestrictionProcessor();
+
     // Initialize the FaustUIBridge
     m_bridge = new FaustUIBridge(m_params);
 
@@ -107,6 +109,7 @@ void MxzeroAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
 {
     for (int i = 0; i < m_dsps.size(); ++i)
         m_dsps.getUnchecked(i)->init(sampleRate);
+    m_restriction->prepareToPlay(samplesPerBlock, sampleRate);
 }
 
 void MxzeroAudioProcessor::releaseResources()
@@ -159,6 +162,11 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
 
     for (int i = 0; i < totalNumInputChannels; ++i)
         m_dsps.getUnchecked(i)->compute(numSamples, channelData + i, channelData + i);
+
+#if ! JUCE_DEBUG
+    // After the Faust processing, add the demo restriction to the output stream
+    m_restriction->processBlock(buffer);
+#endif
 }
 
 //==============================================================================

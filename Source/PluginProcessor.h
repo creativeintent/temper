@@ -13,6 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "FaustUIBridge.h"
+#include "RestrictionProcessor.h"
 
 #include "faust/dsp/dsp.h"
 
@@ -63,6 +64,7 @@ private:
     AudioProcessorValueTreeState m_params;
     OwnedArray<dsp> m_dsps;
     ScopedPointer<FaustUIBridge> m_bridge;
+    ScopedPointer<RestrictionProcessor> m_restriction;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessor)
