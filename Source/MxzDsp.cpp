@@ -78,12 +78,13 @@ using std::min;
 
 class MxzDsp : public dsp {
   private:
+	float 	fVec0[2];
 	FAUSTFLOAT 	fslider0;
 	FAUSTFLOAT 	fslider1;
 	FAUSTFLOAT 	fslider2;
 	FAUSTFLOAT 	fslider3;
 	FAUSTFLOAT 	fslider4;
-	float 	fVec0[2];
+	float 	fRec3[2];
 	float 	fRec2[2];
 	float 	fRec1[2];
 	float 	fRec0[2];
@@ -93,14 +94,14 @@ class MxzDsp : public dsp {
 	virtual void metadata(Meta* m) { 
 		m->declare("signals.lib/name", "Faust Signal Routing Library");
 		m->declare("signals.lib/version", "0.0");
-		m->declare("name", "mxzero");
-		m->declare("filters.lib/name", "Faust Filters Library");
-		m->declare("filters.lib/version", "0.0");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.0");
 		m->declare("maths.lib/author", "GRAME");
 		m->declare("maths.lib/copyright", "GRAME");
 		m->declare("maths.lib/license", "LGPL with exception");
+		m->declare("name", "mxzero");
+		m->declare("filters.lib/name", "Faust Filters Library");
+		m->declare("filters.lib/version", "0.0");
 	}
 
 	virtual int getNumInputs() { return 1; }
@@ -119,6 +120,7 @@ class MxzDsp : public dsp {
 	}
 	virtual void instanceClear() {
 		for (int i=0; i<2; i++) fVec0[i] = 0;
+		for (int i=0; i<2; i++) fRec3[i] = 0;
 		for (int i=0; i<2; i++) fRec2[i] = 0;
 		for (int i=0; i<2; i++) fRec1[i] = 0;
 		for (int i=0; i<2; i++) fRec0[i] = 0;
@@ -154,7 +156,7 @@ class MxzDsp : public dsp {
 		float 	fSlow3 = float(fslider2);
 		float 	fSlow4 = max((float)0, (1 - fabsf((fSlow3 + -2))));
 		float 	fSlow5 = float(fslider3);
-		float 	fSlow6 = float(fslider4);
+		float 	fSlow6 = (0.005f * float(fslider4));
 		float 	fSlow7 = max((float)0, (1 - fabsf(fSlow3)));
 		float 	fSlow8 = max((float)0, (1 - fabsf((fSlow3 + -1))));
 		float 	fSlow9 = max((float)0, (1 - fabsf((fSlow3 + -3))));
@@ -164,18 +166,20 @@ class MxzDsp : public dsp {
 		for (int i=0; i<count; i++) {
 			float fTemp0 = (float)input0[i];
 			fVec0[0] = fTemp0;
-			float fTemp1 = tanhf((fSlow5 + (fSlow6 * fVec0[0])));
+			fRec3[0] = (fSlow6 + (0.995f * fRec3[1]));
+			float fTemp1 = tanhf((fSlow5 + (fVec0[0] * fRec3[0])));
 			float fTemp2 = faustpower<2>(fTemp1);
 			float fTemp3 = ((2 * fTemp2) + -1);
-			float fTemp4 = (1 - (2 * (fTemp2 * (0 - (2 * (fTemp3 + -1))))));
+			float fTemp4 = (1 - (4 * (fTemp2 * (1 - fTemp3))));
 			fRec2[0] = ((fSlow1 * fRec2[1]) + (fSlow2 * ((fSlow4 * fTemp4) + ((fSlow7 * fTemp3) + (fTemp1 * ((fSlow8 * ((2 * fTemp3) + -1)) + (fSlow9 * (1 - (2 * (fTemp3 - fTemp4))))))))));
-			fRec1[0] = (((fRec1[1] * (0 - (fSlow0 * fRec2[0]))) + (fVec0[0] * (1.0f - (fSlow0 * (1 - fRec2[0]))))) + (fVec0[1] * (fSlow0 + (fSlow10 * fRec2[0]))));
+			fRec1[0] = ((fVec0[0] * (1.0f - (fSlow0 * (1 - fRec2[0])))) + ((fVec0[1] * (fSlow0 + (fSlow10 * fRec2[0]))) + (fRec1[1] * (0 - (fSlow0 * fRec2[0])))));
 			fRec0[0] = (((0.995f * fRec0[1]) + fRec1[0]) - fRec1[1]);
 			output0[i] = (FAUSTFLOAT)fRec0[0];
 			// post processing
 			fRec0[1] = fRec0[0];
 			fRec1[1] = fRec1[0];
 			fRec2[1] = fRec2[0];
+			fRec3[1] = fRec3[0];
 			fVec0[1] = fVec0[0];
 		}
 	}

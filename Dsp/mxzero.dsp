@@ -1,6 +1,6 @@
 import("stdfaust.lib");
 
-pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001);
+pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
 poffset = hslider("offset", 0.0, -1.0, 1.0, 0.001);
 psmooth = hslider("smoothing", 0.5, 0.0, 1.0, 0.001);
 ptype = hslider("filterType", 0.5, 0.0, 1.0, 0.001);
