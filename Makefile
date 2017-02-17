@@ -6,4 +6,8 @@ ifndef FAUST
 endif
 	faust -a minimal-effect.cpp -cn MxzDsp -o ./Source/MxzDsp.cpp ./Dsp/mxzero.dsp
 
+test:
+	auval -v aufx Mxzo Cvin
+
+.PHONY: test
 all: mxzdsp.cpp
