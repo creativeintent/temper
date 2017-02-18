@@ -30,9 +30,8 @@ m_params (*this, nullptr)
 #endif
 {
     m_restriction = new RestrictionProcessor();
-
-    // Initialize the FaustUIBridge
     m_bridge = new FaustUIBridge(m_params);
+    m_lastKnownSampleRate = 0.0;
 
     // Initialize the dsp units
     for (int i = 0; i < getTotalNumInputChannels(); ++i)
@@ -107,9 +106,15 @@ void MxzeroAudioProcessor::changeProgramName (int index, const String& newName)
 //==============================================================================
 void MxzeroAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    for (int i = 0; i < m_dsps.size(); ++i)
-        m_dsps.getUnchecked(i)->init(sampleRate);
+    if (m_lastKnownSampleRate == 0.0)
+        for (int i = 0; i < m_dsps.size(); ++i)
+            m_dsps.getUnchecked(i)->init(sampleRate);
+    else
+        for (int i = 0; i < m_dsps.size(); ++i)
+            m_dsps.getUnchecked(i)->instanceConstants(sampleRate);
+
     m_restriction->prepareToPlay(samplesPerBlock, sampleRate);
+    m_lastKnownSampleRate = sampleRate;
 }
 
 void MxzeroAudioProcessor::releaseResources()

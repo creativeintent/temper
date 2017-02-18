@@ -66,6 +66,8 @@ private:
     ScopedPointer<FaustUIBridge> m_bridge;
     ScopedPointer<RestrictionProcessor> m_restriction;
 
+    double m_lastKnownSampleRate;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessor)
 };
