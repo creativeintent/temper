@@ -5,6 +5,7 @@ poffset = hslider("offset", 0.0, -1.0, 1.0, 0.001) : si.smooth(0.995);
 psmooth = hslider("smoothing", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
 ptype = hslider("filterType", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
 ptransfer = hslider("transferType", 0.0, 0.0, 3.0, 0.001) : si.smooth(0.995);
+pmix = hslider("mix", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
 
 // A utility function which creates a triangular window of width 2 and height 1
 // centered about `c` with zero value everywhere outside the window.
@@ -35,4 +36,4 @@ a1(x) = ptype * m(x);
 
 filter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) : fi.dcblocker;
 
-process = filter;
+process = _ <: _, filter : *(1.0 - pmix), *(pmix) : +;

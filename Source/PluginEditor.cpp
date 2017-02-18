@@ -37,9 +37,13 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     transferTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     transferTypeAttachment = new SliderAttachment(m_vts, "transferType", transferTypeSlider);
 
+    addAndMakeVisible(mixSlider);
+    mixSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    mixAttachment = new SliderAttachment(m_vts, "mix", mixSlider);
+
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (500, 200);
+    setSize (600, 200);
 }
 
 MxzeroAudioProcessorEditor::~MxzeroAudioProcessorEditor()
@@ -62,4 +66,5 @@ void MxzeroAudioProcessorEditor::resized()
     smoothingSlider.setBounds(r.removeFromLeft(100));
     filterTypeSlider.setBounds(r.removeFromLeft(100));
     transferTypeSlider.setBounds(r.removeFromLeft(100));
+    mixSlider.setBounds(r.removeFromLeft(100));
 }

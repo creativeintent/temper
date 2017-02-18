@@ -52,6 +52,9 @@ private:
     Slider transferTypeSlider;
     ScopedPointer<SliderAttachment> transferTypeAttachment;
 
+    Slider mixSlider;
+    ScopedPointer<SliderAttachment> mixAttachment;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessorEditor)
 };
 
