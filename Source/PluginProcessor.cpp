@@ -44,6 +44,9 @@ m_params (*this, nullptr)
     // Initialize the AudioProcessorValueTreeState root
     ValueTree root (Identifier("MXZ"));
     m_params.state = root;
+
+    // Verify the installation
+    m_restriction->validateRegistration();
 }
 
 MxzeroAudioProcessor::~MxzeroAudioProcessor()

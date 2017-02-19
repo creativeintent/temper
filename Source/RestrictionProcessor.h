@@ -53,6 +53,15 @@ public:
      */
     void processBlock (AudioSampleBuffer& buffer);
 
+    //==============================================================================
+    /** Finds or creates the registration key file on disk.
+     */
+    File getKeyFile();
+
+    /** Validates the registration key and unlocks the plugin accordingly.
+     */
+    void validateRegistration();
+
 private:
     //==============================================================================
     ScopedPointer<LinearSmoothedValue<float>> m_smoothing;
