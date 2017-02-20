@@ -2,10 +2,11 @@ import("stdfaust.lib");
 
 pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
 poffset = hslider("offset", 0.0, -1.0, 1.0, 0.001) : si.smooth(0.995);
-psmooth = hslider("smoothing", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
 ptype = hslider("filterType", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
 ptransfer = hslider("transferType", 0.0, 0.0, 3.0, 0.001) : si.smooth(0.995);
 pmix = hslider("mix", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
+pbandpassfc = hslider("bandpassfc", 200, 20, 800, 1.0) : si.smooth(0.995);
+pbandpassq = hslider("bandpassq", 0.1, 0.1, 4, 0.001) : si.smooth(0.995);
 
 // A utility function which creates a triangular window of width 2 and height 1
 // centered about `c` with zero value everywhere outside the window.
@@ -27,7 +28,7 @@ transfer = ma.chebychevpoly((0, 0, w1, w2, w3, w4)) with {
 drive(x) = x : *(pdrive) : +(poffset) : ma.tanh;
 
 // This signal drives the coefficients of the filter.
-m(x) = drive(x) : transfer : si.smooth(psmooth);
+m(x) = drive(x) : transfer;
 
 // Determining the coefficients given the filter type param.
 b0(x) = ptype * m(x) + (1.0 - ptype);
@@ -36,4 +37,4 @@ a1(x) = ptype * m(x);
 
 filter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) : fi.dcblocker;
 
-process = _ <: _, filter : *(1.0 - pmix), *(pmix) : +;
+process = _ <: _, (fi.resonbp(pbandpassfc, pbandpassq, 1.0) : filter) : *(1.0 - pmix), *(pmix) : +;

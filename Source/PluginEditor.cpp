@@ -17,6 +17,14 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     : AudioProcessorEditor (&p), processor (p), m_vts(vts)
 {
     // Connect the sliders
+    addAndMakeVisible(bandpassFreqSlider);
+    bandpassFreqSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    bandpassFreqAttachment = new SliderAttachment(m_vts, "bandpassfc", bandpassFreqSlider);
+
+    addAndMakeVisible(bandpassResoSlider);
+    bandpassResoSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    bandpassResoAttachment = new SliderAttachment(m_vts, "bandpassq", bandpassResoSlider);
+
     addAndMakeVisible (driveSlider);
     driveSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
     driveAttachment = new SliderAttachment(m_vts, "drive", driveSlider);
@@ -24,10 +32,6 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     addAndMakeVisible(offsetSlider);
     offsetSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     offsetAttachment = new SliderAttachment(m_vts, "offset", offsetSlider);
-
-    addAndMakeVisible(smoothingSlider);
-    smoothingSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    smoothingAttachment = new SliderAttachment(m_vts, "smoothing", smoothingSlider);
 
     addAndMakeVisible(filterTypeSlider);
     filterTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
@@ -43,7 +47,7 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (600, 200);
+    setSize (700, 200);
 }
 
 MxzeroAudioProcessorEditor::~MxzeroAudioProcessorEditor()
@@ -61,9 +65,10 @@ void MxzeroAudioProcessorEditor::resized()
     // Lay out the slider components
     Rectangle<int> r (getLocalBounds());
 
+    bandpassFreqSlider.setBounds(r.removeFromLeft(100));
+    bandpassResoSlider.setBounds(r.removeFromLeft(100));
     driveSlider.setBounds(r.removeFromLeft(100));
     offsetSlider.setBounds(r.removeFromLeft(100));
-    smoothingSlider.setBounds(r.removeFromLeft(100));
     filterTypeSlider.setBounds(r.removeFromLeft(100));
     transferTypeSlider.setBounds(r.removeFromLeft(100));
     mixSlider.setBounds(r.removeFromLeft(100));
