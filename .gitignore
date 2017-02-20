@@ -1,5 +1,5 @@
 *.swp
+*.keys
 
 build
 xcuserdata
-private.keys
