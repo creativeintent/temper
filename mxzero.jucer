@@ -12,6 +12,7 @@
               companyName="Creative Intent" companyWebsite="http://www.creativeintent.co">
   <MAINGROUP id="NQTBxz" name="mxzero">
     <GROUP id="{29549935-F76D-270B-CF22-913999456CE7}" name="Source">
+      <FILE id="AfFDlA" name="public.keys" compile="0" resource="1" file="Source/public.keys"/>
       <FILE id="uN8X87" name="RestrictionProcessor.cpp" compile="1" resource="0"
             file="Source/RestrictionProcessor.cpp"/>
       <FILE id="uq0cMx" name="RestrictionProcessor.h" compile="0" resource="0"

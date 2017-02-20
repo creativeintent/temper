@@ -72,16 +72,35 @@ File RestrictionProcessor::getKeyFile()
     return reg;
 }
 
+StringArray RestrictionProcessor::getValidKeyHashes()
+{
+    int size;
+    const char* p = BinaryData::getNamedResource("public_keys", size);
+
+    String keyFile(p, size);
+    StringArray keys;
+
+    keys.addTokens(keyFile, "\n", String());
+    return keys;
+}
+
 void RestrictionProcessor::validateRegistration()
 {
     File reg = getKeyFile();
-    Whirlpool hash(reg);
-    String hex = hash.toHexString();
+    String key = reg.loadFileAsString().trim();
 
-    // TODO: Check this against a known list of hashes bundled into the plugin.
-    if (hex == kValidHash)
+    SHA256 hash(key.toUTF8());
+
+    StringArray validHashes = getValidKeyHashes();
+    String digest = hash.toHexString();
+
+    for (int i = 0; i < validHashes.size(); i++)
     {
-        DBG("Validation successful! Unlocking...");
-        m_alpha = 0.0f;
+        if (validHashes.getReference(i).equalsIgnoreCase(digest))
+        {
+            DBG("Validation successful! Unlocking...");
+            m_alpha = 0.0f;
+            break;
+        }
     }
 }

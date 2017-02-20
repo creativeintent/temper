@@ -58,6 +58,10 @@ public:
      */
     File getKeyFile();
 
+    /** Returns the set of known valid hash values.
+     */
+    StringArray getValidKeyHashes();
+
     /** Validates the registration key and unlocks the plugin accordingly.
      */
     void validateRegistration();
