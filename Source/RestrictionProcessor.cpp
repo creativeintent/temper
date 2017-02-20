@@ -12,7 +12,6 @@
 
 const double kFreq = 0.05; // Twenty second period.
 const double kDuty = 0.75; // Fifteen seconds of audio, five seconds of silence.
-const String kValidHash = "19fa61d75522a4669b44e39c1d2e1726c530232130d407f89afee0964997f7a73e83be698b288febcf88e3e03c4f0757ea8964e59b63d93708b138cc42a66eb3";
 
 //==============================================================================
 RestrictionProcessor::RestrictionProcessor()
