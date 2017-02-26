@@ -5,7 +5,7 @@ poffset = hslider("offset", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
 ptype = hslider("filterType", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
 ptransfer = hslider("transferType", 0.0, 0.0, 3.0, 0.001) : si.smooth(0.995);
 pmix = hslider("mix", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
-pbandpassfc = hslider("bandpassfc", 200, 20, 800, 1.0) : si.smooth(0.995);
+pbandpassfc = hslider("bandpassfc", 200, 20, 8000, 1.0) : si.smooth(0.995);
 pbandpassq = hslider("bandpassq", 0.1, 0.1, 4, 0.001) : si.smooth(0.995);
 
 // A utility function which creates a triangular window of width 2 and height 1
