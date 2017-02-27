@@ -18,36 +18,43 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
 {
     // Connect the sliders
     addAndMakeVisible(bandpassFreqSlider);
+    bandpassFreqSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
     bandpassFreqSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     bandpassFreqAttachment = new SliderAttachment(m_vts, "bandpassfc", bandpassFreqSlider);
 
     addAndMakeVisible(bandpassResoSlider);
+    bandpassResoSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
     bandpassResoSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     bandpassResoAttachment = new SliderAttachment(m_vts, "bandpassq", bandpassResoSlider);
 
     addAndMakeVisible (driveSlider);
+    driveSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
     driveSlider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
     driveAttachment = new SliderAttachment(m_vts, "drive", driveSlider);
 
     addAndMakeVisible(offsetSlider);
+    offsetSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
     offsetSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     offsetAttachment = new SliderAttachment(m_vts, "offset", offsetSlider);
 
     addAndMakeVisible(filterTypeSlider);
+    filterTypeSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
     filterTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     filterTypeAttachment = new SliderAttachment(m_vts, "filterType", filterTypeSlider);
 
     addAndMakeVisible(transferTypeSlider);
+    transferTypeSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
     transferTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     transferTypeAttachment = new SliderAttachment(m_vts, "transferType", transferTypeSlider);
 
     addAndMakeVisible(mixSlider);
+    mixSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
     mixSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     mixAttachment = new SliderAttachment(m_vts, "mix", mixSlider);
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (700, 200);
+    setSize (744, 476);
 }
 
 MxzeroAudioProcessorEditor::~MxzeroAudioProcessorEditor()
@@ -57,19 +64,27 @@ MxzeroAudioProcessorEditor::~MxzeroAudioProcessorEditor()
 //==============================================================================
 void MxzeroAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll (Colours::white);
+    Image bg = ImageCache::getFromMemory(BinaryData::Background_png, BinaryData::Background_pngSize);
+    g.drawImageAt(bg.rescaled(744, 476), 0, 0);
 }
 
 void MxzeroAudioProcessorEditor::resized()
 {
-    // Lay out the slider components
-    Rectangle<int> r (getLocalBounds());
+    const int knobWidth = 178 * 0.5;
+    const int halfKnobWidth = knobWidth * 0.5;
 
-    bandpassFreqSlider.setBounds(r.removeFromLeft(100));
-    bandpassResoSlider.setBounds(r.removeFromLeft(100));
-    driveSlider.setBounds(r.removeFromLeft(100));
-    offsetSlider.setBounds(r.removeFromLeft(100));
-    filterTypeSlider.setBounds(r.removeFromLeft(100));
-    transferTypeSlider.setBounds(r.removeFromLeft(100));
-    mixSlider.setBounds(r.removeFromLeft(100));
+    // Left side knobs
+    bandpassFreqSlider.setBounds(75 - halfKnobWidth, 157 - halfKnobWidth, knobWidth, knobWidth);
+    bandpassResoSlider.setBounds(75 - halfKnobWidth, 352 - halfKnobWidth, knobWidth, knobWidth);
+
+    // Center knobs
+    driveSlider.setBounds(219 - halfKnobWidth, 250 - halfKnobWidth, knobWidth, knobWidth);
+    transferTypeSlider.setBounds(528 - halfKnobWidth, 250 - halfKnobWidth, knobWidth, knobWidth);
+    offsetSlider.setBounds(380 - halfKnobWidth, 380 - halfKnobWidth, knobWidth, knobWidth);
+
+    // Right side knobs
+    mixSlider.setBounds(674 - halfKnobWidth, 157 - halfKnobWidth, knobWidth, knobWidth);
+
+    // TODO: Maybe nixing this?
+    // filterTypeSlider.setBounds(r.removeFromLeft(100));
 }
