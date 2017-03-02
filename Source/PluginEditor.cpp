@@ -55,6 +55,7 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (744, 476);
+    setLookAndFeel(&laf);
 }
 
 MxzeroAudioProcessorEditor::~MxzeroAudioProcessorEditor()

@@ -12,6 +12,7 @@
 #define PLUGINEDITOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "MxzLookAndFeel.h"
 #include "PluginProcessor.h"
 
 typedef AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
@@ -33,6 +34,7 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MxzeroAudioProcessor& processor;
+    MxzLookAndFeel laf;
 
     AudioProcessorValueTreeState& m_vts;
 
