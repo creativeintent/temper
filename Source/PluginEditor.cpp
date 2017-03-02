@@ -19,6 +19,7 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     // Connect the sliders
     addAndMakeVisible(filterFreqSlider);
     filterFreqSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    filterFreqSlider.setTextValueSuffix("Hz");
     filterFreqSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     filterFreqAttachment = new SliderAttachment(m_vts, "filterfc", filterFreqSlider);
 
@@ -49,6 +50,7 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
 
     addAndMakeVisible(mixSlider);
     mixSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    mixSlider.setTextValueSuffix("% Wet");
     mixSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     mixAttachment = new SliderAttachment(m_vts, "mix", mixSlider);
 
