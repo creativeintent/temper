@@ -37,11 +37,11 @@ private:
     AudioProcessorValueTreeState& m_vts;
 
     // Sliders and listeners
-    Slider bandpassFreqSlider;
-    ScopedPointer<SliderAttachment> bandpassFreqAttachment;
+    Slider filterFreqSlider;
+    ScopedPointer<SliderAttachment> filterFreqAttachment;
 
-    Slider bandpassResoSlider;
-    ScopedPointer<SliderAttachment> bandpassResoAttachment;
+    Slider filterResoSlider;
+    ScopedPointer<SliderAttachment> filterResoAttachment;
 
     Slider driveSlider;
     ScopedPointer<SliderAttachment> driveAttachment;

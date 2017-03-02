@@ -17,15 +17,15 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     : AudioProcessorEditor (&p), processor (p), m_vts(vts)
 {
     // Connect the sliders
-    addAndMakeVisible(bandpassFreqSlider);
-    bandpassFreqSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
-    bandpassFreqSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    bandpassFreqAttachment = new SliderAttachment(m_vts, "bandpassfc", bandpassFreqSlider);
+    addAndMakeVisible(filterFreqSlider);
+    filterFreqSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    filterFreqSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    filterFreqAttachment = new SliderAttachment(m_vts, "filterfc", filterFreqSlider);
 
-    addAndMakeVisible(bandpassResoSlider);
-    bandpassResoSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
-    bandpassResoSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    bandpassResoAttachment = new SliderAttachment(m_vts, "bandpassq", bandpassResoSlider);
+    addAndMakeVisible(filterResoSlider);
+    filterResoSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    filterResoSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    filterResoAttachment = new SliderAttachment(m_vts, "filterq", filterResoSlider);
 
     addAndMakeVisible (driveSlider);
     driveSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
@@ -37,15 +37,15 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     offsetSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     offsetAttachment = new SliderAttachment(m_vts, "offset", offsetSlider);
 
-    addAndMakeVisible(filterTypeSlider);
-    filterTypeSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
-    filterTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    filterTypeAttachment = new SliderAttachment(m_vts, "filterType", filterTypeSlider);
+//    addAndMakeVisible(filterTypeSlider);
+//    filterTypeSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+//    filterTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+//    filterTypeAttachment = new SliderAttachment(m_vts, "filterType", filterTypeSlider);
 
     addAndMakeVisible(transferTypeSlider);
     transferTypeSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
     transferTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    transferTypeAttachment = new SliderAttachment(m_vts, "transferType", transferTypeSlider);
+    transferTypeAttachment = new SliderAttachment(m_vts, "curve", transferTypeSlider);
 
     addAndMakeVisible(mixSlider);
     mixSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
@@ -74,8 +74,8 @@ void MxzeroAudioProcessorEditor::resized()
     const int halfKnobWidth = knobWidth * 0.5;
 
     // Left side knobs
-    bandpassFreqSlider.setBounds(75 - halfKnobWidth, 157 - halfKnobWidth, knobWidth, knobWidth);
-    bandpassResoSlider.setBounds(75 - halfKnobWidth, 352 - halfKnobWidth, knobWidth, knobWidth);
+    filterFreqSlider.setBounds(75 - halfKnobWidth, 157 - halfKnobWidth, knobWidth, knobWidth);
+    filterResoSlider.setBounds(75 - halfKnobWidth, 352 - halfKnobWidth, knobWidth, knobWidth);
 
     // Center knobs
     driveSlider.setBounds(219 - halfKnobWidth, 250 - halfKnobWidth, knobWidth, knobWidth);

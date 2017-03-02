@@ -2,11 +2,11 @@ import("stdfaust.lib");
 
 pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
 poffset = hslider("offset", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
-ptype = hslider("filterType", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
-ptransfer = hslider("transferType", 0.0, 0.0, 3.0, 0.001) : si.smooth(0.995);
-pmix = hslider("mix", 0.5, 0.0, 1.0, 0.001) : si.smooth(0.995);
-pbandpassfc = hslider("bandpassfc", 200, 20, 8000, 1.0) : si.smooth(0.995);
-pbandpassq = hslider("bandpassq", 0.1, 0.1, 4, 0.001) : si.smooth(0.995);
+ptype = hslider("filterType", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
+pcurve = hslider("curve", 0.1, 0.1, 4.0, 0.001) : si.smooth(0.995);
+pmix = hslider("mix", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
+pfilterfc = hslider("filterfc", 8000, 20, 18000, 1.0) : si.smooth(0.995);
+pfilterq = hslider("filterq", 0.1, 0.1, 8, 0.001) : si.smooth(0.995);
 
 // A utility function which creates a triangular window of width 2 and height 1
 // centered about `c` with zero value everywhere outside the window.
@@ -15,12 +15,13 @@ triwinat(c, x) = max(0, 1 - abs(x - c));
 // Our wave shaping curve is a chebychev polynomial with coefficients decided
 // by the `ptransfer` input control applied through a series of triangular
 // window functions.
-transfer = ma.chebychevpoly((0, 0, w1, w2, w3, w4)) with {
-	w1 = triwinat(0, ptransfer);
-	w2 = triwinat(1, ptransfer);
-	w3 = triwinat(2, ptransfer);
-	w4 = triwinat(3, ptransfer);
-};
+// transfer = ma.chebychevpoly((0, 0, w1, w2, w3, w4)) with {
+// 	w1 = triwinat(0, ptransfer);
+// 	w2 = triwinat(1, ptransfer);
+// 	w3 = triwinat(2, ptransfer);
+// 	w4 = triwinat(3, ptransfer);
+// };
+transfer(x) = ma.tanh(pcurve * x) / ma.tanh(pcurve);
 
 // Both the one-zero and the allpass filter are stable for `|m(x)| <= 1`, but
 // should not linger near +/-1.0 for very long. We therefore clamp the driven
@@ -37,4 +38,4 @@ a1(x) = ptype * m(x);
 
 filter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) : fi.dcblocker;
 
-process = _ <: _, (fi.resonbp(pbandpassfc, pbandpassq, 1.0) : filter) : *(1.0 - pmix), *(pmix) : +;
+process = _ <: _, (fi.resonlp(pfilterfc, pfilterq, 1.0) : filter) : *(1.0 - pmix), *(pmix) : +;
