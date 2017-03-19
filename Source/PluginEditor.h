@@ -51,14 +51,14 @@ private:
     Slider offsetSlider;
     ScopedPointer<SliderAttachment> offsetAttachment;
 
-    Slider filterTypeSlider;
-    ScopedPointer<SliderAttachment> filterTypeAttachment;
+    Slider curveSlider;
+    ScopedPointer<SliderAttachment> curveAttachment;
 
-    Slider transferTypeSlider;
-    ScopedPointer<SliderAttachment> transferTypeAttachment;
+    Slider feedbackSlider;
+    ScopedPointer<SliderAttachment> feedbackAttachment;
 
-    Slider mixSlider;
-    ScopedPointer<SliderAttachment> mixAttachment;
+    Slider levelSlider;
+    ScopedPointer<SliderAttachment> levelAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessorEditor)
 };

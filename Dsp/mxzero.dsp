@@ -1,11 +1,18 @@
 import("stdfaust.lib");
 el = library("./ellip.dsp");
 
+// Pre-filter parameters
+pfilterfc = hslider("filterfc", 8000, 20, 18000, 1.0) : si.smooth(0.995);
+pfilterq = hslider("filterq", 0.1, 0.1, 8, 0.001) : si.smooth(0.995);
+
+// Distortion parameters
 pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
 poffset = hslider("offset", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
 pcurve = hslider("curve", 0.1, 0.1, 4.0, 0.001) : si.smooth(0.995);
-pfilterfc = hslider("filterfc", 8000, 20, 18000, 1.0) : si.smooth(0.995);
-pfilterq = hslider("filterq", 0.1, 0.1, 8, 0.001) : si.smooth(0.995);
+
+// Output parameters
+pfeedback = hslider("feedback", -60, -60, -3, 1) : ba.db2linear : si.smooth(0.995);
+plevel = hslider("level", -3, -60, 0, 1) : ba.db2linear : si.smooth(0.995);
 
 // TODO: Worth keeping?
 pmix = hslider("mix", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
@@ -40,7 +47,13 @@ modfilter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) with {
 prefilter = fi.resonlp(pfilterfc, pfilterq, 1.0);
 
 // Our main processing block.
-main = prefilter : modfilter : fi.dcblocker;
+main = prefilter : (+ : modfilter) ~ *(pfeedback) : fi.dcblocker : gain with {
+	// This explicit gain multiplier of 4.0 accounts for the loss of gain that
+	// occurs from oversampling by a factor of 2, and for the loss of gain that
+	// occurs from the prefilter and modulation step. Then we apply the output
+	// level parameter.
+	gain = *(4.0) : *(plevel);
+};
 
 // TODO: Is wet dry worth keeping?
 // wetdry = _ <: _, main : *(1.0 - pmix), *(pmix) : +;

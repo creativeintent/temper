@@ -38,21 +38,20 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     offsetSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     offsetAttachment = new SliderAttachment(m_vts, "offset", offsetSlider);
 
-//    addAndMakeVisible(filterTypeSlider);
-//    filterTypeSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
-//    filterTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-//    filterTypeAttachment = new SliderAttachment(m_vts, "filterType", filterTypeSlider);
+    addAndMakeVisible(curveSlider);
+    curveSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    curveSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    curveAttachment = new SliderAttachment(m_vts, "curve", curveSlider);
 
-    addAndMakeVisible(transferTypeSlider);
-    transferTypeSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
-    transferTypeSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    transferTypeAttachment = new SliderAttachment(m_vts, "curve", transferTypeSlider);
+    addAndMakeVisible(feedbackSlider);
+    feedbackSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    feedbackSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    feedbackAttachment = new SliderAttachment(m_vts, "feedback", feedbackSlider);
 
-    addAndMakeVisible(mixSlider);
-    mixSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
-    mixSlider.setTextValueSuffix("% Wet");
-    mixSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    mixAttachment = new SliderAttachment(m_vts, "mix", mixSlider);
+    addAndMakeVisible(levelSlider);
+    levelSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    levelSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    levelAttachment = new SliderAttachment(m_vts, "level", levelSlider);
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -82,11 +81,12 @@ void MxzeroAudioProcessorEditor::resized()
 
     // Center knobs
     driveSlider.setBounds(219 - halfKnobWidth, 250 - halfKnobWidth, knobWidth, knobWidth);
-    transferTypeSlider.setBounds(528 - halfKnobWidth, 250 - halfKnobWidth, knobWidth, knobWidth);
+    curveSlider.setBounds(528 - halfKnobWidth, 250 - halfKnobWidth, knobWidth, knobWidth);
     offsetSlider.setBounds(380 - halfKnobWidth, 380 - halfKnobWidth, knobWidth, knobWidth);
 
     // Right side knobs
-    mixSlider.setBounds(674 - halfKnobWidth, 157 - halfKnobWidth, knobWidth, knobWidth);
+    feedbackSlider.setBounds(674 - halfKnobWidth, 157 - halfKnobWidth, knobWidth, knobWidth);
+    levelSlider.setBounds(674 - halfKnobWidth, 352 - halfKnobWidth, knobWidth, knobWidth);
 
     // TODO: Maybe nixing this?
     // filterTypeSlider.setBounds(r.removeFromLeft(100));
