@@ -3,42 +3,55 @@ el = library("./ellip.dsp");
 
 pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
 poffset = hslider("offset", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
-ptype = hslider("filterType", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
 pcurve = hslider("curve", 0.1, 0.1, 4.0, 0.001) : si.smooth(0.995);
-pmix = hslider("mix", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
 pfilterfc = hslider("filterfc", 8000, 20, 18000, 1.0) : si.smooth(0.995);
 pfilterq = hslider("filterq", 0.1, 0.1, 8, 0.001) : si.smooth(0.995);
 
-// A utility function which creates a triangular window of width 2 and height 1
-// centered about `c` with zero value everywhere outside the window.
-triwinat(c, x) = max(0, 1 - abs(x - c));
+// TODO: Worth keeping?
+pmix = hslider("mix", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
+ptype = hslider("filterType", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
 
-// Our wave shaping curve is a chebychev polynomial with coefficients decided
-// by the `ptransfer` input control applied through a series of triangular
-// window functions.
-// transfer = ma.chebychevpoly((0, 0, w1, w2, w3, w4)) with {
-// 	w1 = triwinat(0, ptransfer);
-// 	w2 = triwinat(1, ptransfer);
-// 	w3 = triwinat(2, ptransfer);
-// 	w4 = triwinat(3, ptransfer);
-// };
+// A fairly standard wave shaping curve; we use this to shape the input signal
+// before modulating the filter coefficients by this signal. Which shaping curve
+// we use here is pretty unimportant; as long as we can introduce higher harmonics,
+// the coefficient modulation will react. Which harmonics we introduce here seems
+// to affect the resulting sound pretty minimally.
 transfer(x) = ma.tanh(pcurve * x) / ma.tanh(pcurve);
 
-// Both the one-zero and the allpass filter are stable for `|m(x)| <= 1`, but
-// should not linger near +/-1.0 for very long. We therefore clamp the driven
-// signal with a tanh function to ensure smooth coefficient calculation.
+// The allpass filter is stable for `|m(x)| <= 1`, but should not linger
+// near +/-1.0 for very long. We therefore clamp the driven signal with a tanh
+// function to ensure smooth coefficient calculation.
 drive(x) = x : *(pdrive) : +(poffset) : ma.tanh;
 
-// This signal drives the coefficients of the filter.
-m(x) = drive(x) : transfer;
+// Our modulated filter is an allpass with coefficients governed by the input
+// signal applied through our wave shaper.
+//
+// TODO: `ptype` is used here to interpolate between an allpass and a one-zero.
+// Are we keeping that?
+modfilter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) with {
+	b0(x) = ptype * m(x) + (1.0 - ptype);
+	b1(x) = ptype + m(x) * (1.0 - ptype);
+	a1(x) = ptype * m(x);
+	m(x) = drive(x) : transfer;
+};
 
-// Determining the coefficients given the filter type param.
-b0(x) = ptype * m(x) + (1.0 - ptype);
-b1(x) = ptype + m(x) * (1.0 - ptype);
-a1(x) = ptype * m(x);
+// We have a resonant lowpass filter at the beginning of our signal chain
+// to control what part of the input signal becomes the modulating signal.
+prefilter = fi.resonlp(pfilterfc, pfilterq, 1.0);
 
-filter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) : fi.dcblocker;
-lp = fi.resonlp(pfilterfc, pfilterq, 1.0) : filter;
-distortion = _ <: _, lp : *(1.0 - pmix), *(pmix) : +;
+// Our main processing block.
+main = prefilter : modfilter : fi.dcblocker;
 
-process = el.ellip : distortion : el.ellip;
+// TODO: Is wet dry worth keeping?
+// wetdry = _ <: _, main : *(1.0 - pmix), *(pmix) : +;
+
+// When this unit processes a block, the block will be a zero-padded input
+// signal at a higher sampling rate. We run the elliptic filter immediately
+// because that step of zero-padding the input buffer introduces an alias of
+// the input signal in the range [sampleRate / 4, sampleRate / 2] which would
+// fold back into the audible range upon downsampling, especially if we run
+// the main filter on it. Similarly, processing our input signal introduces
+// harmonics in the same frequency range [sampleRate / 4, sampleRate / 2] which
+// we cut out with the elliptic filter at the end of the chain before we drop
+// sample to return to the original sample rate.
+process = el.ellip : main : el.ellip;
