@@ -1,4 +1,5 @@
 import("stdfaust.lib");
+el = library("./ellip.dsp");
 
 pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
 poffset = hslider("offset", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
@@ -37,5 +38,7 @@ b1(x) = ptype + m(x) * (1.0 - ptype);
 a1(x) = ptype * m(x);
 
 filter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) : fi.dcblocker;
+lp = fi.resonlp(pfilterfc, pfilterq, 1.0) : filter;
+distortion = _ <: _, lp : *(1.0 - pmix), *(pmix) : +;
 
-process = _ <: _, (fi.resonlp(pfilterfc, pfilterq, 1.0) : filter) : *(1.0 - pmix), *(pmix) : +;
+process = el.ellip : distortion : el.ellip;

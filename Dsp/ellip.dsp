@@ -81,5 +81,6 @@ s4(fc) = fi.tf2s(b0, b1, b2, a1, a2, w1) with {
 //     freqs(B, A, w);
 //
 // Note the normalized cutoff frequency at 1rad/s.
-ellip(fc) = s1(fc) : s2(fc) : s3(fc) : s4(fc);
-process = ellip(ma.SR / 4);
+ellip = s1(fc) : s2(fc) : s3(fc) : s4(fc) with {
+	fc = ma.SR / 4;
+};
