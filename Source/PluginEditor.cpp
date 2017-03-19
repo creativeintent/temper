@@ -45,11 +45,13 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
 
     addAndMakeVisible(feedbackSlider);
     feedbackSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    feedbackSlider.setTextValueSuffix("dB");
     feedbackSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     feedbackAttachment = new SliderAttachment(m_vts, "feedback", feedbackSlider);
 
     addAndMakeVisible(levelSlider);
     levelSlider.setTextBoxStyle(Slider::NoTextBox, true, 80, 20);
+    levelSlider.setTextValueSuffix("dB");
     levelSlider.setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     levelAttachment = new SliderAttachment(m_vts, "level", levelSlider);
 

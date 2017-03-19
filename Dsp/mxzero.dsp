@@ -2,13 +2,13 @@ import("stdfaust.lib");
 el = library("./ellip.dsp");
 
 // Pre-filter parameters
-pfilterfc = hslider("filterfc", 8000, 20, 18000, 1.0) : si.smooth(0.995);
-pfilterq = hslider("filterq", 0.1, 0.1, 8, 0.001) : si.smooth(0.995);
+pfilterfc = hslider("filterfc", 16000, 100, 16000, 1.0) : si.smooth(0.995);
+pfilterq = hslider("filterq", 1.0, 1.0, 8, 0.001) : si.smooth(0.995);
 
 // Distortion parameters
-pdrive = hslider("drive", 1.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
+pdrive = hslider("drive", 4.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
 poffset = hslider("offset", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
-pcurve = hslider("curve", 0.1, 0.1, 4.0, 0.001) : si.smooth(0.995);
+pcurve = hslider("curve", 1.0, 0.1, 4.0, 0.001) : si.smooth(0.995);
 
 // Output parameters
 pfeedback = hslider("feedback", -60, -60, -3, 1) : ba.db2linear : si.smooth(0.995);

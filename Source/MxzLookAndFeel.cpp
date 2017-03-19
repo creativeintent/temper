@@ -30,7 +30,7 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
     // Draw the readout
     g.setColour (slider.findColour (Slider::rotarySliderFillColourId).withAlpha (isMouseOver ? 1.0f : 0.7f));
 
-    const float roundedVal = floorf(slider.getValue() * 100) * 0.001;
+    const float roundedVal = floorf(slider.getValue() * 100) * 0.01;
     String sliderVal = slider.getTextFromValue(roundedVal);
     g.drawText(sliderVal, centreX - radius, centreY - 8.0f, rw, 24.0f, Justification::centred);
 
