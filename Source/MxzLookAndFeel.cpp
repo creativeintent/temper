@@ -27,10 +27,12 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
     const float angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
     const bool isMouseOver = slider.isMouseOverOrDragging() && slider.isEnabled();
 
+    g.setFont(Font("Avenir", 22.0, 0));
+
     // Draw the readout
     g.setColour (slider.findColour (Slider::rotarySliderFillColourId).withAlpha (isMouseOver ? 1.0f : 0.7f));
 
-    const float roundedVal = floorf(slider.getValue() * 100) * 0.01;
+    const float roundedVal = floorf(slider.getValue() * 10) * 0.1;
     String sliderVal = slider.getTextFromValue(roundedVal);
     g.drawText(sliderVal, centreX - radius, centreY - 8.0f, rw, 24.0f, Justification::centred);
 
@@ -47,4 +49,8 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
     Path filledArc;
     filledArc.addArc(rx, ry, rw, rw, rotaryStartAngle, angle, true);
     g.strokePath(filledArc, PathStrokeType(4.0f));
+
+    Path outline;
+    outline.addArc(rx, ry, rw + 2.0f, rw + 2.0f, 0, 2.0f * 3.14, true);
+    g.strokePath(outline, PathStrokeType(1.0f));
 }
