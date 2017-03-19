@@ -12,6 +12,7 @@
 #include "PluginEditor.h"
 #include "MxzDsp.cpp"
 
+const int kOversampleFactor = 2;
 
 //==============================================================================
 MxzeroAudioProcessor::MxzeroAudioProcessor()
@@ -109,12 +110,17 @@ void MxzeroAudioProcessor::changeProgramName (int index, const String& newName)
 //==============================================================================
 void MxzeroAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    // Make sure we allocate enough size in the work buffer to compute the maximum-size
+    // input buffer at the oversamplign rate.
+    m_tempBuffer.setSize(getTotalNumInputChannels(), samplesPerBlock * kOversampleFactor);
+
+    // Re-initialize the dsp modules at the upsampled rate.
     if (m_lastKnownSampleRate == 0.0)
         for (int i = 0; i < m_dsps.size(); ++i)
-            m_dsps.getUnchecked(i)->init(sampleRate);
+            m_dsps.getUnchecked(i)->init(sampleRate * kOversampleFactor);
     else
         for (int i = 0; i < m_dsps.size(); ++i)
-            m_dsps.getUnchecked(i)->instanceConstants(sampleRate);
+            m_dsps.getUnchecked(i)->instanceConstants(sampleRate * kOversampleFactor);
 
     m_restriction->prepareToPlay(samplesPerBlock, sampleRate);
     m_lastKnownSampleRate = sampleRate;
@@ -164,12 +170,39 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // Hand the guts of the processing off to the Faust implementation
+    // Now the guts of the processing; oversampling and applying the Faust dsp module.
     float** channelData = buffer.getArrayOfWritePointers();
-    const int numSamples = buffer.getNumSamples();
+    float** workData = m_tempBuffer.getArrayOfWritePointers();
+    const int numInputChannels = buffer.getNumChannels();
+    const int numInputSamples = buffer.getNumSamples();
 
-    for (int i = 0; i < totalNumInputChannels; ++i)
-        m_dsps.getUnchecked(i)->compute(numSamples, channelData + i, channelData + i);
+    // First make sure we can hold the upsampled signal in our temp buffer, otherwise the host
+    // has delivered a buffer larger than it said it would.
+    jassert(numInputSamples * kOversampleFactor <= m_tempBuffer.getNumSamples());
+    jassert(numInputChannels <= m_tempBuffer.getNumChannels());
+
+    for (int i = 0; i < numInputChannels; ++i)
+    {
+        // Before we process the input samples, we zero-pad the input buffer, writing into the
+        // temp buffer. Padding each sample with a single zero doubles the sample rate while
+        // preserving the input signal.
+        for (int j = 0; j < numInputSamples; ++j)
+        {
+            workData[i][j * kOversampleFactor] = channelData[i][j];
+            workData[i][j * kOversampleFactor + 1] = 0.0f;
+        }
+
+        // At the new sampling rate we run the Faust dsp module.
+        m_dsps.getUnchecked(i)->compute(numInputSamples * kOversampleFactor, workData + i, workData + i);
+
+        // Now we have the processed signal at the new sample rate in our work buffer,
+        // and we can drop every other sample to return to the original sample rate with
+        // the desired output signal.
+        for (int j = 0; j < numInputSamples; ++j)
+        {
+            channelData[i][j] = workData[i][j * kOversampleFactor];
+        }
+    }
 
 #if ! JUCE_DEBUG
     // After the Faust processing, add the demo restriction to the output stream
