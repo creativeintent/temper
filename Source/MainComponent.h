@@ -38,7 +38,7 @@ class MainComponent  : public Component
 {
 public:
     //==============================================================================
-    MainComponent ();
+    MainComponent (AudioProcessorValueTreeState& vts);
     ~MainComponent();
 
     //==============================================================================
@@ -52,13 +52,14 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    ScopedPointer<SliderAttachment> filterFreqAttachment;
-    ScopedPointer<SliderAttachment> filterResoAttachment;
-    ScopedPointer<SliderAttachment> driveAttachment;
-    ScopedPointer<SliderAttachment> offsetAttachment;
-    ScopedPointer<SliderAttachment> curveAttachment;
-    ScopedPointer<SliderAttachment> feedbackAttachment;
-    ScopedPointer<SliderAttachment> levelAttachment;
+    AudioProcessorValueTreeState& m_vts;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> filterFreqAttachment;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> filterResoAttachment;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> driveAttachment;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> offsetAttachment;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> curveAttachment;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> levelAttachment;
     //[/UserVariables]
 
     //==============================================================================

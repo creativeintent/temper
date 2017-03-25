@@ -14,6 +14,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MxzLookAndFeel.h"
 #include "PluginProcessor.h"
+#include "MainComponent.h"
 
 typedef AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 
@@ -35,30 +36,9 @@ private:
     // access the processor object that created it.
     MxzeroAudioProcessor& processor;
     MxzLookAndFeel laf;
-
     AudioProcessorValueTreeState& m_vts;
 
-    // Sliders and listeners
-    Slider filterFreqSlider;
-    ScopedPointer<SliderAttachment> filterFreqAttachment;
-
-    Slider filterResoSlider;
-    ScopedPointer<SliderAttachment> filterResoAttachment;
-
-    Slider driveSlider;
-    ScopedPointer<SliderAttachment> driveAttachment;
-
-    Slider offsetSlider;
-    ScopedPointer<SliderAttachment> offsetAttachment;
-
-    Slider curveSlider;
-    ScopedPointer<SliderAttachment> curveAttachment;
-
-    Slider feedbackSlider;
-    ScopedPointer<SliderAttachment> feedbackAttachment;
-
-    Slider levelSlider;
-    ScopedPointer<SliderAttachment> levelAttachment;
+    ScopedPointer<MainComponent> m_main;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessorEditor)
 };

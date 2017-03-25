@@ -24,10 +24,12 @@
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
+typedef AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 //[/MiscUserDefs]
 
 //==============================================================================
-MainComponent::MainComponent ()
+MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
+    : m_vts(vts)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -140,13 +142,13 @@ MainComponent::MainComponent ()
 
 
     //[Constructor] You can add your own custom stuff here..
-    filterFreqAttachment = new SliderAttachment(m_vts, "filterfc", m_cutoffSlider);
-    filterResoAttachment = new SliderAttachment(m_vts, "filterq", m_resoSlider);
-    driveAttachment = new SliderAttachment(m_vts, "drive", m_driveSlider);
-    curveAttachment = new SliderAttachment(m_vts, "curve", m_curveSlider);
-    offsetAttachment = new SliderAttachment(m_vts, "offset", m_biasSlider);
-    feedbackAttachment = new SliderAttachment(m_vts, "feedback", m_feedbackSlider);
-    levelAttachment = new SliderAttachment(m_vts, "level", m_gainSlider);
+    filterFreqAttachment = new SliderAttachment(m_vts, "filterfc", *m_cutoffSlider);
+    filterResoAttachment = new SliderAttachment(m_vts, "filterq", *m_resoSlider);
+    driveAttachment = new SliderAttachment(m_vts, "drive", *m_driveSlider);
+    curveAttachment = new SliderAttachment(m_vts, "curve", *m_curveSlider);
+    offsetAttachment = new SliderAttachment(m_vts, "offset", *m_biasSlider);
+    feedbackAttachment = new SliderAttachment(m_vts, "feedback", *m_feedbackSlider);
+    levelAttachment = new SliderAttachment(m_vts, "level", *m_gainSlider);
     //[/Constructor]
 }
 
@@ -238,9 +240,10 @@ void MainComponent::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="MainComponent" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="700" initialHeight="152">
+                 parentClasses="public Component" constructorParams="AudioProcessorValueTreeState&amp; vts"
+                 variableInitialisers="m_vts(vts)" snapPixels="8" snapActive="1"
+                 snapShown="1" overlayOpacity="0.330" fixedSize="1" initialWidth="700"
+                 initialHeight="152">
   <BACKGROUND backgroundColour="ff7d7d7d">
     <TEXT pos="491 123 200 30" fill="solid: ff000000" hasStroke="0" text="Creative Intent // MXZero (Beta)"
           fontname="Default font" fontsize="15" bold="0" italic="0" justification="36"/>

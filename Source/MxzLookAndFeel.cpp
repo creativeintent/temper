@@ -49,8 +49,4 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
     Path filledArc;
     filledArc.addArc(rx, ry, rw, rw, rotaryStartAngle, angle, true);
     g.strokePath(filledArc, PathStrokeType(4.0f));
-
-    Path outline;
-    outline.addArc(rx, ry, rw + 2.0f, rw + 2.0f, 0, 2.0f * 3.14, true);
-    g.strokePath(outline, PathStrokeType(1.0f));
 }
