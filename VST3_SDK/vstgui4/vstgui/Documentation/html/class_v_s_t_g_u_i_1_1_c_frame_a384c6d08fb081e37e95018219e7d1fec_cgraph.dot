@@ -1,0 +1,20 @@
+digraph "platformOnKeyUp"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="platformOnKeyUp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="onKeyUp",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#ac50da528f8b849272593684073541b3b",tooltip="called if a key up event occurs and this view has focus "];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="keyboardHooksOnKeyUp",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#ac4217e0dec7c33e7d6e3fe5b7c9ff5b7"];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::IKeyboardHook\l::onKeyUp",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_keyboard_hook.html#aa4c5570a0837236f1c1a0f4b3aa6d1cd",tooltip="should return 1 if no further key up processing should apply, otherwise -1 "];
+  Node2 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CView::getMouseEnabled",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#acab79bf608c51aad89f6f1e491231cf1",tooltip="get the state of wheather this view uses the mouse or not "];
+  Node2 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CView::onKeyUp",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ac50da528f8b849272593684073541b3b",tooltip="called if a key up event occurs and this view has focus "];
+  Node2 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CView::getParentView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ac45407fc7304ee33c5729fa04edaea76",tooltip="get parent view "];
+}

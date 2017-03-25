@@ -1,0 +1,4 @@
+<map id="TDictionary&lt; TKey, TObject &gt;" name="TDictionary&lt; TKey, TObject &gt;">
+<area shape="rect" id="node2" href="$classSteinberg_1_1TDLinkedList.html" title="{TDLinkedList\&lt; TAssociation\l\&lt; TKey, TObject \&gt; \&gt;\n||+ TDLinkedList()\l+ TDLinkedList()\l+ TDLinkedList()\l+ ~TDLinkedList()\l+ operator=()\l+ newInstance()\l+ add()\l+ append()\l+ prepend()\l+ insertAt()\land 17 more...\l}" alt="" coords="5,309,173,536"/>
+<area shape="rect" id="node4" href="$classSteinberg_1_1TContainer.html" title="{TContainer\&lt; TAssociation\l\&lt; TKey, TObject \&gt; \&gt;\n|# errorObject\l# _size\l|+ TContainer()\l+ TContainer()\l+ ~TContainer()\l+ operator==()\l+ operator!=()\l+ newInstance()\l+ operator[]()\l+ total()\l+ isEmpty()\l+ size()\land 14 more...\l# copy()\l}" alt="" coords="10,6,168,260"/>
+</map>

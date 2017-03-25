@@ -1,0 +1,12 @@
+digraph "setCommandName"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setCommandName",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="CCommandMenuItem",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_command_menu_item.html#ae96e582f74778bc78f9f23b259c2ee3f"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="~CCommandMenuItem",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_command_menu_item.html#a6fa1dbcbdc8d5fa8eb27378f59a52c97"];
+}

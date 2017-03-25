@@ -1,0 +1,16 @@
+digraph "valueChanged"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="valueChanged",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CControl::getTag",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a6f5b9468bcf84c776485950a9c6990c3"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CControl::getValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a0cecc937d7e222b7e3d8fac5294aa38f"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="updateState",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_color_chooser.html#aa5dabf4a89c5e3410a829e6a3d042c1f"];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CViewContainer\l::invalid",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#a51647a4891b4a9cbaf8595171c5ad3fc",tooltip="mark whole view as invalid "];
+}

@@ -1,0 +1,14 @@
+digraph "setSize"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setSize",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="operator=",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#af9620c5c8b5fea506df5242bc5b8b1ea"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFontChooser\l::valueChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_chooser.html#a9e11979012090b0ff41c3f59aef6023d"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CTabView::setTab\lFontStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_tab_view.html#a66062c09de8cab0326f8374f6d2b5b2e",tooltip="call this after the tabs are added. Tabs added after this call will have the default font style..."];
+}

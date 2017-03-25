@@ -1,0 +1,26 @@
+digraph "getVisibleViewSize"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getVisibleViewSize",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CControl::getFocusPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#aa8a6771777fd78c1a26ac13fc1fe12f1"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CKnob::getFocusPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_knob.html#aa8a6771777fd78c1a26ac13fc1fe12f1"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CLayeredViewContainer\l::updateLayerSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html#a2b3a35e421b7abbc7b5a833ec1751aaa"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CLayeredViewContainer\l::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CLayeredViewContainer\l::viewContainerTransformChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html#af80b80a3ff7ae938f7802b4500ca7ccb"];
+  Node4 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CLayeredViewContainer\l::parentSizeChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html#a2c74a100fe4ecff75d76053f446fd5bb",tooltip="notification that one of the views parent has changed its size "];
+  Node4 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CLayeredViewContainer\l::setViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html#ada1ffb857aa147620f2d01522b37569d",tooltip="set views size "];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CLayeredViewContainer\l::drawViewLayer",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html#af68c2c59b58f0c8f010834bb0f959a9a"];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CTextEdit::\lplatformGetVisibleSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_edit.html#ac6723d734158ef4548dbd9dd3b24732f"];
+}

@@ -1,0 +1,14 @@
+digraph "doIdleStuff"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="doIdleStuff",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="getTicks",height=0.2,width=0.4,color="black",URL="$class_a_eff_g_u_i_editor.html#a05dffb509478801c59747249f05dafe5"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="wait",height=0.2,width=0.4,color="black",URL="$class_a_eff_g_u_i_editor.html#a7c93ea375d0afa3024f09ddc91c015e1"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="idle",height=0.2,width=0.4,color="black",URL="$class_a_eff_g_u_i_editor.html#a83abbeda22fc5e6c2b35523b64199c1c"];
+}

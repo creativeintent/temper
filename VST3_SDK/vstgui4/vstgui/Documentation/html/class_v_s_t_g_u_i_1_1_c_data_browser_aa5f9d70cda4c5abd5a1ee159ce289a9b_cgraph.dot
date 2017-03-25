@@ -1,0 +1,17 @@
+digraph "unselectRow"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="unselectRow",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::IDataBrowserDelegate\l::dbGetNumRows",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a7a995c1bb7ecebecbd53378b7d32130e",tooltip="return number of rows for CDataBrowser browser "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CScrollView\l::getStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scroll_view.html#ad3e31421098660b2bf757372feaa2f98"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::IDataBrowserDelegate\l::dbSelectionChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a0b8554afada5a0eab8d74eefb8935436"];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="unselectAll",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#ad204f9856847ba3780165acbe388a155",tooltip="empty selection "];
+  Node5 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

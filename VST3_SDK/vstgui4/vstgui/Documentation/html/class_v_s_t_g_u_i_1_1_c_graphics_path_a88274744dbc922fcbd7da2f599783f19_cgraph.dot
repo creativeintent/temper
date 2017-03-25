@@ -1,0 +1,12 @@
+digraph "addPath"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="addPath",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CGraphicsTransform\l::transform",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#af5b80ac47e3d74fe4cf0ca4d75f2e6c3"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="dirty",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_graphics_path.html#af1cb1b3449a77dab0724c0698a81ca2c",tooltip="platform object should be released "];
+}

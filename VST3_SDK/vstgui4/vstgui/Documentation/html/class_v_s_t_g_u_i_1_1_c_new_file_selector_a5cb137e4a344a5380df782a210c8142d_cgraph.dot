@@ -1,0 +1,25 @@
+digraph "~CNewFileSelector"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="~CNewFileSelector",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="setTitle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_new_file_selector.html#afb2daf6d961426423c66598fd8c7f55b",tooltip="set title of file selector "];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::String::free",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#af30ee7f201c1f86d9aceb849d6d08fbf"];
+  Node2 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::String::newWithString",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#a83745b23a3d48e4f1e69950977918803"];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::UTF8StringView\l::calculateByteCount",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_string_view.html#a67b9d83785a9c0fc5a668303de116803"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="setInitialDirectory",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_new_file_selector.html#ab41f599b1a51e1f384637f21a7770cc0",tooltip="set initial directory (UTF8 string) "];
+  Node6 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="setDefaultSaveName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_new_file_selector.html#a8a6ffb70c424c6e5c03264c31ce366e3",tooltip="set initial save name (UTF8 string) "];
+  Node7 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

@@ -1,0 +1,37 @@
+digraph "setAttribute"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setAttribute",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CDataBrowser\l::beginTextEdit",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#af132c21a2b263d779de2ed53b400da22",tooltip="starts a text edit for a cell "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFrame::setFocus\lDrawingEnabled",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a7447c9fa6124d6a7e3e8895335e2c337",tooltip="enable focus drawing "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CFrame::setFocus\lColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#abecc63e92d16722ebcd412e30c6350cb",tooltip="set focus draw color "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CFrame::setFocus\lWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a04d8e61d75ad5cf40686349cba1be6df",tooltip="set focus draw width "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="CView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a6692134a3539d58a74e25275d1936d27"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::UIDescription\l::createViewFromNode",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#ad17c8f72c6bf19a6a8d873e8947a3359"];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::UIDescription\l::restoreViews",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#acc6a9f590d7a896b92ea6b33cb6fdf44"];
+  Node7 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::UIDescription\l::createView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a9b617a7d2bb805de4150cf2e65dade5d"];
+  Node9 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::UIDescription\l::updateAttributesForView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a2d7bcbdffb29bc607222c4d41fd53d2b"];
+  Node10 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::UIDescription\l::updateViewDescription",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a9c533dcd11cce036d6cc856a2d1c9cc4"];
+  Node11 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::UIViewFactory\l::createViewByName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#a029774db62b9070edfcdd78068a31407"];
+  Node12 -> Node13 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::UIViewFactory\l::createView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#a14a05eaacca7a2254708dd9032c9a80f"];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::UIViewFactory\l::applyCustomViewAttributeValues",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#ab311dd687ea212eccd65b6237dc8eb61"];
+}

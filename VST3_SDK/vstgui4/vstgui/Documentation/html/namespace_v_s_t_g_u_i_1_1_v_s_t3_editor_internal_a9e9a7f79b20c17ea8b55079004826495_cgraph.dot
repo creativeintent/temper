@@ -1,0 +1,20 @@
+digraph "getUIDescriptionSaveOptions"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getUIDescriptionSaveOptions",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::getViewController",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#ac0caf7c5b5b1b43d55ceec218776c5b8"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CView::getAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1691269ee71c2cfedde6f940d7526baa",tooltip="get an attribute "];
+  Node2 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CView::getParentView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ac45407fc7304ee33c5729fa04edaea76",tooltip="get parent view "];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CViewContainer\l::getView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#a31f6322a456fd50f52f1ac3112856976",tooltip="get the child view at index "];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::UIAttributes\l::getBooleanAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#ac1ac1cbe6c81106386498469fded95cd"];
+  Node6 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::UIAttributes\l::getAttributeValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#a80dddbc022b66698cf7a00620efbcd88"];
+}

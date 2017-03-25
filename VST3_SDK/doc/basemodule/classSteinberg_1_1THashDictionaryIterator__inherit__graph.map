@@ -1,0 +1,4 @@
+<map id="THashDictionaryIterator&lt; TKey, TObject &gt;" name="THashDictionaryIterator&lt; TKey, TObject &gt;">
+<area shape="rect" id="node2" href="$classSteinberg_1_1THashTableIterator.html" title="{THashTableIterator\l\&lt; TAssociation\&lt; TKey,\l TObject \&gt; \&gt;\n||+ THashTableIterator()\l+ done()\l+ next()\l+ previous()\l+ current()\l+ first()\l+ last()\l+ table()\l}" alt="" coords="17,281,159,479"/>
+<area shape="rect" id="node4" href="$classSteinberg_1_1TIterator.html" title="{TIterator\&lt; TAssociation\l\&lt; TKey, TObject \&gt; \&gt;\n|# _container\l|+ TIterator()\l+ ~TIterator()\l+ done()\l+ next()\l+ next()\l+ previous()\l+ previous()\l+ current()\l+ first()\l+ last()\land 9 more...\l}" alt="" coords="16,5,160,232"/>
+</map>

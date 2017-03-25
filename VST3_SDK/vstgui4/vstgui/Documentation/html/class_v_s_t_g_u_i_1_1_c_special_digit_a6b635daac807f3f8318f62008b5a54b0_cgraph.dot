@@ -1,0 +1,41 @@
+digraph "CSpecialDigit"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="CSpecialDigit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CControl::setValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a06bf62da9ba043bcf1b4c26bb2bf357b"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CControl::getMin",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a7cf3216ed0a504f4bab603c67ef403f2"];
+  Node2 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CControl::getMax",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#aa89b448a266e794c3d967593b3faf4a8"];
+  Node2 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::IDependency\l::changed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#acac105ad797d9700f9a31946792ecbc0"];
+  Node5 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::IDependency\l::rememberObject",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#a9005955fa448192caddbbced658a616c"];
+  Node6 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CBaseObject\l::remember",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ada0719d1daaca4af1795018001769311",tooltip="increase refcount "];
+  Node5 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CBaseObject\l::notify",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ab18c3bcc0cb674396848861dfd78a83a"];
+  Node5 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::IDependency\l::forgetObject",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#a626f70bf0ebe5646d8e1335e5c8a607a"];
+  Node9 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CBaseObject\l::forget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8",tooltip="decrease refcount and delete object if refcount == 0 "];
+  Node10 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CBaseObject\l::beforeDelete",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b"];
+  Node1 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CBitmap::getWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_bitmap.html#a8b4fe88292b8e95807a9b07a26cd1cb1",tooltip="get the width of the image "];
+  Node12 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CBitmap::getPlatform\lBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_bitmap.html#a8849ed13652f5ee727ba7e689af30290"];
+  Node1 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CControl::setMax",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a00e616bc3ffaba361c613af072df8864"];
+  Node14 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::CControl::bounce\lValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a28bd46996ac9f5362dcf92bf6d825e8d"];
+  Node15 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node16 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CControl::setMin",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a5e05f9d623fcd2bf32e2dc92cffc7384"];
+  Node16 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

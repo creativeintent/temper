@@ -1,0 +1,14 @@
+digraph "controlTagDidChange"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="controlTagDidChange",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CControl::setTag",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#aac4c8479129a3591ef90cfb40976b840"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CTabView::addTab",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_tab_view.html#a2f003c7e0d23c7d77eafc0f601a047a6",tooltip="add a tab "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::DelegationController\l::controlTagDidChange",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_delegation_controller.html#a81c5e8f316624e3e58ae9d2ea8b4bd45"];
+}

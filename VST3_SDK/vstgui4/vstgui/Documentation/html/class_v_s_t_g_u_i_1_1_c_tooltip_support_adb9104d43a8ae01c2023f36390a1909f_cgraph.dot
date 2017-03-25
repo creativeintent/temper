@@ -1,0 +1,12 @@
+digraph "hideTooltip"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="hideTooltip",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CVSTGUITimer\l::stop",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_v_s_t_g_u_i_timer.html#a68a350717fe6bf9012843e7c977d87b2",tooltip="stops the timer, returns whether timer was running or not "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFrame::getPlatform\lFrame",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a3b8d7ec8e7df59cf0fdc367f99fde1d0"];
+}

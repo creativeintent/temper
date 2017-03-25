@@ -1,0 +1,34 @@
+digraph "init"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="setFrameColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ae44181e37622cc3aeb857617ee21f595",tooltip="set current stroke color "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="setLineStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a622734e81b6fc1a89480d47fc4dc6f01",tooltip="set the current line style "];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="setLineWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a9901bb437bd3a1c196eb2f7b0d5bfa44",tooltip="set the current line width "];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="setFillColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a500577d63c24a75702a9e4cf45dbb67c",tooltip="set current fill color "];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="setFontColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ae55294dcf820a4e8367f3b7e622d8027",tooltip="set current font color "];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="setFont",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#aa88b4cee28d3836ba68eeb55cd3bdca4",tooltip="set current font "];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CFontDesc::\lgetSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a41e097ceebffe54a8ed361d006164fc6",tooltip="get the height of the font "];
+  Node7 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CFontDesc::\lgetStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a8258f5208a5d8e941b3018bf004e6367",tooltip="get the style of the font "];
+  Node7 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CFontDesc::\lnewCopy",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a624f67fa321bcb03a632d38161b1f216"];
+  Node1 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="setDrawMode",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ab4bef9a3e8c1344693fc3f53a9a1b51b",tooltip="set the current draw mode, see CDrawMode "];
+  Node1 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="setClipRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a3eb686895016175b3aa34feff499eb7c",tooltip="set the current clip "];
+  Node12 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="getCurrentTransform",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#af2f8fb0ef26ea37214d7d0dbbbbacfd2"];
+  Node12 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CGraphicsTransform\l::transform",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#af5b80ac47e3d74fe4cf0ca4d75f2e6c3"];
+}

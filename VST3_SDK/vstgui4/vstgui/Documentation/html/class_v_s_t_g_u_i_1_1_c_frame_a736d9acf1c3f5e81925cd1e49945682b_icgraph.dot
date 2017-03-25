@@ -1,0 +1,20 @@
+digraph "onViewAdded"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="onViewAdded",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CView::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="open",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a5a0cd6b1b28a807a5b6bcf1a1ad8cff8"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="CFrame",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a13958c1a3cae051f6bd425bd39af21bc"];
+  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::COpenGLView\l::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_open_g_l_view.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+  Node2 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CSegmentButton\l::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_segment_button.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+}

@@ -1,0 +1,17 @@
+digraph "addDefaultNodes"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="addDefaultNodes",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="parse",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a1e17a5c9f8b518e6aea8ba0adb9113c4"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::VST3Editor\l::init",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a02fd73d861ef2e4aabb38c0c9ff82947"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::VST3Editor\l::VST3Editor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a6da6f7fa1358e3bb29b45dbb29a1311d"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="addNewTemplate",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#ac237dfa6ff8a6ff7c9afcc9ff98d6cee"];
+  Node5 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

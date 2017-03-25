@@ -1,0 +1,28 @@
+var class_v_s_t_g_u_i_1_1_i_data_browser_delegate =
+[
+    [ "kRowSelected", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#adf764cbdea00d65edcd07bb9953ad2b7ad83be25e4e9916df35f3a54ad7745bee", null ],
+    [ "dbAttached", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a2c5505003583271bd4bff211b52e5197", null ],
+    [ "dbCellSetupTextEdit", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#aa2f15b2c8f38bfebc187d0e76d269de7", null ],
+    [ "dbCellTextChanged", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a2a02bfc609747db9dd5e02a5e51beef9", null ],
+    [ "dbDrawCell", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#ac41c38ad2f5331aec8f62de1b8e7e451", null ],
+    [ "dbDrawHeader", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a85b7146e0d0d1d1e39fa3e468e50f24b", null ],
+    [ "dbGetColumnDescription", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#ad82600abc36d60a7fe7ca232008ca887", null ],
+    [ "dbGetCurrentColumnWidth", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a1b8544e2a333509ebea48e20452e0ec0", null ],
+    [ "dbGetLineWidthAndColor", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a7b36a55bd733ed49b370c6d6e2057111", null ],
+    [ "dbGetNumColumns", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#adb1298007dc75c87ce369fe46687afa7", null ],
+    [ "dbGetNumRows", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a7a995c1bb7ecebecbd53378b7d32130e", null ],
+    [ "dbGetRowHeight", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a302018b7876e6b43d7dc7602e78e3574", null ],
+    [ "dbOnDragEnterBrowser", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#aacde11d1219a031cbea751d502976721", null ],
+    [ "dbOnDragEnterCell", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a6eb6b2c88223fe39b1d068993631a1ad", null ],
+    [ "dbOnDragExitBrowser", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a49f3f6bfad1e0063ba32b4feaa9f96ac", null ],
+    [ "dbOnDragExitCell", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#ac618eb4d26fb7dd975e985ebb696462d", null ],
+    [ "dbOnDragMoveInCell", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a38ed72ac474e413875ff42173cc45689", null ],
+    [ "dbOnDropInCell", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a5d3bbddad58db789751af8f0e6805807", null ],
+    [ "dbOnKeyDown", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a9d074286ef275963aed9ae50346cdbeb", null ],
+    [ "dbOnMouseDown", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a49c8bdc4f9100a6c7046a9d3fdc805a4", null ],
+    [ "dbOnMouseMoved", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a4a9fdd638c80cdc802d296e51eae1aa2", null ],
+    [ "dbOnMouseUp", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#ac8acc4c1ec7dcd7d0bdd396777eb12f2", null ],
+    [ "dbRemoved", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#ac3336710c1610bdd014defb96cd1421e", null ],
+    [ "dbSelectionChanged", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a0b8554afada5a0eab8d74eefb8935436", null ],
+    [ "dbSetCurrentColumnWidth", "class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a7e1092dafa6654ba6d7c3391e119c952", null ]
+];

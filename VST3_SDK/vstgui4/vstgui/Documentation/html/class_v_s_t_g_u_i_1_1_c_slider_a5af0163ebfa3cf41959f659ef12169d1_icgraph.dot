@@ -1,0 +1,18 @@
+digraph "getMode"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getMode",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="calculateDelta",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_slider.html#ad0ce5039d1402a45f57b509e8fcd0117"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_slider.html#af5e4151d575380ad56bf87893631f03d",tooltip="called when a mouse down event occurs "];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="onMouseMoved",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_slider.html#ac8855959285a9555faaa8b0313e07027",tooltip="called when a mouse move event occurs "];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="getFreeClick",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_slider.html#afc1052efc52e5e8f1a4ad84483917300"];
+}

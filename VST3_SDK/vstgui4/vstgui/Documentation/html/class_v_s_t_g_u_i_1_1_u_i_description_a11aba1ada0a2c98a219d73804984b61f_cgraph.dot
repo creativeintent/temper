@@ -1,0 +1,37 @@
+digraph "calculateStringValue"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="calculateStringValue",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::UIDescriptionPrivate\l::tokenizeString",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_u_i_description_private.html#ad3175ed8533444130c009f857c2f1c36"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::UTF8CharacterIterator\l::getByteLength",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_character_iterator.html#ade2221adf6e7b993124a882b984d4564"];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::UTF8CharacterIterator\l::back",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_character_iterator.html#a0bb7394b3cd98cdf7b65bd5105121109"];
+  Node2 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::UTF8CharacterIterator\l::next",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_character_iterator.html#aea0742f4dc1c44734017c5b0c21d0413"];
+  Node5 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::UTF8CharacterIterator::end",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_character_iterator.html#a03dc55107bee72cd1fccd0fa44d9d211"];
+  Node2 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="getTagForName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a4d20a5578f2b8cf3f247e5e9726dff75"];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="findChildNodeByNameAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a08d7accaf1c7c8e7e45d353e4c3f4bd6"];
+  Node7 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="getBaseNode",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a2b0f673945c12c2dbf13ecdb4d768bf1"];
+  Node7 -> Node1 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::IController\l::getTagForName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_controller.html#a1f450d51458c8ad435c72f8050e75845"];
+  Node1 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="getVariable",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a0fbbc231900c1d5f9daed9ca8efad954"];
+  Node11 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 -> Node1 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::UIDescriptionPrivate\l::computeTokens",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_u_i_description_private.html#aa88f16dcc11608f2b8118778f9e1f3f0"];
+}

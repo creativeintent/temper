@@ -1,0 +1,29 @@
+digraph "CSlider"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="CSlider",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="setDrawTransparentHandle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_slider.html#a5ddc2f921f8c867788f5066502ffa760"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CBaseObject\l::remember",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ada0719d1daaca4af1795018001769311",tooltip="increase refcount "];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CBitmap::getWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_bitmap.html#a8b4fe88292b8e95807a9b07a26cd1cb1",tooltip="get the width of the image "];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CBitmap::getPlatform\lBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_bitmap.html#a8849ed13652f5ee727ba7e689af30290"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CBitmap::getHeight",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_bitmap.html#a1f4be3a475a8fb7d8defa4621c01558d",tooltip="get the height of the image "];
+  Node6 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CView::getViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a7b14fb07c53ccfa07dc91900f4fe01f1",tooltip="read only access to view size "];
+  Node1 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CRect::getWidth",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a8b4fe88292b8e95807a9b07a26cd1cb1"];
+  Node1 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CRect::getHeight",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a1f4be3a475a8fb7d8defa4621c01558d"];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="setOffsetHandle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_slider.html#a36c6de7c58c72c2aa05eb5b9986ff136"];
+  Node1 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CView::setWantsFocus",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a7c938477f787fe59b0eacb147a8c03a5",tooltip="set focus support on/off "];
+}

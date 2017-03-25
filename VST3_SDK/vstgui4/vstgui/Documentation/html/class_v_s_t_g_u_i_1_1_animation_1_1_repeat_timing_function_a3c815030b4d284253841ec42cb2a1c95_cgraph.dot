@@ -1,0 +1,12 @@
+digraph "isDone"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="isDone",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::Animation::\lTimingFunctionBase::\lgetLength",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html#a67cd323fecc35d2cd8895e08f9e242e6"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::Animation::\lTimingFunctionBase::\lisDone",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html#a3c815030b4d284253841ec42cb2a1c95"];
+}

@@ -1,0 +1,12 @@
+digraph "setTransparency"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setTransparency",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CDataBrowser\l::CDataBrowser",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#aaf73b3af5bff3c9cf6ed3c447e6561d0"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFontChooser\l::CFontChooser",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_chooser.html#a1a4d6cbd6b3c39bdff979a626e42016e"];
+}

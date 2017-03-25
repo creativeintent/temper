@@ -1,0 +1,47 @@
+digraph "isVisible"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="isVisible",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CFrame::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#af5e4151d575380ad56bf87893631f03d",tooltip="called when a mouse down event occurs "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFrame::platform\lOnMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a507648489acc6bca8cec757b94f1256d"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CFrame::invalidRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#ad414ba3d5e64f9fdc11309e05266ffcf",tooltip="mark rect as invalid "];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CFrame::scrollRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#adccf8c195f686e93c923333b54eace87",tooltip="scroll src rect by distance "];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CFrame::invalid",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a42789430a9d5e7f3729bf69c9398fc52",tooltip="mark whole view as invalid "];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CFrame::setZoom",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#acd95b7a4f72bc2f26ec1b08904fd3df1",tooltip="set zoom factor "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::COpenGLView\l::setVisible",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_open_g_l_view.html#ae7b11de49c83518bc4e91feb6c2e9b9f",tooltip="set visibility state "];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CScrollView\l::recalculateSubViews",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scroll_view.html#a0c6d1dd9bc1cbe653d7eacaf4362e06e"];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CDataBrowser\l::recalculateSubViews",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#a0c6d1dd9bc1cbe653d7eacaf4362e06e"];
+  Node9 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CScrollView\l::setStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scroll_view.html#a921dad1b65204e0e6c501e64b83dcc02"];
+  Node9 -> Node12 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CScrollView\l::setScrollbarWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scroll_view.html#acbd5b76dbb00098b28f173f7f0276312"];
+  Node9 -> Node13 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CScrollView\l::setContainerSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scroll_view.html#a76a87a4f5faa6bd93a3503c31225d654",tooltip="set the virtual size of this container "];
+  Node13 -> Node14 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CDataBrowser\l::recalculateLayout",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#adf67dfd47fb9d3c6051cd43cc8542cba",tooltip="trigger recalculation, call if numRows or numColumns changed "];
+  Node14 -> Node15 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::CDataBrowser\l::setViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#aaebdc2090c8ebee6be423c64ab69bf64",tooltip="set views size "];
+  Node14 -> Node16 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CDataBrowser\l::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+  Node14 -> Node17 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node17 [label="VSTGUI::GenericStringList\lDataBrowserSource::setStringList",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_generic_string_list_data_browser_source.html#a65aa599f5c20dcb98d48e49ef5114946"];
+  Node14 -> Node18 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node18 [label="VSTGUI::GenericStringList\lDataBrowserSource::setupUI",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_generic_string_list_data_browser_source.html#a721c0ed5144b9f9d50e5dc7fe4976492"];
+  Node18 -> Node19 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node19 [label="VSTGUI::CFontChooser\l::CFontChooser",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_chooser.html#a1a4d6cbd6b3c39bdff979a626e42016e"];
+  Node13 -> Node20 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node20 [label="VSTGUI::CScrollView\l::setViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scroll_view.html#ada1ffb857aa147620f2d01522b37569d",tooltip="set views size "];
+  Node20 -> Node15 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

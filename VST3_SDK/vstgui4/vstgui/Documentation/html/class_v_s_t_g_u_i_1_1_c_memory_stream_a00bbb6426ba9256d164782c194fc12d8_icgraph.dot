@@ -1,0 +1,16 @@
+digraph "resize"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="resize",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="CMemoryStream",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_memory_stream.html#a8aa580a0e816b89eb53c4b1fd67a0448"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="writeRaw",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_memory_stream.html#a322107a43e6826686e736c2e32b8b49e"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="operator\<\<",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_memory_stream.html#a6286b55dd743d3d454e185842d20e103"];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="end",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_memory_stream.html#af545ab12986d2fe462f1013c3bafb5f3"];
+}

@@ -1,0 +1,38 @@
+digraph "updateViewSize"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="updateViewSize",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="doPushInFromLeft",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#acf2fe54ba915a2a5c5baf79eb99f754d"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="init",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#a02fd73d861ef2e4aabb38c0c9ff82947"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="ExchangeViewAnimation",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#ab056dfd92492a3566d61f0e150d02ff2"];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="animationTick",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#ae39b9b451e6e7c5b8fa0186a3b516c2b",tooltip="pos is a normalized value between zero and one "];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="animationFinished",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#aad1ec675e50d5dbdc0b59b400ab75b6b",tooltip="animation ended "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="doPushInFromRight",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#a8a6fb646d3572a926d841cdacac1df2d"];
+  Node7 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="doPushInFromTop",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#aed3495cde756b45f50be655402cc2308"];
+  Node8 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="doPushInFromBottom",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#a09b9175cff6b667cf85f7b41e3ef97a1"];
+  Node9 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="doPushInOutFromLeft",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#a458feb800c9a9e417ce2e46cd0bc5b7e"];
+  Node10 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="doPushInOutFromRight",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#aadd2a714eb20cd21fbf3b1b876c8dafc"];
+  Node11 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

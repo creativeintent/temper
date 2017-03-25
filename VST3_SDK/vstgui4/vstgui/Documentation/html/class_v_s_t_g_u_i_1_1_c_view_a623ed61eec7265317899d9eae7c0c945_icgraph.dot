@@ -1,0 +1,30 @@
+digraph "setBackground"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setBackground",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CCheckBox::\lsetBackground",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_check_box.html#a623ed61eec7265317899d9eae7c0c945",tooltip="set the background image of this view "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CControl::CControl",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#ae9b5e963e6d739e43fd95ff5673ae956"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CAnimKnob::\lsetBackground",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_anim_knob.html#a623ed61eec7265317899d9eae7c0c945",tooltip="set the background image of this view "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CShadowViewContainer\l::removed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_shadow_view_container.html#a49265b3f3a104df683a4fb5867d09555",tooltip="view is removed from parent view "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CShadowViewContainer\l::drawRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_shadow_view_container.html#a530199c9ce307c3c7aa37e8f7acd75fb",tooltip="called if the view should draw itself "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CAnimationSplash\lScreen::CAnimationSplashScreen",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_animation_splash_screen.html#a20c89a91bd67718a5489fd9b142b728c"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CAnimationSplash\lScreen::setSplashBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_animation_splash_screen.html#a4fe61cc8ba507a1c2678425b1335bd66"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CTabView::CTabView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_tab_view.html#a68c34233a8a8f4b56b15987b0d8e31ec"];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CVuMeter::setOnBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_vu_meter.html#a39a8af7b783c40b2cb0186a463b19ada"];
+  Node10 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CVuMeter::CVuMeter",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_vu_meter.html#a25aaa57dde3fa69e613b195a5ba90205"];
+  Node10 -> Node12 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CVuMeter::\l~CVuMeter",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_vu_meter.html#a3cac1dd874092c24b9ecf8ee978b9d31"];
+}

@@ -1,0 +1,41 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="FUnknown" alt="" coords="6,908,85,934"/>
+<area shape="rect" id="node3" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginBase.html" title="IPluginBase" alt="" coords="183,28,268,54"/>
+<area shape="rect" id="node9" href="$classSteinberg_1_1Vst_1_1ChannelContext_1_1IInfoListener.html" title="Channel Context Interface. " alt="" coords="182,78,269,104"/>
+<area shape="rect" id="node11" href="$classSteinberg_1_1Vst_1_1IAttributeList.html" title="Attribute list used in IMessage and IStreamAttributes. " alt="" coords="181,127,269,153"/>
+<area shape="rect" id="node13" href="$classSteinberg_1_1Vst_1_1IAudioPresentationLatency.html" title="Extended IAudioProcessor interface for a component. " alt="" coords="143,176,308,202"/>
+<area shape="rect" id="node15" href="$classSteinberg_1_1Vst_1_1IAudioProcessor.html" title="Audio Processing Interface. " alt="" coords="171,226,280,252"/>
+<area shape="rect" id="node17" href="$classSteinberg_1_1Vst_1_1IAutomationState.html" title="Extended IComponent interface for a component. " alt="" coords="169,275,282,301"/>
+<area shape="rect" id="node19" href="$classSteinberg_1_1Vst_1_1IComponentHandler.html" title="Host callback interface for an edit controller. " alt="" coords="161,324,290,350"/>
+<area shape="rect" id="node21" href="$classSteinberg_1_1Vst_1_1IComponentHandler2.html" title="Extended Host callback interface IComponentHandler2 for an edit controller. " alt="" coords="158,374,293,400"/>
+<area shape="rect" id="node23" href="$classSteinberg_1_1Vst_1_1IComponentHandler3.html" title="Extended Host callback interface IComponentHandler3 for an edit controller. " alt="" coords="158,423,293,449"/>
+<area shape="rect" id="node25" href="$classSteinberg_1_1Vst_1_1IConnectionPoint.html" title="Connect a component with another one. " alt="" coords="169,472,282,498"/>
+<area shape="rect" id="node27" href="$classSteinberg_1_1Vst_1_1IContextMenu.html" title="Context Menu Interface. " alt="" coords="177,522,273,548"/>
+<area shape="rect" id="node29" href="$classSteinberg_1_1Vst_1_1IContextMenuTarget.html" title="Context Menu Item Target Interface. " alt="" coords="161,571,290,597"/>
+<area shape="rect" id="node31" href="$classSteinberg_1_1Vst_1_1IEditController2.html" title="Edit controller component interface extension. " alt="" coords="173,620,277,646"/>
+<area shape="rect" id="node33" href="$classSteinberg_1_1Vst_1_1IEditControllerHostEditing.html" title="Parameter Editing from Host. " alt="" coords="146,670,305,696"/>
+<area shape="rect" id="node35" href="$classSteinberg_1_1Vst_1_1IEventList.html" title="List of events to process. " alt="" coords="188,719,262,745"/>
+<area shape="rect" id="node37" href="$classSteinberg_1_1Vst_1_1IHostApplication.html" title="Basic Host Callback Interface. " alt="" coords="171,768,279,794"/>
+<area shape="rect" id="node39" href="$classSteinberg_1_1Vst_1_1IInterAppAudioConnectionNotification.html" title="Extended IEditController interface for Inter&#45;App Audio connection state change notifications. " alt="" coords="145,819,306,858"/>
+<area shape="rect" id="node41" href="$classSteinberg_1_1Vst_1_1IInterAppAudioHost.html" title="Inter&#45;App Audio host Interface. " alt="" coords="163,883,288,909"/>
+<area shape="rect" id="node43" href="$classSteinberg_1_1Vst_1_1IInterAppAudioPresetManager.html" title="Extended IEditController interface for Inter&#45;App Audio Preset Management. " alt="" coords="134,932,317,958"/>
+<area shape="rect" id="node45" href="$classSteinberg_1_1Vst_1_1IKeyswitchController.html" title="Extended IEditController interface for key switches support. " alt="" coords="160,982,291,1008"/>
+<area shape="rect" id="node47" href="$classSteinberg_1_1Vst_1_1IMessage.html" title="Private Plug&#45;in message. " alt="" coords="189,1031,262,1057"/>
+<area shape="rect" id="node49" href="$classSteinberg_1_1Vst_1_1IMidiMapping.html" title="MIDI Mapping Interface. " alt="" coords="179,1080,272,1106"/>
+<area shape="rect" id="node51" href="$classSteinberg_1_1Vst_1_1INoteExpressionController.html" title="Extended IEditController interface for note expression event support. " alt="" coords="145,1130,306,1156"/>
+<area shape="rect" id="node53" href="$classSteinberg_1_1Vst_1_1IParameterChanges.html" title="All parameter changes of a processing block. " alt="" coords="161,1179,290,1205"/>
+<area shape="rect" id="node55" href="$classSteinberg_1_1Vst_1_1IParameterFinder.html" title="Extension for IPlugView to find view parameters (lookup value under mouse support). " alt="" coords="168,1228,283,1254"/>
+<area shape="rect" id="node57" href="$classSteinberg_1_1Vst_1_1IParamValueQueue.html" title="Queue of changes for a specific parameter. " alt="" coords="162,1278,288,1304"/>
+<area shape="rect" id="node59" href="$classSteinberg_1_1Vst_1_1IPrefetchableSupport.html" title="Indicates that the Plug&#45;in could or not support Prefetch (dynamically). " alt="" coords="158,1327,292,1353"/>
+<area shape="rect" id="node61" href="$classSteinberg_1_1Vst_1_1IProgramListData.html" title="Component extension to access program list data. " alt="" coords="168,1376,283,1402"/>
+<area shape="rect" id="node63" href="$classSteinberg_1_1Vst_1_1IStreamAttributes.html" title="Meta attributes of a stream. " alt="" coords="168,1426,282,1452"/>
+<area shape="rect" id="node65" href="$classSteinberg_1_1Vst_1_1IUnitData.html" title="Component extension to access unit data. " alt="" coords="190,1475,261,1501"/>
+<area shape="rect" id="node67" href="$classSteinberg_1_1Vst_1_1IUnitHandler.html" title="Host callback for unit support. " alt="" coords="181,1524,269,1550"/>
+<area shape="rect" id="node69" href="$classSteinberg_1_1Vst_1_1IUnitHandler2.html" title="Host callback for extended unit support. " alt="" coords="178,1574,273,1600"/>
+<area shape="rect" id="node71" href="$classSteinberg_1_1Vst_1_1IUnitInfo.html" title="Edit controller extension to describe the Plug&#45;in structure. " alt="" coords="192,1623,258,1649"/>
+<area shape="rect" id="node73" href="$classSteinberg_1_1Vst_1_1IVst3ToAUWrapper.html" title="VST 3 to AU Wrapper Interface. " alt="" coords="163,1672,287,1698"/>
+<area shape="rect" id="node75" href="$classSteinberg_1_1Vst_1_1IVst3ToVst2Wrapper.html" title="VST 3 to VST 2 Wrapper Interface. " alt="" coords="160,1722,291,1748"/>
+<area shape="rect" id="node77" href="$classSteinberg_1_1Vst_1_1IXmlRepresentationController.html" title="Extended IEditController interface for a component. " alt="" coords="136,1771,315,1797"/>
+<area shape="rect" id="node5" href="$classSteinberg_1_1Vst_1_1IComponent.html" title="Component Base Interface. " alt="" coords="371,4,458,30"/>
+<area shape="rect" id="node7" href="$classSteinberg_1_1Vst_1_1IEditController.html" title="Edit controller component interface. " alt="" coords="366,54,463,80"/>
+</map>

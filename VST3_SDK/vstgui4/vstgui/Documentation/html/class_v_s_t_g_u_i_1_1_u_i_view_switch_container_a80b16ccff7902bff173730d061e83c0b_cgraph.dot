@@ -1,0 +1,14 @@
+digraph "attached"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="attached",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CViewContainer\l::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#a346862a374e9b89e0ca2ceb05028f4e2",tooltip="view is attached to a parent view "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CViewContainer\l::removeAll",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#acfef7ab75b0b59f29edb89e2e16c513f",tooltip="remove all child views "];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::IViewSwitchController\l::switchContainerAttached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_view_switch_controller.html#ad24b73136880d2b656b67a244df83c8d"];
+}

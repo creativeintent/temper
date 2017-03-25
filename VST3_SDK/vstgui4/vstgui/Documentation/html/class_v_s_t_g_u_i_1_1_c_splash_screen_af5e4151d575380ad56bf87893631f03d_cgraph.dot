@@ -1,0 +1,34 @@
+digraph "onMouseDown"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="onMouseDown",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CControl::getMax",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#aa89b448a266e794c3d967593b3faf4a8"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CControl::getMin",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a7cf3216ed0a504f4bab603c67ef403f2"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CView::getFrame",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a2045d5fae6d0f8c615dc55113828359a",tooltip="get frame "];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CControl::valueChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#ae57d02e392f1505445a7d83f1a18d96c",tooltip="notifies listener and dependent objects "];
+  Node5 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::IControlListener\l::valueChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_control_listener.html#a296f15a574e04152381eb01632abfec1"];
+  Node5 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::DispatchList\l::forEach",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_dispatch_list.html#a09cd3391119d3266c5d62ec8525d503d"];
+  Node5 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::IDependency\l::changed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#acac105ad797d9700f9a31946792ecbc0"];
+  Node8 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::IDependency\l::rememberObject",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#a9005955fa448192caddbbced658a616c"];
+  Node9 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CBaseObject\l::remember",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ada0719d1daaca4af1795018001769311",tooltip="increase refcount "];
+  Node8 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CBaseObject\l::notify",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ab18c3bcc0cb674396848861dfd78a83a"];
+  Node8 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::IDependency\l::forgetObject",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#a626f70bf0ebe5646d8e1335e5c8a607a"];
+  Node12 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CBaseObject\l::forget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8",tooltip="decrease refcount and delete object if refcount == 0 "];
+  Node13 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CBaseObject\l::beforeDelete",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b"];
+}

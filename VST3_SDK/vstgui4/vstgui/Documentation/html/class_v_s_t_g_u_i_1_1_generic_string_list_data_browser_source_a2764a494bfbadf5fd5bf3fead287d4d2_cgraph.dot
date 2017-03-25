@@ -1,0 +1,47 @@
+digraph "dbDrawCell"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="dbDrawCell",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CDrawContext\l::setDrawMode",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ab4bef9a3e8c1344693fc3f53a9a1b51b",tooltip="set the current draw mode, see CDrawMode "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CDrawContext\l::setLineWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a9901bb437bd3a1c196eb2f7b0d5bfa44",tooltip="set the current line width "];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CDrawContext\l::setFillColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a500577d63c24a75702a9e4cf45dbb67c",tooltip="set current fill color "];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CDrawContext\l::drawRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ac9c3a91724de57693bb7a353091db3bc",tooltip="draw a rect "];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CView::getFrame",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a2045d5fae6d0f8c615dc55113828359a",tooltip="get frame "];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CFrame::getFocusView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a2f95a242207c9b2f07412935d34d0dc1"];
+  Node1 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CViewContainer\l::isChild",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#a60ad2aca49fcfc7cd997f5355b62b148",tooltip="check if pView is a child view of this container "];
+  Node1 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CColor::toHSV",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_color.html#a78c376a14444b0440ab6cddc70993971",tooltip="convert to hue, saturation and value "];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CColor::fromHSV",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_color.html#a63657dc29c2749c60c545b03d56fcefc",tooltip="convert from hue, saturation and value "];
+  Node1 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CRect::inset",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a67f221f80f18e8bc5eaf06aa6d82aace"];
+  Node1 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CDrawContext\l::setFont",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#aa88b4cee28d3836ba68eeb55cd3bdca4",tooltip="set current font "];
+  Node12 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CFontDesc::\lgetSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a41e097ceebffe54a8ed361d006164fc6",tooltip="get the height of the font "];
+  Node12 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CFontDesc::\lgetStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a8258f5208a5d8e941b3018bf004e6367",tooltip="get the style of the font "];
+  Node12 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::CFontDesc::\lnewCopy",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a624f67fa321bcb03a632d38161b1f216"];
+  Node1 -> Node16 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CDrawContext\l::setFontColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ae55294dcf820a4e8367f3b7e622d8027",tooltip="set current font color "];
+  Node1 -> Node17 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node17 [label="VSTGUI::CDrawContext\l::drawString",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ab6f84da4fdd3ce79d6347bfb9225ae6c",tooltip="draw an UTF-8 encoded string "];
+  Node17 -> Node18 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node18 [label="VSTGUI::CDrawContext\l::getDrawString",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ae02f4a64e6c2b077988f56ed305ec140"];
+  Node18 -> Node19 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node19 [label="VSTGUI::CString::setUTF8\lString",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_string.html#a84ea5d1858d74fdd5fa820c5a3d7667a"];
+  Node17 -> Node20 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node20 [label="VSTGUI::CDrawContext\l::clearDrawString",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ae0c5f28e389dcccd7e49d8474846a016"];
+  Node20 -> Node19 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

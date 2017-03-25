@@ -1,0 +1,40 @@
+digraph "save"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="save",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::moveOldFile",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#a1cf9ef372f63c82d34330fb1c29001c1"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFileStream\l::open",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_file_stream.html#a46e351ecfc8ca894cb1ac490c095c792"];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::InputStream\l::setByteOrder",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_input_stream.html#a3bb8e967e96ebbc930b753ce8f3b0b7a"];
+  Node3 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::OutputStream\l::setByteOrder",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_output_stream.html#a3bb8e967e96ebbc930b753ce8f3b0b7a"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="saveToStream",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#add4dc67cce3d4607f6d258dbb418211a"];
+  Node6 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::IDependency\l::changed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#acac105ad797d9700f9a31946792ecbc0"];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::IDependency\l::rememberObject",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#a9005955fa448192caddbbced658a616c"];
+  Node8 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CBaseObject\l::remember",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ada0719d1daaca4af1795018001769311",tooltip="increase refcount "];
+  Node7 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CBaseObject\l::notify",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ab18c3bcc0cb674396848861dfd78a83a"];
+  Node7 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::IDependency\l::forgetObject",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_dependency.html#a626f70bf0ebe5646d8e1335e5c8a607a"];
+  Node11 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CBaseObject\l::forget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8",tooltip="decrease refcount and delete object if refcount == 0 "];
+  Node12 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CBaseObject\l::beforeDelete",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b"];
+  Node6 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="getBaseNode",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a2b0f673945c12c2dbf13ecdb4d768bf1"];
+  Node1 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="saveWindowsRCFile",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#ae87789f442d3c644a49694cecf826706"];
+  Node15 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 -> Node16 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::UIAttributes\l::getAttributeValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#a80dddbc022b66698cf7a00620efbcd88"];
+}

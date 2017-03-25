@@ -1,0 +1,24 @@
+digraph "drawBackground"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="drawBackground",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CView::getViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a7b14fb07c53ccfa07dc91900f4fe01f1",tooltip="read only access to view size "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::IScrollbarDrawer\l::drawScrollbarBackground",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_scrollbar_drawer.html#a948ca4bfe1672839071751e0a2b1a763"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CDrawContext\l::setDrawMode",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ab4bef9a3e8c1344693fc3f53a9a1b51b",tooltip="set the current draw mode, see CDrawMode "];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CDrawContext\l::setLineWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a9901bb437bd3a1c196eb2f7b0d5bfa44",tooltip="set the current line width "];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CDrawContext\l::setFillColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a500577d63c24a75702a9e4cf45dbb67c",tooltip="set current fill color "];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CDrawContext\l::setFrameColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ae44181e37622cc3aeb857617ee21f595",tooltip="set current stroke color "];
+  Node1 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CDrawContext\l::setLineStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a622734e81b6fc1a89480d47fc4dc6f01",tooltip="set the current line style "];
+  Node1 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CDrawContext\l::drawRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#ac9c3a91724de57693bb7a353091db3bc",tooltip="draw a rect "];
+}

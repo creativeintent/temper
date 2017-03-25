@@ -1,0 +1,30 @@
+digraph "operator="
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="operator=",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="setName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a04bf978b047fcbf0bfa03cb052111105",tooltip="set the name of the font "];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::String::free",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#af30ee7f201c1f86d9aceb849d6d08fbf"];
+  Node2 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::String::newWithString",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#a83745b23a3d48e4f1e69950977918803"];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::UTF8StringView\l::calculateByteCount",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_string_view.html#a67b9d83785a9c0fc5a668303de116803"];
+  Node2 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="freePlatformFont",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a8320c1ae5fc44c383e96220707f3654c"];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="getName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#ad0f04ff2d50f6eb1af4101aee459bcd8",tooltip="get the name of the font "];
+  Node1 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="setSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a628f10b3308511e5cc29f9ed76ef8b07",tooltip="set the height of the font "];
+  Node8 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="getSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a41e097ceebffe54a8ed361d006164fc6",tooltip="get the height of the font "];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="setStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a921dad1b65204e0e6c501e64b83dcc02",tooltip="set the style of the font "];
+  Node10 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="getStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_desc.html#a8258f5208a5d8e941b3018bf004e6367",tooltip="get the style of the font "];
+}

@@ -1,0 +1,4 @@
+<map id="HostAttributeList" name="HostAttributeList">
+<area shape="rect" id="node2" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IAttributeList.html" title="{IAttributeList\n|+ iid\l|+ setInt()\l+ getInt()\l+ setFloat()\l+ getFloat()\l+ setString()\l+ getString()\l+ setBinary()\l+ getBinary()\l}" alt="" coords="27,157,116,328"/>
+<area shape="rect" id="node4" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="14,6,129,108"/>
+</map>

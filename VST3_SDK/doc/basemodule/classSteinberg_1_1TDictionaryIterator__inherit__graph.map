@@ -1,0 +1,4 @@
+<map id="TDictionaryIterator&lt; TKey, TObject &gt;" name="TDictionaryIterator&lt; TKey, TObject &gt;">
+<area shape="rect" id="node2" href="$classSteinberg_1_1TDLinkedListIterator.html" title="{TDLinkedListIterator\l\&lt; TAssociation\&lt; TKey,\l TObject \&gt; \&gt;\n||+ TDLinkedListIterator()\l+ done()\l+ next()\l+ previous()\l+ current()\l+ first()\l+ last()\l+ list()\l}" alt="" coords="5,281,152,479"/>
+<area shape="rect" id="node4" href="$classSteinberg_1_1TIterator.html" title="{TIterator\&lt; TAssociation\l\&lt; TKey, TObject \&gt; \&gt;\n|# _container\l|+ TIterator()\l+ ~TIterator()\l+ done()\l+ next()\l+ next()\l+ previous()\l+ previous()\l+ current()\l+ first()\l+ last()\land 9 more...\l}" alt="" coords="6,5,151,232"/>
+</map>

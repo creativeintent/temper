@@ -1,0 +1,14 @@
+digraph "setFont"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setFont",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="CCheckBox",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_check_box.html#abfd45c0dae0029fb43b093190d78bc42"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="~CCheckBox",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_check_box.html#a7f356285321b8453226500459256530a"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CFontChooser\l::CFontChooser",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_chooser.html#a1a4d6cbd6b3c39bdff979a626e42016e"];
+}

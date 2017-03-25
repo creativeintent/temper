@@ -1,0 +1,33 @@
+digraph "onVisualChange"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="onVisualChange",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::Animation::\lInterpolationTimingFunction\l::addPoint",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#a110935fdba8346f35d530ba0a82419e6",tooltip="both values are normalized ones "];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::Animation::\lTimingFunctionBase::\lgetLength",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html#a67cd323fecc35d2cd8895e08f9e242e6"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CView::addAnimation",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ad2a5962bd58b120ead1a75f7b4a7ca9a"];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CView::getFrame",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a2045d5fae6d0f8c615dc55113828359a",tooltip="get frame "];
+  Node4 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CFrame::getAnimator",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#aa7609ca92096612f85c0fa58058bd2f8",tooltip="get animator for this frame "];
+  Node4 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::Animation::\lAnimator::addAnimation",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_animator.html#a42b159b8f4e793638508e7b38c88c514"];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::Animation::\lAnimator::removeAnimation",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_animator.html#a2d1cd53cfc4276cd235f9ea6fa95026d"];
+  Node7 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::owned",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#a8464605507078761fac5d681245eb20a"];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CView::setAlphaValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a231289d0aa4c6c85931a822afab8b2bf",tooltip="set alpha value which will be applied when drawing this view "];
+  Node10 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CView::invalidRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ad414ba3d5e64f9fdc11309e05266ffcf",tooltip="mark rect as invalid "];
+  Node11 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CView::isAttached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1b7f04ee36bdaecd09a2625370dc90d8",tooltip="is view attached to a parentView "];
+  Node11 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CView::getViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a7b14fb07c53ccfa07dc91900f4fe01f1",tooltip="read only access to view size "];
+}

@@ -1,0 +1,13 @@
+digraph "operator&lt;&lt;"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="operator\<\<",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="writeRaw",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_output_stream.html#ad71a45cec0de5a184d8cdd47219c10aa"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::writeEndianSwap",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#a6fac9ee9d2fe6ee3927ce6174612d338"];
+  Node3 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

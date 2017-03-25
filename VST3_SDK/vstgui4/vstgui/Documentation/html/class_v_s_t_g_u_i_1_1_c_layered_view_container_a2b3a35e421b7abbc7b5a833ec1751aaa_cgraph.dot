@@ -1,0 +1,41 @@
+digraph "updateLayerSize"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="updateLayerSize",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CView::getViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a7b14fb07c53ccfa07dc91900f4fe01f1",tooltip="read only access to view size "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CViewContainer\l::getTransform",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#a3140336a555cd7aacaba2ee5ca08e28a"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CGraphicsTransform\l::transform",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#af5b80ac47e3d74fe4cf0ca4d75f2e6c3"];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CView::getParentView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ac45407fc7304ee33c5729fa04edaea76",tooltip="get parent view "];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CRect::offset",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a3b15bdeea464922589dfe91b21d991ce"];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CRect::bound",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#ad560ae1abaefe509ecd31935c57ced6b"];
+  Node1 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CView::getVisible\lViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a53c47f5a0cddd21e71f53237879112da",tooltip="returns the visible size of the view "];
+  Node1 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CRect::getTopLeft",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a8283a5bcb281e300d94ac274dd79c4bb"];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CView::translate\lToGlobal",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ad1bb542701081a3b8e7a2fffcc465e1a"];
+  Node10 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CView::getGlobal\lTransform",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ad920b8e3821267e2703098459376290a"];
+  Node11 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CGraphicsTransform\l::translate",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#a5235ece1301b85093760b1bd924c754d"];
+  Node12 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CGraphicsTransform\l::CGraphicsTransform",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#a6fdf66da9a43b608bc8182f500316b92"];
+  Node11 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CView::getViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a5ad6102316e6d16e4905a38ad3f16dcc",tooltip="returns the current view size "];
+  Node11 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::CRect::offsetInverse",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a02aad27c2ef1127534fad1a29e0de5f3"];
+  Node15 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

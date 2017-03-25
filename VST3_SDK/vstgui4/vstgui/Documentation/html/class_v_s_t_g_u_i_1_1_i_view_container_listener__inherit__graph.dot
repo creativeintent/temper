@@ -1,0 +1,13 @@
+digraph "IViewContainerListener"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  Node1 [label="IViewContainerListener",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="IViewContainerListenerAdapter",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_view_container_listener_adapter.html",tooltip="ViewContainer Listener Interface Adapter. "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="CLayeredViewContainer",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html",tooltip="a view container which draws into a platform layer on top of a parent layer or the platform viewA CLa..."];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="CShadowViewContainer",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_shadow_view_container.html",tooltip="a view container which draws a shadow for it&#39;s subviews "];
+}

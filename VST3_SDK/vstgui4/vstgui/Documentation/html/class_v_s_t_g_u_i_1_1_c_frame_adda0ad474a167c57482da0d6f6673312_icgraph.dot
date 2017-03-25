@@ -1,0 +1,20 @@
+digraph "getFocusWidth"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getFocusWidth",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CCheckBox::\lgetFocusPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_check_box.html#aa8a6771777fd78c1a26ac13fc1fe12f1"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CTextButton\l::getFocusPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_button.html#aa8a6771777fd78c1a26ac13fc1fe12f1"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CControl::getFocusPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#aa8a6771777fd78c1a26ac13fc1fe12f1"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CKnob::getFocusPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_knob.html#aa8a6771777fd78c1a26ac13fc1fe12f1"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CParamDisplay\l::getFocusPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#aa8a6771777fd78c1a26ac13fc1fe12f1"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CSegmentButton\l::getFocusPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_segment_button.html#aa8a6771777fd78c1a26ac13fc1fe12f1"];
+}

@@ -1,0 +1,20 @@
+digraph "Graphical Class Hierarchy"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="ViewListenerCall",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_view_private_1_1_view_listener_call.html"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="ViewAttached",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_view_private_1_1_view_attached.html"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="ViewLostFocus",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_view_private_1_1_view_lost_focus.html"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="ViewRemoved",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_view_private_1_1_view_removed.html"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="ViewSizeChanged",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_view_private_1_1_view_size_changed.html"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="ViewTookFocus",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_view_private_1_1_view_took_focus.html"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="ViewWillDelete",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_view_private_1_1_view_will_delete.html"];
+}

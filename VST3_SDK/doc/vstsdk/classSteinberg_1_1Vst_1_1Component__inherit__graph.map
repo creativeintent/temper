@@ -1,0 +1,8 @@
+<map id="Component" name="Component">
+<area shape="rect" id="node17" href="$classSteinberg_1_1Vst_1_1AudioEffect.html" title="Default implementation for a VST 3 audio effect. " alt="" coords="133,902,284,1114"/>
+<area shape="rect" id="node2" href="$classSteinberg_1_1Vst_1_1ComponentBase.html" title="Base class for VST 3 Component and Edit Controller. " alt="" coords="58,309,195,549"/>
+<area shape="rect" id="node6" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginBase.html" title="{IPluginBase\n|+ iid\l|+ initialize()\l+ terminate()\l}" alt="" coords="228,165,317,254"/>
+<area shape="rect" id="node13" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IComponent.html" title="{IComponent\n|+ iid\l|+ getControllerClassId()\l+ setIoMode()\l+ getBusCount()\l+ getBusInfo()\l+ getRoutingInfo()\l+ activateBus()\l+ setActive()\l+ setState()\l+ getState()\l}" alt="" coords="219,337,367,522"/>
+<area shape="rect" id="node8" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="152,6,268,108"/>
+<area shape="rect" id="node10" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IConnectionPoint.html" title="{IConnectionPoint\n|+ iid\l|+ connect()\l+ disconnect()\l+ notify()\l}" alt="" coords="92,158,204,260"/>
+</map>

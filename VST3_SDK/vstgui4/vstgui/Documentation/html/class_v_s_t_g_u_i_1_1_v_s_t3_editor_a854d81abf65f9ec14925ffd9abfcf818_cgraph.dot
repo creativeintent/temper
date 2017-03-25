@@ -1,0 +1,29 @@
+digraph "onViewRemoved"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="onViewRemoved",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CControl::getTag",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a6f5b9468bcf84c776485950a9c6990c3"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="getParameterChangeListener",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#aacadd5b863ee566de5c42065dba9d76e"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::ParameterChangeListener\l::removeControl",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#acb8988eff7a2c73a5676e15c9898c18f"];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CBaseObject\l::forget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8",tooltip="decrease refcount and delete object if refcount == 0 "];
+  Node5 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CBaseObject\l::beforeDelete",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b"];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::getViewController",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#ac0caf7c5b5b1b43d55ceec218776c5b8"];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CView::getAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1691269ee71c2cfedde6f940d7526baa",tooltip="get an attribute "];
+  Node7 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CView::getParentView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ac45407fc7304ee33c5729fa04edaea76",tooltip="get parent view "];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::VST3EditorInternal\l::releaseSubController",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_v_s_t3_editor_internal.html#ae472a69c55a02a1b55a04c36ed746dd6"];
+  Node10 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CView::removeAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ae0cd41adfb11745650b23cfff1dde454",tooltip="remove an attribute "];
+}

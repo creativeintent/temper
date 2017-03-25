@@ -1,0 +1,22 @@
+digraph "resizeSubView"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="resizeSubView",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="layoutViewsEqualSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_row_column_view.html#ae7c563dcda3ecdb30511be705b188314"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="layoutViews",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_row_column_view.html#aee750e4cb39c719d39954430dd89ad5c"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="setStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_row_column_view.html#a711c104609272c5630d992a2aa12b653"];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="setSpacing",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_row_column_view.html#a04736dc8adf5632e628ea88644498a5e"];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="setMargin",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_row_column_view.html#a468a649668393d93bca4830d74c14b44"];
+  Node3 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="setLayoutStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_row_column_view.html#a2c0f4707eb103811cdebaaf3fe25a323"];
+  Node3 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="notify",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_row_column_view.html#a15414e56ad0060f4b50f81ff44ad2a3e",tooltip="translates a local coordinate to a global one using parent transforms "];
+}

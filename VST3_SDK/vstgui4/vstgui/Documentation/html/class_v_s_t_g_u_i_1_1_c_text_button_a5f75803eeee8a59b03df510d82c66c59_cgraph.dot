@@ -1,0 +1,44 @@
+digraph "CTextButton"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="CTextButton",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="setFont",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_button.html#a8bb2d9e1362a2b8d9047b2e895f794fd"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CBaseObject\l::forget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8",tooltip="decrease refcount and delete object if refcount == 0 "];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CBaseObject\l::beforeDelete",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b"];
+  Node2 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CBaseObject\l::remember",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ada0719d1daaca4af1795018001769311",tooltip="increase refcount "];
+  Node2 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CView::invalid",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a51647a4891b4a9cbaf8595171c5ad3fc",tooltip="mark whole view as invalid "];
+  Node6 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CView::setDirty",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a0f19a61606a7f547b62102310063ea76",tooltip="set the view to dirty so that it is redrawn in the next idle. Thread Safe ! "];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CView::invalidRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ad414ba3d5e64f9fdc11309e05266ffcf",tooltip="mark rect as invalid "];
+  Node8 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CView::isAttached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1b7f04ee36bdaecd09a2625370dc90d8",tooltip="is view attached to a parentView "];
+  Node8 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="setTextColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_button.html#ad0c3213f4680a20d3cb30112b5718fc2"];
+  Node10 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="setTextColorHighlighted",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_button.html#af51ec82e63406359e32eec98ae8daebe"];
+  Node11 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::owned",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#a8464605507078761fac5d681245eb20a"];
+  Node1 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CGradient::\lcreate",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_gradient.html#a6b56ed6810ffbcebd1d139eb790cf50c"];
+  Node1 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="setFrameColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_button.html#ae44181e37622cc3aeb857617ee21f595"];
+  Node14 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="setFrameColorHighlighted",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_button.html#ab61e5de9ff4582ed9c4a46747dd82864"];
+  Node15 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node16 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CView::setWantsFocus",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a7c938477f787fe59b0eacb147a8c03a5",tooltip="set focus support on/off "];
+}

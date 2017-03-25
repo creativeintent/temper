@@ -1,0 +1,24 @@
+digraph "onStartLocalEventLoop"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="onStartLocalEventLoop",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CNewFileSelector::run",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_new_file_selector.html#a004f7b7322cdc375eaf1c62c4d193f2b",tooltip="the delegate will get a kSelectEndMessage throu the notify method where the sender is this CNewFileSe..."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CNewFileSelector\l::runModal",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_new_file_selector.html#ab02f39b59f96ed7743729293ab06744b",tooltip="run as modal dialog "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::VST3Editor\l::save",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a686e6c3e4128af1fd656944ae498dece"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::COptionMenu\l::popup",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#ae16683842653f97cac2c61e255bdfc53",tooltip="pops up menu "];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::COptionMenu\l::onKeyDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#ab3e92822dfb33fc98af5cc4d4d65768d",tooltip="called if a key down event occurs and this view has focus "];
+  Node5 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::COptionMenu\l::popup",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#a4f4bb4ba2aa2b7a347f9de2c3da1a265",tooltip="pops up menu at frameLocation "];
+  Node5 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::COptionMenu\l::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#af5e4151d575380ad56bf87893631f03d",tooltip="called when a mouse down event occurs "];
+  Node5 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::VST3Editor\l::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a4305e69d2e6fc870a37b123050120e13",tooltip="a mouse down event happend on the frame at position where. If the observer handles this..."];
+}

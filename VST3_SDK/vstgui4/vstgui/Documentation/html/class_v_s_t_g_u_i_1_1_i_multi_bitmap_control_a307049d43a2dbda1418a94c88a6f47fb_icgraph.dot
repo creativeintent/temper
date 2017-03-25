@@ -1,0 +1,26 @@
+digraph "setHeightOfOneImage"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setHeightOfOneImage",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CAutoAnimation\l::CAutoAnimation",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_auto_animation.html#a0b6b12d61cfa8438b6a71497d2901194"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CKickButton\l::CKickButton",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_kick_button.html#a5095b9dfa3ffbc29f542b225b97cc5a7"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CAnimKnob::\lsetHeightOfOneImage",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_anim_knob.html#aa461070209a686c8b44059191be2a3a3"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CAnimKnob::\lCAnimKnob",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_anim_knob.html#ae39bb45e08ab3c4a4cfd51e724b876d3"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CMovieBitmap\l::CMovieBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_movie_bitmap.html#a7244c179c41abd395c3d78117b756b26"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CMovieButton\l::CMovieButton",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_movie_button.html#a984cefdcb821e40134c505f9215f9953"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CVerticalSwitch\l::CVerticalSwitch",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_vertical_switch.html#a902c9b1dd24b5fa94403f1f2cd6ef9c7"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CHorizontalSwitch\l::CHorizontalSwitch",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_horizontal_switch.html#a1c5f65d23c6ead3113ddd99a91e40852"];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CRockerSwitch\l::CRockerSwitch",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_rocker_switch.html#a38b2529c6253684c15a3ff511d78d8de"];
+}

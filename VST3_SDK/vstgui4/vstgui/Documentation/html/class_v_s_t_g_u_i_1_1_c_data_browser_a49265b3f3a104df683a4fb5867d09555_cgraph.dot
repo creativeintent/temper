@@ -1,0 +1,14 @@
+digraph "removed"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="removed",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CView::isAttached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1b7f04ee36bdaecd09a2625370dc90d8",tooltip="is view attached to a parentView "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::IDataBrowserDelegate\l::dbRemoved",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#ac3336710c1610bdd014defb96cd1421e"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CViewContainer\l::removed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#a6e6ca5f3ecb10d888379cf19c29dd604",tooltip="view is removed from parent view "];
+}

@@ -1,0 +1,8 @@
+<map id="VstAutomationTest" name="VstAutomationTest">
+<area shape="rect" id="node15" href="$classSteinberg_1_1Vst_1_1VstFlushParamTest.html" title="Test Parameters Flush (no Buffer). " alt="" coords="105,1158,248,1260"/>
+<area shape="rect" id="node2" href="$classSteinberg_1_1Vst_1_1VstProcessTest.html" title="Test Process Test. " alt="" coords="5,525,171,765"/>
+<area shape="rect" id="node4" href="$classSteinberg_1_1Vst_1_1VstTestEnh.html" title="Test Helper. " alt="" coords="34,347,141,477"/>
+<area shape="rect" id="node6" href="$classSteinberg_1_1Vst_1_1VstTestBase.html" title="Test Helper. " alt="" coords="31,128,144,299"/>
+<area shape="rect" id="node10" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IParameterChanges.html" title="{IParameterChanges\n|+ iid\l|+ getParameterCount()\l+ getParameterData()\l+ addParameterData()\l}" alt="" coords="194,594,339,696"/>
+<area shape="rect" id="node12" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="208,361,324,463"/>
+</map>

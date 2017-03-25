@@ -1,0 +1,47 @@
+digraph "notify"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="notify",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CView::getAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1691269ee71c2cfedde6f940d7526baa",tooltip="get an attribute "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CTextLabel\l::getText",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_label.html#a62320e8bea8a4b12b43da8f113b10b5f",tooltip="read only access to text "];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::IDataBrowserDelegate\l::dbCellTextChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a2a02bfc609747db9dd5e02a5e51beef9",tooltip="the text of the cell changed beginTextEdit was called for "];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CScrollView\l::removeView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scroll_view.html#a0a4c38fc43ad87d5ef21f0e7361d4f25",tooltip="remove a child view "];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CView::getFrame",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a2045d5fae6d0f8c615dc55113828359a",tooltip="get frame "];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CFrame::setFocusView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#af51b9124a814e6fd82fb4680ac58cff3"];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CView::isAttached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1b7f04ee36bdaecd09a2625370dc90d8",tooltip="is view attached to a parentView "];
+  Node7 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CView::wantsFocus",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1aaf63d0b9cd4a8f27328f2239a9951c",tooltip="check if view supports focus "];
+  Node7 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CView::invalid",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a51647a4891b4a9cbaf8595171c5ad3fc",tooltip="mark whole view as invalid "];
+  Node10 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CView::setDirty",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a0f19a61606a7f547b62102310063ea76",tooltip="set the view to dirty so that it is redrawn in the next idle. Thread Safe ! "];
+  Node11 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CView::invalidRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ad414ba3d5e64f9fdc11309e05266ffcf",tooltip="mark rect as invalid "];
+  Node12 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CView::getParentView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#ac45407fc7304ee33c5729fa04edaea76",tooltip="get parent view "];
+  Node7 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CView::notify",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a15414e56ad0060f4b50f81ff44ad2a3e",tooltip="translates a local coordinate to a global one using parent transforms "];
+  Node7 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::CViewContainer\l::notify",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#ab18c3bcc0cb674396848861dfd78a83a",tooltip="translates a local coordinate to a global one using parent transforms "];
+  Node7 -> Node16 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CView::looseFocus",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#aba08198e3f9d7bba967b0c5ab3cae07a",tooltip="called if view should loose focus "];
+  Node16 -> Node17 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node17 [label="VSTGUI::DispatchList\l::forEach",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_dispatch_list.html#a09cd3391119d3266c5d62ec8525d503d"];
+  Node7 -> Node18 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node18 [label="VSTGUI::CView::takeFocus",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#af199268157650ebc6dd9248a0ca04550",tooltip="called if view should take focus "];
+  Node18 -> Node17 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

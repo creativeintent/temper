@@ -1,0 +1,18 @@
+digraph "hitTest"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="hitTest",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CFrame::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#af5e4151d575380ad56bf87893631f03d",tooltip="called when a mouse down event occurs "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFrame::platform\lOnMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a507648489acc6bca8cec757b94f1256d"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CSplashScreen\l::hitTest",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_splash_screen.html#a64e2c0bdb7ef05c4554f70217c675726",tooltip="check if where hits this view "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CXYPad::onMouseMoved",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_x_y_pad.html#ac8855959285a9555faaa8b0313e07027",tooltip="called when a mouse move event occurs "];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CXYPad::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_x_y_pad.html#af5e4151d575380ad56bf87893631f03d",tooltip="called when a mouse down event occurs "];
+}

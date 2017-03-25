@@ -1,0 +1,22 @@
+digraph "setFontColor"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setFontColor",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CCheckBox::draw",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_check_box.html#ae25271b6e9cac9c3e21437c10ec491d8",tooltip="called if the view should draw itself "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::GenericStringList\lDataBrowserSource::dbDrawCell",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_generic_string_list_data_browser_source.html#a2764a494bfbadf5fd5bf3fead287d4d2"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="init",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a02fd73d861ef2e4aabb38c0c9ff82947"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CDrawMethods\l::drawIconAndText",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_c_draw_methods.html#a46d935bdf260519c07e691ec67dfdfb4"];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CTextButton\l::draw",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_button.html#ae25271b6e9cac9c3e21437c10ec491d8",tooltip="called if the view should draw itself "];
+  Node5 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CSegmentButton\l::drawRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_segment_button.html#abe8cbffc7cff7c218cd112b6d53612df",tooltip="called if the view should draw itself "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CParamDisplay\l::drawPlatformText",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#aca4ad9ea1bcf86e78c59c65dc8062b7f"];
+}

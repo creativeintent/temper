@@ -1,0 +1,47 @@
+digraph "CPoint"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="CPoint",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="operator+",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_point.html#a4228e103b118f6cf41c09adedc765e57"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="operator-",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_point.html#ae8eca82f3f436be816fa87ae5167b885"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="offset",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_point.html#abd7ec2f0cbad33b41c2758f8c7044ff1"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CCheckBox::draw",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_check_box.html#ae25271b6e9cac9c3e21437c10ec491d8",tooltip="called if the view should draw itself "];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CGradientView\l::draw",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_gradient_view.html#ae25271b6e9cac9c3e21437c10ec491d8",tooltip="called if the view should draw itself "];
+  Node4 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CKnob::drawHandle\lAsCircle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_knob.html#a909d81efaadf43eafdbb35e862f372c1"];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CKnob::draw",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_knob.html#a83ee48340580dff7f1796dbebe7b0a0f",tooltip="called if the view should draw itself "];
+  Node4 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CKnob::drawHandle\lAsLine",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_knob.html#a6590df97b907472bc0c904ab7cbfd782"];
+  Node9 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CKnob::drawHandle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_knob.html#a8553dad65359a30fed274fc45f109013"];
+  Node10 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CKnob::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_knob.html#af5e4151d575380ad56bf87893631f03d",tooltip="called when a mouse down event occurs "];
+  Node4 -> Node12 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CKnob::onMouseMoved",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_knob.html#ac8855959285a9555faaa8b0313e07027",tooltip="called when a mouse move event occurs "];
+  Node12 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 -> Node13 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CView::hitTest",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a64e2c0bdb7ef05c4554f70217c675726",tooltip="check if where hits this view "];
+  Node13 -> Node14 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CFrame::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#af5e4151d575380ad56bf87893631f03d",tooltip="called when a mouse down event occurs "];
+  Node14 -> Node15 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::CFrame::platform\lOnMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a507648489acc6bca8cec757b94f1256d"];
+  Node13 -> Node16 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CSplashScreen\l::hitTest",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_splash_screen.html#a64e2c0bdb7ef05c4554f70217c675726",tooltip="check if where hits this view "];
+  Node13 -> Node17 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node17 [label="VSTGUI::CXYPad::onMouseMoved",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_x_y_pad.html#ac8855959285a9555faaa8b0313e07027",tooltip="called when a mouse move event occurs "];
+  Node17 -> Node18 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node18 [label="VSTGUI::CXYPad::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_x_y_pad.html#af5e4151d575380ad56bf87893631f03d",tooltip="called when a mouse down event occurs "];
+  Node4 -> Node18 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 -> Node17 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

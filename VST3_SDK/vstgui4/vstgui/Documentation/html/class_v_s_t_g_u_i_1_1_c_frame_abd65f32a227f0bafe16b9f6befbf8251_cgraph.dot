@@ -1,0 +1,29 @@
+digraph "onMouseExited"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="onMouseExited",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="clearMouseViews",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#adeac5973a837902933978d7d5a1eee61"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CTooltipSupport\l::onMouseExited",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_tooltip_support.html#a8f43f21fc087ee3670f58784a1d2af0c"];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CTooltipSupport\l::hideTooltip",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_tooltip_support.html#adb9104d43a8ae01c2023f36390a1909f"];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CVSTGUITimer\l::stop",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_v_s_t_g_u_i_timer.html#a68a350717fe6bf9012843e7c977d87b2",tooltip="stops the timer, returns whether timer was running or not "];
+  Node4 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="getPlatformFrame",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a3b8d7ec8e7df59cf0fdc367f99fde1d0"];
+  Node3 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CVSTGUITimer\l::setFireTime",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_v_s_t_g_u_i_timer.html#a8647d7eb64d0c6fcbdd654332bac258b",tooltip="in milliseconds "];
+  Node7 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CVSTGUITimer\l::start",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_v_s_t_g_u_i_timer.html#aad5997aaaa2d622f0ca57f8b24a51a7b",tooltip="starts the timer "];
+  Node8 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::owned",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#a8464605507078761fac5d681245eb20a"];
+  Node3 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="callMouseObserverMouseExited",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a8f97b9b5fe74666c47d1c374f265e60d"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

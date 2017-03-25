@@ -1,0 +1,34 @@
+digraph "createViewFromNode"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="createViewFromNode",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="createView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a9b617a7d2bb805de4150cf2e65dade5d"];
+  Node2 -> Node1 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CView::setAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1fe53948e356f854b091b1cd35c512db",tooltip="set an attribute "];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::IViewFactory\l::applyAttributeValues",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_view_factory.html#a7656a36c599003b309891563b44f13ce"];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::IController\l::createSubController",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_controller.html#a8d66a2f406fc09a3eb96094287816daa"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="setController",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#aaca041945df8e011b28caa09604ca11b"];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::IController\l::createView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_controller.html#a7b72e7a48bb34e49e7d086b7c2adca88"];
+  Node1 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::IViewFactory\l::applyCustomViewAttributeValues",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_view_factory.html#a09439b2897449d04ec816b2e254c02ac"];
+  Node1 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::IViewFactory\l::createView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_view_factory.html#a723f2d60a2aca49c55737f4773f6d0a4"];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CViewContainer\l::addView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#aa3f0bcc0a5ac5c2a62405f6899dda689",tooltip="add a child view "];
+  Node1 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CBaseObject\l::forget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8",tooltip="decrease refcount and delete object if refcount == 0 "];
+  Node11 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CBaseObject\l::beforeDelete",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::IController\l::verifyView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_controller.html#a750f4ee649e3e454cb24c9dab6831869"];
+}

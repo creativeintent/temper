@@ -1,0 +1,20 @@
+digraph "getCreatorRegistry"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getCreatorRegistry",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::UIViewFactory\l::createViewByName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#a029774db62b9070edfcdd78068a31407"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::UIViewFactory\l::createView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#a14a05eaacca7a2254708dd9032c9a80f"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::UIViewFactory\l::applyAttributeValues",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#a58bbe2c420f746ffce58fc206e7db5ff"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::UIViewFactory\l::applyCustomViewAttributeValues",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#ab311dd687ea212eccd65b6237dc8eb61"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::UIViewFactory\l::registerViewCreator",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#aa8bd27c0b05d0759c648959863ad3cef"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::UIViewFactory\l::unregisterViewCreator",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#a319fc52127401456b018e4174d221b5e"];
+}

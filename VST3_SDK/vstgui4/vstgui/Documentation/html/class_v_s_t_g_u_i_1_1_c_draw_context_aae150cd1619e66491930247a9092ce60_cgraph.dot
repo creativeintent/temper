@@ -1,0 +1,27 @@
+digraph "createRoundRectGraphicsPath"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="createRoundRectGraphicsPath",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="createGraphicsPath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a674489a3852313daca850240742481c6",tooltip="create a graphics path object, you need to forget it after usage "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CGraphicsPath\l::addRoundRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_graphics_path.html#ab931fd1815af542997697960629d87f3"];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CGraphicsPath\l::addRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_graphics_path.html#ae4590118f1051be2a1e7f04a2e262fb9"];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CGraphicsPath\l::dirty",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_graphics_path.html#af1cb1b3449a77dab0724c0698a81ca2c",tooltip="platform object should be released "];
+  Node3 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CRect::normalize",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a63e6527168ac6522121a0202e16bee87"];
+  Node3 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CGraphicsPath\l::beginSubpath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_graphics_path.html#ab3c59aa53e7ac49487475ded4b4d69f8"];
+  Node7 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CGraphicsPath\l::addArc",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_graphics_path.html#aca91e47845b2094ae600277948f9576a"];
+  Node8 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CGraphicsPath\l::closeSubpath",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_graphics_path.html#a98a19f37f0b03f579a5f741a553d7a3f"];
+  Node9 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

@@ -1,0 +1,27 @@
+digraph "createView"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="createView",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::UIAttributes\l::getAttributeValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#a80dddbc022b66698cf7a00620efbcd88"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="createViewByName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#a029774db62b9070edfcdd78068a31407"];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::getCreatorRegistry",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#ae434d8db1dbb70e1ac02abfc227f3c76"];
+  Node3 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::ViewCreatorRegistry\l::find",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_view_creator_registry.html#a456e9326447da4f5fa892b4bc88e4605"];
+  Node5 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::ViewCreatorRegistry::end",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_view_creator_registry.html#a75fa10ba64b3954a6f9b55a49b3766e2"];
+  Node3 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CView::setAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1fe53948e356f854b091b1cd35c512db",tooltip="set an attribute "];
+  Node3 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="evaluateAttributesAndRemember",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_factory.html#ae8f98a5b61edf8478725bd924b6f7386"];
+  Node8 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::IUIDescription\l::getVariable",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_u_i_description.html#a7a2b19358c2e79b79c065087391307a5"];
+  Node8 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::UIAttributes\l::setAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#a6080c68ac82148bc668e9218b1d39854"];
+}

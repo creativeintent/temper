@@ -1,0 +1,5 @@
+<map id="BaseParameter" name="BaseParameter">
+<area shape="rect" id="node5" href="$classSteinberg_1_1Vst_1_1mda_1_1IndexedParameter.html" title="{IndexedParameter\n|# indexString\l|+ IndexedParameter()\l+ toPlain()\l+ toNormalized()\l+ toString()\l+ fromString()\l+ setIndexString()\l# ~IndexedParameter()\l}" alt="" coords="5,432,149,589"/>
+<area shape="rect" id="node7" href="$classSteinberg_1_1Vst_1_1mda_1_1ScaledParameter.html" title="{ScaledParameter\n|# minValue\l# maxValue\l# printAsInteger\l|+ ScaledParameter()\l+ toPlain()\l+ toNormalized()\l+ toString()\l+ fromString()\l}" alt="" coords="174,432,305,589"/>
+<area shape="rect" id="node2" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1Parameter.html" title="{Parameter\n|+ valueNormalized\l+ precision\l|+ Parameter()\l+ Parameter()\l+ Parameter()\l+ ~Parameter()\l+ getInfo()\l+ getInfo()\l+ setUnitID()\l+ getUnitID()\l+ getNormalized()\l+ setNormalized()\land 6 more...\l}" alt="" coords="98,5,219,232"/>
+</map>

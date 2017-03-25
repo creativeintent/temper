@@ -1,0 +1,40 @@
+digraph "drawStyleChanged"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="drawStyleChanged",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="setStyle",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#ade43dd17e915ee6df8b0c96b3fde4954"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::VST3Editor\l::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a4305e69d2e6fc870a37b123050120e13",tooltip="a mouse down event happend on the frame at position where. If the observer handles this..."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="setPrecision",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#a760ea0bc573e850b684da311ab3f25ae"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="setFont",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#a9c063ae13696f9d0a2abd7979c1debe6"];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CFontChooser\l::CFontChooser",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_font_chooser.html#a1a4d6cbd6b3c39bdff979a626e42016e"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="setFontColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#aeaf6af4b5d771d43a2692ea3e1ef5342"];
+  Node7 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="setBackColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#a40330e605721feb6290ede56c0dd4657"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="setFrameColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#abb0048dae5ffaf30e9350d81b263c4be"];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="setShadowColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#a0da2921daab737ff234d0be636a917b6"];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="setHoriAlign",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#ab196e12537327bff0009e8d2db382599"];
+  Node11 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="setTextInset",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#a2cc4427ed48bddbe5d067f113b28ebdb"];
+  Node1 -> Node13 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="setTextRotation",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#a683464985c732c82175f0acfadcaa541"];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="setRoundRectRadius",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#a3984c01d05fab15e51af55325f5f919b"];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="setFrameWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#ae9260a021d412d1447e27ed58ce0322d"];
+  Node1 -> Node16 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CTextLabel\l::drawStyleChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_label.html#aebea43ccfbc91da6f5095268374de408"];
+}

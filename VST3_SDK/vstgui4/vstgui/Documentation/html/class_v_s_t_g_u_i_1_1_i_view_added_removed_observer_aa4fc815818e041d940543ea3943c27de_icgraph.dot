@@ -1,0 +1,18 @@
+digraph "onViewRemoved"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="onViewRemoved",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CFrame::onViewRemoved",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a062fdd8e28c1cbaeffa9e5ce6ca8f5ec"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CView::removed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a49265b3f3a104df683a4fb5867d09555",tooltip="view is removed from parent view "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CTextButton\l::removed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_text_button.html#a49265b3f3a104df683a4fb5867d09555",tooltip="view is removed from parent view "];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::COpenGLView\l::removed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_open_g_l_view.html#a49265b3f3a104df683a4fb5867d09555",tooltip="view is removed from parent view "];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CParamDisplay\l::removed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#a49265b3f3a104df683a4fb5867d09555",tooltip="view is removed from parent view "];
+}

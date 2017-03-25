@@ -1,0 +1,4 @@
+<map id="ParameterValueQueue" name="ParameterValueQueue">
+<area shape="rect" id="node2" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IParamValueQueue.html" title="{IParamValueQueue\n|+ iid\l|+ getParameterId()\l+ getPointCount()\l+ getPoint()\l+ addPoint()\l}" alt="" coords="26,158,152,274"/>
+<area shape="rect" id="node4" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="31,6,147,108"/>
+</map>

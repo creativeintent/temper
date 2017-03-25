@@ -1,0 +1,45 @@
+digraph "getViewController"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getViewController",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="getSplitViewController",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i.html#ab01255256715bd463ffb966ca28bc60c"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CSplitView\l::storeViewSizes",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#afc90095708948ed7f4a2201baaca0133"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CSplitView\l::removed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a49265b3f3a104df683a4fb5867d09555",tooltip="view is removed from parent view "];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CSplitView\l::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CSplitView\l::requestNewSeparatorSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a129ba2469954235dd9ad1eb7f9c5ca4c"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CSplitView\l::setSeparatorWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a9fb9f90a3230b7fe496791ea67986e2d",tooltip="set the width of the separators "];
+  Node6 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CSplitView\l::resizeFirstView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ad6ece4580634fc04e425a521c327125d"];
+  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::CSplitView\l::setViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ada1ffb857aa147620f2d01522b37569d",tooltip="set views size "];
+  Node6 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CSplitView\l::resizeSecondView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a7d515066dd3e7c3d0960c3da1502f64c"];
+  Node10 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CSplitView\l::resizeLastView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a54f2ef725a3284c7cadc1cc0c7dcc527"];
+  Node11 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 -> Node12 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CSplitView\l::resizeViewsEqual",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ac98cefe207ff01ac2532c39dd3a85619"];
+  Node12 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 -> Node13 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CSplitView\l::getDrawer",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ad43aa61c9780170975e09f199c350e42"];
+  Node1 -> Node14 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::VST3Editor\l::onViewRemoved",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a854d81abf65f9ec14925ffd9abfcf818"];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::VST3Editor\l::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a4305e69d2e6fc870a37b123050120e13",tooltip="a mouse down event happend on the frame at position where. If the observer handles this..."];
+  Node1 -> Node16 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::VST3EditorInternal\l::getUIDescriptionSaveOptions",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_v_s_t3_editor_internal.html#a9e9a7f79b20c17ea8b55079004826495"];
+  Node16 -> Node17 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node17 [label="VSTGUI::VST3Editor\l::save",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a686e6c3e4128af1fd656944ae498dece"];
+  Node1 -> Node18 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node18 [label="VSTGUI::VST3Editor\l::syncParameterTags",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#aebefaa91610bf29144bf7f16cd8b65ea"];
+}

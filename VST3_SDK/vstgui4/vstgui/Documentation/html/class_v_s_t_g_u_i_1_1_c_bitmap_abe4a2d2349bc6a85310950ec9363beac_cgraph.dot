@@ -1,0 +1,22 @@
+digraph "draw"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="draw",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CDrawContext\l::getClipRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a42623d0fc45883e1a9ac3fe21272a49e",tooltip="get the current clip "];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CDrawContext\l::getCurrentTransform",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#af2f8fb0ef26ea37214d7d0dbbbbacfd2"];
+  Node2 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CGraphicsTransform\l::inverse",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#ae0b83e1a553219ac2e5a9c0e9ee42e72"];
+  Node2 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CGraphicsTransform\l::transform",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#af5b80ac47e3d74fe4cf0ca4d75f2e6c3"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CRect::bound",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#ad560ae1abaefe509ecd31935c57ced6b"];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CRect::isEmpty",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a479432127ee77145cc19d6a2d1590821"];
+  Node1 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CDrawContext\l::drawBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a90db9382b9c2c390af6f4630109dbee0",tooltip="don&#39;t call directly, please use CBitmap::draw instead "];
+}

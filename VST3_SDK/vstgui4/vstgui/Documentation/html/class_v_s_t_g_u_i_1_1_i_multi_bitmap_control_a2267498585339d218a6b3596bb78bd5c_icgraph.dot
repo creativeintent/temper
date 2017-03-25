@@ -1,0 +1,20 @@
+digraph "getHeightOfOneImage"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getHeightOfOneImage",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CAnimKnob::\lsizeToFit",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_anim_knob.html#a1f9f5eb3e6ae65118a2c1f15f15acab3",tooltip="resize view to optimal size "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CMovieBitmap\l::sizeToFit",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_movie_bitmap.html#a1f9f5eb3e6ae65118a2c1f15f15acab3",tooltip="resize view to optimal size "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CMovieButton\l::sizeToFit",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_movie_button.html#a1f9f5eb3e6ae65118a2c1f15f15acab3",tooltip="resize view to optimal size "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CVerticalSwitch\l::sizeToFit",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_vertical_switch.html#a1f9f5eb3e6ae65118a2c1f15f15acab3",tooltip="resize view to optimal size "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CHorizontalSwitch\l::sizeToFit",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_horizontal_switch.html#a1f9f5eb3e6ae65118a2c1f15f15acab3",tooltip="resize view to optimal size "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CRockerSwitch\l::sizeToFit",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_rocker_switch.html#a1f9f5eb3e6ae65118a2c1f15f15acab3",tooltip="resize view to optimal size "];
+}

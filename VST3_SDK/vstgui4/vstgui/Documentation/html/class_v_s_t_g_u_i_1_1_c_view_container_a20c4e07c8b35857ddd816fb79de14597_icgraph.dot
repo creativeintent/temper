@@ -1,0 +1,18 @@
+digraph "getNbViews"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getNbViews",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CSplitView\l::resizeViewsEqual",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ac98cefe207ff01ac2532c39dd3a85619"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CSplitView\l::setViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ada1ffb857aa147620f2d01522b37569d",tooltip="set views size "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CSplitView\l::addView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a5bf9c24c3fa1c7b4596596d29e0cc4ae",tooltip="add a child view "];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CSplitView\l::addView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#aed7070f25de97fc661a06bdb43613f08",tooltip="add a child view "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CTabView::setViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_tab_view.html#ada1ffb857aa147620f2d01522b37569d",tooltip="set views size "];
+}

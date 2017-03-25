@@ -1,0 +1,5 @@
+<map id="IParamValueQueue" name="IParamValueQueue">
+<area shape="rect" id="node5" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1ParamChanges.html" title="{ParamChanges\n||+ ParamChanges()\l+ ~ParamChanges()\l+ init()\l+ setPoint()\l+ resetPoints()\l+ getProcessedFrames()\l+ setProcessedFrames()\l+ havePointsBeenRead()\l+ getParameterId()\l+ getPointCount()\l+ getPoint()\l+ addPoint()\l}" alt="" coords="5,323,160,549"/>
+<area shape="rect" id="node7" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1ParameterValueQueue.html" title="{ParameterValueQueue\n|# paramID\l# values\l|+ ParameterValueQueue()\l+ ~ParameterValueQueue()\l+ getParameterId()\l+ getPointCount()\l+ getPoint()\l+ addPoint()\l+ setParamID()\l+ clear()\l}" alt="" coords="185,343,353,529"/>
+<area shape="rect" id="node2" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="118,6,233,108"/>
+</map>

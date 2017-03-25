@@ -1,0 +1,47 @@
+digraph "drawBitmapNinePartTiled"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="drawBitmapNinePartTiled",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CBitmap::getWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_bitmap.html#a8b4fe88292b8e95807a9b07a26cd1cb1",tooltip="get the width of the image "];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CBitmap::getPlatform\lBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_bitmap.html#a8849ed13652f5ee727ba7e689af30290"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CBitmap::getHeight",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_bitmap.html#a1f4be3a475a8fb7d8defa4621c01558d",tooltip="get the height of the image "];
+  Node4 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CNinePartTiledDescription\l::calcRects",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_nine_part_tiled_description.html#a586ee003cbbfaa6ddaf89c3730994d1e"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="fillRectWithBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a07e13b92a6da8f440f5688cfedc1686d"];
+  Node6 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CRect::isEmpty",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a479432127ee77145cc19d6a2d1590821"];
+  Node6 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="getClipRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a42623d0fc45883e1a9ac3fe21272a49e",tooltip="get the current clip "];
+  Node8 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="getCurrentTransform",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#af2f8fb0ef26ea37214d7d0dbbbbacfd2"];
+  Node8 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::CGraphicsTransform\l::inverse",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#ae0b83e1a553219ac2e5a9c0e9ee42e72"];
+  Node8 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CGraphicsTransform\l::transform",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_graphics_transform.html#af5b80ac47e3d74fe4cf0ca4d75f2e6c3"];
+  Node6 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::CRect::getHeight",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a1f4be3a475a8fb7d8defa4621c01558d"];
+  Node6 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::CRect::setHeight",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a5067e7f1239cf80b5488792ecf3ac098"];
+  Node13 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::CRect::height",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a5ca7ffa8316b6835e331dfd01534ed32"];
+  Node14 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::CRect::getWidth",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a8b4fe88292b8e95807a9b07a26cd1cb1"];
+  Node6 -> Node16 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CRect::setWidth",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a7e69f8e49a406917215c3260790d4698"];
+  Node16 -> Node17 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node17 [label="VSTGUI::CRect::width",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#aac17e64c594f7da1f088efeb1e53f114"];
+  Node17 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 -> Node18 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node18 [label="VSTGUI::CRect::rectOverlap",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a55ac47ed5972c5f2baeffa332dab10f8"];
+  Node6 -> Node19 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node19 [label="drawBitmap",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a90db9382b9c2c390af6f4630109dbee0",tooltip="don&#39;t call directly, please use CBitmap::draw instead "];
+}

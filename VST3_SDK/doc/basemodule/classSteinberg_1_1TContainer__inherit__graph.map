@@ -1,0 +1,17 @@
+<map id="TContainer&lt; T &gt;" name="TContainer&lt; T &gt;">
+<area shape="rect" id="node3" href="$classSteinberg_1_1TArrayBase.html" title="Template array base class. " alt="" coords="116,294,284,658"/>
+<area shape="rect" id="node11" href="$classSteinberg_1_1TBinaryTree.html" title="TBinaryTree is a rooted binary tree. " alt="" coords="308,370,421,582"/>
+<area shape="rect" id="node13" href="$classSteinberg_1_1TBTree.html" title="BTree template definition. " alt="" coords="446,370,553,582"/>
+<area shape="rect" id="node17" href="$classSteinberg_1_1TDLinkedList.html" title="Doubly linked template list. " alt="" coords="578,370,696,582"/>
+<area shape="rect" id="node19" href="$classSteinberg_1_1THashTable.html" title="Hash Table templateA hash table is a list of buckets. " alt="" coords="720,370,849,582"/>
+<area shape="rect" id="node25" href="$classSteinberg_1_1TLinkedList.html" title="Single linked list template definition. " alt="" coords="921,370,1031,582"/>
+<area shape="rect" id="node5" href="$classSteinberg_1_1TArray.html" title="Array container template. " alt="" coords="5,734,112,919"/>
+<area shape="rect" id="node7" href="$classSteinberg_1_1TOrderedArray.html" title="Ordered Array container template. " alt="" coords="136,755,264,899"/>
+<area shape="rect" id="node9" href="$classSteinberg_1_1TSortableArray.html" title="Sortable Array container template. " alt="" coords="289,741,417,912"/>
+<area shape="rect" id="node15" href="$classSteinberg_1_1TBTreeSet.html" title="B&#45;Tree set template definition. " alt="" coords="447,734,552,919"/>
+<area shape="rect" id="node21" href="$classSteinberg_1_1TBag.html" title="Bag template. " alt="" coords="581,707,709,947"/>
+<area shape="rect" id="node23" href="$classSteinberg_1_1THashSet.html" title="A hash set is a collection of items, without any particular order and without repetitions stored in a..." alt="" coords="734,727,836,926"/>
+<area shape="rect" id="node27" href="$classSteinberg_1_1TDeque.html" title="TDeque is a double ended queue. " alt="" coords="860,727,953,926"/>
+<area shape="rect" id="node29" href="$classSteinberg_1_1TQueue.html" title="Queue template. " alt="" coords="978,748,1069,905"/>
+<area shape="rect" id="node31" href="$classSteinberg_1_1TStack.html" title="TStack is a template container based on the LIFO&#45;principle (last in/first out). " alt="" coords="1094,748,1185,905"/>
+</map>

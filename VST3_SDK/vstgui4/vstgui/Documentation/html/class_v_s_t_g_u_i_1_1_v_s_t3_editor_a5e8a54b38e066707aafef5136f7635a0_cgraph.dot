@@ -1,0 +1,19 @@
+digraph "findParameter"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="findParameter",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CView::getMouseEnabled",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#acab79bf608c51aad89f6f1e491231cf1",tooltip="get the state of wheather this view uses the mouse or not "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CControl::getTag",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_control.html#a6f5b9468bcf84c776485950a9c6990c3"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::ParameterChangeListener\l::containsControl",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#aaa24c4a270ef198d4acfb45f191d2119"];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::ParameterChangeListener\l::getParameter",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#aed242334ff913e65d2cb4b6974b96551"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::ParameterChangeListener\l::getParameterID",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#a1df8e4a77b7ed4681e97a609a840e26d"];
+  Node6 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

@@ -1,0 +1,6 @@
+<map id="EditorView" name="EditorView">
+<area shape="rect" id="node11" href="$classSteinberg_1_1Vst_1_1VSTGUIEditor.html" title="Base class for an edit view using VSTGUI. " alt="" coords="19,886,193,1140"/>
+<area shape="rect" id="node2" href="$classSteinberg_1_1CPluginView.html" title="Plug&#45;In view default implementation. " alt="" coords="19,432,193,659"/>
+<area shape="rect" id="node6" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPlugView.html" title="{IPlugView\n|+ iid\l|+ isPlatformTypeSupported()\l+ attached()\l+ removed()\l+ onWheel()\l+ onKeyDown()\l+ onKeyUp()\l+ getSize()\l+ onSize()\l+ onFocus()\l+ setFrame()\l+ canResize()\l+ checkSizeConstraint()\l}" alt="" coords="91,157,265,384"/>
+<area shape="rect" id="node8" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="120,6,236,108"/>
+</map>

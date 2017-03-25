@@ -1,0 +1,22 @@
+digraph "next"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="next",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="operator++",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_character_iterator.html#aa4d23cc1d1cb7345664cdc577f8b0a85"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::UIDescriptionPrivate\l::tokenizeString",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_u_i_description_private.html#ad3175ed8533444130c009f857c2f1c36"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::UIDescription\l::calculateStringValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a11aba1ada0a2c98a219d73804984b61f"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::UIDescription\l::getTagForName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a4d20a5578f2b8cf3f247e5e9726dff75"];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::UIDescription\l::lookupControlTagName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a977b6c3e0f12ec3c4c719e2b6fb8846e"];
+  Node4 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::UIDescription\l::getVariable",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a0fbbc231900c1d5f9daed9ca8efad954"];
+  Node7 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

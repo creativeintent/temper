@@ -1,0 +1,10 @@
+<map id="ComponentBase" name="ComponentBase">
+<area shape="rect" id="node12" href="$classSteinberg_1_1Vst_1_1Component.html" title="Default implementation for a VST 3 Component. " alt="" coords="6,598,156,852"/>
+<area shape="rect" id="node16" href="$classSteinberg_1_1Vst_1_1EditController.html" title="Default implementation for a VST 3 edit controller. " alt="" coords="181,598,355,852"/>
+<area shape="rect" id="node4" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginBase.html" title="{IPluginBase\n|+ iid\l|+ initialize()\l+ terminate()\l}" alt="" coords="130,165,219,254"/>
+<area shape="rect" id="node6" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="179,6,295,108"/>
+<area shape="rect" id="node8" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IConnectionPoint.html" title="{IConnectionPoint\n|+ iid\l|+ connect()\l+ disconnect()\l+ notify()\l}" alt="" coords="244,158,356,260"/>
+<area shape="rect" id="node14" href="$classSteinberg_1_1Vst_1_1AudioEffect.html" title="Default implementation for a VST 3 audio effect. " alt="" coords="4,936,155,1149"/>
+<area shape="rect" id="node18" href="$classSteinberg_1_1Vst_1_1EditControllerEx1.html" title="Advanced implementation (support IUnitInfo) for a VST 3 edit controller. " alt="" coords="180,929,355,1156"/>
+<area shape="rect" id="node20" href="$classSteinberg_1_1Vst_1_1SingleComponentEffect.html" title="Default implementation for a non&#45;distributable Plug&#45;in that combines processor and edit controller in..." alt="" coords="379,902,551,1184"/>
+</map>

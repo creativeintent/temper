@@ -1,0 +1,28 @@
+digraph "~CCommandMenuItem"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="~CCommandMenuItem",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="setTarget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_command_menu_item.html#a0ff642d224d37229fcc9c2a959508717"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CBaseObject\l::forget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8",tooltip="decrease refcount and delete object if refcount == 0 "];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CBaseObject\l::beforeDelete",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b"];
+  Node2 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CBaseObject\l::remember",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ada0719d1daaca4af1795018001769311",tooltip="increase refcount "];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="setCommandCategory",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_command_menu_item.html#af92a717d8d6b1c50c3ab0882b253ce58"];
+  Node6 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::String::free",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#af30ee7f201c1f86d9aceb849d6d08fbf"];
+  Node6 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::String::newWithString",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#a83745b23a3d48e4f1e69950977918803"];
+  Node8 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::UTF8StringView\l::calculateByteCount",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_string_view.html#a67b9d83785a9c0fc5a668303de116803"];
+  Node1 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="setCommandName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_command_menu_item.html#a1edf8e13e04f48933cdc7b624d5001de"];
+  Node10 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

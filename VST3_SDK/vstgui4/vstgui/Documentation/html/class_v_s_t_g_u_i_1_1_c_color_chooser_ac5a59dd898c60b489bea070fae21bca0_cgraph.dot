@@ -1,0 +1,12 @@
+digraph "setColor"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setColor",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="updateState",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_color_chooser.html#aa5dabf4a89c5e3410a829e6a3d042c1f"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CViewContainer\l::invalid",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view_container.html#a51647a4891b4a9cbaf8595171c5ad3fc",tooltip="mark whole view as invalid "];
+}

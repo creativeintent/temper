@@ -1,0 +1,18 @@
+digraph "getAlphaValue"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getAlphaValue",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::Animation::\lAlphaValueAnimation\l::animationStart",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_alpha_value_animation.html#a4d55efefecb3e5377a428a5e13eb1565",tooltip="animation starts "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::Animation::\lExchangeViewAnimation::init",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#a02fd73d861ef2e4aabb38c0c9ff82947"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::Animation::\lExchangeViewAnimation\l::ExchangeViewAnimation",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html#ab056dfd92492a3566d61f0e150d02ff2"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CLayeredViewContainer\l::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CScrollbar\l::onMouseExited",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scrollbar.html#abd65f32a227f0bafe16b9f6befbf8251",tooltip="called when the mouse leaves this view "];
+}

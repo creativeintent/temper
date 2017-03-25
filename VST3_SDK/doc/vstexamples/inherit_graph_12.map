@@ -1,0 +1,120 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node3" href="$classSteinberg_1_1Vst_1_1AGainEditorView.html" title="AGainEditorView" alt="" coords="895,868,1007,894"/>
+<area shape="rect" id="node6" href="$classSteinberg_1_1Vst_1_1ADelayTest.html" title="ADelayTest" alt="" coords="316,1864,398,1890"/>
+<area shape="rect" id="node8" href="$classSteinberg_1_1Vst_1_1ADelayTestFactory.html" title="ADelayTestFactory" alt="" coords="296,1914,418,1940"/>
+<area shape="rect" id="node10" href="$classSteinberg_1_1Vst_1_1PlugProvider.html" title="Helper for creating and initializing component. " alt="" coords="312,1691,402,1717"/>
+<area shape="rect" id="node12" href="$classSteinberg_1_1Vst_1_1Validator.html" title="Main Class of Validator. " alt="" coords="323,1766,391,1792"/>
+<area shape="rect" id="node14" href="$classSteinberg_1_1Vst_1_1VstModule.html" title="This handles the Plug&#45;in factory in its library. " alt="" coords="318,1815,396,1841"/>
+<area shape="rect" id="node15" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="FUnknown" alt="" coords="6,1388,85,1414"/>
+<area shape="rect" id="node17" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginBase.html" title="IPluginBase" alt="" coords="148,1300,233,1326"/>
+<area shape="rect" id="node205" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPlugView.html" title="IPlugView" alt="" coords="153,1010,228,1036"/>
+<area shape="rect" id="node214" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1ChannelContext_1_1IInfoListener.html" title="IInfoListener" alt="" coords="718,1964,805,1990"/>
+<area shape="rect" id="node218" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IAudioPresentationLatency.html" title="IAudioPresentationLatency" alt="" coords="474,1400,638,1426"/>
+<area shape="rect" id="node221" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IAudioProcessor.html" title="IAudioProcessor" alt="" coords="501,1114,611,1140"/>
+<area shape="rect" id="node224" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IConnectionPoint.html" title="IConnectionPoint" alt="" coords="134,1239,247,1265"/>
+<area shape="rect" id="node227" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IContextMenuTarget.html" title="IContextMenuTarget" alt="" coords="491,1056,621,1082"/>
+<area shape="rect" id="node230" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IEditController2.html" title="IEditController2" alt="" coords="305,1363,409,1389"/>
+<area shape="rect" id="node233" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IHostApplication.html" title="IHostApplication" alt="" coords="137,1766,245,1792"/>
+<area shape="rect" id="node236" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IMidiMapping.html" title="IMidiMapping" alt="" coords="510,1515,602,1541"/>
+<area shape="rect" id="node242" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1INoteExpressionController.html" title="INoteExpressionController" alt="" coords="475,1464,637,1490"/>
+<area shape="rect" id="node246" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IParameterFinder.html" title="IParameterFinder" alt="" coords="704,868,819,894"/>
+<area shape="rect" id="node249" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1IPlugProvider.html" title="IPlugProvider" alt="" coords="144,1667,237,1693"/>
+<area shape="rect" id="node252" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IPrefetchableSupport.html" title="IPrefetchableSupport" alt="" coords="694,1166,828,1192"/>
+<area shape="rect" id="node256" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IUnitInfo.html" title="IUnitInfo" alt="" coords="523,1616,589,1642"/>
+<area shape="rect" id="node259" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IXmlRepresentationController.html" title="IXmlRepresentationController" alt="" coords="467,1566,645,1592"/>
+<area shape="rect" id="node19" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1ComponentBase.html" title="ComponentBase" alt="" coords="302,1215,413,1241"/>
+<area shape="rect" id="node199" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IComponent.html" title="IComponent" alt="" coords="314,1264,401,1290"/>
+<area shape="rect" id="node202" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IEditController.html" title="IEditController" alt="" coords="309,1314,406,1340"/>
+<area shape="rect" id="node21" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1Component.html" title="Component" alt="" coords="514,1215,598,1241"/>
+<area shape="rect" id="node111" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1EditController.html" title="EditController" alt="" coords="509,1326,603,1352"/>
+<area shape="rect" id="node23" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1AudioEffect.html" title="AudioEffect" alt="" coords="720,1114,803,1140"/>
+<area shape="rect" id="node25" href="$classSteinberg_1_1Vst_1_1ADelayProcessor.html" title="ADelayProcessor" alt="" coords="894,1116,1008,1142"/>
+<area shape="rect" id="node27" href="$classSteinberg_1_1Vst_1_1AGain.html" title="AGain" alt="" coords="923,918,978,944"/>
+<area shape="rect" id="node31" href="$classSteinberg_1_1Vst_1_1HostCheckerProcessor.html" title="HostCheckerProcessor" alt="" coords="878,1215,1023,1241"/>
+<area shape="rect" id="node33" href="$classSteinberg_1_1Vst_1_1mda_1_1BaseProcessor.html" title="BaseProcessor" alt="" coords="899,967,1002,993"/>
+<area shape="rect" id="node103" href="$classSteinberg_1_1Vst_1_1NoteExpressionSynth_1_1Processor.html" title="Example Note Expression Audio Processor. " alt="" coords="913,1018,988,1044"/>
+<area shape="rect" id="node107" href="$classSteinberg_1_1Vst_1_1PitchNamesProcessor.html" title="PitchNamesProcessor" alt="" coords="881,1067,1021,1093"/>
+<area shape="rect" id="node109" href="$classSteinberg_1_1Vst_1_1Plug.html" title="Plug" alt="" coords="928,1166,973,1192"/>
+<area shape="rect" id="node29" href="$classSteinberg_1_1Vst_1_1AGainWithSideChain.html" title="AGainWithSideChain" alt="" coords="1088,4,1222,30"/>
+<area shape="rect" id="node35" href="$classSteinberg_1_1Vst_1_1mda_1_1AmbienceProcessor.html" title="AmbienceProcessor" alt="" coords="1090,152,1219,178"/>
+<area shape="rect" id="node37" href="$classSteinberg_1_1Vst_1_1mda_1_1BandistoProcessor.html" title="BandistoProcessor" alt="" coords="1094,202,1216,228"/>
+<area shape="rect" id="node39" href="$classSteinberg_1_1Vst_1_1mda_1_1BeatBoxProcessor.html" title="BeatBoxProcessor" alt="" coords="1094,251,1215,277"/>
+<area shape="rect" id="node41" href="$classSteinberg_1_1Vst_1_1mda_1_1ComboProcessor.html" title="ComboProcessor" alt="" coords="1098,300,1212,326"/>
+<area shape="rect" id="node43" href="$classSteinberg_1_1Vst_1_1mda_1_1DeEsserProcessor.html" title="DeEsserProcessor" alt="" coords="1094,350,1215,376"/>
+<area shape="rect" id="node45" href="$classSteinberg_1_1Vst_1_1mda_1_1DegradeProcessor.html" title="DegradeProcessor" alt="" coords="1094,399,1215,425"/>
+<area shape="rect" id="node47" href="$classSteinberg_1_1Vst_1_1mda_1_1DelayProcessor.html" title="DelayProcessor" alt="" coords="1102,448,1208,474"/>
+<area shape="rect" id="node49" href="$classSteinberg_1_1Vst_1_1mda_1_1DetuneProcessor.html" title="DetuneProcessor" alt="" coords="1098,498,1212,524"/>
+<area shape="rect" id="node51" href="$classSteinberg_1_1Vst_1_1mda_1_1DitherProcessor.html" title="DitherProcessor" alt="" coords="1101,547,1208,573"/>
+<area shape="rect" id="node53" href="$classSteinberg_1_1Vst_1_1mda_1_1DubDelayProcessor.html" title="DubDelayProcessor" alt="" coords="1091,596,1219,622"/>
+<area shape="rect" id="node55" href="$classSteinberg_1_1Vst_1_1mda_1_1DX10Processor.html" title="DX10Processor" alt="" coords="1102,646,1207,672"/>
+<area shape="rect" id="node57" href="$classSteinberg_1_1Vst_1_1mda_1_1DynamicsProcessor.html" title="DynamicsProcessor" alt="" coords="1091,695,1219,721"/>
+<area shape="rect" id="node59" href="$classSteinberg_1_1Vst_1_1mda_1_1EPianoProcessor.html" title="EPianoProcessor" alt="" coords="1098,744,1212,770"/>
+<area shape="rect" id="node61" href="$classSteinberg_1_1Vst_1_1mda_1_1ImageProcessor.html" title="ImageProcessor" alt="" coords="1100,794,1209,820"/>
+<area shape="rect" id="node63" href="$classSteinberg_1_1Vst_1_1mda_1_1JX10Processor.html" title="JX10Processor" alt="" coords="1103,843,1206,869"/>
+<area shape="rect" id="node65" href="$classSteinberg_1_1Vst_1_1mda_1_1LeslieProcessor.html" title="LeslieProcessor" alt="" coords="1101,892,1208,918"/>
+<area shape="rect" id="node67" href="$classSteinberg_1_1Vst_1_1mda_1_1LimiterProcessor.html" title="LimiterProcessor" alt="" coords="1099,942,1210,968"/>
+<area shape="rect" id="node69" href="$classSteinberg_1_1Vst_1_1mda_1_1LoudnessProcessor.html" title="LoudnessProcessor" alt="" coords="1091,991,1218,1017"/>
+<area shape="rect" id="node71" href="$classSteinberg_1_1Vst_1_1mda_1_1MultiBandProcessor.html" title="MultiBandProcessor" alt="" coords="1090,1040,1219,1066"/>
+<area shape="rect" id="node73" href="$classSteinberg_1_1Vst_1_1mda_1_1OverdriveProcessor.html" title="OverdriveProcessor" alt="" coords="1091,1090,1218,1116"/>
+<area shape="rect" id="node75" href="$classSteinberg_1_1Vst_1_1mda_1_1PianoProcessor.html" title="PianoProcessor" alt="" coords="1102,1139,1208,1165"/>
+<area shape="rect" id="node77" href="$classSteinberg_1_1Vst_1_1mda_1_1RePsychoProcessor.html" title="RePsychoProcessor" alt="" coords="1090,1188,1220,1214"/>
+<area shape="rect" id="node79" href="$classSteinberg_1_1Vst_1_1mda_1_1RezFilterProcessor.html" title="RezFilterProcessor" alt="" coords="1093,1238,1216,1264"/>
+<area shape="rect" id="node81" href="$classSteinberg_1_1Vst_1_1mda_1_1RingModProcessor.html" title="RingModProcessor" alt="" coords="1093,1287,1216,1313"/>
+<area shape="rect" id="node83" href="$classSteinberg_1_1Vst_1_1mda_1_1RoundPanProcessor.html" title="RoundPanProcessor" alt="" coords="1089,1336,1221,1362"/>
+<area shape="rect" id="node85" href="$classSteinberg_1_1Vst_1_1mda_1_1ShepardProcessor.html" title="ShepardProcessor" alt="" coords="1094,1386,1215,1412"/>
+<area shape="rect" id="node87" href="$classSteinberg_1_1Vst_1_1mda_1_1SpecMeterProcessor.html" title="SpecMeterProcessor" alt="" coords="1088,1435,1221,1461"/>
+<area shape="rect" id="node89" href="$classSteinberg_1_1Vst_1_1mda_1_1SplitterProcessor.html" title="SplitterProcessor" alt="" coords="1098,1484,1211,1510"/>
+<area shape="rect" id="node91" href="$classSteinberg_1_1Vst_1_1mda_1_1StereoProcessor.html" title="StereoProcessor" alt="" coords="1099,1534,1210,1560"/>
+<area shape="rect" id="node93" href="$classSteinberg_1_1Vst_1_1mda_1_1SubSynthProcessor.html" title="SubSynthProcessor" alt="" coords="1091,1583,1218,1609"/>
+<area shape="rect" id="node95" href="$classSteinberg_1_1Vst_1_1mda_1_1TalkBoxProcessor.html" title="TalkBoxProcessor" alt="" coords="1096,1632,1213,1658"/>
+<area shape="rect" id="node97" href="$classSteinberg_1_1Vst_1_1mda_1_1TestToneProcessor.html" title="TestToneProcessor" alt="" coords="1093,1682,1216,1708"/>
+<area shape="rect" id="node99" href="$classSteinberg_1_1Vst_1_1mda_1_1ThruZeroProcessor.html" title="ThruZeroProcessor" alt="" coords="1092,54,1217,80"/>
+<area shape="rect" id="node101" href="$classSteinberg_1_1Vst_1_1mda_1_1TrackerProcessor.html" title="TrackerProcessor" alt="" coords="1097,103,1212,129"/>
+<area shape="rect" id="node105" href="$classSteinberg_1_1Vst_1_1NoteExpressionSynth_1_1ProcessorWithUIController.html" title="Example Note Expression Audio Processor + User Interface. " alt="" coords="1073,1731,1236,1757"/>
+<area shape="rect" id="node113" href="$classSteinberg_1_1Vst_1_1ADelayController.html" title="ADelayController" alt="" coords="705,1263,817,1289"/>
+<area shape="rect" id="node115" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1EditControllerEx1.html" title="EditControllerEx1" alt="" coords="704,1616,819,1642"/>
+<area shape="rect" id="node195" href="$classSteinberg_1_1Vst_1_1NoteExpressionSynth_1_1Controller.html" title="Example Note Expression Edit Controller. " alt="" coords="725,1364,798,1390"/>
+<area shape="rect" id="node117" href="$classSteinberg_1_1Vst_1_1AGainController.html" title="AGainController" alt="" coords="897,1642,1004,1668"/>
+<area shape="rect" id="node119" href="$classSteinberg_1_1Vst_1_1HostCheckerController.html" title="HostCheckerController" alt="" coords="879,1552,1022,1578"/>
+<area shape="rect" id="node121" href="$classSteinberg_1_1Vst_1_1mda_1_1BaseController.html" title="BaseController" alt="" coords="900,2495,1001,2521"/>
+<area shape="rect" id="node191" href="$classSteinberg_1_1Vst_1_1PitchNamesController.html" title="PitchNamesController" alt="" coords="882,1476,1020,1502"/>
+<area shape="rect" id="node193" href="$classSteinberg_1_1Vst_1_1PlugController.html" title="PlugController" alt="" coords="902,2544,999,2570"/>
+<area shape="rect" id="node123" href="$classSteinberg_1_1Vst_1_1mda_1_1AmbienceController.html" title="AmbienceController" alt="" coords="1091,1879,1218,1905"/>
+<area shape="rect" id="node125" href="$classSteinberg_1_1Vst_1_1mda_1_1BandistoController.html" title="BandistoController" alt="" coords="1095,1928,1215,1954"/>
+<area shape="rect" id="node127" href="$classSteinberg_1_1Vst_1_1mda_1_1BeatBoxController.html" title="BeatBoxController" alt="" coords="1095,1978,1214,2004"/>
+<area shape="rect" id="node129" href="$classSteinberg_1_1Vst_1_1mda_1_1ComboController.html" title="ComboController" alt="" coords="1099,2027,1211,2053"/>
+<area shape="rect" id="node131" href="$classSteinberg_1_1Vst_1_1mda_1_1DeEsserController.html" title="DeEsserController" alt="" coords="1095,2076,1214,2102"/>
+<area shape="rect" id="node133" href="$classSteinberg_1_1Vst_1_1mda_1_1DegradeController.html" title="DegradeController" alt="" coords="1095,2126,1214,2152"/>
+<area shape="rect" id="node135" href="$classSteinberg_1_1Vst_1_1mda_1_1DelayController.html" title="DelayController" alt="" coords="1103,2175,1207,2201"/>
+<area shape="rect" id="node137" href="$classSteinberg_1_1Vst_1_1mda_1_1DetuneController.html" title="DetuneController" alt="" coords="1099,2224,1211,2250"/>
+<area shape="rect" id="node139" href="$classSteinberg_1_1Vst_1_1mda_1_1DitherController.html" title="DitherController" alt="" coords="1102,2274,1207,2300"/>
+<area shape="rect" id="node141" href="$classSteinberg_1_1Vst_1_1mda_1_1DubDelayController.html" title="DubDelayController" alt="" coords="1092,2323,1218,2349"/>
+<area shape="rect" id="node143" href="$classSteinberg_1_1Vst_1_1mda_1_1DX10Controller.html" title="DX10Controller" alt="" coords="1103,2372,1206,2398"/>
+<area shape="rect" id="node145" href="$classSteinberg_1_1Vst_1_1mda_1_1DynamicsController.html" title="DynamicsController" alt="" coords="1092,2422,1218,2448"/>
+<area shape="rect" id="node147" href="$classSteinberg_1_1Vst_1_1mda_1_1EPianoController.html" title="EPianoController" alt="" coords="1099,2471,1211,2497"/>
+<area shape="rect" id="node149" href="$classSteinberg_1_1Vst_1_1mda_1_1ImageController.html" title="ImageController" alt="" coords="1101,2520,1208,2546"/>
+<area shape="rect" id="node151" href="$classSteinberg_1_1Vst_1_1mda_1_1JX10Controller.html" title="JX10Controller" alt="" coords="1104,2570,1205,2596"/>
+<area shape="rect" id="node153" href="$classSteinberg_1_1Vst_1_1mda_1_1LeslieController.html" title="LeslieController" alt="" coords="1102,2619,1207,2645"/>
+<area shape="rect" id="node155" href="$classSteinberg_1_1Vst_1_1mda_1_1LimiterController.html" title="LimiterController" alt="" coords="1100,2668,1209,2694"/>
+<area shape="rect" id="node157" href="$classSteinberg_1_1Vst_1_1mda_1_1LoudnessController.html" title="LoudnessController" alt="" coords="1092,2718,1217,2744"/>
+<area shape="rect" id="node159" href="$classSteinberg_1_1Vst_1_1mda_1_1MultiBandController.html" title="MultiBandController" alt="" coords="1091,2767,1218,2793"/>
+<area shape="rect" id="node161" href="$classSteinberg_1_1Vst_1_1mda_1_1OverdriveController.html" title="OverdriveController" alt="" coords="1092,2816,1217,2842"/>
+<area shape="rect" id="node163" href="$classSteinberg_1_1Vst_1_1mda_1_1PianoController.html" title="PianoController" alt="" coords="1103,2866,1207,2892"/>
+<area shape="rect" id="node165" href="$classSteinberg_1_1Vst_1_1mda_1_1RePsychoController.html" title="RePsychoController" alt="" coords="1091,2915,1219,2941"/>
+<area shape="rect" id="node167" href="$classSteinberg_1_1Vst_1_1mda_1_1RezFilterController.html" title="RezFilterController" alt="" coords="1094,2964,1215,2990"/>
+<area shape="rect" id="node169" href="$classSteinberg_1_1Vst_1_1mda_1_1RingModController.html" title="RingModController" alt="" coords="1094,3014,1215,3040"/>
+<area shape="rect" id="node171" href="$classSteinberg_1_1Vst_1_1mda_1_1RoundPanController.html" title="RoundPanController" alt="" coords="1090,3063,1220,3089"/>
+<area shape="rect" id="node173" href="$classSteinberg_1_1Vst_1_1mda_1_1ShepardController.html" title="ShepardController" alt="" coords="1095,3112,1214,3138"/>
+<area shape="rect" id="node175" href="$classSteinberg_1_1Vst_1_1mda_1_1SpecMeterController.html" title="SpecMeterController" alt="" coords="1089,3162,1220,3188"/>
+<area shape="rect" id="node177" href="$classSteinberg_1_1Vst_1_1mda_1_1SplitterController.html" title="SplitterController" alt="" coords="1099,3211,1210,3237"/>
+<area shape="rect" id="node179" href="$classSteinberg_1_1Vst_1_1mda_1_1StereoController.html" title="StereoController" alt="" coords="1100,3260,1209,3286"/>
+<area shape="rect" id="node181" href="$classSteinberg_1_1Vst_1_1mda_1_1SubSynthController.html" title="SubSynthController" alt="" coords="1092,3310,1217,3336"/>
+<area shape="rect" id="node183" href="$classSteinberg_1_1Vst_1_1mda_1_1TalkBoxController.html" title="TalkBoxController" alt="" coords="1097,3359,1212,3385"/>
+<area shape="rect" id="node185" href="$classSteinberg_1_1Vst_1_1mda_1_1TestToneController.html" title="TestToneController" alt="" coords="1094,3408,1215,3434"/>
+<area shape="rect" id="node187" href="$classSteinberg_1_1Vst_1_1mda_1_1ThruZeroController.html" title="ThruZeroController" alt="" coords="1093,1780,1216,1806"/>
+<area shape="rect" id="node189" href="$classSteinberg_1_1Vst_1_1mda_1_1TrackerController.html" title="TrackerController" alt="" coords="1098,1830,1211,1856"/>
+<area shape="rect" id="node197" href="$classSteinberg_1_1Vst_1_1NoteExpressionSynth_1_1ControllerWithUI.html" title="Example Note Expression Audio Controller + User Interface. " alt="" coords="896,1390,1005,1416"/>
+<area shape="rect" id="node207" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1CPluginView.html" title="CPluginView" alt="" coords="313,1007,402,1033"/>
+<area shape="rect" id="node209" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1EditorView.html" title="EditorView" alt="" coords="517,995,595,1021"/>
+<area shape="rect" id="node211" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag$classSteinberg_1_1Vst_1_1VSTGUIEditor.html" title="VSTGUIEditor" alt="" coords="713,990,810,1016"/>
+</map>

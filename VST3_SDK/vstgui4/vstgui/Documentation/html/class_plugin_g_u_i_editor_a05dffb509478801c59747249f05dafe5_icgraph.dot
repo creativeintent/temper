@@ -1,0 +1,12 @@
+digraph "getTicks"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getTicks",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="PluginGUIEditor",height=0.2,width=0.4,color="black",URL="$class_plugin_g_u_i_editor.html#a5888393b9b343df09668eb71a45da721"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="doIdleStuff",height=0.2,width=0.4,color="black",URL="$class_plugin_g_u_i_editor.html#a1730dc80596102088370374a9f0abce6"];
+}

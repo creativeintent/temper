@@ -1,0 +1,6 @@
+<map id="CPluginFactory" name="CPluginFactory">
+<area shape="rect" id="node2" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginFactory3.html" title="{IPluginFactory3\n|+ iid\l|+ getClassInfoUnicode()\l+ setHostContext()\l}" alt="" coords="5,445,155,534"/>
+<area shape="rect" id="node4" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginFactory2.html" title="{IPluginFactory2\n|+ iid\l|+ getClassInfo2()\l}" alt="" coords="23,323,136,397"/>
+<area shape="rect" id="node6" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginFactory.html" title="{IPluginFactory\n|+ iid\l|+ getFactoryInfo()\l+ countClasses()\l+ getClassInfo()\l+ createInstance()\l}" alt="" coords="21,158,139,274"/>
+<area shape="rect" id="node8" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="22,6,137,108"/>
+</map>

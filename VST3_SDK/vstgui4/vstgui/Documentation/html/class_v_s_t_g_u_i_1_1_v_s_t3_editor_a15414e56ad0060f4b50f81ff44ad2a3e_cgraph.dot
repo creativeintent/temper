@@ -1,0 +1,20 @@
+digraph "notify"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="notify",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CCommandMenuItem\l::getCommandCategory",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_command_menu_item.html#ab3bc467fd19370c7c21db264806e6712"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CCommandMenuItem\l::getCommandName",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_command_menu_item.html#a1abd2d2a4f2077a9101c618aec2a99d1"];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::UIAttributes\l::getAttributeValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#a80dddbc022b66698cf7a00620efbcd88"];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CMenuItem::\lsetEnabled",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_menu_item.html#a013814dd3b12417a8e3bc30bb5744a71",tooltip="set menu item enabled state "];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CMenuItem::\lsetChecked",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_menu_item.html#a41ac8da48387a7a6516197d30e95aada",tooltip="set menu item checked state "];
+  Node1 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CMenuItem::\lgetTag",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_menu_item.html#a77b4a7b5e759eb8150d49c4330496423",tooltip="returns the tag of the item "];
+}

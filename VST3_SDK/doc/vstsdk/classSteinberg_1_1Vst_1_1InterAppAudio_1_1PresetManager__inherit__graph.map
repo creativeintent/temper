@@ -1,0 +1,4 @@
+<map id="PresetManager" name="PresetManager">
+<area shape="rect" id="node4" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IInterAppAudioPresetManager.html" title="{IInterAppAudioPresetManager\n|+ iid\l|+ runLoadPresetBrowser()\l+ runSavePresetBrowser()\l+ loadNextPreset()\l+ loadPreviousPreset()\l}" alt="" coords="91,158,273,274"/>
+<area shape="rect" id="node6" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="124,6,240,108"/>
+</map>

@@ -1,0 +1,12 @@
+digraph "first"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="first",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="next",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_drag_container_helper.html#a6d9df5bf575a3c3b18430be1e354e876"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::IDataPackage\l::getData",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_data_package.html#a5fbe9c43da08cdd39924711810a2e26d"];
+}

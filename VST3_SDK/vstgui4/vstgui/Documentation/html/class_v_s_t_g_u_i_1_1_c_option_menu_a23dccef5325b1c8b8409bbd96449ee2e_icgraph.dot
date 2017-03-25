@@ -1,0 +1,39 @@
+digraph "addEntry"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="addEntry",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="addEntry",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#afe493a4e084ebfc51283bc260932ce1b",tooltip="add a new submenu entry "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="addSeparator",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#a9eb257c26848669f9ff071a568294eb0",tooltip="add a new separator entry "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="addEntry",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#ac031c90d965c68fd215fe5887c4e5d96",tooltip="add a new entry "];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::VST3Editor\l::onMouseDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a4305e69d2e6fc870a37b123050120e13",tooltip="a mouse down event happend on the frame at position where. If the observer handles this..."];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::VST3Editor\l::enableEditing",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a735597df0f43568cb501ebe71efa5d6d"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::VST3Editor\l::onKeyDown",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a8d50a70febc6d3b3a8c55f7783ed4962",tooltip="should return 1 if no further key down processing should apply, otherwise -1 "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::ParameterChangeListener\l::updateControlValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#a9cfc75a6671c251dacdbd24e636d0ca3"];
+  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::ParameterChangeListener\l::addControl",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#a838ba0753537ab62e6b68c810b5b1f41"];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::ParameterChangeListener\l::ParameterChangeListener",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#a8191a258793d1ab3889af52a772bf84a"];
+  Node9 -> Node11 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::VST3Editor\l::controlTagDidChange",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a3c43308976983d62b03b089297c88167"];
+  Node9 -> Node12 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::VST3Editor\l::verifyView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a0a12d9bd75a7a62d1c5fdb0ab5ee4a40"];
+  Node8 -> Node13 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::ParameterChangeListener\l::update",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#af0d44025f1c09517c2960843539072d4"];
+  Node13 -> Node14 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::VST3Editor\l::valueChanged",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a9e11979012090b0ff41c3f59aef6023d"];
+  Node8 -> Node15 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::ParameterChangeListener\l::performEdit",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#ada09c15459754b72280caf38fa2544e7"];
+  Node15 -> Node14 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

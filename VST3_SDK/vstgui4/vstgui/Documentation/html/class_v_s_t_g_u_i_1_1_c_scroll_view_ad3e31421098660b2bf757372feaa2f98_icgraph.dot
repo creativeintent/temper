@@ -1,0 +1,16 @@
+digraph "getStyle"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getStyle",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CDataBrowser\l::selectRow",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#a09c4b9d260f2175013dfcbff42c23229",tooltip="add row to selection "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CDataBrowser\l::unselectRow",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_data_browser.html#aa5f9d70cda4c5abd5a1ee159ce289a9b",tooltip="remove row from selection "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::GenericStringList\lDataBrowserSource::dbGetCurrent\lColumnWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_generic_string_list_data_browser_source.html#aa1f9120c99ba96949b66c37a95daa65b",tooltip="return current width of index column "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="notify",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_scroll_view.html#a15414e56ad0060f4b50f81ff44ad2a3e",tooltip="translates a local coordinate to a global one using parent transforms "];
+}

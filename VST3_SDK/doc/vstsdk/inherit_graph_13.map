@@ -1,0 +1,87 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node3" href="$classSteinberg_1_1Vst_1_1VSTGUIEditor.html" title="Base class for an edit view using VSTGUI. " alt="" coords="1222,1096,1319,1122"/>
+<area shape="rect" id="node6" href="$classSteinberg_1_1CPluginView.html" title="Plug&#45;In view default implementation. " alt="" coords="789,1047,878,1073"/>
+<area shape="rect" id="node11" href="$classSteinberg_1_1Vst_1_1Bus.html" title="Basic Bus object. " alt="" coords="812,498,854,524"/>
+<area shape="rect" id="node17" href="$classSteinberg_1_1Vst_1_1BusList.html" title="List of Buses. " alt="" coords="803,350,864,376"/>
+<area shape="rect" id="node19" href="$classSteinberg_1_1Vst_1_1ComponentBase.html" title="Base class for VST 3 Component and Edit Controller. " alt="" coords="778,796,889,822"/>
+<area shape="rect" id="node31" href="$classSteinberg_1_1Vst_1_1InterAppAudio_1_1PresetManager.html" title="PresetManager" alt="" coords="782,695,885,721"/>
+<area shape="rect" id="node33" href="$classSteinberg_1_1Vst_1_1NoteExpressionType.html" title="Note expression type object. " alt="" coords="767,646,899,672"/>
+<area shape="rect" id="node37" href="$classSteinberg_1_1Vst_1_1NoteExpressionTypeContainer.html" title="Collection of note expression types. " alt="" coords="741,547,925,573"/>
+<area shape="rect" id="node39" href="$classSteinberg_1_1Vst_1_1Parameter.html" title="Description of a Parameter. " alt="" coords="795,399,872,425"/>
+<area shape="rect" id="node45" href="$classSteinberg_1_1Vst_1_1ProgramList.html" title="ProgramList element. " alt="" coords="790,448,876,474"/>
+<area shape="rect" id="node49" href="$classSteinberg_1_1Vst_1_1Unit.html" title="Unit element. " alt="" coords="812,596,855,622"/>
+<area shape="rect" id="node8" href="$classSteinberg_1_1Vst_1_1EditorView.html" title="View related to an edit controller. " alt="" coords="1022,1047,1101,1073"/>
+<area shape="rect" id="node13" href="$classSteinberg_1_1Vst_1_1AudioBus.html" title="Description of an Audio Bus. " alt="" coords="1025,547,1098,573"/>
+<area shape="rect" id="node15" href="$classSteinberg_1_1Vst_1_1EventBus.html" title="Description of an Event Bus. " alt="" coords="1025,498,1098,524"/>
+<area shape="rect" id="node21" href="$classSteinberg_1_1Vst_1_1Component.html" title="Default implementation for a VST 3 Component. " alt="" coords="1020,796,1103,822"/>
+<area shape="rect" id="node25" href="$classSteinberg_1_1Vst_1_1EditController.html" title="Default implementation for a VST 3 edit controller. " alt="" coords="1014,898,1108,924"/>
+<area shape="rect" id="node23" href="$classSteinberg_1_1Vst_1_1AudioEffect.html" title="Default implementation for a VST 3 audio effect. " alt="" coords="1229,772,1312,798"/>
+<area shape="rect" id="node27" href="$classSteinberg_1_1Vst_1_1EditControllerEx1.html" title="Advanced implementation (support IUnitInfo) for a VST 3 edit controller. " alt="" coords="1213,947,1328,973"/>
+<area shape="rect" id="node29" href="$classSteinberg_1_1Vst_1_1SingleComponentEffect.html" title="Default implementation for a non&#45;distributable Plug&#45;in that combines processor and edit controller in..." alt="" coords="1197,847,1344,873"/>
+<area shape="rect" id="node35" href="$classSteinberg_1_1Vst_1_1RangeNoteExpressionType.html" title="Note expression type object representing a custom range. " alt="" coords="978,646,1145,672"/>
+<area shape="rect" id="node41" href="$classSteinberg_1_1Vst_1_1RangeParameter.html" title="Description of a RangeParameter. " alt="" coords="1005,399,1118,425"/>
+<area shape="rect" id="node43" href="$classSteinberg_1_1Vst_1_1StringListParameter.html" title="Description of a StringListParameter. " alt="" coords="998,350,1125,376"/>
+<area shape="rect" id="node47" href="$classSteinberg_1_1Vst_1_1ProgramListWithPitchNames.html" title="ProgramListWithPitchNames element. " alt="" coords="974,448,1149,474"/>
+<area shape="rect" id="node50" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="FUnknown" alt="" coords="310,971,389,997"/>
+<area shape="rect" id="node52" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IBStream.html" title="IBStream" alt="" coords="566,202,637,228"/>
+<area shape="rect" id="node62" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginBase.html" title="IPluginBase" alt="" coords="559,883,644,909"/>
+<area shape="rect" id="node72" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginFactory.html" title="IPluginFactory" alt="" coords="552,300,650,326"/>
+<area shape="rect" id="node80" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPlugView.html" title="IPlugView" alt="" coords="564,1047,639,1073"/>
+<area shape="rect" id="node83" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IAttributeList.html" title="IAttributeList" alt="" coords="557,1096,645,1122"/>
+<area shape="rect" id="node87" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IAudioProcessor.html" title="IAudioProcessor" alt="" coords="1007,747,1116,773"/>
+<area shape="rect" id="node91" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IConnectionPoint.html" title="IConnectionPoint" alt="" coords="545,820,658,846"/>
+<area shape="rect" id="node94" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IEditController2.html" title="IEditController2" alt="" coords="549,946,653,972"/>
+<area shape="rect" id="node97" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IEventList.html" title="IEventList" alt="" coords="564,1146,638,1172"/>
+<area shape="rect" id="node101" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IHostApplication.html" title="IHostApplication" alt="" coords="547,1195,655,1221"/>
+<area shape="rect" id="node105" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IInterAppAudioPresetManager.html" title="IInterAppAudioPresetManager" alt="" coords="510,695,693,721"/>
+<area shape="rect" id="node108" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IMessage.html" title="IMessage" alt="" coords="565,1343,638,1369"/>
+<area shape="rect" id="node112" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IParameterChanges.html" title="IParameterChanges" alt="" coords="537,1244,666,1270"/>
+<area shape="rect" id="node120" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IParamValueQueue.html" title="IParamValueQueue" alt="" coords="538,54,664,80"/>
+<area shape="rect" id="node126" href="$classSteinberg_1_1Vst_1_1IPlugProvider.html" title="Test Helper. " alt="" coords="555,1294,648,1320"/>
+<area shape="rect" id="node128" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IUnitInfo.html" title="IUnitInfo" alt="" coords="1028,971,1094,997"/>
+<area shape="rect" id="node54" href="$classSteinberg_1_1MemoryStream.html" title="Memory based Stream for IBStream implementation (using malloc). " alt="" coords="782,251,885,277"/>
+<area shape="rect" id="node56" href="$classSteinberg_1_1Vst_1_1BufferStream.html" title="Stream implementation for a memory buffer. " alt="" coords="787,103,879,129"/>
+<area shape="rect" id="node58" href="$classSteinberg_1_1Vst_1_1FileStream.html" title="Stream implementation for a file using stdio. " alt="" coords="794,152,873,178"/>
+<area shape="rect" id="node60" href="$classSteinberg_1_1Vst_1_1ReadOnlyBStream.html" title="Stream representing a Read&#45;Only subsection of its source stream. " alt="" coords="773,202,894,228"/>
+<area shape="rect" id="node65" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IComponent.html" title="IComponent" alt="" coords="790,846,877,872"/>
+<area shape="rect" id="node69" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IEditController.html" title="IEditController" alt="" coords="785,895,882,921"/>
+<area shape="rect" id="node74" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginFactory2.html" title="IPluginFactory2" alt="" coords="781,300,886,326"/>
+<area shape="rect" id="node76" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1IPluginFactory3.html" title="IPluginFactory3" alt="" coords="1009,300,1114,326"/>
+<area shape="rect" id="node78" href="$classSteinberg_1_1CPluginFactory.html" title="Default Class Factory implementation. " alt="" coords="1219,300,1322,326"/>
+<area shape="rect" id="node85" href="$classSteinberg_1_1Vst_1_1HostAttributeList.html" title="Implementation&#39;s example of IAttributeList. " alt="" coords="779,1096,888,1122"/>
+<area shape="rect" id="node99" href="$classSteinberg_1_1Vst_1_1EventList.html" title="Implementation&#39;s example of IEventList. " alt="" coords="798,1146,869,1172"/>
+<area shape="rect" id="node103" href="$classSteinberg_1_1Vst_1_1HostApplication.html" title="Implementation&#39;s example of IHostApplication. " alt="" coords="781,1195,886,1221"/>
+<area shape="rect" id="node110" href="$classSteinberg_1_1Vst_1_1HostMessage.html" title="Implementation&#39;s example of IMessage. " alt="" coords="786,1343,881,1369"/>
+<area shape="rect" id="node114" href="$classSteinberg_1_1Vst_1_1ParameterChanges.html" title="Implementation&#39;s example of IParameterChanges &#45; not threadsave!. " alt="" coords="771,1244,896,1270"/>
+<area shape="rect" id="node116" href="$classSteinberg_1_1Vst_1_1VstAutomationTest.html" title="Test Automation. " alt="" coords="773,1294,894,1320"/>
+<area shape="rect" id="node118" href="$classSteinberg_1_1Vst_1_1VstFlushParamTest.html" title="Test Parameters Flush (no Buffer). " alt="" coords="999,1294,1124,1320"/>
+<area shape="rect" id="node122" href="$classSteinberg_1_1Vst_1_1ParamChanges.html" title="VstAutomationTest helper classes: implementation of IParamValueQueue. " alt="" coords="781,54,886,80"/>
+<area shape="rect" id="node124" href="$classSteinberg_1_1Vst_1_1ParameterValueQueue.html" title="Implementation&#39;s example of IParamValueQueue &#45; not threadsave!. " alt="" coords="762,4,905,30"/>
+<area shape="rect" id="node132" href="$classSteinberg_1_1Vst_1_1VstTestBase.html" title="Test Helper. " alt="" coords="101,1935,189,1961"/>
+<area shape="rect" id="node134" href="$classSteinberg_1_1Vst_1_1VstBusActivationTest.html" title="Test Bus Activation. " alt="" coords="283,1712,416,1738"/>
+<area shape="rect" id="node136" href="$classSteinberg_1_1Vst_1_1VstBusConsistencyTest.html" title="Test Bus Consistency. " alt="" coords="276,1762,423,1788"/>
+<area shape="rect" id="node138" href="$classSteinberg_1_1Vst_1_1VstBusInvalidIndexTest.html" title="Test Bus Invalid Index. " alt="" coords="277,1811,422,1837"/>
+<area shape="rect" id="node140" href="$classSteinberg_1_1Vst_1_1VstCheckAudioBusArrangementTest.html" title="Test Check Audio Bus Arrangement. " alt="" coords="242,1860,457,1886"/>
+<area shape="rect" id="node142" href="$classSteinberg_1_1Vst_1_1VstEditorClassesTest.html" title="Test Scan Editor Classes. " alt="" coords="282,1910,417,1936"/>
+<area shape="rect" id="node144" href="$classSteinberg_1_1Vst_1_1VstInvalidStateTransitionTest.html" title="Test Invalid State Transition. " alt="" coords="262,1959,437,1985"/>
+<area shape="rect" id="node146" href="$classSteinberg_1_1Vst_1_1VstKeyswitchTest.html" title="Test Keyswitch. " alt="" coords="292,2008,407,2034"/>
+<area shape="rect" id="node148" href="$classSteinberg_1_1Vst_1_1VstMidiMappingTest.html" title="Test MIDI Mapping. " alt="" coords="285,2058,414,2084"/>
+<area shape="rect" id="node150" href="$classSteinberg_1_1Vst_1_1VstNoteExpressionTest.html" title="Test Note Expression. " alt="" coords="277,2107,422,2133"/>
+<area shape="rect" id="node152" href="$classSteinberg_1_1Vst_1_1VstProgramInfoTest.html" title="Test Scan Programs. " alt="" coords="286,2156,413,2182"/>
+<area shape="rect" id="node154" href="$classSteinberg_1_1Vst_1_1VstRepeatIdenticalStateTransitionTest.html" title="Test Repeat Identical State Transition. " alt="" coords="237,2206,461,2232"/>
+<area shape="rect" id="node156" href="$classSteinberg_1_1Vst_1_1VstScanBussesTest.html" title="Test Scan Buses. " alt="" coords="286,2255,413,2281"/>
+<area shape="rect" id="node158" href="$classSteinberg_1_1Vst_1_1VstScanParametersTest.html" title="Test Scan Parameters. " alt="" coords="274,2304,424,2330"/>
+<area shape="rect" id="node160" href="$classSteinberg_1_1Vst_1_1VstTerminateInitializeTest.html" title="Test Terminate/Initialize. " alt="" coords="271,2354,428,2380"/>
+<area shape="rect" id="node162" href="$classSteinberg_1_1Vst_1_1VstTestEnh.html" title="Test Helper. " alt="" coords="308,1515,390,1541"/>
+<area shape="rect" id="node181" href="$classSteinberg_1_1Vst_1_1VstUnitInfoTest.html" title="Test Scan Units. " alt="" coords="298,1564,400,1590"/>
+<area shape="rect" id="node183" href="$classSteinberg_1_1Vst_1_1VstUnitStructureTest.html" title="Test Check Unit Structure. " alt="" coords="284,1614,415,1640"/>
+<area shape="rect" id="node185" href="$classSteinberg_1_1Vst_1_1VstValidStateTransitionTest.html" title="Test Valid State Transition. " alt="" coords="266,1663,433,1689"/>
+<area shape="rect" id="node164" href="$classSteinberg_1_1Vst_1_1VstProcessTest.html" title="Test Process Test. " alt="" coords="549,1491,653,1517"/>
+<area shape="rect" id="node179" href="$classSteinberg_1_1Vst_1_1VstSuspendResumeTest.html" title="Test Suspend/Resume. " alt="" coords="525,1540,678,1566"/>
+<area shape="rect" id="node167" href="$classSteinberg_1_1Vst_1_1VstProcessFormatTest.html" title="Test Process Format. " alt="" coords="762,1590,904,1616"/>
+<area shape="rect" id="node169" href="$classSteinberg_1_1Vst_1_1VstProcessTailTest.html" title="Test ProcesTail. " alt="" coords="772,1639,894,1665"/>
+<area shape="rect" id="node171" href="$classSteinberg_1_1Vst_1_1VstSilenceFlagsTest.html" title="Test Silence Flags. " alt="" coords="769,1392,898,1418"/>
+<area shape="rect" id="node173" href="$classSteinberg_1_1Vst_1_1VstSilenceProcessingTest.html" title="Test Silence Processing. " alt="" coords="754,1442,913,1468"/>
+<area shape="rect" id="node175" href="$classSteinberg_1_1Vst_1_1VstSpeakerArrangementTest.html" title="Test Speaker Arrangement. " alt="" coords="746,1491,921,1517"/>
+<area shape="rect" id="node177" href="$classSteinberg_1_1Vst_1_1VstVariableBlockSizeTest.html" title="Test Variable Block Size. " alt="" coords="755,1540,912,1566"/>
+</map>

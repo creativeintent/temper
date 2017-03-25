@@ -1,0 +1,4 @@
+<map id="EventList" name="EventList">
+<area shape="rect" id="node2" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag$classSteinberg_1_1Vst_1_1IEventList.html" title="{IEventList\n|+ iid\l|+ getEventCount()\l+ getEvent()\l+ addEvent()\l}" alt="" coords="10,158,128,260"/>
+<area shape="rect" id="node4" href="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag$classSteinberg_1_1FUnknown.html" title="{FUnknown\n|+ iid\l|+ queryInterface()\l+ addRef()\l+ release()\l}" alt="" coords="11,6,127,108"/>
+</map>

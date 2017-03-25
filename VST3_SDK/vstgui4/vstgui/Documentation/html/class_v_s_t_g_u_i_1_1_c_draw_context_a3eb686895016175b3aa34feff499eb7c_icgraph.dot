@@ -1,0 +1,22 @@
+digraph "setClipRect"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setClipRect",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="init",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_draw_context.html#a02fd73d861ef2e4aabb38c0c9ff82947"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFrame::drawRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a530199c9ce307c3c7aa37e8f7acd75fb",tooltip="called if the view should draw itself "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CFrame::draw",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a83ee48340580dff7f1796dbebe7b0a0f",tooltip="called if the view should draw itself "];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CFrame::platform\lDrawRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a13531c5a9bf691d4ec9a71fee3fda3df"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CParamDisplay\l::drawPlatformText",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_param_display.html#aca4ad9ea1bcf86e78c59c65dc8062b7f"];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CSegmentButton\l::drawRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_segment_button.html#abe8cbffc7cff7c218cd112b6d53612df",tooltip="called if the view should draw itself "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CTabView::drawBackgroundRect",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_tab_view.html#a73195afa396240ad593e6a07dc412528",tooltip="draw the background "];
+}

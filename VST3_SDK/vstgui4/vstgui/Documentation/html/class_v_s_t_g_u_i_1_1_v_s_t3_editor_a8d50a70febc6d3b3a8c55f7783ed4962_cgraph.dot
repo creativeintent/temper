@@ -1,0 +1,47 @@
+digraph "onKeyDown"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="onKeyDown",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="enableEditing",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a735597df0f43568cb501ebe71efa5d6d"];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CView::getAutosize\lFlags",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a9f099f38b6d6d1057bbd3e6bac0db433",tooltip="get autosize flags "];
+  Node2 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CView::setAutosize\lFlags",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a8b132bc89c5168ff1601ac77aad7afbb",tooltip="set autosize flags "];
+  Node2 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CView::getWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a8b4fe88292b8e95807a9b07a26cd1cb1",tooltip="get the width of the view "];
+  Node5 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CRect::getWidth",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a8b4fe88292b8e95807a9b07a26cd1cb1"];
+  Node2 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CView::getHeight",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a1f4be3a475a8fb7d8defa4621c01558d",tooltip="get the height of the view "];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CRect::getHeight",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a1f4be3a475a8fb7d8defa4621c01558d"];
+  Node2 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::COptionMenu\l::addEntry",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#a23dccef5325b1c8b8409bbd96449ee2e",tooltip="add a new entry "];
+  Node9 -> Node10 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::COptionMenu\l::getNbEntries",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#adee7672985693efe9c38a8897f12936d",tooltip="get number of entries "];
+  Node2 -> Node11 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node11 [label="VSTGUI::CMenuItem::\lsetKey",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_menu_item.html#a9a8e0a706e76bb8c2adf5ac1a3b16403",tooltip="set keycode and key modifiers of menu item "];
+  Node11 -> Node12 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node12 [label="VSTGUI::String::free",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#af30ee7f201c1f86d9aceb849d6d08fbf"];
+  Node11 -> Node13 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node13 [label="VSTGUI::String::newWithString",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#a83745b23a3d48e4f1e69950977918803"];
+  Node13 -> Node14 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node14 [label="VSTGUI::UTF8StringView\l::calculateByteCount",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_string_view.html#a67b9d83785a9c0fc5a668303de116803"];
+  Node2 -> Node15 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node15 [label="VSTGUI::COptionMenu\l::addSeparator",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_option_menu.html#a9eb257c26848669f9ff071a568294eb0",tooltip="add a new separator entry "];
+  Node15 -> Node9 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 -> Node16 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node16 [label="VSTGUI::CBaseObject\l::forget",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8",tooltip="decrease refcount and delete object if refcount == 0 "];
+  Node16 -> Node17 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node17 [label="VSTGUI::CBaseObject\l::beforeDelete",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b"];
+  Node2 -> Node18 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node18 [label="VSTGUI::UIAttributes\l::getAttributeValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#a80dddbc022b66698cf7a00620efbcd88"];
+  Node2 -> Node19 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node19 [label="VSTGUI::UIAttributes\l::setAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#a6080c68ac82148bc668e9218b1d39854"];
+  Node2 -> Node20 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node20 [label="VSTGUI::UIAttributes\l::removeAttribute",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#ac1e94a1974bc1493e99e586e11349054"];
+}

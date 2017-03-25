@@ -1,0 +1,25 @@
+digraph "getSplitViewSizeConstraint"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getSplitViewSizeConstraint",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CSplitView\l::requestNewSeparatorSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a129ba2469954235dd9ad1eb7f9c5ca4c"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CSplitView\l::setSeparatorWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a9fb9f90a3230b7fe496791ea67986e2d",tooltip="set the width of the separators "];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CSplitView\l::resizeFirstView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ad6ece4580634fc04e425a521c327125d"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CSplitView\l::setViewSize",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ada1ffb857aa147620f2d01522b37569d",tooltip="set views size "];
+  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CSplitView\l::resizeSecondView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a7d515066dd3e7c3d0960c3da1502f64c"];
+  Node6 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CSplitView\l::resizeLastView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a54f2ef725a3284c7cadc1cc0c7dcc527"];
+  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CSplitView\l::resizeViewsEqual",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#ac98cefe207ff01ac2532c39dd3a85619"];
+  Node8 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+}

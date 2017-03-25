@@ -1,0 +1,26 @@
+digraph "removeAll"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="removeAll",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::CFrame::removeAll",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a58740e67e93e5e4e275439ae9f6a3c80",tooltip="remove all child views "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFrame::~CFrame",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#ad1bf70520cdd1e1663d122f8a84d017b"];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::CFrame::close",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_frame.html#a5ae591df94fc66ccb85cbb6565368bca",tooltip="closes the frame and calls forget "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CSplitView\l::removeAll",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_split_view.html#a58740e67e93e5e4e275439ae9f6a3c80",tooltip="remove all child views "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::UIViewSwitchContainer\l::setCurrentViewIndex",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_switch_container.html#ad3561a0c13cf9120d316e062da592eaa"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::UIDescriptionView\lSwitchController::notify",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description_view_switch_controller.html#a15414e56ad0060f4b50f81ff44ad2a3e"];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::UIDescriptionView\lSwitchController::switchContainer\lAttached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description_view_switch_controller.html#a93bd431f3ff3c9d4b70eb58b30219499"];
+  Node1 -> Node9 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node9 [label="VSTGUI::UIViewSwitchContainer\l::attached",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_switch_container.html#a80b16ccff7902bff173730d061e83c0b",tooltip="view is attached to a parent view "];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node10 [label="VSTGUI::UIViewSwitchContainer\l::removed",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_view_switch_container.html#a49265b3f3a104df683a4fb5867d09555",tooltip="view is removed from parent view "];
+}

@@ -1,0 +1,4 @@
+<map id="VST 3 Interfaces defined in version 3.6.0" name="VST 3 Interfaces defined in version 3.6.0">
+<area shape="rect" id="node1" href="$group__vstIHost.html" title="VST 3 Interfaces to\l be implemented by the Host" alt="" coords="385,15,559,55"/>
+<area shape="rect" id="node2" href="$group__vstIPlug.html" title="VST 3 Interfaces to\l be implemented by the\l Plug&#45;in" alt="" coords="399,93,545,147"/>
+</map>

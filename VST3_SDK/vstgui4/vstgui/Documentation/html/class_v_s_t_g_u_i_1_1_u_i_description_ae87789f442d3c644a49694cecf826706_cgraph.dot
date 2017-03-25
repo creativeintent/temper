@@ -1,0 +1,18 @@
+digraph "saveWindowsRCFile"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="saveWindowsRCFile",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="getBaseNode",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_description.html#a2b0f673945c12c2dbf13ecdb4d768bf1"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CFileStream\l::open",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_file_stream.html#a46e351ecfc8ca894cb1ac490c095c792"];
+  Node3 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::InputStream\l::setByteOrder",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_input_stream.html#a3bb8e967e96ebbc930b753ce8f3b0b7a"];
+  Node3 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::OutputStream\l::setByteOrder",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_output_stream.html#a3bb8e967e96ebbc930b753ce8f3b0b7a"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::UIAttributes\l::getAttributeValue",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_i_attributes.html#a80dddbc022b66698cf7a00620efbcd88"];
+}

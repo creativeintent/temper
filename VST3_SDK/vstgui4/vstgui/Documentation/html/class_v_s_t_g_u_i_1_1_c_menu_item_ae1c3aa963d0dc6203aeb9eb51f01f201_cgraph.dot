@@ -1,0 +1,16 @@
+digraph "setVirtualKey"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="setVirtualKey",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="setKey",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_menu_item.html#a9a8e0a706e76bb8c2adf5ac1a3b16403",tooltip="set keycode and key modifiers of menu item "];
+  Node2 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::String::free",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#af30ee7f201c1f86d9aceb849d6d08fbf"];
+  Node2 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::String::newWithString",height=0.2,width=0.4,color="black",URL="$namespace_v_s_t_g_u_i_1_1_string.html#a83745b23a3d48e4f1e69950977918803"];
+  Node4 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::UTF8StringView\l::calculateByteCount",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_u_t_f8_string_view.html#a67b9d83785a9c0fc5a668303de116803"];
+}

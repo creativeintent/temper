@@ -1,0 +1,22 @@
+digraph "getCellBounds"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="getCellBounds",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::IDataBrowserDelegate\l::dbGetLineWidthAndColor",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a7b36a55bd733ed49b370c6d6e2057111",tooltip="return the line width and color "];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::IDataBrowserDelegate\l::dbGetRowHeight",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a302018b7876e6b43d7dc7602e78e3574",tooltip="return height of one row "];
+  Node1 -> Node4 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::IDataBrowserDelegate\l::dbGetCurrentColumnWidth",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_data_browser_delegate.html#a1b8544e2a333509ebea48e20452e0ec0",tooltip="return current width of index column "];
+  Node1 -> Node5 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::CRect::offset",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a3b15bdeea464922589dfe91b21d991ce"];
+  Node1 -> Node6 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::CRect::setWidth",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a7e69f8e49a406917215c3260790d4698"];
+  Node6 -> Node7 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node7 [label="VSTGUI::CRect::width",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#aac17e64c594f7da1f088efeb1e53f114"];
+  Node7 -> Node8 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node8 [label="VSTGUI::CRect::getWidth",height=0.2,width=0.4,color="black",URL="$struct_v_s_t_g_u_i_1_1_c_rect.html#a8b4fe88292b8e95807a9b07a26cd1cb1"];
+}

@@ -1,0 +1,18 @@
+digraph "containsControl"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="containsControl",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="addControl",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#a838ba0753537ab62e6b68c810b5b1f41"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="ParameterChangeListener",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_parameter_change_listener.html#a8191a258793d1ab3889af52a772bf84a"];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node4 [label="VSTGUI::VST3Editor\l::controlTagDidChange",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a3c43308976983d62b03b089297c88167"];
+  Node2 -> Node5 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node5 [label="VSTGUI::VST3Editor\l::verifyView",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a0a12d9bd75a7a62d1c5fdb0ab5ee4a40"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node6 [label="VSTGUI::VST3Editor\l::findParameter",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#a5e8a54b38e066707aafef5136f7635a0"];
+}

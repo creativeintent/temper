@@ -1,0 +1,12 @@
+digraph "CMovieButton"
+{
+  bgcolor="transparent";
+  edge [fontname="Arial",fontsize="9",labelfontname="Arial",labelfontsize="9"];
+  node [fontname="Arial",fontsize="9",shape=record];
+  rankdir="LR";
+  Node1 [label="CMovieButton",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node2 [label="VSTGUI::IMultiBitmapControl\l::setHeightOfOneImage",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_i_multi_bitmap_control.html#a307049d43a2dbda1418a94c88a6f47fb"];
+  Node1 -> Node3 [color="midnightblue",fontsize="9",style="solid",fontname="Arial"];
+  Node3 [label="VSTGUI::CView::setWantsFocus",height=0.2,width=0.4,color="black",URL="$class_v_s_t_g_u_i_1_1_c_view.html#a7c938477f787fe59b0eacb147a8c03a5",tooltip="set focus support on/off "];
+}

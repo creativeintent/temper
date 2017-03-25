@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node3" href="$classSteinberg_1_1FComparablePtr.html" title="Extends IPtr to allow comparison in containers. " alt="" coords="105,4,239,30"/>
+<area shape="rect" id="node5" href="$classSteinberg_1_1FSortablePtr.html" title="Extends IPtr to allow sorted containers. " alt="" coords="116,54,228,80"/>
+<area shape="rect" id="node7" href="$classSteinberg_1_1ISortablePtr.html" title="ISortablePtr\&lt; T, Compare\lFunc \&gt;" alt="" coords="94,104,250,144"/>
+</map>
