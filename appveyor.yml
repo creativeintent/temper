@@ -27,3 +27,10 @@ build:
   publish_nuget: false
   publish_nuget_symbols: false
   include_nuget_references: false
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  - path: Builds/VisualStudio2015/Debug
