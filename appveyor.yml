@@ -38,5 +38,7 @@ build:
 #---------------------------------#
 
 artifacts:
-  - path: Builds/VisualStudio2015/Debug/mxzero.dll
-  - path: Builds/VisualStudio2015/Debug/mxzero.vst3
+  - path: Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.dll
+    name: mxzero-$(version)-$(platform)-$(configuration).dll
+  - path: Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.vst3
+    name: mxzero-$(version)-$(platform)-$(configuration).vst3
