@@ -17,6 +17,8 @@ matrix:
   allow_failures:
     - platform: x64
       configuration: Debug
+    - platform: x86
+      configuration: Debug
 
 build:
   parallel: true
