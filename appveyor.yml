@@ -1,0 +1,28 @@
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# Build worker image (VM template)
+image: Visual Studio 2015
+
+# Fetch repository as zip archive
+shallow_clone: true 
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - platform: x64
+      configuration: Debug
+      build:
+        parallel: true
+        project: ./Builds/VisualStudio2015/mxzero.sln
+        publish_wap: false
+        publish_wap_xcopy: false
+        publish_azure: false
+        publish_nuget: false
+        publish_nuget_symbols: false
+        include_nuget_references: false
