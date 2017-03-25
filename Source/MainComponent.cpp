@@ -149,6 +149,10 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     offsetAttachment = new SliderAttachment(m_vts, "offset", *m_biasSlider);
     feedbackAttachment = new SliderAttachment(m_vts, "feedback", *m_feedbackSlider);
     levelAttachment = new SliderAttachment(m_vts, "level", *m_gainSlider);
+
+    m_cutoffSlider->setTextValueSuffix("Hz");
+    m_feedbackSlider->setTextValueSuffix("dB");
+    m_gainSlider->setTextValueSuffix("dB");
     //[/Constructor]
 }
 
