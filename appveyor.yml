@@ -17,12 +17,13 @@ matrix:
   allow_failures:
     - platform: x64
       configuration: Debug
-      build:
-        parallel: true
-        project: ./Builds/VisualStudio2015/mxzero.sln
-        publish_wap: false
-        publish_wap_xcopy: false
-        publish_azure: false
-        publish_nuget: false
-        publish_nuget_symbols: false
-        include_nuget_references: false
+
+build:
+  parallel: true
+  project: ./Builds/VisualStudio2015/mxzero.sln
+  publish_wap: false
+  publish_wap_xcopy: false
+  publish_azure: false
+  publish_nuget: false
+  publish_nuget_symbols: false
+  include_nuget_references: false
