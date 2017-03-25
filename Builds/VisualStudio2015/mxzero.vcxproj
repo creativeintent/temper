@@ -134,6 +134,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MxzLookAndFeel.cpp"/>
     <ClCompile Include="..\..\Source\RestrictionProcessor.cpp"/>
     <ClCompile Include="..\..\Source\FaustUIBridge.cpp"/>
@@ -1796,6 +1797,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MxzLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\RestrictionProcessor.h"/>
     <ClInclude Include="..\..\Source\FaustUIBridge.h"/>

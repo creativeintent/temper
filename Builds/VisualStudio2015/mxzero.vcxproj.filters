@@ -379,6 +379,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\MainComponent.cpp">
+      <Filter>mxzero\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MxzLookAndFeel.cpp">
       <Filter>mxzero\Source</Filter>
     </ClCompile>
@@ -2220,6 +2223,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\MainComponent.h">
+      <Filter>mxzero\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MxzLookAndFeel.h">
       <Filter>mxzero\Source</Filter>
     </ClInclude>
