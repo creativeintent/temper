@@ -4175,9 +4175,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Source\Background.png">
-      <Filter>mxzero\Source</Filter>
-    </None>
     <None Include="..\..\Source\public.keys">
       <Filter>mxzero\Source</Filter>
     </None>

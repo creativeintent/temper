@@ -16,7 +16,6 @@
             file="Source/MxzLookAndFeel.cpp"/>
       <FILE id="m9PJXn" name="MxzLookAndFeel.h" compile="0" resource="0"
             file="Source/MxzLookAndFeel.h"/>
-      <FILE id="i8f0Lc" name="Background.png" compile="0" resource="1" file="Source/Background.png"/>
       <FILE id="AfFDlA" name="public.keys" compile="0" resource="1" file="Source/public.keys"/>
       <FILE id="uN8X87" name="RestrictionProcessor.cpp" compile="1" resource="0"
             file="Source/RestrictionProcessor.cpp"/>

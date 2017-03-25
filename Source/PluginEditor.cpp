@@ -68,8 +68,7 @@ MxzeroAudioProcessorEditor::~MxzeroAudioProcessorEditor()
 //==============================================================================
 void MxzeroAudioProcessorEditor::paint (Graphics& g)
 {
-    Image bg = ImageCache::getFromMemory(BinaryData::Background_png, BinaryData::Background_pngSize);
-    g.drawImageAt(bg.rescaled(744, 476), 0, 0);
+    g.fillAll(Colours::darkslategrey);
 }
 
 void MxzeroAudioProcessorEditor::resized()
