@@ -159,6 +159,17 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
 MainComponent::~MainComponent()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
+    // This has to happen before we null out the Sliders themselves because
+    // when the ScopedPointer<> delete policy tries to remove Listeners from
+    // the SliderAttachment it refers to the Sliders themselves. If the Sliders
+    // have already been deleted at that point then we get a null pointer error.
+    filterFreqAttachment = nullptr;
+    filterResoAttachment = nullptr;
+    driveAttachment = nullptr;
+    curveAttachment = nullptr;
+    offsetAttachment = nullptr;
+    feedbackAttachment = nullptr;
+    levelAttachment = nullptr;
     //[/Destructor_pre]
 
     m_cutoffSlider = nullptr;
