@@ -10,8 +10,7 @@ shallow_clone: true
 
 # Build platforms; can specify an array here for multiple builds.
 platform:
-  - Win32
-  - x64
+  - Any CPU
 
 configuration:
   - Debug32
