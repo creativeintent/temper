@@ -8,10 +8,6 @@ image: Visual Studio 2015
 # Fetch repository as zip archive
 shallow_clone: true 
 
-# Build platforms; can specify an array here for multiple builds.
-platform:
-  - Any CPU
-
 configuration:
   - Debug32
   - Debug64
@@ -20,15 +16,6 @@ configuration:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - platform: Win32
-      configuration: Debug64
-    - platform: x64
-      configuration: Debug32
-    - platform: Win32
-      configuration: Release64
-    - platform: x64
-      configuration: Release32
 
 #---------------------------------#
 #       build configuration       #
