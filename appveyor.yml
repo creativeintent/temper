@@ -8,11 +8,13 @@ image: Visual Studio 2015
 # Fetch repository as zip archive
 shallow_clone: true 
 
+platform:
+ - Win32
+ - x64
+
 configuration:
-  - Debug32
-  - Debug64
-  - Release32
-  - Release64
+  - Debug
+  - Release
 
 matrix:
   fast_finish: true
