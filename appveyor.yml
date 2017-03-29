@@ -10,11 +10,12 @@ shallow_clone: true
 
 # Build platforms; can specify an array here for multiple builds.
 platform:
+  - Win32
   - x64
-#  - x86
 
 configuration:
   - Debug
+  - Release
 
 matrix:
   fast_finish: true
