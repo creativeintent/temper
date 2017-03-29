@@ -4,14 +4,20 @@ Project("{B94A52D6-5C64-6F17-D023-6BD5505EFD31}") = "mxzero", "mxzero.vcxproj", 
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Release|x64 = Release|x64
+		Debug32|Win32 = Debug32|Win32
+		Debug64|x64 = Debug64|x64
+		Release32|Win32 = Release32|Win32
+		Release64|x64 = Release64|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{82329037-B926-5E14-DA60-03494472AD3C}.Debug|x64.ActiveCfg = Debug|x64
-		{82329037-B926-5E14-DA60-03494472AD3C}.Debug|x64.Build.0 = Debug|x64
-		{82329037-B926-5E14-DA60-03494472AD3C}.Release|x64.ActiveCfg = Release|x64
-		{82329037-B926-5E14-DA60-03494472AD3C}.Release|x64.Build.0 = Release|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Debug32|Win32.ActiveCfg = Debug32|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Debug32|Win32.Build.0 = Debug32|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Debug64|x64.ActiveCfg = Debug64|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Debug64|x64.Build.0 = Debug64|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Release32|Win32.ActiveCfg = Release32|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Release32|Win32.Build.0 = Release32|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Release64|x64.ActiveCfg = Release64|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Release64|x64.Build.0 = Release64|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

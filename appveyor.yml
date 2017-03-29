@@ -14,11 +14,22 @@ platform:
   - x64
 
 configuration:
-  - Debug
-  - Release
+  - Debug32
+  - Debug64
+  - Release32
+  - Release64
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - platform: Win32
+      configuration: Debug64
+    - platform: x64
+      configuration: Debug32
+    - platform: Win32
+      configuration: Release64
+    - platform: x64
+      configuration: Release32
 
 #---------------------------------#
 #       build configuration       #
