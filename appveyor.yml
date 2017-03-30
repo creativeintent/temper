@@ -39,4 +39,14 @@ build:
 
 artifacts:
   - path: Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.dll
+    name: $(configuration)/mxzero ($(platform)).dll
   - path: Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.vst3
+    name: $(configuration)/mxzero ($(platform)).vst3
+#
+#---------------------------------#
+#      deployment configuration   #
+#---------------------------------#
+
+deploy:
+  - provider: Environment
+    name: mxzero
