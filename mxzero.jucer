@@ -66,16 +66,16 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="mxzero" headerPath="../../Include"
-                       binaryPath="Win32/Debug/"/>
+                       binaryPath="Builds/VisualStudio2015/Win32/Debug/"/>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="mxzero" headerPath="../../Include"
-                       binaryPath="x64/Debug"/>
+                       binaryPath="Builds/VisualStudio2015/x64/Debug/"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="mxzero" headerPath="../../Include"
-                       binaryPath="Win32/Release"/>
+                       binaryPath="Builds/VisualStudio2015/Win32/Release/"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="mxzero" headerPath="../../Include"
-                       binaryPath="x64/Release"/>
+                       binaryPath="Builds/VisualStudio2015/x64/Release/"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
