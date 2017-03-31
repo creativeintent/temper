@@ -33,15 +33,17 @@ build:
   publish_nuget_symbols: false
   include_nuget_references: false
 
+after_build:
+  - cmd: copy Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.dll $(configuration)/mxzero\ $(platform).dll
+  - cmd: copy Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.vst3 $(configuration)/mxzero\ $(platform).vst3
+
 #---------------------------------#
 #      artifacts configuration    #
 #---------------------------------#
 
 artifacts:
-  - path: Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.dll
-    name: $(configuration)/mxzero ($(platform)).dll
-  - path: Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.vst3
-    name: $(configuration)/mxzero ($(platform)).vst3
+  - path: $(configuration)/mxzero\ $(platform).dll
+  - path: $(configuration)/mxzero\ $(platform).vst3
 #
 #---------------------------------#
 #      deployment configuration   #
@@ -50,6 +52,5 @@ artifacts:
 deploy:
   - provider: Environment
     name: mxzero
-    folder: $(appveyor_repo_tag_name)
     on:
       appveyor_repo_tag: true
