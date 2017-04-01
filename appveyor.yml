@@ -15,6 +15,7 @@ platform:
 configuration:
   - Debug
   - Release
+  - Demo
 
 matrix:
   fast_finish: true
@@ -38,10 +39,8 @@ build:
 #---------------------------------#
 
 artifacts:
-  - path: Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.dll
-    name: $(configuration)/mxzero ($(platform)).dll
-  - path: Builds/VisualStudio2015/$(platform)/$(configuration)/mxzero.vst3
-    name: $(configuration)/mxzero ($(platform)).vst3
+  - path: Builds/VisualStudio2015/$(configuration)/*.dll
+  - path: Builds/VisualStudio2015/$(configuration)/*.vst3
 #
 #---------------------------------#
 #      deployment configuration   #
@@ -50,6 +49,5 @@ artifacts:
 deploy:
   - provider: Environment
     name: mxzero
-    folder: $(appveyor_repo_tag_name)
     on:
       appveyor_repo_tag: true
