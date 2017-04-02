@@ -8,18 +8,27 @@ deploy_win() {
     S3BUCKET="s3://mxzero"
     S3DIR="$S3BUCKET/$1"
     TMPDIR="$(mktemp -d)"
-    OUTDIR="$TMPDIR/zip"
+    RELEASEDIR="$TMPDIR/zip/release"
+    DEMODIR="$TMPDIR/zip/demo"
 
     aws s3 sync $S3DIR $TMPDIR
-    mkdir -p $TMPDIR/zip
-    mv $TMPDIR/Builds/VisualStudio2015/Win32/Release/mxzero.dll $OUTDIR/mxzero.dll
-    mv $TMPDIR/Builds/VisualStudio2015/Win32/Release/mxzero.vst3 $OUTDIR/mxzero.vst3
-    mv $TMPDIR/Builds/VisualStudio2015/x64/Release/mxzero.dll $OUTDIR/mxzero\ \(x64\).dll
-    mv $TMPDIR/Builds/VisualStudio2015/x64/Release/mxzero.vst3 $OUTDIR/mxzero\ \(x64\).vst3
 
-    pushd $OUTDIR
+    mkdir -p $RELEASEDIR
+    mv $TMPDIR/Builds/VisualStudio2015/Release/*.dll $RELEASEDIR
+    mv $TMPDIR/Builds/VisualStudio2015/Release/*.vst3 $RELEASEDIR
+
+    mkdir -p $DEMODIR
+    mv $TMPDIR/Builds/VisualStudio2015/Demo/*.dll $DEMODIR
+    mv $TMPDIR/Builds/VisualStudio2015/Demo/*.vst3 $DEMODIR
+
+    pushd $RELEASEDIR
         zip -rq4 mxzero-$1.zip .
         aws s3 cp mxzero-$1.zip $S3BUCKET
+    popd
+
+    pushd $DEMODIR
+        zip -rq4 mxzero-$1-Demo.zip .
+        aws s3 cp mxzero-$1-Demo.zip $S3BUCKET
     popd
 }
 
