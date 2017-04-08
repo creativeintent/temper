@@ -18,6 +18,7 @@ SpectroscopeComponent::SpectroscopeComponent()
     m_fftBlockReady(false),
     m_forwardFFT(kFFTOrder, false)
 {
+    zeromem(m_outputData, sizeof(m_outputData));
     setSize(700, 200);
 }
 
@@ -47,6 +48,27 @@ void SpectroscopeComponent::paint (Graphics& g)
 
 void SpectroscopeComponent::resized()
 {
+}
+
+void SpectroscopeComponent::timerCallback()
+{
+    if (m_fftBlockReady)
+    {
+        // Compute the frequency transform
+        m_forwardFFT.performFrequencyOnlyForwardTransform(m_fftData);
+
+        // Copy the frequency bins into the output data buffer, taking
+        // max(output[i], fftData[i]) for each bin.
+        FloatVectorOperations::max(m_outputData, m_outputData, m_fftData, kFFTSize);
+
+        m_fftBlockReady = false;
+    }
+
+    // Decay the output bin magnitudes
+    for (int i = 0; i < kFFTSize; ++i)
+        m_outputData[i] *= 0.707f;
+
+    repaint();
 }
 
 void SpectroscopeComponent::pushBuffer(AudioSampleBuffer &buffer)

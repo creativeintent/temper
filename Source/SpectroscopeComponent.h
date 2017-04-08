@@ -16,7 +16,8 @@
 //==============================================================================
 /*
 */
-class SpectroscopeComponent    : public Component
+class SpectroscopeComponent    : public Component,
+                                 private Timer
 {
 public:
     SpectroscopeComponent();
@@ -24,6 +25,7 @@ public:
 
     void paint (Graphics&) override;
     void resized() override;
+    void timerCallback() override;
 
     void pushBuffer (AudioSampleBuffer& buffer);
     inline void pushSample (float sample);
