@@ -33,12 +33,13 @@ public:
     enum {
         kFFTOrder = 10,
         kFFTSize = 1024, // 2^10
+        kOutputSize = 512, // 1024 / 2
     };
 
 private:
     float m_fifo [kFFTSize];
     float m_fftData [2 * kFFTSize];
-    float m_outputData [kFFTSize];
+    float m_outputData [kOutputSize];
 
     unsigned int m_fifoIndex;
     bool m_fftBlockReady;

@@ -30,12 +30,12 @@ void SpectroscopeComponent::paint (Graphics& g)
 {
     const float width = (float) getWidth();
     const float height = (float) getHeight();
-    const float xScale = width / (float) kFFTSize;
+    const float xScale = width / (float) kOutputSize;
 
     Path p;
     p.startNewSubPath(0.0f, 0.0f);
 
-    for (int i = 0; i < kFFTSize; ++i)
+    for (int i = 0; i < kOutputSize; ++i)
     {
         const float x = (float) i * xScale;
         const float y = height - height * m_outputData[i];
@@ -60,14 +60,17 @@ void SpectroscopeComponent::timerCallback()
         m_forwardFFT.performFrequencyOnlyForwardTransform(m_fftData);
 
         // Copy the frequency bins into the output data buffer, taking
-        // max(output[i], fftData[i]) for each bin.
-        FloatVectorOperations::max(m_outputData, m_outputData, m_fftData, kFFTSize);
+        // max(output[i], fftData[i]) for each bin. Note that after computing the
+        // FrequencyOnlyForwardTransform on an array A of size N, A[N/2, N) is full
+        // of zeros, and A[0, N/4) is a mirror of A[N/4, N/2). Therefore we only copy
+        // kFFTSize / 2 samples into the output data buffer here.
+        FloatVectorOperations::max(m_outputData, m_outputData, m_fftData, kOutputSize);
 
         m_fftBlockReady = false;
     }
 
     // Decay the output bin magnitudes
-    for (int i = 0; i < kFFTSize; ++i)
+    for (int i = 0; i < kOutputSize; ++i)
         m_outputData[i] *= 0.707f;
 
     repaint();
