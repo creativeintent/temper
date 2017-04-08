@@ -15,7 +15,8 @@
 SpectroscopeComponent::SpectroscopeComponent()
 :   m_fifoIndex(0),
     m_fftBlockReady(false),
-    m_forwardFFT(kFFTOrder, false)
+    m_forwardFFT(kFFTOrder, false),
+    m_baseColour(Colours::white)
 {
     zeromem(m_outputData, sizeof(m_outputData));
     setSize(700, 200);
@@ -43,7 +44,7 @@ void SpectroscopeComponent::paint (Graphics& g)
     Path p;
     p.startNewSubPath(0.0f, height);
 
-    for (int i = 0; i < kOutputSize; ++i)
+    for (int i = 1; i < kOutputSize; ++i)
     {
         const float xPos = (float) i / (float) kOutputSize;
         const float x = std::exp(std::log(xPos) * 0.2f) * width;
@@ -55,16 +56,16 @@ void SpectroscopeComponent::paint (Graphics& g)
     }
 
     // Clear the drawing target
-    g.setColour(Colours::black);
+    g.setColour(Colours::transparentBlack);
     g.fillAll();
 
     // Stroke the line
-    g.setColour(Colours::green);
+    g.setColour(m_baseColour);
     g.strokePath(p, PathStrokeType(1.0f));
 
     // Fill under the line with a gradient
-    Colour start((uint8) 0, (uint8) 255, (uint8) 0, (uint8) 40);
-    Colour stop((uint8) 0, (uint8) 255, (uint8) 0, (uint8) 200);
+    Colour start = m_baseColour.withAlpha(0.2f);
+    Colour stop = m_baseColour.withAlpha(0.8f);
 
     p.closeSubPath();
     g.setGradientFill(ColourGradient(start, 0.0f, height, stop, 0.0f, 0.0f, false));
@@ -129,4 +130,9 @@ inline void SpectroscopeComponent::pushSample(float sample)
     }
 
     m_fifo[m_fifoIndex++] = sample;
+}
+
+void SpectroscopeComponent::setBaseColour(Colour c)
+{
+    m_baseColour = c;
 }

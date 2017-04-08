@@ -29,6 +29,7 @@ public:
 
     void pushBuffer (AudioSampleBuffer& buffer);
     inline void pushSample (float sample);
+    void setBaseColour (Colour c);
 
     enum {
         kFFTOrder = 10,
@@ -45,6 +46,7 @@ private:
     bool m_fftBlockReady;
 
     FFT m_forwardFFT;
+    Colour m_baseColour;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectroscopeComponent)
 };

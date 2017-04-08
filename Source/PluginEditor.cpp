@@ -29,7 +29,7 @@ MxzeroAudioProcessorEditor::~MxzeroAudioProcessorEditor()
 //==============================================================================
 void MxzeroAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll(Colours::darkslategrey);
+    g.fillAll(Colours::black);
 }
 
 void MxzeroAudioProcessorEditor::resized()
