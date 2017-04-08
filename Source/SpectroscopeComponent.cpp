@@ -41,7 +41,7 @@ void SpectroscopeComponent::paint (Graphics& g)
     const float scale = 1.0f / jmax((float) kFFTSize, maxBin.getEnd());
 
     Path p;
-    p.startNewSubPath(0.0f, 0.0f);
+    p.startNewSubPath(0.0f, height);
 
     for (int i = 0; i < kOutputSize; ++i)
     {
@@ -54,10 +54,22 @@ void SpectroscopeComponent::paint (Graphics& g)
         p.lineTo(x, y);
     }
 
+    // Clear the drawing target
     g.setColour(Colours::black);
     g.fillAll();
+
+    // Stroke the line
     g.setColour(Colours::green);
     g.strokePath(p, PathStrokeType(1.0f));
+
+    // Fill under the line with a gradient
+    Colour start((uint8) 0, (uint8) 255, (uint8) 0, (uint8) 40);
+    Colour stop((uint8) 0, (uint8) 255, (uint8) 0, (uint8) 200);
+
+    p.closeSubPath();
+    g.setGradientFill(ColourGradient(start, 0.0f, height, stop, 0.0f, 0.0f, false));
+    g.fillPath(p);
+
 }
 
 void SpectroscopeComponent::resized()
