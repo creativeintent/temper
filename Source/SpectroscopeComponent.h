@@ -29,6 +29,7 @@ public:
 
     void pushBuffer (AudioSampleBuffer& buffer);
     inline void pushSample (float sample);
+    inline float windowSample (float sample, int sampleIndex, int windowSize);
     void setBaseColour (Colour c);
 
     enum {
