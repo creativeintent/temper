@@ -30,14 +30,14 @@ void SpectroscopeComponent::paint (Graphics& g)
 {
     const float width = (float) getWidth();
     const float height = (float) getHeight();
-    const float xScale = width / (float) kOutputSize;
 
     Path p;
     p.startNewSubPath(0.0f, 0.0f);
 
     for (int i = 0; i < kOutputSize; ++i)
     {
-        const float x = (float) i * xScale;
+        const float xPos = (float) i / (float) kOutputSize;
+        const float x = std::exp(std::log(xPos) * 0.2f) * width;
         const float y = height - height * m_outputData[i];
         p.lineTo(x, y);
     }
