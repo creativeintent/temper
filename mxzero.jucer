@@ -12,6 +12,10 @@
               companyName="Creative Intent" companyWebsite="http://www.creativeintent.co">
   <MAINGROUP id="NQTBxz" name="mxzero">
     <GROUP id="{29549935-F76D-270B-CF22-913999456CE7}" name="Source">
+      <FILE id="DVaBKb" name="SpectroscopeComponent.cpp" compile="1" resource="0"
+            file="Source/SpectroscopeComponent.cpp"/>
+      <FILE id="mjtLV5" name="SpectroscopeComponent.h" compile="0" resource="0"
+            file="Source/SpectroscopeComponent.h"/>
       <FILE id="gFAIV8" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="SPBe1V" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
