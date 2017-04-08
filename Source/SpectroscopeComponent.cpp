@@ -51,7 +51,7 @@ void SpectroscopeComponent::paint (Graphics& g)
 
         const float yMag = m_outputData[i] * scale;
         const float yDecibel = Decibels::gainToDecibels(yMag);
-        const float y = jmap(yDecibel, -60.0f, 3.0f, height, 0.0f);
+        const float y = jmap(yDecibel, -90.0f, 3.0f, height, 0.0f);
         p.lineTo(x, y);
     }
 

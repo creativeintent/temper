@@ -33,7 +33,8 @@ public:
     void resized() override;
 
     //==============================================================================
-    ScopedPointer<SpectroscopeComponent> m_viz;
+    ScopedPointer<SpectroscopeComponent> m_vizPre;
+    ScopedPointer<SpectroscopeComponent> m_vizPost;
 
 private:
     // This reference is provided as a quick way for your editor to

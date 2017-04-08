@@ -172,9 +172,9 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // Push input buffer into the spectroscope component.
+    // Push input buffer into the Pre spectroscope component.
     if (editor)
-        editor->m_viz->pushBuffer(buffer);
+        editor->m_vizPre->pushBuffer(buffer);
 
     // Now the guts of the processing; oversampling and applying the Faust dsp module.
     float** channelData = buffer.getArrayOfWritePointers();
@@ -214,6 +214,10 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
     // After the Faust processing, add the demo restriction to the output stream
     m_restriction->processBlock(buffer);
 #endif
+
+    // Push resulting buffer into the Post spectroscope component.
+    if (editor)
+        editor->m_vizPost->pushBuffer(buffer);
 }
 
 //==============================================================================
