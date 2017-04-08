@@ -17,7 +17,8 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     : AudioProcessorEditor (&p), processor (p), m_vts(vts)
 {
     addAndMakeVisible(m_main = new MainComponent(m_vts));
-    setSize (700, 152);
+    addAndMakeVisible(m_viz = new SpectroscopeComponent());
+    setSize (700, 352);
     setLookAndFeel(&laf);
 }
 
@@ -33,4 +34,6 @@ void MxzeroAudioProcessorEditor::paint (Graphics& g)
 
 void MxzeroAudioProcessorEditor::resized()
 {
+    m_main->setBounds(0, 0, 700, 152);
+    m_viz->setBounds(0, 152, 700, 200);
 }

@@ -25,7 +25,25 @@ public:
     void paint (Graphics&) override;
     void resized() override;
 
+    void pushBuffer (AudioSampleBuffer& buffer);
+    inline void pushSample (float sample);
+
+    enum {
+        kFFTOrder = 10,
+        kFFTSize = 1024, // 2^10
+    };
+
 private:
+    float m_fifo [kFFTSize];
+    float m_fftData [kFFTSize];
+    float m_outputData [kFFTSize];
+
+    unsigned int m_fifoIndex;
+    unsigned int m_fifoIndexMask;
+    bool m_fftBlockReady;
+
+    FFT m_forwardFFT;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectroscopeComponent)
 };
 

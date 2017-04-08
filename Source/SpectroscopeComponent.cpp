@@ -13,10 +13,12 @@
 
 //==============================================================================
 SpectroscopeComponent::SpectroscopeComponent()
+:   m_fifoIndex(0),
+    m_fifoIndexMask(kFFTSize - 1),
+    m_fftBlockReady(false),
+    m_forwardFFT(kFFTOrder, false)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-
+    setSize(700, 200);
 }
 
 SpectroscopeComponent::~SpectroscopeComponent()
@@ -45,7 +47,34 @@ void SpectroscopeComponent::paint (Graphics& g)
 
 void SpectroscopeComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
+}
 
+void SpectroscopeComponent::pushBuffer(AudioSampleBuffer &buffer)
+{
+    if (buffer.getNumChannels() > 0)
+    {
+        const int numSamples = buffer.getNumSamples();
+        const float* channelData = buffer.getReadPointer(0);
+
+        for (int i = 0; i < numSamples; ++i)
+            pushSample(channelData[i]);
+    }
+}
+
+inline void SpectroscopeComponent::pushSample(float sample)
+{
+    const int writeIndex = m_fifoIndex & m_fifoIndexMask;
+
+    // When we wrap around the fifo table, we copy the data into the
+    // FFT buffer and prepare to perform the transform.
+    if (writeIndex == 0 && !m_fftBlockReady)
+    {
+        zeromem(m_fftData, sizeof(m_fftData));
+        memcpy(m_fftData, m_fifo, sizeof(m_fifo));
+        m_fftBlockReady = true;
+        m_fifoIndex = 0;
+    }
+
+    m_fifo[writeIndex] = sample;
+    m_fifoIndex++;
 }

@@ -161,6 +161,8 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
     const int totalNumInputChannels  = getTotalNumInputChannels();
     const int totalNumOutputChannels = getTotalNumOutputChannels();
 
+    MxzeroAudioProcessorEditor* editor = static_cast<MxzeroAudioProcessorEditor*>(getActiveEditor());
+
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
@@ -169,6 +171,10 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
     // this code if your algorithm always overwrites all the output channels.
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
+
+    // Push input buffer into the spectroscope component.
+    if (editor)
+        editor->m_viz->pushBuffer(buffer);
 
     // Now the guts of the processing; oversampling and applying the Faust dsp module.
     float** channelData = buffer.getArrayOfWritePointers();
