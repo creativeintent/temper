@@ -31,6 +31,15 @@ void SpectroscopeComponent::paint (Graphics& g)
     const float width = (float) getWidth();
     const float height = (float) getHeight();
 
+    // The values in the output bins after the FFT have a range that I don't understand
+    // and isn't explained in the docs. It seems that if I scale down by the size of the
+    // fft buffer, I get somewhat reasonable results on the graph. But in examples I've
+    // seen, we would just divide here by the maximum value in the bins at the time of
+    // drawing. Seeing as that would be inconsistent between frames, I'm defaulting to the
+    // size of the fft here unless the max value in the bins is larger.
+    Range<float> maxBin = FloatVectorOperations::findMinAndMax(m_outputData, kOutputSize);
+    const float scale = 1.0f / jmax((float) kFFTSize, maxBin.getEnd());
+
     Path p;
     p.startNewSubPath(0.0f, 0.0f);
 
@@ -38,7 +47,10 @@ void SpectroscopeComponent::paint (Graphics& g)
     {
         const float xPos = (float) i / (float) kOutputSize;
         const float x = std::exp(std::log(xPos) * 0.2f) * width;
-        const float y = height - height * m_outputData[i];
+
+        const float yMag = m_outputData[i] * scale;
+        const float yDecibel = Decibels::gainToDecibels(yMag);
+        const float y = jmap(yDecibel, -60.0f, 3.0f, height, 0.0f);
         p.lineTo(x, y);
     }
 
