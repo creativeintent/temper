@@ -37,7 +37,7 @@ public:
 
 private:
     float m_fifo [kFFTSize];
-    float m_fftData [kFFTSize];
+    float m_fftData [2 * kFFTSize];
     float m_outputData [kFFTSize];
 
     unsigned int m_fifoIndex;
