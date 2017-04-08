@@ -41,7 +41,6 @@ private:
     float m_outputData [kFFTSize];
 
     unsigned int m_fifoIndex;
-    unsigned int m_fifoIndexMask;
     bool m_fftBlockReady;
 
     FFT m_forwardFFT;

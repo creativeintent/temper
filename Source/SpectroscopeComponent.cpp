@@ -14,12 +14,12 @@
 //==============================================================================
 SpectroscopeComponent::SpectroscopeComponent()
 :   m_fifoIndex(0),
-    m_fifoIndexMask(kFFTSize - 1),
     m_fftBlockReady(false),
     m_forwardFFT(kFFTOrder, false)
 {
     zeromem(m_outputData, sizeof(m_outputData));
     setSize(700, 200);
+    startTimerHz(60);
 }
 
 SpectroscopeComponent::~SpectroscopeComponent()
@@ -28,22 +28,24 @@ SpectroscopeComponent::~SpectroscopeComponent()
 
 void SpectroscopeComponent::paint (Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    const float width = (float) getWidth();
+    const float height = (float) getHeight();
+    const float xScale = width / (float) kFFTSize;
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+    Path p;
+    p.startNewSubPath(0.0f, 0.0f);
 
-    g.fillAll (Colours::white);   // clear the background
+    for (int i = 0; i < kFFTSize; ++i)
+    {
+        const float x = (float) i * xScale;
+        const float y = height - height * m_outputData[i];
+        p.lineTo(x, y);
+    }
 
-    g.setColour (Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (Colours::lightblue);
-    g.setFont (14.0f);
-    g.drawText ("SpectroscopeComponent", getLocalBounds(),
-                Justification::centred, true);   // draw some placeholder text
+    g.setColour(Colours::black);
+    g.fillAll();
+    g.setColour(Colours::green);
+    g.strokePath(p, PathStrokeType(1.0f));
 }
 
 void SpectroscopeComponent::resized()
@@ -85,18 +87,19 @@ void SpectroscopeComponent::pushBuffer(AudioSampleBuffer &buffer)
 
 inline void SpectroscopeComponent::pushSample(float sample)
 {
-    const int writeIndex = m_fifoIndex & m_fifoIndexMask;
-
     // When we wrap around the fifo table, we copy the data into the
     // FFT buffer and prepare to perform the transform.
-    if (writeIndex == 0 && !m_fftBlockReady)
+    if (m_fifoIndex == kFFTSize)
     {
-        zeromem(m_fftData, sizeof(m_fftData));
-        memcpy(m_fftData, m_fifo, sizeof(m_fifo));
-        m_fftBlockReady = true;
+        if (!m_fftBlockReady)
+        {
+            zeromem(m_fftData, sizeof(m_fftData));
+            memcpy(m_fftData, m_fifo, sizeof(m_fifo));
+            m_fftBlockReady = true;
+        }
+
         m_fifoIndex = 0;
     }
 
-    m_fifo[writeIndex] = sample;
-    m_fifoIndex++;
+    m_fifo[m_fifoIndex++] = sample;
 }
