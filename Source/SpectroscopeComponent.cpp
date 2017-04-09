@@ -43,14 +43,13 @@ void SpectroscopeComponent::paint (Graphics& g)
 
     Path p;
 
-    // TODO: Try 2x oversampling with windowed sinc ipol since we are drawing
-    // only 512 samples in a region potentially larger than 512px wide.
-    for (int i = 0; i < kOutputSize; ++i)
+    for (int i = 0; i < kOutputSize * kOversampleFactor; ++i)
     {
-        const float xPos = (float) i / (float) kOutputSize;
-        const float x = std::exp(std::log(xPos) * 0.2f) * width;
+        const float outputIndex = (float) i / (float) kOversampleFactor;
+        const float xPos = outputIndex / (float) kOutputSize;
+        const float x = std::exp(std::log(xPos) * 0.4f) * width;
 
-        const float yMag = m_outputData[i] * scale;
+        const float yMag = getOutputSample(outputIndex) * scale;
         const float yDecibel = Decibels::gainToDecibels(yMag);
         const float y = jmap(yDecibel, -90.0f, 3.0f, height, 0.0f);
 
@@ -152,6 +151,32 @@ inline float SpectroscopeComponent::window(int sampleIndex, int windowSize)
     float num = 2.0f * float_Pi * (float) sampleIndex;
     float denom = (float) (windowSize - 1);
     return 0.5f * (1.0f - std::cos(num / denom));
+}
+
+inline float SpectroscopeComponent::sinc(float x)
+{
+    return x != 0 ? sinf(x) / x : 1.0f;
+}
+
+inline float SpectroscopeComponent::getOutputSample(float index)
+{
+    const int whole = static_cast<int>(index);
+    const float frac = index - (float) whole;
+
+    // A window of size kInterpolatorWindowSize centered about 0.
+    const int start = -kInterpolatorWindowSize / 2 + 1;
+    const int stop = kInterpolatorWindowSize / 2;
+
+    float out = 0.0f;
+
+    for (int i = start; i < stop; ++i)
+    {
+        const int readIndex = whole + i;
+        float outputSample = m_outputData[readIndex];
+        out += outputSample * sinc(((float) i - frac) * double_Pi) * window(i + stop, kInterpolatorWindowSize);
+    }
+
+    return out;
 }
 
 void SpectroscopeComponent::setBaseColour(Colour c)

@@ -30,12 +30,16 @@ public:
     void pushBuffer (AudioSampleBuffer& buffer);
     inline void pushSample (float sample);
     inline float window (int sampleIndex, int windowSize);
+    inline float sinc (float x);
+    inline float getOutputSample (float index);
     void setBaseColour (Colour c);
 
     enum {
         kFFTOrder = 10,
         kFFTSize = 1024, // 2^10
         kOutputSize = 512, // 1024 / 2
+        kOversampleFactor = 4,
+        kInterpolatorWindowSize = 32,
     };
 
 private:
