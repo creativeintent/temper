@@ -103,7 +103,7 @@ void SpectroscopeComponent::timerCallback()
 
     // Decay the output bin magnitudes
     for (int i = 0; i < kOutputSize; ++i)
-        m_outputData[i] *= 0.707f;
+        m_outputData[i] *= 0.845f; // 0.707f;
 
     repaint();
 }
