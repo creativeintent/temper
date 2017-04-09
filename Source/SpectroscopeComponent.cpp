@@ -42,9 +42,10 @@ void SpectroscopeComponent::paint (Graphics& g)
     const float scale = 1.0f / jmax((float) kFFTSize, maxBin.getEnd());
 
     Path p;
-    p.startNewSubPath(0.0f, height);
 
-    for (int i = 1; i < kOutputSize; ++i)
+    // TODO: Try 2x oversampling with windowed sinc ipol since we are drawing
+    // only 512 samples in a region potentially larger than 512px wide.
+    for (int i = 0; i < kOutputSize; ++i)
     {
         const float xPos = (float) i / (float) kOutputSize;
         const float x = std::exp(std::log(xPos) * 0.2f) * width;
@@ -52,7 +53,11 @@ void SpectroscopeComponent::paint (Graphics& g)
         const float yMag = m_outputData[i] * scale;
         const float yDecibel = Decibels::gainToDecibels(yMag);
         const float y = jmap(yDecibel, -90.0f, 3.0f, height, 0.0f);
-        p.lineTo(x, y);
+
+        if (i == 0)
+            p.startNewSubPath(0.0f, y);
+        else
+            p.lineTo(x, y);
     }
 
     // Clear the drawing target
@@ -67,6 +72,9 @@ void SpectroscopeComponent::paint (Graphics& g)
     Colour start = m_baseColour.withAlpha(0.2f);
     Colour stop = m_baseColour.withAlpha(0.8f);
 
+    // Wrap the line around the bottom of the graph before closing the path.
+    p.lineTo(p.getCurrentPosition().getX(), height);
+    p.lineTo(0.0f, height);
     p.closeSubPath();
     g.setGradientFill(ColourGradient(start, 0.0f, height, stop, 0.0f, 0.0f, false));
     g.fillPath(p);
