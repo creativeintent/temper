@@ -35,9 +35,9 @@ public:
     void setBaseColour (Colour c);
 
     enum {
-        kFFTOrder = 10,
-        kFFTSize = 1024, // 2^10
-        kOutputSize = 512, // 1024 / 2
+        kFFTOrder = 9,
+        kFFTSize = 512, // 2^9
+        kOutputSize = 256, // 512 / 2
         kOversampleFactor = 4,
         kInterpolatorWindowSize = 32,
     };
