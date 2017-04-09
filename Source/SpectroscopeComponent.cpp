@@ -137,11 +137,11 @@ inline void SpectroscopeComponent::pushSample(float sample)
         m_fifoIndex = 0;
     }
 
-    m_fifo[m_fifoIndex] = windowSample(sample, m_fifoIndex, kFFTSize);
+    m_fifo[m_fifoIndex] = sample * window(m_fifoIndex, kFFTSize);
     m_fifoIndex++;
 }
 
-inline float SpectroscopeComponent::windowSample(float sample, int sampleIndex, int windowSize)
+inline float SpectroscopeComponent::window(int sampleIndex, int windowSize)
 {
     // A simple Hann window implementation. If the FFT size never changes, it would
     // be much more efficient here to compute the window once over a buffer of the
@@ -151,7 +151,7 @@ inline float SpectroscopeComponent::windowSample(float sample, int sampleIndex, 
     // result to the output buffer.
     float num = 2.0f * float_Pi * (float) sampleIndex;
     float denom = (float) (windowSize - 1);
-    return sample * 0.5f * (1.0f - std::cos(num / denom));
+    return 0.5f * (1.0f - std::cos(num / denom));
 }
 
 void SpectroscopeComponent::setBaseColour(Colour c)
