@@ -5,6 +5,9 @@
     <Filter Include="mxzero">
       <UniqueIdentifier>{EF3BC0BE-FB14-F962-1444-5F21700ED5C6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mxzero\Assets">
+      <UniqueIdentifier>{6FF68A2E-1749-C4C2-37C6-2B9F12D54EE5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="mxzero\Source">
       <UniqueIdentifier>{BC447959-EC2F-C8A4-C1E0-234B7B61E01E}</UniqueIdentifier>
     </Filter>
@@ -4187,6 +4190,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Assets\GraphBackground.png">
+      <Filter>mxzero\Assets</Filter>
+    </None>
     <None Include="..\..\Source\public.keys">
       <Filter>mxzero\Source</Filter>
     </None>

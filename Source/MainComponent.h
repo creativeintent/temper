@@ -48,6 +48,9 @@ public:
     void paint (Graphics& g) override;
     void resized() override;
 
+    // Binary resources:
+    static const char* background_png;
+    static const int background_pngSize;
 
 
 private:
@@ -70,9 +73,6 @@ private:
     ScopedPointer<Slider> m_biasSlider;
     ScopedPointer<Slider> m_feedbackSlider;
     ScopedPointer<Slider> m_gainSlider;
-    ScopedPointer<GroupComponent> m_filterGroup;
-    ScopedPointer<GroupComponent> m_distortionGroup;
-    ScopedPointer<GroupComponent> m_outputGroup;
     ScopedPointer<Label> m_cutoffLabel;
     ScopedPointer<Label> m_resoLabel;
     ScopedPointer<Label> m_driveLabel;
@@ -80,6 +80,7 @@ private:
     ScopedPointer<Label> m_biasLabel;
     ScopedPointer<Label> m_feedbackLabel;
     ScopedPointer<Label> m_gainLabel;
+    Image cachedImage_background_png_1;
 
 
     //==============================================================================

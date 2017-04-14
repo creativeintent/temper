@@ -22,7 +22,7 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
 
     m_vizPost->setBaseColour(Colours::orange);
 
-    setSize (700, 352);
+    setSize (744, 476);
     setLookAndFeel(&laf);
 }
 
@@ -38,7 +38,7 @@ void MxzeroAudioProcessorEditor::paint (Graphics& g)
 
 void MxzeroAudioProcessorEditor::resized()
 {
-    m_main->setBounds(0, 0, 700, 152);
+    m_main->setBounds(0, 0, 744, 476);
     m_vizPre->setBounds(0, 152, 700, 200);
     m_vizPost->setBounds(0, 152, 700, 200);
 }

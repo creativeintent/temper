@@ -11,6 +11,10 @@
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.3.0"
               companyName="Creative Intent" companyWebsite="http://www.creativeintent.co">
   <MAINGROUP id="NQTBxz" name="mxzero">
+    <GROUP id="{B07EB401-33C5-FD72-4C14-C86C74D8477E}" name="Assets">
+      <FILE id="iRJMki" name="GraphBackground.png" compile="0" resource="1"
+            file="Assets/GraphBackground.png"/>
+    </GROUP>
     <GROUP id="{29549935-F76D-270B-CF22-913999456CE7}" name="Source">
       <FILE id="DVaBKb" name="SpectroscopeComponent.cpp" compile="1" resource="0"
             file="Source/SpectroscopeComponent.cpp"/>
