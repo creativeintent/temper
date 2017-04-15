@@ -190,8 +190,6 @@ void MainComponent::paint (Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colour (0xff7d7d7d));
-
     g.setColour (Colours::black);
     g.drawImage (cachedImage_background_png_1,
                  0, 0, 744, 476,
@@ -244,7 +242,7 @@ BEGIN_JUCER_METADATA
                  variableInitialisers="m_vts(vts)" snapPixels="8" snapActive="1"
                  snapShown="1" overlayOpacity="0.330" fixedSize="1" initialWidth="744"
                  initialHeight="476">
-  <BACKGROUND backgroundColour="ff7d7d7d">
+  <BACKGROUND backgroundColour="ffffff">
     <IMAGE pos="0 0 744 476" resource="background_png" opacity="1" mode="0"/>
   </BACKGROUND>
   <SLIDER name="Cutoff" id="80edd5c38c704dd5" memberName="m_cutoffSlider"
