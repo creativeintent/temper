@@ -48,9 +48,6 @@ public:
     void paint (Graphics& g) override;
     void resized() override;
 
-    // Binary resources:
-    static const char* background_png;
-    static const int background_pngSize;
 
 
 private:
@@ -80,7 +77,7 @@ private:
     ScopedPointer<Label> m_biasLabel;
     ScopedPointer<Label> m_feedbackLabel;
     ScopedPointer<Label> m_gainLabel;
-    Image cachedImage_background_png_1;
+    ScopedPointer<Drawable> drawable1;
 
 
     //==============================================================================

@@ -4190,6 +4190,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Assets\Background.png">
+      <Filter>mxzero\Assets</Filter>
+    </None>
     <None Include="..\..\Assets\GraphBackground.png">
       <Filter>mxzero\Assets</Filter>
     </None>
