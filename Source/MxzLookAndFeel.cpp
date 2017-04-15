@@ -12,7 +12,7 @@
 
 MxzLookAndFeel::MxzLookAndFeel()
 {
-    setColour(Slider::rotarySliderFillColourId, Colours::orange);
+    setColour(Slider::rotarySliderFillColourId, Colour::fromRGBA(226, 115, 0, 255));
 }
 
 void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos,
@@ -30,7 +30,7 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
     g.setFont(Font("Avenir", 22.0, 0));
 
     // Draw the readout
-    g.setColour (slider.findColour (Slider::rotarySliderFillColourId).withAlpha (isMouseOver ? 1.0f : 0.7f));
+    g.setColour (slider.findColour (Slider::rotarySliderFillColourId).withAlpha (isMouseOver ? 1.0f : 0.9f));
 
     const float roundedVal = floorf(slider.getValue() * 10) * 0.1;
     String sliderVal = slider.getTextFromValue(roundedVal);
@@ -44,9 +44,20 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
     g.strokePath(track, PathStrokeType(4.0f));
 
     // Draw the slider position
-    g.setColour (slider.findColour (Slider::rotarySliderFillColourId).withAlpha (isMouseOver ? 1.0f : 0.7f));
+    Colour sliderFillStart = Colour::fromRGBA(245, 121, 35, 255).withAlpha(isMouseOver ? 1.0f : 0.9f);
+    Colour sliderFillStop = Colour::fromRGBA(255, 184, 23, 255).withAlpha(isMouseOver ? 1.0f : 0.9f);
+    ColourGradient sliderFill = ColourGradient(sliderFillStart,
+                                               (float) x,
+                                               (float) 0,
+                                               sliderFillStop,
+                                               (float) width,
+                                               (float) 0,
+                                               false);
+
+    g.setGradientFill(sliderFill);
 
     Path filledArc;
     filledArc.addArc(rx, ry, rw, rw, rotaryStartAngle, angle, true);
-    g.strokePath(filledArc, PathStrokeType(4.0f));
+    PathStrokeType(4.0f).createStrokedPath(filledArc, filledArc);
+    g.fillPath(filledArc);
 }
