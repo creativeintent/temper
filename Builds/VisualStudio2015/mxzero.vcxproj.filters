@@ -4199,9 +4199,6 @@
     <None Include="..\..\Assets\Montserrat-Light.otf">
       <Filter>mxzero\Assets</Filter>
     </None>
-    <None Include="..\..\Assets\Montserrat-Regular.otf">
-      <Filter>mxzero\Assets</Filter>
-    </None>
     <None Include="..\..\Source\public.keys">
       <Filter>mxzero\Source</Filter>
     </None>

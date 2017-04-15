@@ -17,8 +17,6 @@
             file="Assets/GraphBackground.png"/>
       <FILE id="Lgyi4M" name="Montserrat-Light.otf" compile="0" resource="1"
             file="Assets/Montserrat-Light.otf"/>
-      <FILE id="QYOhlk" name="Montserrat-Regular.otf" compile="0" resource="1"
-            file="Assets/Montserrat-Regular.otf"/>
     </GROUP>
     <GROUP id="{29549935-F76D-270B-CF22-913999456CE7}" name="Source">
       <FILE id="DVaBKb" name="SpectroscopeComponent.cpp" compile="1" resource="0"
