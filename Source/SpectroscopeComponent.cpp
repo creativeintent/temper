@@ -49,11 +49,11 @@ void SpectroscopeComponent::paint (Graphics& g)
     {
         const float outputIndex = (float) i / (float) kOversampleFactor;
         const float xPos = outputIndex / (float) kOutputSize;
-        const float x = std::exp(std::log(xPos) * 0.4f) * width;
+        const float x = std::exp(std::log(xPos) * 0.6f) * width;
 
         const float yMag = getOutputSample(outputIndex) * scale;
         const float yDecibel = Decibels::gainToDecibels(yMag);
-        const float y = jmap(yDecibel, -90.0f, 3.0f, height, 0.0f);
+        const float y = jmap(yDecibel, -90.0f, -12.0f, height, 0.0f);
 
         if (i == 0)
             p.startNewSubPath(0.0f, y);
