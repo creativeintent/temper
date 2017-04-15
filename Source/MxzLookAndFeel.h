@@ -18,7 +18,9 @@ class MxzLookAndFeel : public LookAndFeel_V2
 public:
     MxzLookAndFeel();
 
+    Font getBaseFont ();
     Font getLabelFont (Label&) override;
+    Font getSliderReadoutFont ();
 
     void drawLabel (Graphics&, Label&) override;
     void drawRotarySlider (Graphics&, int x, int y, int width, int height,
