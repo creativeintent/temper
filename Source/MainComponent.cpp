@@ -204,20 +204,20 @@ void MainComponent::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    m_cutoffSlider->setBounds (24, 144, 80, 80);
-    m_resoSlider->setBounds (24, 272, 80, 80);
-    m_driveSlider->setBounds (336, 352, 80, 80);
-    m_curveSlider->setBounds (208, 344, 80, 80);
-    m_biasSlider->setBounds (464, 352, 80, 80);
-    m_feedbackSlider->setBounds (632, 144, 80, 80);
-    m_gainSlider->setBounds (640, 272, 80, 80);
-    m_cutoffLabel->setBounds (24, 112, 80, 20);
-    m_resoLabel->setBounds (24, 368, 80, 20);
-    m_driveLabel->setBounds (328, 448, 80, 20);
-    m_curveLabel->setBounds (200, 440, 80, 20);
-    m_biasLabel->setBounds (464, 440, 80, 20);
-    m_feedbackLabel->setBounds (640, 112, 80, 20);
-    m_gainLabel->setBounds (632, 368, 80, 20);
+    m_cutoffSlider->setBounds (28, 149, 72, 72);
+    m_resoSlider->setBounds (28, 277, 72, 72);
+    m_driveSlider->setBounds (336, 357, 72, 72);
+    m_curveSlider->setBounds (219, 370, 50, 50);
+    m_biasSlider->setBounds (475, 370, 50, 50);
+    m_feedbackSlider->setBounds (640, 148, 72, 72);
+    m_gainSlider->setBounds (640, 277, 72, 72);
+    m_cutoffLabel->setBounds (24, 111, 80, 20);
+    m_resoLabel->setBounds (24, 369, 80, 20);
+    m_driveLabel->setBounds (332, 450, 80, 20);
+    m_curveLabel->setBounds (203, 440, 80, 20);
+    m_biasLabel->setBounds (462, 440, 80, 20);
+    m_feedbackLabel->setBounds (637, 111, 80, 20);
+    m_gainLabel->setBounds (635, 369, 80, 20);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -246,71 +246,71 @@ BEGIN_JUCER_METADATA
     <IMAGE pos="0 0 744 476" resource="background_png" opacity="1" mode="0"/>
   </BACKGROUND>
   <SLIDER name="Cutoff" id="80edd5c38c704dd5" memberName="m_cutoffSlider"
-          virtualName="" explicitFocusOrder="0" pos="24 144 80 80" min="0"
+          virtualName="" explicitFocusOrder="0" pos="28 149 72 72" min="0"
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Resonance" id="3bb5cf0ab68e9733" memberName="m_resoSlider"
-          virtualName="" explicitFocusOrder="0" pos="24 272 80 80" min="0"
+          virtualName="" explicitFocusOrder="0" pos="28 277 72 72" min="0"
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Drive" id="9909e31099819864" memberName="m_driveSlider"
-          virtualName="" explicitFocusOrder="0" pos="336 352 80 80" min="0"
+          virtualName="" explicitFocusOrder="0" pos="336 357 72 72" min="0"
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Curve" id="a56ea73f883bdf8f" memberName="m_curveSlider"
-          virtualName="" explicitFocusOrder="0" pos="208 344 80 80" min="0"
+          virtualName="" explicitFocusOrder="0" pos="219 370 50 50" min="0"
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Bias" id="a1e434d9a7eda8a0" memberName="m_biasSlider" virtualName=""
-          explicitFocusOrder="0" pos="464 352 80 80" min="0" max="10" int="0"
+          explicitFocusOrder="0" pos="475 370 50 50" min="0" max="10" int="0"
           style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox" textBoxEditable="0"
           textBoxWidth="80" textBoxHeight="20" skewFactor="1" needsCallback="0"/>
   <SLIDER name="Feedback" id="ecd475fce33f4b83" memberName="m_feedbackSlider"
-          virtualName="" explicitFocusOrder="0" pos="632 144 80 80" min="0"
+          virtualName="" explicitFocusOrder="0" pos="640 148 72 72" min="0"
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Level" id="bf47d1ef820213ea" memberName="m_gainSlider"
-          virtualName="" explicitFocusOrder="0" pos="640 272 80 80" min="0"
+          virtualName="" explicitFocusOrder="0" pos="640 277 72 72" min="0"
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <LABEL name="Cutoff Label" id="8c36484c7dd57b99" memberName="m_cutoffLabel"
-         virtualName="" explicitFocusOrder="0" pos="24 112 80 20" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="24 111 80 20" edTextCol="ff000000"
          edBkgCol="0" labelText="Cutoff" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
   <LABEL name="Resonance Label" id="cc33e12b86f2a86a" memberName="m_resoLabel"
-         virtualName="" explicitFocusOrder="0" pos="24 368 80 20" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="24 369 80 20" edTextCol="ff000000"
          edBkgCol="0" labelText="Resonance" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
   <LABEL name="Drive Label" id="195ded46976233cb" memberName="m_driveLabel"
-         virtualName="" explicitFocusOrder="0" pos="328 448 80 20" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="332 450 80 20" edTextCol="ff000000"
          edBkgCol="0" labelText="Drive" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
   <LABEL name="Curve Label" id="30073a37efa500cc" memberName="m_curveLabel"
-         virtualName="" explicitFocusOrder="0" pos="200 440 80 20" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="203 440 80 20" edTextCol="ff000000"
          edBkgCol="0" labelText="Curve" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
   <LABEL name="Bias Label" id="e8a8527f3f6976cf" memberName="m_biasLabel"
-         virtualName="" explicitFocusOrder="0" pos="464 440 80 20" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="462 440 80 20" edTextCol="ff000000"
          edBkgCol="0" labelText="Bias" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
   <LABEL name="Feedback Label" id="5547950683b7ca1f" memberName="m_feedbackLabel"
-         virtualName="" explicitFocusOrder="0" pos="640 112 80 20" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="637 111 80 20" edTextCol="ff000000"
          edBkgCol="0" labelText="Feedback" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>
   <LABEL name="Gain Label" id="719d91e31d43fa34" memberName="m_gainLabel"
-         virtualName="" explicitFocusOrder="0" pos="632 368 80 20" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="635 369 80 20" edTextCol="ff000000"
          edBkgCol="0" labelText="Level" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="36"/>

@@ -41,7 +41,7 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
 
     Path track;
     track.addArc(rx, ry, rw, rw, rotaryStartAngle, rotaryEndAngle, true);
-    g.strokePath(track, PathStrokeType(4.0f));
+    g.strokePath(track, PathStrokeType(3.0f));
 
     // Draw the slider position
     Colour sliderFillStart = Colour::fromRGBA(245, 121, 35, 255).withAlpha(isMouseOver ? 1.0f : 0.9f);
@@ -58,6 +58,6 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
 
     Path filledArc;
     filledArc.addArc(rx, ry, rw, rw, rotaryStartAngle, angle, true);
-    PathStrokeType(4.0f).createStrokedPath(filledArc, filledArc);
+    PathStrokeType(3.0f).createStrokedPath(filledArc, filledArc);
     g.fillPath(filledArc);
 }
