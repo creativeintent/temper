@@ -12,6 +12,12 @@ namespace BinaryData
     extern const char*   GraphBackground_png;
     const int            GraphBackground_pngSize = 179814;
 
+    extern const char*   MontserratLight_otf;
+    const int            MontserratLight_otfSize = 91496;
+
+    extern const char*   MontserratRegular_otf;
+    const int            MontserratRegular_otfSize = 93516;
+
     extern const char*   public_keys;
     const int            public_keysSize = 65000;
 
@@ -19,7 +25,7 @@ namespace BinaryData
     extern const char* namedResourceList[];
 
     // Number of elements in the namedResourceList array.
-    const int namedResourceListSize = 2;
+    const int namedResourceListSize = 4;
 
     // If you provide the name of one of the binary resource variables above, this function will
     // return the corresponding data and its size (or a null pointer if the name isn't found).

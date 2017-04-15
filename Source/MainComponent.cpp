@@ -70,58 +70,65 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     m_gainSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_cutoffLabel = new Label ("Cutoff Label",
-                                                  TRANS("Cutoff")));
+                                                  TRANS("CUTOFF")));
     m_cutoffLabel->setFont (Font (15.00f, Font::plain));
     m_cutoffLabel->setJustificationType (Justification::centred);
     m_cutoffLabel->setEditable (false, false, false);
+    m_cutoffLabel->setColour (Label::textColourId, Colour (0xffff8917));
     m_cutoffLabel->setColour (TextEditor::textColourId, Colours::black);
     m_cutoffLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (m_resoLabel = new Label ("Resonance Label",
-                                                TRANS("Resonance")));
+                                                TRANS("RESONANCE")));
     m_resoLabel->setFont (Font (15.00f, Font::plain));
     m_resoLabel->setJustificationType (Justification::centred);
     m_resoLabel->setEditable (false, false, false);
+    m_resoLabel->setColour (Label::textColourId, Colour (0xffff8917));
     m_resoLabel->setColour (TextEditor::textColourId, Colours::black);
     m_resoLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (m_driveLabel = new Label ("Drive Label",
-                                                 TRANS("Drive")));
+                                                 TRANS("DRIVE")));
     m_driveLabel->setFont (Font (15.00f, Font::plain));
     m_driveLabel->setJustificationType (Justification::centred);
     m_driveLabel->setEditable (false, false, false);
+    m_driveLabel->setColour (Label::textColourId, Colour (0xffff8917));
     m_driveLabel->setColour (TextEditor::textColourId, Colours::black);
     m_driveLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (m_curveLabel = new Label ("Curve Label",
-                                                 TRANS("Curve")));
+                                                 TRANS("CURVE")));
     m_curveLabel->setFont (Font (15.00f, Font::plain));
     m_curveLabel->setJustificationType (Justification::centred);
     m_curveLabel->setEditable (false, false, false);
+    m_curveLabel->setColour (Label::textColourId, Colour (0xffff8917));
     m_curveLabel->setColour (TextEditor::textColourId, Colours::black);
     m_curveLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (m_biasLabel = new Label ("Bias Label",
-                                                TRANS("Bias")));
+                                                TRANS("BIAS")));
     m_biasLabel->setFont (Font (15.00f, Font::plain));
     m_biasLabel->setJustificationType (Justification::centred);
     m_biasLabel->setEditable (false, false, false);
+    m_biasLabel->setColour (Label::textColourId, Colour (0xffff8917));
     m_biasLabel->setColour (TextEditor::textColourId, Colours::black);
     m_biasLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (m_feedbackLabel = new Label ("Feedback Label",
-                                                    TRANS("Feedback")));
+                                                    TRANS("FEEDBACK")));
     m_feedbackLabel->setFont (Font (15.00f, Font::plain));
     m_feedbackLabel->setJustificationType (Justification::centred);
     m_feedbackLabel->setEditable (false, false, false);
+    m_feedbackLabel->setColour (Label::textColourId, Colour (0xffff8917));
     m_feedbackLabel->setColour (TextEditor::textColourId, Colours::black);
     m_feedbackLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (m_gainLabel = new Label ("Gain Label",
-                                                TRANS("Level")));
+                                                TRANS("LEVEL")));
     m_gainLabel->setFont (Font (15.00f, Font::plain));
     m_gainLabel->setJustificationType (Justification::centred);
     m_gainLabel->setEditable (false, false, false);
+    m_gainLabel->setColour (Label::textColourId, Colour (0xffff8917));
     m_gainLabel->setColour (TextEditor::textColourId, Colours::black);
     m_gainLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
@@ -214,10 +221,10 @@ void MainComponent::resized()
     m_cutoffLabel->setBounds (24, 111, 80, 20);
     m_resoLabel->setBounds (24, 369, 80, 20);
     m_driveLabel->setBounds (332, 450, 80, 20);
-    m_curveLabel->setBounds (203, 440, 80, 20);
+    m_curveLabel->setBounds (204, 440, 80, 20);
     m_biasLabel->setBounds (462, 440, 80, 20);
     m_feedbackLabel->setBounds (637, 111, 80, 20);
-    m_gainLabel->setBounds (635, 369, 80, 20);
+    m_gainLabel->setBounds (639, 369, 80, 20);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -280,40 +287,40 @@ BEGIN_JUCER_METADATA
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <LABEL name="Cutoff Label" id="8c36484c7dd57b99" memberName="m_cutoffLabel"
-         virtualName="" explicitFocusOrder="0" pos="24 111 80 20" edTextCol="ff000000"
-         edBkgCol="0" labelText="Cutoff" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="24 111 80 20" textCol="ffff8917"
+         edTextCol="ff000000" edBkgCol="0" labelText="CUTOFF" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="Resonance Label" id="cc33e12b86f2a86a" memberName="m_resoLabel"
-         virtualName="" explicitFocusOrder="0" pos="24 369 80 20" edTextCol="ff000000"
-         edBkgCol="0" labelText="Resonance" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="24 369 80 20" textCol="ffff8917"
+         edTextCol="ff000000" edBkgCol="0" labelText="RESONANCE" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="Drive Label" id="195ded46976233cb" memberName="m_driveLabel"
-         virtualName="" explicitFocusOrder="0" pos="332 450 80 20" edTextCol="ff000000"
-         edBkgCol="0" labelText="Drive" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="332 450 80 20" textCol="ffff8917"
+         edTextCol="ff000000" edBkgCol="0" labelText="DRIVE" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="Curve Label" id="30073a37efa500cc" memberName="m_curveLabel"
-         virtualName="" explicitFocusOrder="0" pos="203 440 80 20" edTextCol="ff000000"
-         edBkgCol="0" labelText="Curve" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="204 440 80 20" textCol="ffff8917"
+         edTextCol="ff000000" edBkgCol="0" labelText="CURVE" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="Bias Label" id="e8a8527f3f6976cf" memberName="m_biasLabel"
-         virtualName="" explicitFocusOrder="0" pos="462 440 80 20" edTextCol="ff000000"
-         edBkgCol="0" labelText="Bias" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="462 440 80 20" textCol="ffff8917"
+         edTextCol="ff000000" edBkgCol="0" labelText="BIAS" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="Feedback Label" id="5547950683b7ca1f" memberName="m_feedbackLabel"
-         virtualName="" explicitFocusOrder="0" pos="637 111 80 20" edTextCol="ff000000"
-         edBkgCol="0" labelText="Feedback" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="637 111 80 20" textCol="ffff8917"
+         edTextCol="ff000000" edBkgCol="0" labelText="FEEDBACK" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="Gain Label" id="719d91e31d43fa34" memberName="m_gainLabel"
-         virtualName="" explicitFocusOrder="0" pos="635 369 80 20" edTextCol="ff000000"
-         edBkgCol="0" labelText="Level" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="36"/>
+         virtualName="" explicitFocusOrder="0" pos="639 369 80 20" textCol="ffff8917"
+         edTextCol="ff000000" edBkgCol="0" labelText="LEVEL" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

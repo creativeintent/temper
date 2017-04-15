@@ -15,6 +15,27 @@ MxzLookAndFeel::MxzLookAndFeel()
     setColour(Slider::rotarySliderFillColourId, Colour::fromRGBA(226, 115, 0, 255));
 }
 
+Font MxzLookAndFeel::getLabelFont(Label &)
+{
+    return Font(Typeface::createSystemTypefaceFor(BinaryData::MontserratLight_otf,
+                                                  BinaryData::MontserratLight_otfSize)).withPointHeight(10);
+}
+
+void MxzLookAndFeel::drawLabel(Graphics& g, Label& l)
+{
+    Colour labelColour = Colour::fromRGB(149, 89, 17);
+    Font labelFont = getLabelFont(l);
+
+    g.setColour(labelColour);
+    g.setFont(labelFont);
+
+    Rectangle<int> textArea (l.getBorderSize().subtractedFrom (l.getLocalBounds()));
+
+    g.drawFittedText (l.getText(), textArea, l.getJustificationType(),
+                      jmax (1, (int) (textArea.getHeight() / labelFont.getHeight())),
+                      l.getMinimumHorizontalScale());
+}
+
 void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos,
                                        const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider)
 {
@@ -27,14 +48,28 @@ void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int
     const float angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
     const bool isMouseOver = slider.isMouseOverOrDragging() && slider.isEnabled();
 
-    g.setFont(Font("Avenir", 22.0, 0));
+    Font readoutFont = Font(Typeface::createSystemTypefaceFor(BinaryData::MontserratLight_otf,
+                                                              BinaryData::MontserratLight_otfSize)).withPointHeight(14);
+
+    g.setFont(readoutFont);
 
     // Draw the readout
-    g.setColour (slider.findColour (Slider::rotarySliderFillColourId).withAlpha (isMouseOver ? 1.0f : 0.9f));
+    Colour readoutColour = Colour::fromRGB(254, 173, 29).withAlpha(isMouseOver ? 1.0f : 0.9f);
+    g.setColour(readoutColour);
 
-    const float roundedVal = floorf(slider.getValue() * 10) * 0.1;
-    String sliderVal = slider.getTextFromValue(roundedVal);
-    g.drawText(sliderVal, centreX - radius, centreY - 8.0f, rw, 24.0f, Justification::centred);
+    String sliderVal;
+    if (slider.getValue() >= 1000)
+    {
+        const float roundedVal = floorf(slider.getValue() / 100) * 0.1;
+        sliderVal = String(roundedVal) + "kHz";
+    }
+    else
+    {
+        const float roundedVal = floorf(slider.getValue() * 10) * 0.1;
+        sliderVal = slider.getTextFromValue(roundedVal);
+    }
+
+    g.drawText(sliderVal, centreX - radius, centreY - 10.0f, rw, 24.0f, Justification::centred);
 
     // Draw the track
     g.setColour (slider.findColour (Slider::rotarySliderOutlineColourId));
