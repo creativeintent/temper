@@ -16,7 +16,9 @@ SpectroscopeComponent::SpectroscopeComponent()
 :   m_fifoIndex(0),
     m_fftBlockReady(false),
     m_forwardFFT(kFFTOrder, false),
-    m_baseColour(Colours::white)
+    m_strokeColour(Colours::white),
+    m_fillStartColour(Colours::white.withAlpha(0.2f)),
+    m_fillStopColour(Colours::white.withAlpha(0.8f))
 {
     zeromem(m_outputData, sizeof(m_outputData));
     setSize(700, 200);
@@ -64,18 +66,14 @@ void SpectroscopeComponent::paint (Graphics& g)
     g.fillAll();
 
     // Stroke the line
-    g.setColour(m_baseColour);
+    g.setColour(m_strokeColour);
     g.strokePath(p, PathStrokeType(1.0f));
-
-    // Fill under the line with a gradient
-    Colour start = m_baseColour.withAlpha(0.2f);
-    Colour stop = m_baseColour.withAlpha(0.8f);
 
     // Wrap the line around the bottom of the graph before closing the path.
     p.lineTo(p.getCurrentPosition().getX(), height);
     p.lineTo(0.0f, height);
     p.closeSubPath();
-    g.setGradientFill(ColourGradient(start, 0.0f, height, stop, 0.0f, 0.0f, false));
+    g.setGradientFill(ColourGradient(m_fillStartColour, 0.0f, height, m_fillStopColour, 0.0f, height * 0.6f, false));
     g.fillPath(p);
 
 }
@@ -179,7 +177,9 @@ inline float SpectroscopeComponent::getOutputSample(float index)
     return out;
 }
 
-void SpectroscopeComponent::setBaseColour(Colour c)
+void SpectroscopeComponent::setColours(Colour strokeColour, Colour fillStartColour, Colour fillStopColour)
 {
-    m_baseColour = c;
+    m_strokeColour = strokeColour;
+    m_fillStartColour = fillStartColour;
+    m_fillStopColour = fillStopColour;
 }

@@ -21,7 +21,14 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     addAndMakeVisible(m_vizPost = new SpectroscopeComponent());
 
     m_main->setAlwaysOnTop(true);
-    m_vizPost->setBaseColour(Colours::orange);
+    m_vizPre->setColours(Colour::fromRGBA(255, 51, 34, 255),
+                         Colour::fromRGBA(223, 19, 19, 255).withAlpha(0.7f),
+                         Colour::fromRGBA(123, 0, 0, 255).withAlpha(0.7f));
+    m_vizPost->setColours(Colour::fromRGBA(255, 186, 34, 255),
+                          Colour::fromRGBA(253, 174, 25, 255).withAlpha(0.7f),
+                          Colour::fromRGBA(255, 126, 0, 255).withAlpha(0.7f));
+
+    m_vizPre->toBehind(m_vizPost);
 
     setSize (744, 476);
     setLookAndFeel(&laf);

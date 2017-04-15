@@ -32,7 +32,7 @@ public:
     inline float window (int sampleIndex, int windowSize);
     inline float sinc (float x);
     inline float getOutputSample (float index);
-    void setBaseColour (Colour c);
+    void setColours (Colour strokeColour, Colour fillStartColour, Colour fillStopColour);
 
     enum {
         kFFTOrder = 9,
@@ -51,7 +51,9 @@ private:
     bool m_fftBlockReady;
 
     FFT m_forwardFFT;
-    Colour m_baseColour;
+    Colour m_strokeColour;
+    Colour m_fillStartColour;
+    Colour m_fillStopColour;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SpectroscopeComponent)
 };
