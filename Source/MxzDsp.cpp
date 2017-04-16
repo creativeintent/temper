@@ -113,17 +113,17 @@ class MxzDsp : public dsp {
   public:
 	virtual void metadata(Meta* m) { 
 		m->declare("name", "mxzero");
+		m->declare("maths.lib/name", "Faust Math Library");
+		m->declare("maths.lib/version", "2.0");
+		m->declare("maths.lib/author", "GRAME");
+		m->declare("maths.lib/copyright", "GRAME");
+		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/version", "0.0");
 		m->declare("signals.lib/name", "Faust Signal Routing Library");
 		m->declare("signals.lib/version", "0.0");
 		m->declare("basics.lib/name", "Faust Basic Element Library");
 		m->declare("basics.lib/version", "0.0");
-		m->declare("maths.lib/name", "Faust Math Library");
-		m->declare("maths.lib/version", "2.0");
-		m->declare("maths.lib/author", "GRAME");
-		m->declare("maths.lib/copyright", "GRAME");
-		m->declare("maths.lib/license", "LGPL with exception");
 	}
 
 	virtual int getNumInputs() { return 1; }
@@ -190,7 +190,7 @@ class MxzDsp : public dsp {
 		ui_interface->addHorizontalSlider("filterType", &fslider3, 1.0f, 0.0f, 1.0f, 0.001f);
 		ui_interface->addHorizontalSlider("filterfc", &fslider1, 1.6e+04f, 1e+02f, 1.6e+04f, 1.0f);
 		ui_interface->addHorizontalSlider("filterq", &fslider2, 1.0f, 1.0f, 8.0f, 0.001f);
-		ui_interface->addHorizontalSlider("level", &fslider7, -3.0f, -6e+01f, 0.0f, 1.0f);
+		ui_interface->addHorizontalSlider("level", &fslider7, -3.0f, -12.0f, 12.0f, 1.0f);
 		ui_interface->addHorizontalSlider("offset", &fslider5, 0.0f, 0.0f, 1.0f, 0.001f);
 		ui_interface->closeBox();
 	}
@@ -207,7 +207,7 @@ class MxzDsp : public dsp {
 		FAUSTFLOAT* output0 = output[0];
 		for (int i=0; i<count; i++) {
 			fRec7[0] = (fSlow0 + (0.995f * fRec7[1]));
-			fRec12[0] = (((1.0637765f * fRec12[1]) + (float)input0[i]) - (0.36209202f * fRec12[2]));
+			fRec12[0] = (((float)input0[i] + (1.0637765f * fRec12[1])) - (0.36209202f * fRec12[2]));
 			fRec11[0] = (((0.00048638252f * (fRec12[2] + fRec12[0])) + ((0.61464167f * fRec11[1]) + (0.0009343176f * fRec12[1]))) - (0.5686961f * fRec11[2]));
 			fRec10[0] = (((2.3153434f * (fRec11[2] + fRec11[0])) + ((0.19564603f * fRec10[1]) + (2.447349f * fRec11[1]))) - (0.7792284f * fRec10[2]));
 			fRec9[0] = (((5.509348f * fRec10[1]) + (3.7421112f * (fRec10[2] + fRec10[0]))) - ((0.014306352f * fRec9[1]) + (0.93285143f * fRec9[2])));
@@ -217,7 +217,7 @@ class MxzDsp : public dsp {
 			fRec14[0] = (fSlow2 + (0.995f * fRec14[1]));
 			float fTemp2 = (1.0f / fRec14[0]);
 			float fTemp3 = (((fTemp1 + fTemp2) / fTemp0) + 1);
-			fRec8[0] = (((1.4299138f * fRec9[1]) + (1.6742295f * (fRec9[2] + fRec9[0]))) - (((fRec8[2] * (((fTemp1 - fTemp2) / fTemp0) + 1)) + (2 * (fRec8[1] * (1 - (1.0f / faustpower<2>(fTemp0)))))) / fTemp3));
+			fRec8[0] = (((1.4299138f * fRec9[1]) + (1.6742295f * (fRec9[2] + fRec9[0]))) - (((fRec8[2] * (((fTemp1 - fTemp2) / fTemp0) + 1)) + (2 * ((1 - (1.0f / faustpower<2>(fTemp0))) * fRec8[1]))) / fTemp3));
 			float fTemp4 = ((fRec5[1] * fRec7[0]) + ((fRec8[0] + (fRec8[2] + (2.0f * fRec8[1]))) / fTemp3));
 			fVec0[0] = fTemp4;
 			fRec15[0] = (fSlow3 + (0.995f * fRec15[1]));
@@ -231,8 +231,8 @@ class MxzDsp : public dsp {
 			fRec4[0] = (((0.995f * fRec4[1]) + fRec5[0]) - fRec5[1]);
 			fRec19[0] = (fSlow7 + (0.995f * fRec19[1]));
 			fRec3[0] = (((1.0637765f * fRec3[1]) + (4.0f * (fRec4[0] * fRec19[0]))) - (0.36209202f * fRec3[2]));
-			fRec2[0] = (((0.00048638252f * (fRec3[2] + fRec3[0])) + ((0.61464167f * fRec2[1]) + (0.0009343176f * fRec3[1]))) - (0.5686961f * fRec2[2]));
-			fRec1[0] = (((2.3153434f * (fRec2[2] + fRec2[0])) + ((0.19564603f * fRec1[1]) + (2.447349f * fRec2[1]))) - (0.7792284f * fRec1[2]));
+			fRec2[0] = ((((0.61464167f * fRec2[1]) + (0.0009343176f * fRec3[1])) + (0.00048638252f * (fRec3[2] + fRec3[0]))) - (0.5686961f * fRec2[2]));
+			fRec1[0] = ((((0.19564603f * fRec1[1]) + (2.447349f * fRec2[1])) + (2.3153434f * (fRec2[2] + fRec2[0]))) - (0.7792284f * fRec1[2]));
 			fRec0[0] = (((5.509348f * fRec1[1]) + (3.7421112f * (fRec1[2] + fRec1[0]))) - ((0.014306352f * fRec0[1]) + (0.93285143f * fRec0[2])));
 			output0[i] = (FAUSTFLOAT)((1.4299138f * fRec0[1]) + (1.6742295f * (fRec0[2] + fRec0[0])));
 			// post processing

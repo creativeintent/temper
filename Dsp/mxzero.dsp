@@ -12,7 +12,7 @@ pcurve = hslider("curve", 1.0, 0.1, 4.0, 0.001) : si.smooth(0.995);
 
 // Output parameters
 pfeedback = hslider("feedback", -60, -60, -3, 1) : ba.db2linear : si.smooth(0.995);
-plevel = hslider("level", -3, -60, 0, 1) : ba.db2linear : si.smooth(0.995);
+plevel = hslider("level", -3, -12, 12, 1) : ba.db2linear : si.smooth(0.995);
 
 // TODO: Worth keeping?
 pmix = hslider("mix", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
