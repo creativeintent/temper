@@ -11,7 +11,7 @@ poffset = hslider("offset", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
 pcurve = hslider("curve", 1.0, 0.1, 4.0, 0.001) : si.smooth(0.995);
 
 // Output parameters
-pfeedback = hslider("feedback", -60, -60, -3, 1) : ba.db2linear : si.smooth(0.995);
+pfeedback = hslider("feedback", -60, -60, -24, 1) : ba.db2linear : si.smooth(0.995);
 plevel = hslider("level", -3, -12, 12, 1) : ba.db2linear : si.smooth(0.995);
 
 // TODO: Worth keeping?
@@ -28,26 +28,29 @@ transfer(x) = ma.tanh(pcurve * x) / ma.tanh(pcurve);
 // The allpass filter is stable for `|m(x)| <= 1`, but should not linger
 // near +/-1.0 for very long. We therefore clamp the driven signal with a tanh
 // function to ensure smooth coefficient calculation.
-drive(x) = x : *(pdrive) : +(poffset) : ma.tanh;
+drive(x) = x : *(pdrive) : +(fol(x)) : ma.tanh with {
+	fol = an.amp_follower(0.04);
+};
 
 // Our modulated filter is an allpass with coefficients governed by the input
 // signal applied through our wave shaper.
 //
 // TODO: `ptype` is used here to interpolate between an allpass and a one-zero.
 // Are we keeping that?
-modfilter(x) = x : fi.tf1(b0(x), b1(x), a1(x)) with {
+modfilter(x) = x <: _, tap(x) : *(1.0 - poffset), *(poffset) : + : fi.tf1(b0(x), b1(x), a1(x)) with {
 	b0(x) = ptype * m(x) + (1.0 - ptype);
 	b1(x) = ptype + m(x) * (1.0 - ptype);
 	a1(x) = ptype * m(x);
 	m(x) = drive(x) : transfer;
+	tap(x) = m(x) : *(0.24);
 };
 
 // We have a resonant lowpass filter at the beginning of our signal chain
 // to control what part of the input signal becomes the modulating signal.
-prefilter = fi.resonlp(pfilterfc, pfilterq, 1.0);
+filter = fi.resonlp(pfilterfc, pfilterq, 1.0);
 
 // Our main processing block.
-main = prefilter : (+ : modfilter) ~ *(pfeedback) : fi.dcblocker : gain with {
+main = (+ : modfilter : fi.dcblocker) ~ *(pfeedback) : gain with {
 	// This explicit gain multiplier of 4.0 accounts for the loss of gain that
 	// occurs from oversampling by a factor of 2, and for the loss of gain that
 	// occurs from the prefilter and modulation step. Then we apply the output
@@ -67,4 +70,4 @@ main = prefilter : (+ : modfilter) ~ *(pfeedback) : fi.dcblocker : gain with {
 // harmonics in the same frequency range [sampleRate / 4, sampleRate / 2] which
 // we cut out with the elliptic filter at the end of the chain before we drop
 // sample to return to the original sample rate.
-process = el.ellip : main : el.ellip;
+process = el.ellip : filter: main : el.ellip;
