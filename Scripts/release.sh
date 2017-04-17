@@ -2,7 +2,7 @@
 
 set -e
 
-export PATH=~/Library/Python/2.7/bin/aws:$PATH
+export PATH=~/Library/Python/2.7/bin/:$PATH
 
 deploy_win() {
     S3BUCKET="s3://mxzero"
