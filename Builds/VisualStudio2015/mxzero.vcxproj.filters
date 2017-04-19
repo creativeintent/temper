@@ -4199,9 +4199,6 @@
     <None Include="..\..\Assets\Montserrat-Light.otf">
       <Filter>mxzero\Assets</Filter>
     </None>
-    <None Include="..\..\Source\public.keys">
-      <Filter>mxzero\Source</Filter>
-    </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\codecs\flac\Flac Licence.txt">
       <Filter>Juce Modules\juce_audio_formats\codecs\flac</Filter>
     </None>

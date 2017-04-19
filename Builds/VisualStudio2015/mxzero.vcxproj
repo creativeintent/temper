@@ -2689,7 +2689,6 @@
     <None Include="..\..\Assets\Background.png"/>
     <None Include="..\..\Assets\GraphBackground.png"/>
     <None Include="..\..\Assets\Montserrat-Light.otf"/>
-    <None Include="..\..\Source\public.keys"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_plugin_client\AU\AUResources.r"/>
