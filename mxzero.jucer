@@ -30,7 +30,6 @@
             file="Source/MxzLookAndFeel.cpp"/>
       <FILE id="m9PJXn" name="MxzLookAndFeel.h" compile="0" resource="0"
             file="Source/MxzLookAndFeel.h"/>
-      <FILE id="AfFDlA" name="public.keys" compile="0" resource="1" file="Source/public.keys"/>
       <FILE id="uN8X87" name="RestrictionProcessor.cpp" compile="1" resource="0"
             file="Source/RestrictionProcessor.cpp"/>
       <FILE id="uq0cMx" name="RestrictionProcessor.h" compile="0" resource="0"
