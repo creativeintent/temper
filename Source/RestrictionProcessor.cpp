@@ -17,7 +17,6 @@ const double kDuty = 0.75; // Fifteen seconds of audio, five seconds of silence.
 RestrictionProcessor::RestrictionProcessor()
 {
     m_smoothing = new LinearSmoothedValue<float>();
-    m_alpha = 1.0f;
 }
 
 //==============================================================================
@@ -48,58 +47,9 @@ void RestrictionProcessor::processBlock(AudioSampleBuffer &buffer)
         for (int i = 0; i < numChannels; ++i)
         {
             const float in = channelData[i][j];
-            channelData[i][j] = m_alpha * gain * in + (1.0f - m_alpha) * in;
+            channelData[i][j] = gain * in;
         }
 
         m_currentAngle = fmod(m_currentAngle + m_delta, 1.0);
-    }
-}
-
-//==============================================================================
-File RestrictionProcessor::getKeyFile()
-{
-    File reg = File::getSpecialLocation(File::userApplicationDataDirectory)
-        .getChildFile("Application Support")
-        .getChildFile("Creative Intent")
-        .getChildFile("mxzero.key");
-
-    if (!reg.existsAsFile())
-        reg.create();
-
-    DBG("Accessing key file:");
-    DBG(reg.getFullPathName());
-    return reg;
-}
-
-StringArray RestrictionProcessor::getValidKeyHashes()
-{
-    int size;
-    const char* p = BinaryData::getNamedResource("public_keys", size);
-
-    String keyFile(p, size);
-    StringArray keys;
-
-    keys.addTokens(keyFile, "\n", String());
-    return keys;
-}
-
-void RestrictionProcessor::validateRegistration()
-{
-    File reg = getKeyFile();
-    String key = reg.loadFileAsString().trim();
-
-    SHA256 hash(key.toUTF8());
-
-    StringArray validHashes = getValidKeyHashes();
-    String digest = hash.toHexString();
-
-    for (int i = 0; i < validHashes.size(); i++)
-    {
-        if (validHashes.getReference(i).equalsIgnoreCase(digest))
-        {
-            DBG("Validation successful! Unlocking...");
-            m_alpha = 0.0f;
-            break;
-        }
     }
 }

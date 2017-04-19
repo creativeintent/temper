@@ -53,19 +53,6 @@ public:
      */
     void processBlock (AudioSampleBuffer& buffer);
 
-    //==============================================================================
-    /** Finds or creates the registration key file on disk.
-     */
-    File getKeyFile();
-
-    /** Returns the set of known valid hash values.
-     */
-    StringArray getValidKeyHashes();
-
-    /** Validates the registration key and unlocks the plugin accordingly.
-     */
-    void validateRegistration();
-
 private:
     //==============================================================================
     ScopedPointer<LinearSmoothedValue<float>> m_smoothing;
@@ -74,9 +61,6 @@ private:
     double m_sampleRate;
     double m_delta;
     double m_currentAngle;
-
-    // The interpolation factor between the trial output stream and the normal.
-    float m_alpha;
 };
 
 #endif  // RESTRICTIONPROCESSOR_H_INCLUDED
