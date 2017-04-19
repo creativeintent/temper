@@ -55,7 +55,7 @@
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="mxzero"
                        osxArchitecture="64BitUniversal" headerPath="../../Include"/>
         <CONFIGURATION name="Demo" isDebug="0" optimisation="3" targetName="mxzero (Demo)"
-                       osxArchitecture="64BitUniversal" headerPath="../../Include" defines="MXZ_DEMO_BUILD=1"/>
+                       osxArchitecture="64BitUniversal" headerPath="../../Include" defines="TEMPER_DEMO_BUILD=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
@@ -90,11 +90,11 @@
                        binaryPath="Builds/VisualStudio2015/Release/"/>
         <CONFIGURATION name="Demo" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="mxzero (Demo)" headerPath="../../Include"
-                       binaryPath="Builds/VisualStudio2015/Demo/" defines="MXZ_DEMO_BUILD=1"/>
+                       binaryPath="Builds/VisualStudio2015/Demo/" defines="TEMPER_DEMO_BUILD=1"/>
         <CONFIGURATION name="Demo" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="mxzero (x64)(Demo)"
                        headerPath="../../Include" binaryPath="Builds/VisualStudio2015/Demo/"
-                       defines="MXZ_DEMO_BUILD=1"/>
+                       defines="TEMPER_DEMO_BUILD=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
