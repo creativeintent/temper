@@ -207,7 +207,7 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
         }
     }
 
-#ifdef MXZ_DEMO_BUILD
+#ifdef TEMPER_DEMO_BUILD
     // After the Faust processing, add the demo restriction to the output stream
     m_restriction->processBlock(buffer);
 #endif
