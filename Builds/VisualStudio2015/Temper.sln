@@ -1,0 +1,31 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2015
+Project("{83196FCD-961F-5BFA-492F-029BE5AAC0C0}") = "Temper", "Temper.vcxproj", "{82329037-B926-5E14-DA60-03494472AD3C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		Demo|Win32 = Demo|Win32
+		Demo|x64 = Demo|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82329037-B926-5E14-DA60-03494472AD3C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Debug|Win32.Build.0 = Debug|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Debug|x64.ActiveCfg = Debug|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Debug|x64.Build.0 = Debug|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Release|Win32.ActiveCfg = Release|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Release|Win32.Build.0 = Release|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Release|x64.ActiveCfg = Release|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Release|x64.Build.0 = Release|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Demo|Win32.ActiveCfg = Demo|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Demo|Win32.Build.0 = Demo|Win32
+		{82329037-B926-5E14-DA60-03494472AD3C}.Demo|x64.ActiveCfg = Demo|x64
+		{82329037-B926-5E14-DA60-03494472AD3C}.Demo|x64.Build.0 = Demo|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

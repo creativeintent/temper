@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="e0DLq8" name="mxzero" projectType="audioplug" version="1.0.0"
-              bundleIdentifier="com.yourcompany.mxzero" includeBinaryInAppConfig="1"
+<JUCERPROJECT id="e0DLq8" name="Temper" projectType="audioplug" version="1.0.0"
+              bundleIdentifier="com.creativeintent.temper" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="1" buildAU="1" buildAUv3="0" buildRTAS="0"
-              buildAAX="0" pluginName="mxzero" pluginDesc="mxzero" pluginManufacturer="Creative Intent"
-              pluginManufacturerCode="Cvin" pluginCode="Mxzo" pluginChannelConfigs=""
-              pluginIsSynth="0" pluginWantsMidiIn="0" pluginProducesMidiOut="0"
-              pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0" pluginAUExportPrefix="mxzeroAU"
-              pluginRTASCategory="" aaxIdentifier="com.yourcompany.mxzero"
+              buildAAX="0" pluginName="Temper" pluginDesc="Modern digital distortion."
+              pluginManufacturer="Creative Intent" pluginManufacturerCode="Cvin"
+              pluginCode="Tmpr" pluginChannelConfigs="" pluginIsSynth="0" pluginWantsMidiIn="0"
+              pluginProducesMidiOut="0" pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0"
+              pluginAUExportPrefix="TemperAU" pluginRTASCategory="" aaxIdentifier="com.creativeintent.temper"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="4.3.0"
               companyName="Creative Intent" companyWebsite="http://www.creativeintent.co">
-  <MAINGROUP id="NQTBxz" name="mxzero">
+  <MAINGROUP id="NQTBxz" name="Temper">
     <GROUP id="{B07EB401-33C5-FD72-4C14-C86C74D8477E}" name="Assets">
       <FILE id="qQ2cig" name="Background.png" compile="0" resource="1" file="Assets/Background.png"/>
       <FILE id="iRJMki" name="GraphBackground.png" compile="0" resource="1"

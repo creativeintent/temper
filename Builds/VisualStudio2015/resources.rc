@@ -14,9 +14,9 @@ BEGIN
     BLOCK "040904E4"
     BEGIN
       VALUE "CompanyName",  "Creative Intent\0"
-      VALUE "FileDescription",  "mxzero\0"
+      VALUE "FileDescription",  "Temper\0"
       VALUE "FileVersion",  "1.0.0\0"
-      VALUE "ProductName",  "mxzero\0"
+      VALUE "ProductName",  "Temper\0"
       VALUE "ProductVersion",  "1.0.0\0"
     END
   END

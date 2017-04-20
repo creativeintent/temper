@@ -245,10 +245,10 @@
  #define JucePlugin_Build_STANDALONE       0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "mxzero"
+ #define JucePlugin_Name                   "Temper"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "mxzero"
+ #define JucePlugin_Desc                   "Modern digital distortion."
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "Creative Intent"
@@ -263,7 +263,7 @@
  #define JucePlugin_ManufacturerCode       0x4376696e // 'Cvin'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             0x4d787a6f // 'Mxzo'
+ #define JucePlugin_PluginCode             0x546d7072 // 'Tmpr'
 #endif
 #ifndef  JucePlugin_IsSynth
  #define JucePlugin_IsSynth                0
@@ -302,16 +302,16 @@
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         mxzeroAU
+ #define JucePlugin_AUExportPrefix         TemperAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "mxzeroAU"
+ #define JucePlugin_AUExportPrefixQuoted   "TemperAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.yourcompany.mxzero
+ #define JucePlugin_CFBundleIdentifier     com.creativeintent.temper
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           ePlugInCategory_None
@@ -329,7 +329,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.yourcompany.mxzero
+ #define JucePlugin_AAXIdentifier          com.creativeintent.temper
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
