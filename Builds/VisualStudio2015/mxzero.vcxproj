@@ -369,7 +369,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\SpectroscopeComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
-    <ClCompile Include="..\..\Source\MxzLookAndFeel.cpp"/>
+    <ClCompile Include="..\..\Source\TemperLookAndFeel.cpp"/>
     <ClCompile Include="..\..\Source\RestrictionProcessor.cpp"/>
     <ClCompile Include="..\..\Source\FaustUIBridge.cpp"/>
     <ClCompile Include="..\..\Source\TemperDsp.cpp"/>
@@ -2033,7 +2033,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\SpectroscopeComponent.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
-    <ClInclude Include="..\..\Source\MxzLookAndFeel.h"/>
+    <ClInclude Include="..\..\Source\TemperLookAndFeel.h"/>
     <ClInclude Include="..\..\Source\RestrictionProcessor.h"/>
     <ClInclude Include="..\..\Source\FaustUIBridge.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>

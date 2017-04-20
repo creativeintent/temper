@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    MxzLookAndFeel.h
+    TemperLookAndFeel.h
     Created: 1 Mar 2017 8:15:08pm
     Author:  Nick Thompson
 
@@ -13,10 +13,10 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class MxzLookAndFeel : public LookAndFeel_V2
+class TemperLookAndFeel : public LookAndFeel_V2
 {
 public:
-    MxzLookAndFeel();
+    TemperLookAndFeel();
 
     Font getBaseFont ();
     Font getLabelFont (Label&) override;

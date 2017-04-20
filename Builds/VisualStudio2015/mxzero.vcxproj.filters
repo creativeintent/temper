@@ -388,7 +388,7 @@
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>mxzero\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\MxzLookAndFeel.cpp">
+    <ClCompile Include="..\..\Source\TemperLookAndFeel.cpp">
       <Filter>mxzero\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\RestrictionProcessor.cpp">
@@ -2235,7 +2235,7 @@
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>mxzero\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\MxzLookAndFeel.h">
+    <ClInclude Include="..\..\Source\TemperLookAndFeel.h">
       <Filter>mxzero\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\RestrictionProcessor.h">
