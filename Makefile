@@ -4,7 +4,7 @@ FAUST := $(shell command -v faust 2> /dev/null)
 ifndef FAUST
 	$(error "Faust not found; please install: http://faust.grame.fr/download/")
 endif
-	faust -a minimal-effect.cpp -cn MxzDsp -o ./Source/MxzDsp.cpp ./Dsp/mxzero.dsp
+	faust -a minimal-effect.cpp -cn TemperDsp -o ./Source/TemperDsp.cpp ./Dsp/mxzero.dsp
 
 prototype:
 	# ln -s ~/SDKs/VST3\ SDK/ /usr/local/include/vstsdk2.4

@@ -73,10 +73,10 @@ using std::min;
 
 
 #ifndef FAUSTCLASS 
-#define FAUSTCLASS MxzDsp
+#define FAUSTCLASS TemperDsp
 #endif
 
-class MxzDsp : public dsp {
+class TemperDsp : public dsp {
   private:
 	FAUSTFLOAT 	fslider0;
 	float 	fRec7[2];
@@ -113,6 +113,8 @@ class MxzDsp : public dsp {
   public:
 	virtual void metadata(Meta* m) { 
 		m->declare("name", "mxzero");
+		m->declare("signals.lib/name", "Faust Signal Routing Library");
+		m->declare("signals.lib/version", "0.0");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.0");
 		m->declare("maths.lib/author", "GRAME");
@@ -120,8 +122,6 @@ class MxzDsp : public dsp {
 		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/version", "0.0");
-		m->declare("signals.lib/name", "Faust Signal Routing Library");
-		m->declare("signals.lib/version", "0.0");
 		m->declare("basics.lib/name", "Faust Basic Element Library");
 		m->declare("basics.lib/version", "0.0");
 	}
@@ -176,8 +176,8 @@ class MxzDsp : public dsp {
 		instanceResetUserInterface();
 		instanceClear();
 	}
-	virtual MxzDsp* clone() {
-		return new MxzDsp();
+	virtual TemperDsp* clone() {
+		return new TemperDsp();
 	}
 	virtual int getSampleRate() {
 		return fSamplingFreq;
@@ -217,7 +217,7 @@ class MxzDsp : public dsp {
 			fRec14[0] = (fSlow2 + (0.995f * fRec14[1]));
 			float fTemp2 = (1.0f / fRec14[0]);
 			float fTemp3 = (((fTemp1 + fTemp2) / fTemp0) + 1);
-			fRec8[0] = (((1.4299138f * fRec9[1]) + (1.6742295f * (fRec9[2] + fRec9[0]))) - (((fRec8[2] * (((fTemp1 - fTemp2) / fTemp0) + 1)) + (2 * ((1 - (1.0f / faustpower<2>(fTemp0))) * fRec8[1]))) / fTemp3));
+			fRec8[0] = (((1.4299138f * fRec9[1]) + (1.6742295f * (fRec9[2] + fRec9[0]))) - (((2 * (fRec8[1] * (1 - (1.0f / faustpower<2>(fTemp0))))) + (fRec8[2] * (((fTemp1 - fTemp2) / fTemp0) + 1))) / fTemp3));
 			float fTemp4 = ((fRec5[1] * fRec7[0]) + ((fRec8[0] + (fRec8[2] + (2.0f * fRec8[1]))) / fTemp3));
 			fVec0[0] = fTemp4;
 			fRec15[0] = (fSlow3 + (0.995f * fRec15[1]));
@@ -226,7 +226,7 @@ class MxzDsp : public dsp {
 			fRec18[0] = (fSlow6 + (0.995f * fRec18[1]));
 			float fTemp5 = tanhf((fRec16[0] * tanhf((fRec17[0] + (fRec18[0] * fVec0[0])))));
 			float fTemp6 = tanhf(fRec16[0]);
-			fRec6[0] = ((fVec0[0] * (1.0f - (fRec15[0] * (1 - (fTemp5 / fTemp6))))) + ((fVec0[1] * (fRec15[0] + (((1.0f - fRec15[0]) * fTemp5) / fTemp6))) + (fRec6[1] * (0 - ((fRec15[0] * fTemp5) / fTemp6)))));
+			fRec6[0] = ((fVec0[0] * ((fRec15[0] * ((fTemp5 / fTemp6) + -1)) + 1.0f)) + ((fVec0[1] * (fRec15[0] + (((1.0f - fRec15[0]) * fTemp5) / fTemp6))) + (fRec6[1] * (0 - ((fRec15[0] * fTemp5) / fTemp6)))));
 			fRec5[0] = fRec6[0];
 			fRec4[0] = (((0.995f * fRec4[1]) + fRec5[0]) - fRec5[1]);
 			fRec19[0] = (fSlow7 + (0.995f * fRec19[1]));

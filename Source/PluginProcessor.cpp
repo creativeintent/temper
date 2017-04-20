@@ -10,7 +10,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "MxzDsp.cpp"
+#include "TemperDsp.cpp"
 
 const int kOversampleFactor = 2;
 
@@ -37,7 +37,7 @@ m_params (*this, nullptr)
     // Initialize the dsp units
     for (int i = 0; i < getTotalNumInputChannels(); ++i)
     {
-        MxzDsp* dsp = new MxzDsp();
+        TemperDsp* dsp = new TemperDsp();
         dsp->buildUserInterface(m_bridge);
         m_dsps.add(dsp);
     }

@@ -37,7 +37,7 @@
       <FILE id="UuoykJ" name="FaustUIBridge.cpp" compile="1" resource="0"
             file="Source/FaustUIBridge.cpp"/>
       <FILE id="WOgbWW" name="FaustUIBridge.h" compile="0" resource="0" file="Source/FaustUIBridge.h"/>
-      <FILE id="bXhXHd" name="MxzDsp.cpp" compile="1" resource="0" file="Source/MxzDsp.cpp"/>
+      <FILE id="bXhXHd" name="TemperDsp.cpp" compile="1" resource="0" file="Source/TemperDsp.cpp"/>
       <FILE id="zqfjaI" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="S64Obd" name="PluginProcessor.h" compile="0" resource="0"
