@@ -81,22 +81,22 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">mxzero</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Temper</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</OutDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">mxzero (x64)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Temper (x64)</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">mxzero</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Temper</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</OutDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">mxzero (x64)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Temper (x64)</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">.\Demo\</OutDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">mxzero (Demo)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">Temper (Demo)</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">.\Demo\</OutDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">mxzero (x64)(Demo)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Temper (x64)(Demo)</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</GenerateManifest>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
@@ -127,11 +127,11 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\mxzero.dll</OutputFile>
+      <OutputFile>$(OutDir)\Temper.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>libcmt.lib; msvcrt.lib;;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(IntDir)\mxzero.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(IntDir)\Temper.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -139,7 +139,7 @@
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>$(IntDir)\mxzero.bsc</OutputFile>
+      <OutputFile>$(IntDir)\Temper.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
       <Command>copy /Y &quot;$(OutDir)$(TargetFileName)&quot; &quot;$(OutDir)$(TargetName).vst3&quot;</Command>
@@ -172,17 +172,17 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\mxzero (x64).dll</OutputFile>
+      <OutputFile>$(OutDir)\Temper (x64).dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>libcmt.lib; msvcrt.lib;;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(IntDir)\mxzero (x64).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(IntDir)\Temper (x64).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>$(IntDir)\mxzero (x64).bsc</OutputFile>
+      <OutputFile>$(IntDir)\Temper (x64).bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
       <Command>copy /Y &quot;$(OutDir)$(TargetFileName)&quot; &quot;$(OutDir)$(TargetName).vst3&quot;</Command>
@@ -214,11 +214,11 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\mxzero.dll</OutputFile>
+      <OutputFile>$(OutDir)\Temper.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(IntDir)\mxzero.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(IntDir)\Temper.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <OptimizeReferences>true</OptimizeReferences>
@@ -227,7 +227,7 @@
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>$(IntDir)\mxzero.bsc</OutputFile>
+      <OutputFile>$(IntDir)\Temper.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
       <Command>copy /Y &quot;$(OutDir)$(TargetFileName)&quot; &quot;$(OutDir)$(TargetName).vst3&quot;</Command>
@@ -259,11 +259,11 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\mxzero (x64).dll</OutputFile>
+      <OutputFile>$(OutDir)\Temper (x64).dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(IntDir)\mxzero (x64).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(IntDir)\Temper (x64).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -271,7 +271,7 @@
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>$(IntDir)\mxzero (x64).bsc</OutputFile>
+      <OutputFile>$(IntDir)\Temper (x64).bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
       <Command>copy /Y &quot;$(OutDir)$(TargetFileName)&quot; &quot;$(OutDir)$(TargetName).vst3&quot;</Command>
@@ -303,11 +303,11 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\mxzero (Demo).dll</OutputFile>
+      <OutputFile>$(OutDir)\Temper (Demo).dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(IntDir)\mxzero (Demo).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(IntDir)\Temper (Demo).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <OptimizeReferences>true</OptimizeReferences>
@@ -316,7 +316,7 @@
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>$(IntDir)\mxzero (Demo).bsc</OutputFile>
+      <OutputFile>$(IntDir)\Temper (Demo).bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
       <Command>copy /Y &quot;$(OutDir)$(TargetFileName)&quot; &quot;$(OutDir)$(TargetName).vst3&quot;</Command>
@@ -348,11 +348,11 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\mxzero (x64)(Demo).dll</OutputFile>
+      <OutputFile>$(OutDir)\Temper (x64)(Demo).dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(IntDir)\mxzero (x64)(Demo).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(IntDir)\Temper (x64)(Demo).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -360,7 +360,7 @@
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>$(IntDir)\mxzero (x64)(Demo).bsc</OutputFile>
+      <OutputFile>$(IntDir)\Temper (x64)(Demo).bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
       <Command>copy /Y &quot;$(OutDir)$(TargetFileName)&quot; &quot;$(OutDir)$(TargetName).vst3&quot;</Command>
