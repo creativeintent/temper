@@ -1,5 +1,5 @@
 //----------------------------------------------------------
-// name: "mxzero"
+// name: "temper"
 //
 // Code generated with Faust 0.9.96 (http://faust.grame.fr)
 //----------------------------------------------------------
@@ -112,9 +112,7 @@ class TemperDsp : public dsp {
 
   public:
 	virtual void metadata(Meta* m) { 
-		m->declare("name", "mxzero");
-		m->declare("signals.lib/name", "Faust Signal Routing Library");
-		m->declare("signals.lib/version", "0.0");
+		m->declare("name", "temper");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.0");
 		m->declare("maths.lib/author", "GRAME");
@@ -122,6 +120,8 @@ class TemperDsp : public dsp {
 		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/version", "0.0");
+		m->declare("signals.lib/name", "Faust Signal Routing Library");
+		m->declare("signals.lib/version", "0.0");
 		m->declare("basics.lib/name", "Faust Basic Element Library");
 		m->declare("basics.lib/version", "0.0");
 	}
@@ -226,15 +226,15 @@ class TemperDsp : public dsp {
 			fRec18[0] = (fSlow6 + (0.995f * fRec18[1]));
 			float fTemp5 = tanhf((fRec16[0] * tanhf((fRec17[0] + (fRec18[0] * fVec0[0])))));
 			float fTemp6 = tanhf(fRec16[0]);
-			fRec6[0] = ((fVec0[0] * ((fRec15[0] * ((fTemp5 / fTemp6) + -1)) + 1.0f)) + ((fVec0[1] * (fRec15[0] + (((1.0f - fRec15[0]) * fTemp5) / fTemp6))) + (fRec6[1] * (0 - ((fRec15[0] * fTemp5) / fTemp6)))));
+			fRec6[0] = ((fVec0[0] * (1.0f - (fRec15[0] * (1 - (fTemp5 / fTemp6))))) + ((fVec0[1] * (fRec15[0] + (((1.0f - fRec15[0]) * fTemp5) / fTemp6))) + (fRec6[1] * (0 - ((fRec15[0] * fTemp5) / fTemp6)))));
 			fRec5[0] = fRec6[0];
 			fRec4[0] = (((0.995f * fRec4[1]) + fRec5[0]) - fRec5[1]);
 			fRec19[0] = (fSlow7 + (0.995f * fRec19[1]));
 			fRec3[0] = (((1.0637765f * fRec3[1]) + (4.0f * (fRec4[0] * fRec19[0]))) - (0.36209202f * fRec3[2]));
 			fRec2[0] = ((((0.61464167f * fRec2[1]) + (0.0009343176f * fRec3[1])) + (0.00048638252f * (fRec3[2] + fRec3[0]))) - (0.5686961f * fRec2[2]));
-			fRec1[0] = ((((0.19564603f * fRec1[1]) + (2.447349f * fRec2[1])) + (2.3153434f * (fRec2[2] + fRec2[0]))) - (0.7792284f * fRec1[2]));
+			fRec1[0] = ((((2.447349f * fRec2[1]) + (2.3153434f * (fRec2[2] + fRec2[0]))) + (0.19564603f * fRec1[1])) - (0.7792284f * fRec1[2]));
 			fRec0[0] = (((5.509348f * fRec1[1]) + (3.7421112f * (fRec1[2] + fRec1[0]))) - ((0.014306352f * fRec0[1]) + (0.93285143f * fRec0[2])));
-			output0[i] = (FAUSTFLOAT)((1.4299138f * fRec0[1]) + (1.6742295f * (fRec0[2] + fRec0[0])));
+			output0[i] = (FAUSTFLOAT)((1.4299138f * fRec0[1]) + (1.6742295f * (fRec0[0] + fRec0[2])));
 			// post processing
 			fRec0[2] = fRec0[1]; fRec0[1] = fRec0[0];
 			fRec1[2] = fRec1[1]; fRec1[1] = fRec1[0];
