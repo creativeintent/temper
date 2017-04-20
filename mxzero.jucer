@@ -26,10 +26,10 @@
       <FILE id="gFAIV8" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="SPBe1V" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="qucmWu" name="MxzLookAndFeel.cpp" compile="1" resource="0"
-            file="Source/MxzLookAndFeel.cpp"/>
-      <FILE id="m9PJXn" name="MxzLookAndFeel.h" compile="0" resource="0"
-            file="Source/MxzLookAndFeel.h"/>
+      <FILE id="qucmWu" name="TemperLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/TemperLookAndFeel.cpp"/>
+      <FILE id="m9PJXn" name="TemperLookAndFeel.h" compile="0" resource="0"
+            file="Source/TemperLookAndFeel.h"/>
       <FILE id="uN8X87" name="RestrictionProcessor.cpp" compile="1" resource="0"
             file="Source/RestrictionProcessor.cpp"/>
       <FILE id="uq0cMx" name="RestrictionProcessor.h" compile="0" resource="0"

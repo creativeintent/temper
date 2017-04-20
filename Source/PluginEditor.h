@@ -12,7 +12,7 @@
 #define PLUGINEDITOR_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "MxzLookAndFeel.h"
+#include "TemperLookAndFeel.h"
 #include "PluginProcessor.h"
 #include "MainComponent.h"
 #include "SpectroscopeComponent.h"
@@ -40,7 +40,7 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MxzeroAudioProcessor& processor;
-    MxzLookAndFeel laf;
+    TemperLookAndFeel laf;
     AudioProcessorValueTreeState& m_vts;
 
     ScopedPointer<MainComponent> m_main;

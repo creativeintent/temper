@@ -1,38 +1,38 @@
 /*
   ==============================================================================
 
-    MxzLookAndFeel.cpp
+    TemperLookAndFeel.cpp
     Created: 1 Mar 2017 8:15:09pm
     Author:  Nick Thompson
 
   ==============================================================================
 */
 
-#include "MxzLookAndFeel.h"
+#include "TemperLookAndFeel.h"
 
-MxzLookAndFeel::MxzLookAndFeel()
+TemperLookAndFeel::TemperLookAndFeel()
 {
     setColour(Slider::rotarySliderFillColourId, Colour::fromRGBA(226, 115, 0, 255));
 }
 
-Font MxzLookAndFeel::getBaseFont()
+Font TemperLookAndFeel::getBaseFont()
 {
     return Font(Typeface::createSystemTypefaceFor(BinaryData::MontserratLight_otf,
                                                   BinaryData::MontserratLight_otfSize));
 }
 
 
-Font MxzLookAndFeel::getLabelFont(Label &)
+Font TemperLookAndFeel::getLabelFont(Label &)
 {
     return getBaseFont().withPointHeight(10);
 }
 
-Font MxzLookAndFeel::getSliderReadoutFont()
+Font TemperLookAndFeel::getSliderReadoutFont()
 {
     return getBaseFont().withPointHeight(14);
 }
 
-void MxzLookAndFeel::drawLabel(Graphics& g, Label& l)
+void TemperLookAndFeel::drawLabel(Graphics& g, Label& l)
 {
     Colour labelColour = Colour::fromRGB(149, 89, 17);
     Font labelFont = getLabelFont(l);
@@ -47,7 +47,7 @@ void MxzLookAndFeel::drawLabel(Graphics& g, Label& l)
                       l.getMinimumHorizontalScale());
 }
 
-void MxzLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos,
+void TemperLookAndFeel::drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos,
                                        const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider)
 {
     const float radius = jmin (width / 2, height / 2) - 2.0f;
