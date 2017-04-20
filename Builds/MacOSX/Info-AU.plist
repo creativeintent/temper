@@ -10,9 +10,9 @@
     <key>CFBundleIdentifier</key>
     <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
     <key>CFBundleName</key>
-    <string>mxzero</string>
+    <string>Temper</string>
     <key>CFBundleDisplayName</key>
-    <string>mxzero</string>
+    <string>Temper</string>
     <key>CFBundlePackageType</key>
     <string>BNDL</string>
     <key>CFBundleSignature</key>
@@ -29,17 +29,17 @@
     <array>
       <dict>
         <key>name</key>
-        <string>Creative Intent: mxzero</string>
+        <string>Creative Intent: Temper</string>
         <key>description</key>
-        <string>mxzero</string>
+        <string>Modern digital distortion.</string>
         <key>factoryFunction</key>
-        <string>mxzeroAUFactory</string>
+        <string>TemperAUFactory</string>
         <key>manufacturer</key>
         <string>Cvin</string>
         <key>type</key>
         <string>aufx</string>
         <key>subtype</key>
-        <string>Mxzo</string>
+        <string>Tmpr</string>
         <key>version</key>
         <integer>65536</integer>
       </dict>
