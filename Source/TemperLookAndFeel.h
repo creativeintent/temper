@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-#ifndef MXZLOOKANDFEEL_H_INCLUDED
-#define MXZLOOKANDFEEL_H_INCLUDED
+#ifndef TEMPERLOOKANDFEEL_H_INCLUDED
+#define TEMPERLOOKANDFEEL_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
@@ -28,4 +28,4 @@ public:
                            Slider&) override;
 };
 
-#endif  // MXZLOOKANDFEEL_H_INCLUDED
+#endif  // TEMPERLOOKANDFEEL_H_INCLUDED
