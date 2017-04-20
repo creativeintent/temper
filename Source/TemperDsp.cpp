@@ -73,10 +73,10 @@ using std::min;
 
 
 #ifndef FAUSTCLASS 
-#define FAUSTCLASS MxzDsp
+#define FAUSTCLASS TemperDsp
 #endif
 
-class MxzDsp : public dsp {
+class TemperDsp : public dsp {
   private:
 	float 	fRec11[3];
 	float 	fRec10[3];
@@ -186,8 +186,8 @@ class MxzDsp : public dsp {
 		instanceResetUserInterface();
 		instanceClear();
 	}
-	virtual MxzDsp* clone() {
-		return new MxzDsp();
+	virtual TemperDsp* clone() {
+		return new TemperDsp();
 	}
 	virtual int getSampleRate() {
 		return fSamplingFreq;

@@ -397,7 +397,7 @@
     <ClCompile Include="..\..\Source\FaustUIBridge.cpp">
       <Filter>mxzero\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\MxzDsp.cpp">
+    <ClCompile Include="..\..\Source\TemperDsp.cpp">
       <Filter>mxzero\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
