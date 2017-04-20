@@ -13,6 +13,6 @@ prototype:
 	mv ./Dsp/temper.vst ~/Library/Audio/Plug-Ins/VST/
 
 test:
-	auval -v aufx Mxzo Cvin
+	auval -v aufx Tmpr Cvin
 
 .PHONY: test prototype
