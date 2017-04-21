@@ -26,7 +26,7 @@ matrix:
 
 build:
   parallel: true
-  project: ./Builds/VisualStudio2015/mxzero.sln
+  project: ./Builds/VisualStudio2015/Temper.sln
   publish_wap: false
   publish_wap_xcopy: false
   publish_azure: false
@@ -48,6 +48,6 @@ artifacts:
 
 deploy:
   - provider: Environment
-    name: mxzero
+    name: Temper
     on:
       appveyor_repo_tag: true
