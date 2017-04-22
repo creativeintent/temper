@@ -5,7 +5,7 @@ set -e
 export PATH=~/Library/Python/2.7/bin/aws:$PATH
 
 deploy_win() {
-    S3BUCKET="s3://mxzero"
+    S3BUCKET="s3://ci-temper"
     S3DIR="$S3BUCKET/$1"
     TMPDIR="$(mktemp -d)"
     RELEASEDIR="$TMPDIR/zip/release"
@@ -22,13 +22,13 @@ deploy_win() {
     mv $TMPDIR/Builds/VisualStudio2015/Demo/*.vst3 $DEMODIR
 
     pushd $RELEASEDIR
-        zip -rq4 mxzero-$1.zip .
-        aws s3 cp mxzero-$1.zip $S3BUCKET
+        zip -rq4 Temper-$1.zip .
+        aws s3 cp Temper-$1.zip $S3BUCKET
     popd
 
     pushd $DEMODIR
-        zip -rq4 mxzero-$1-Demo.zip .
-        aws s3 cp mxzero-$1-Demo.zip $S3BUCKET
+        zip -rq4 Temper-$1-Demo.zip .
+        aws s3 cp Temper-$1-Demo.zip $S3BUCKET
     popd
 }
 
