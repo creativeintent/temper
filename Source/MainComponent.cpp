@@ -106,7 +106,7 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     m_curveLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (m_biasLabel = new Label ("Bias Label",
-                                                TRANS("TAP")));
+                                                TRANS("SATURATION")));
     m_biasLabel->setFont (Font (15.00f, Font::plain));
     m_biasLabel->setJustificationType (Justification::centred);
     m_biasLabel->setEditable (false, false, false);
@@ -311,7 +311,7 @@ BEGIN_JUCER_METADATA
          fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="Bias Label" id="e8a8527f3f6976cf" memberName="m_biasLabel"
          virtualName="" explicitFocusOrder="0" pos="462 440 80 20" textCol="ffff8917"
-         edTextCol="ff000000" edBkgCol="0" labelText="TAP" editableSingleClick="0"
+         edTextCol="ff000000" edBkgCol="0" labelText="SATURATION" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="36"/>
   <LABEL name="Feedback Label" id="5547950683b7ca1f" memberName="m_feedbackLabel"
