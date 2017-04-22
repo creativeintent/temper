@@ -21,12 +21,12 @@
 //==============================================================================
 /**
 */
-class MxzeroAudioProcessor  : public AudioProcessor
+class TemperAudioProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
-    MxzeroAudioProcessor();
-    ~MxzeroAudioProcessor();
+    TemperAudioProcessor();
+    ~TemperAudioProcessor();
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -71,7 +71,7 @@ private:
     double m_lastKnownSampleRate;
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TemperAudioProcessor)
 };
 
 

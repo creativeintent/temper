@@ -22,11 +22,11 @@ typedef AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 //==============================================================================
 /**
 */
-class MxzeroAudioProcessorEditor  : public AudioProcessorEditor
+class TemperAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
-    MxzeroAudioProcessorEditor (MxzeroAudioProcessor&, AudioProcessorValueTreeState&);
-    ~MxzeroAudioProcessorEditor();
+    TemperAudioProcessorEditor (TemperAudioProcessor&, AudioProcessorValueTreeState&);
+    ~TemperAudioProcessorEditor();
 
     //==============================================================================
     void paint (Graphics&) override;
@@ -39,13 +39,13 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    MxzeroAudioProcessor& processor;
+    TemperAudioProcessor& processor;
     TemperLookAndFeel laf;
     AudioProcessorValueTreeState& m_vts;
 
     ScopedPointer<MainComponent> m_main;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MxzeroAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TemperAudioProcessorEditor)
 };
 
 
