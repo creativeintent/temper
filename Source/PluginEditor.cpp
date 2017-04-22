@@ -13,7 +13,7 @@
 
 
 //==============================================================================
-MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p, AudioProcessorValueTreeState& vts)
+TemperAudioProcessorEditor::TemperAudioProcessorEditor (TemperAudioProcessor& p, AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor (&p), processor (p), m_vts(vts)
 {
     addAndMakeVisible(m_main = new MainComponent(m_vts));
@@ -34,12 +34,12 @@ MxzeroAudioProcessorEditor::MxzeroAudioProcessorEditor (MxzeroAudioProcessor& p,
     setLookAndFeel(&laf);
 }
 
-MxzeroAudioProcessorEditor::~MxzeroAudioProcessorEditor()
+TemperAudioProcessorEditor::~TemperAudioProcessorEditor()
 {
 }
 
 //==============================================================================
-void MxzeroAudioProcessorEditor::paint (Graphics& g)
+void TemperAudioProcessorEditor::paint (Graphics& g)
 {
     Image graphBackground = ImageCache::getFromMemory(BinaryData::GraphBackground_png,
                                                       BinaryData::GraphBackground_pngSize);
@@ -47,7 +47,7 @@ void MxzeroAudioProcessorEditor::paint (Graphics& g)
     g.drawImageAt(graphBackground.rescaled(396, 134), 194, 181);
 }
 
-void MxzeroAudioProcessorEditor::resized()
+void TemperAudioProcessorEditor::resized()
 {
     m_main->setBounds(0, 0, 744, 476);
     m_vizPre->setBounds(194, 181, 396, 134);

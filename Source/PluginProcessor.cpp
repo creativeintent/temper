@@ -15,7 +15,7 @@
 const int kOversampleFactor = 2;
 
 //==============================================================================
-MxzeroAudioProcessor::MxzeroAudioProcessor()
+TemperAudioProcessor::TemperAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
 : AudioProcessor (BusesProperties()
 #if ! JucePlugin_IsMidiEffect
@@ -43,21 +43,21 @@ m_params (*this, nullptr)
     }
 
     // Initialize the AudioProcessorValueTreeState root
-    ValueTree root (Identifier("MXZ"));
+    ValueTree root (Identifier("TEMPER"));
     m_params.state = root;
 }
 
-MxzeroAudioProcessor::~MxzeroAudioProcessor()
+TemperAudioProcessor::~TemperAudioProcessor()
 {
 }
 
 //==============================================================================
-const String MxzeroAudioProcessor::getName() const
+const String TemperAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool MxzeroAudioProcessor::acceptsMidi() const
+bool TemperAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -66,7 +66,7 @@ bool MxzeroAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool MxzeroAudioProcessor::producesMidi() const
+bool TemperAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -75,37 +75,37 @@ bool MxzeroAudioProcessor::producesMidi() const
    #endif
 }
 
-double MxzeroAudioProcessor::getTailLengthSeconds() const
+double TemperAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int MxzeroAudioProcessor::getNumPrograms()
+int TemperAudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int MxzeroAudioProcessor::getCurrentProgram()
+int TemperAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void MxzeroAudioProcessor::setCurrentProgram (int index)
+void TemperAudioProcessor::setCurrentProgram (int index)
 {
 }
 
-const String MxzeroAudioProcessor::getProgramName (int index)
+const String TemperAudioProcessor::getProgramName (int index)
 {
     return String();
 }
 
-void MxzeroAudioProcessor::changeProgramName (int index, const String& newName)
+void TemperAudioProcessor::changeProgramName (int index, const String& newName)
 {
 }
 
 //==============================================================================
-void MxzeroAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void TemperAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Make sure we allocate enough size in the work buffer to compute the maximum-size
     // input buffer at the oversamplign rate.
@@ -123,14 +123,14 @@ void MxzeroAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
     m_lastKnownSampleRate = sampleRate;
 }
 
-void MxzeroAudioProcessor::releaseResources()
+void TemperAudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool MxzeroAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool TemperAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     ignoreUnused (layouts);
@@ -153,12 +153,12 @@ bool MxzeroAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) c
 }
 #endif
 
-void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
+void TemperAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
     const int totalNumInputChannels  = getTotalNumInputChannels();
     const int totalNumOutputChannels = getTotalNumOutputChannels();
 
-    MxzeroAudioProcessorEditor* editor = static_cast<MxzeroAudioProcessorEditor*>(getActiveEditor());
+    TemperAudioProcessorEditor* editor = static_cast<TemperAudioProcessorEditor*>(getActiveEditor());
 
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
@@ -218,24 +218,24 @@ void MxzeroAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
 }
 
 //==============================================================================
-bool MxzeroAudioProcessor::hasEditor() const
+bool TemperAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* MxzeroAudioProcessor::createEditor()
+AudioProcessorEditor* TemperAudioProcessor::createEditor()
 {
-    return new MxzeroAudioProcessorEditor (*this, m_params);
+    return new TemperAudioProcessorEditor (*this, m_params);
 }
 
 //==============================================================================
-void MxzeroAudioProcessor::getStateInformation (MemoryBlock& destData)
+void TemperAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
     ScopedPointer<XmlElement> xml (m_params.state.createXml());
     copyXmlToBinary(*xml, destData);
 }
 
-void MxzeroAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void TemperAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
     if (xmlState != nullptr)
@@ -247,5 +247,5 @@ void MxzeroAudioProcessor::setStateInformation (const void* data, int sizeInByte
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new MxzeroAudioProcessor();
+    return new TemperAudioProcessor();
 }
