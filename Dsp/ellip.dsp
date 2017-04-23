@@ -65,8 +65,8 @@ s4(fc) = fi.tf2s(b0, b1, b2, a1, a2, w1) with {
 
 // This module defines an elliptic (cauer) lowpass filter of eighth
 // order with 0.4dB of passband ripple, 96.0dB of stopband ripple, and a
-// half-band cutoff frequency (sampleRate / 4), computed in four second-order
-// sections. The derivation in Octave is as follows,
+// half-band cutoff frequency of (sampleRate / 4), computed in four second-order
+// sections. The derivation in GNU Octave is as follows,
 //
 //     pkg load signal;
 //     format long;

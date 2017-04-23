@@ -14,10 +14,6 @@ pcurve = hslider("Curve", 1.0, 0.1, 4.0, 0.001) : si.smooth(0.995);
 pfeedback = hslider("Feedback", -60, -60, -24, 1) : ba.db2linear : si.smooth(0.995);
 plevel = hslider("Level", -3, -12, 12, 1) : ba.db2linear : si.smooth(0.995);
 
-// TODO: Worth keeping?
-pmix = hslider("mix", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
-ptype = hslider("filterType", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
-
 // A fairly standard wave shaping curve; we use this to shape the input signal
 // before modulating the filter coefficients by this signal. Which shaping curve
 // we use here is pretty unimportant; as long as we can introduce higher harmonics,
@@ -27,20 +23,24 @@ transfer(x) = ma.tanh(pcurve * x) / ma.tanh(pcurve);
 
 // The allpass filter is stable for `|m(x)| <= 1`, but should not linger
 // near +/-1.0 for very long. We therefore clamp the driven signal with a tanh
-// function to ensure smooth coefficient calculation.
+// function to ensure smooth coefficient calculation. We also here introduce
+// a modulated DC offset in the signal before the curve.
 drive(x) = x : *(pdrive) : +(fol(x)) : ma.tanh with {
 	fol = an.amp_follower(0.04);
 };
 
 // Our modulated filter is an allpass with coefficients governed by the input
-// signal applied through our wave shaper.
-//
-// TODO: `ptype` is used here to interpolate between an allpass and a one-zero.
-// Are we keeping that?
+// signal applied through our wave shaper. Before the filter, we mix the dry
+// input signal with the raw waveshaper output according to the `psat` parameter.
+// Note the constant gain coefficient on the waveshaper tap; that number is to offset
+// the global gain from the waveshaper to make sure the shaping process stays
+// under unity gain. The maximum differential gain of the waveshaper can be found
+// by evaluating the derivative of the transfer function at x0 where x0 is the
+// steepest part of the slope. Here that number is ~4, so we multiply by ~1/4.
 modfilter(x) = x <: _, tap(x) : *(1.0 - psat), *(psat) : + : fi.tf1(b0(x), b1(x), a1(x)) with {
-	b0(x) = ptype * m(x) + (1.0 - ptype);
-	b1(x) = ptype + m(x) * (1.0 - ptype);
-	a1(x) = ptype * m(x);
+	b0(x) = m(x);
+	b1(x) = 1.0;
+	a1(x) = m(x);
 	m(x) = drive(x) : transfer;
 	tap(x) = m(x) : *(0.24);
 };
@@ -58,9 +58,6 @@ main = (+ : modfilter : fi.dcblocker) ~ *(pfeedback) : gain with {
 	gain = *(4.0) : *(plevel);
 };
 
-// TODO: Is wet dry worth keeping?
-// wetdry = _ <: _, main : *(1.0 - pmix), *(pmix) : +;
-
 // When this unit processes a block, the block will be a zero-padded input
 // signal at a higher sampling rate. We run the elliptic filter immediately
 // because that step of zero-padding the input buffer introduces an alias of
@@ -70,4 +67,4 @@ main = (+ : modfilter : fi.dcblocker) ~ *(pfeedback) : gain with {
 // harmonics in the same frequency range [sampleRate / 4, sampleRate / 2] which
 // we cut out with the elliptic filter at the end of the chain before we drop
 // sample to return to the original sample rate.
-process = el.ellip : filter: main : el.ellip;
+process = el.ellip : filter : main : el.ellip;

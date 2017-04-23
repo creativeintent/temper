@@ -101,13 +101,11 @@ class TemperDsp : public dsp {
 	FAUSTFLOAT 	fslider5;
 	float 	fRec18[2];
 	float 	fVec0[2];
-	FAUSTFLOAT 	fslider6;
-	float 	fRec19[2];
 	float 	fRec6[2];
 	float 	fRec5[2];
 	float 	fRec4[2];
-	FAUSTFLOAT 	fslider7;
-	float 	fRec20[2];
+	FAUSTFLOAT 	fslider6;
+	float 	fRec19[2];
 	float 	fRec3[3];
 	float 	fRec2[3];
 	float 	fRec1[3];
@@ -116,7 +114,6 @@ class TemperDsp : public dsp {
 
   public:
 	virtual void metadata(Meta* m) { 
-		m->declare("name", "temper");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.0");
 		m->declare("maths.lib/author", "GRAME");
@@ -124,12 +121,13 @@ class TemperDsp : public dsp {
 		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/version", "0.0");
+		m->declare("signals.lib/name", "Faust Signal Routing Library");
+		m->declare("signals.lib/version", "0.0");
 		m->declare("basics.lib/name", "Faust Basic Element Library");
 		m->declare("basics.lib/version", "0.0");
 		m->declare("analyzers.lib/name", "Faust Analyzer Library");
 		m->declare("analyzers.lib/version", "0.0");
-		m->declare("signals.lib/name", "Faust Signal Routing Library");
-		m->declare("signals.lib/version", "0.0");
+		m->declare("name", "temper");
 	}
 
 	virtual int getNumInputs() { return 1; }
@@ -150,8 +148,7 @@ class TemperDsp : public dsp {
 		fslider3 = 1.0f;
 		fslider4 = 1.0f;
 		fslider5 = 4.0f;
-		fslider6 = 1.0f;
-		fslider7 = -3.0f;
+		fslider6 = -3.0f;
 	}
 	virtual void instanceClear() {
 		for (int i=0; i<2; i++) fRec7[i] = 0;
@@ -167,11 +164,10 @@ class TemperDsp : public dsp {
 		for (int i=0; i<2; i++) fRec17[i] = 0;
 		for (int i=0; i<2; i++) fRec18[i] = 0;
 		for (int i=0; i<2; i++) fVec0[i] = 0;
-		for (int i=0; i<2; i++) fRec19[i] = 0;
 		for (int i=0; i<2; i++) fRec6[i] = 0;
 		for (int i=0; i<2; i++) fRec5[i] = 0;
 		for (int i=0; i<2; i++) fRec4[i] = 0;
-		for (int i=0; i<2; i++) fRec20[i] = 0;
+		for (int i=0; i<2; i++) fRec19[i] = 0;
 		for (int i=0; i<3; i++) fRec3[i] = 0;
 		for (int i=0; i<3; i++) fRec2[i] = 0;
 		for (int i=0; i<3; i++) fRec1[i] = 0;
@@ -198,10 +194,9 @@ class TemperDsp : public dsp {
 		ui_interface->addHorizontalSlider("Cutoff", &fslider2, 1.6e+04f, 1e+02f, 1.6e+04f, 1.0f);
 		ui_interface->addHorizontalSlider("Drive", &fslider5, 4.0f, -1e+01f, 1e+01f, 0.001f);
 		ui_interface->addHorizontalSlider("Feedback", &fslider1, -6e+01f, -6e+01f, -24.0f, 1.0f);
-		ui_interface->addHorizontalSlider("Level", &fslider7, -3.0f, -12.0f, 12.0f, 1.0f);
+		ui_interface->addHorizontalSlider("Level", &fslider6, -3.0f, -12.0f, 12.0f, 1.0f);
 		ui_interface->addHorizontalSlider("Resonance", &fslider3, 1.0f, 1.0f, 8.0f, 0.001f);
 		ui_interface->addHorizontalSlider("Saturation", &fslider0, 0.0f, 0.0f, 1.0f, 0.001f);
-		ui_interface->addHorizontalSlider("filterType", &fslider6, 1.0f, 0.0f, 1.0f, 0.001f);
 		ui_interface->closeBox();
 	}
 	virtual void compute (int count, FAUSTFLOAT** input, FAUSTFLOAT** output) {
@@ -211,8 +206,7 @@ class TemperDsp : public dsp {
 		float 	fSlow3 = (0.005f * float(fslider3));
 		float 	fSlow4 = (0.005f * float(fslider4));
 		float 	fSlow5 = (0.005f * float(fslider5));
-		float 	fSlow6 = (0.005f * float(fslider6));
-		float 	fSlow7 = (0.005f * powf(10,(0.05f * float(fslider7))));
+		float 	fSlow6 = (0.005f * powf(10,(0.05f * float(fslider6))));
 		FAUSTFLOAT* input0 = input[0];
 		FAUSTFLOAT* output0 = output[0];
 		for (int i=0; i<count; i++) {
@@ -238,14 +232,13 @@ class TemperDsp : public dsp {
 			float fTemp7 = tanhf(fRec16[0]);
 			float fTemp8 = (((1.0f - fRec7[0]) * fTemp4) + (0.24f * ((fRec7[0] * fTemp6) / fTemp7)));
 			fVec0[0] = fTemp8;
-			fRec19[0] = (fSlow6 + (0.995f * fRec19[1]));
-			fRec6[0] = ((fVec0[0] * ((fRec19[0] * ((fTemp6 / fTemp7) + -1)) + 1.0f)) + ((fVec0[1] * (fRec19[0] + (((1.0f - fRec19[0]) * fTemp6) / fTemp7))) + (fRec6[1] * (0 - ((fRec19[0] * fTemp6) / fTemp7)))));
+			fRec6[0] = (fVec0[1] + ((fRec6[1] * (0 - (fTemp6 / fTemp7))) + ((fTemp6 * fVec0[0]) / fTemp7)));
 			fRec5[0] = (((0.995f * fRec5[1]) + fRec6[0]) - fRec6[1]);
 			fRec4[0] = fRec5[0];
-			fRec20[0] = (fSlow7 + (0.995f * fRec20[1]));
-			fRec3[0] = (((1.0637765f * fRec3[1]) + (4.0f * (fRec4[0] * fRec20[0]))) - (0.36209202f * fRec3[2]));
-			fRec2[0] = ((((0.61464167f * fRec2[1]) + (0.0009343176f * fRec3[1])) + (0.00048638252f * (fRec3[2] + fRec3[0]))) - (0.5686961f * fRec2[2]));
-			fRec1[0] = ((((0.19564603f * fRec1[1]) + (2.447349f * fRec2[1])) + (2.3153434f * (fRec2[2] + fRec2[0]))) - (0.7792284f * fRec1[2]));
+			fRec19[0] = (fSlow6 + (0.995f * fRec19[1]));
+			fRec3[0] = (((1.0637765f * fRec3[1]) + (4.0f * (fRec4[0] * fRec19[0]))) - (0.36209202f * fRec3[2]));
+			fRec2[0] = (((0.00048638252f * (fRec3[2] + fRec3[0])) + ((0.61464167f * fRec2[1]) + (0.0009343176f * fRec3[1]))) - (0.5686961f * fRec2[2]));
+			fRec1[0] = (((2.3153434f * (fRec2[2] + fRec2[0])) + ((0.19564603f * fRec1[1]) + (2.447349f * fRec2[1]))) - (0.7792284f * fRec1[2]));
 			fRec0[0] = (((5.509348f * fRec1[1]) + (3.7421112f * (fRec1[2] + fRec1[0]))) - ((0.014306352f * fRec0[1]) + (0.93285143f * fRec0[2])));
 			output0[i] = (FAUSTFLOAT)((1.4299138f * fRec0[1]) + (1.6742295f * (fRec0[2] + fRec0[0])));
 			// post processing
@@ -253,11 +246,10 @@ class TemperDsp : public dsp {
 			fRec1[2] = fRec1[1]; fRec1[1] = fRec1[0];
 			fRec2[2] = fRec2[1]; fRec2[1] = fRec2[0];
 			fRec3[2] = fRec3[1]; fRec3[1] = fRec3[0];
-			fRec20[1] = fRec20[0];
+			fRec19[1] = fRec19[0];
 			fRec4[1] = fRec4[0];
 			fRec5[1] = fRec5[0];
 			fRec6[1] = fRec6[0];
-			fRec19[1] = fRec19[0];
 			fVec0[1] = fVec0[0];
 			fRec18[1] = fRec18[0];
 			fRec17[1] = fRec17[0];
