@@ -24,12 +24,18 @@ deploy_win() {
     pushd $RELEASEDIR
         zip -rq4 Temper-$1.zip .
         aws s3 cp Temper-$1.zip $S3BUCKET
+        RELEASEURL="$(aws s3 presign $S3BUCKET/Temper-$1.zip --expires-in 604800)"
     popd
 
     pushd $DEMODIR
         zip -rq4 Temper-$1-Demo.zip .
         aws s3 cp Temper-$1-Demo.zip $S3BUCKET
+        DEMOURL="$(aws s3 presign $S3BUCKET/Temper-$1-Demo.zip --expires-in 604800)"
     popd
+
+    echo "Success!"
+    echo "Demo: $DEMOURL"
+    echo "Release: $RELEASEURL"
 }
 
 case "$1" in
