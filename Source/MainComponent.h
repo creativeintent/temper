@@ -56,7 +56,7 @@ private:
     ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> filterFreqAttachment;
     ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> filterResoAttachment;
     ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> driveAttachment;
-    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> offsetAttachment;
+    ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> satAttachment;
     ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> curveAttachment;
     ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> feedbackAttachment;
     ScopedPointer<AudioProcessorValueTreeState::SliderAttachment> levelAttachment;
@@ -67,14 +67,14 @@ private:
     ScopedPointer<Slider> m_resoSlider;
     ScopedPointer<Slider> m_driveSlider;
     ScopedPointer<Slider> m_curveSlider;
-    ScopedPointer<Slider> m_biasSlider;
+    ScopedPointer<Slider> m_satSlider;
     ScopedPointer<Slider> m_feedbackSlider;
     ScopedPointer<Slider> m_gainSlider;
     ScopedPointer<Label> m_cutoffLabel;
     ScopedPointer<Label> m_resoLabel;
     ScopedPointer<Label> m_driveLabel;
     ScopedPointer<Label> m_curveLabel;
-    ScopedPointer<Label> m_biasLabel;
+    ScopedPointer<Label> m_satLabel;
     ScopedPointer<Label> m_feedbackLabel;
     ScopedPointer<Label> m_gainLabel;
     ScopedPointer<Drawable> drawable1;

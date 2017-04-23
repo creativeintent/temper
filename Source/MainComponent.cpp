@@ -54,10 +54,10 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     m_curveSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_curveSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
-    addAndMakeVisible (m_biasSlider = new Slider ("Bias"));
-    m_biasSlider->setRange (0, 10, 0);
-    m_biasSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    m_biasSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
+    addAndMakeVisible (m_satSlider = new Slider ("Saturation"));
+    m_satSlider->setRange (0, 10, 0);
+    m_satSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    m_satSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_feedbackSlider = new Slider ("Feedback"));
     m_feedbackSlider->setRange (0, 10, 0);
@@ -105,14 +105,14 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     m_curveLabel->setColour (TextEditor::textColourId, Colours::black);
     m_curveLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (m_biasLabel = new Label ("Bias Label",
-                                                TRANS("SATURATION")));
-    m_biasLabel->setFont (Font (15.00f, Font::plain));
-    m_biasLabel->setJustificationType (Justification::centred);
-    m_biasLabel->setEditable (false, false, false);
-    m_biasLabel->setColour (Label::textColourId, Colour (0xffff8917));
-    m_biasLabel->setColour (TextEditor::textColourId, Colours::black);
-    m_biasLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible (m_satLabel = new Label ("Saturation Label",
+                                               TRANS("SATURATION")));
+    m_satLabel->setFont (Font (15.00f, Font::plain));
+    m_satLabel->setJustificationType (Justification::centred);
+    m_satLabel->setEditable (false, false, false);
+    m_satLabel->setColour (Label::textColourId, Colour (0xffff8917));
+    m_satLabel->setColour (TextEditor::textColourId, Colours::black);
+    m_satLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (m_feedbackLabel = new Label ("Feedback Label",
                                                     TRANS("FEEDBACK")));
@@ -141,13 +141,13 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
 
 
     //[Constructor] You can add your own custom stuff here..
-    filterFreqAttachment = new SliderAttachment(m_vts, "filterfc", *m_cutoffSlider);
-    filterResoAttachment = new SliderAttachment(m_vts, "filterq", *m_resoSlider);
-    driveAttachment = new SliderAttachment(m_vts, "drive", *m_driveSlider);
-    curveAttachment = new SliderAttachment(m_vts, "curve", *m_curveSlider);
-    offsetAttachment = new SliderAttachment(m_vts, "offset", *m_biasSlider);
-    feedbackAttachment = new SliderAttachment(m_vts, "feedback", *m_feedbackSlider);
-    levelAttachment = new SliderAttachment(m_vts, "level", *m_gainSlider);
+    filterFreqAttachment = new SliderAttachment(m_vts, "Cutoff", *m_cutoffSlider);
+    filterResoAttachment = new SliderAttachment(m_vts, "Resonance", *m_resoSlider);
+    driveAttachment = new SliderAttachment(m_vts, "Drive", *m_driveSlider);
+    curveAttachment = new SliderAttachment(m_vts, "Curve", *m_curveSlider);
+    satAttachment = new SliderAttachment(m_vts, "Saturation", *m_satSlider);
+    feedbackAttachment = new SliderAttachment(m_vts, "Feedback", *m_feedbackSlider);
+    levelAttachment = new SliderAttachment(m_vts, "Level", *m_gainSlider);
 
     m_cutoffSlider->setTextValueSuffix("Hz");
     m_feedbackSlider->setTextValueSuffix("dB");
@@ -166,7 +166,7 @@ MainComponent::~MainComponent()
     filterResoAttachment = nullptr;
     driveAttachment = nullptr;
     curveAttachment = nullptr;
-    offsetAttachment = nullptr;
+    satAttachment = nullptr;
     feedbackAttachment = nullptr;
     levelAttachment = nullptr;
     //[/Destructor_pre]
@@ -175,14 +175,14 @@ MainComponent::~MainComponent()
     m_resoSlider = nullptr;
     m_driveSlider = nullptr;
     m_curveSlider = nullptr;
-    m_biasSlider = nullptr;
+    m_satSlider = nullptr;
     m_feedbackSlider = nullptr;
     m_gainSlider = nullptr;
     m_cutoffLabel = nullptr;
     m_resoLabel = nullptr;
     m_driveLabel = nullptr;
     m_curveLabel = nullptr;
-    m_biasLabel = nullptr;
+    m_satLabel = nullptr;
     m_feedbackLabel = nullptr;
     m_gainLabel = nullptr;
     drawable1 = nullptr;
@@ -217,14 +217,14 @@ void MainComponent::resized()
     m_resoSlider->setBounds (28, 277, 72, 72);
     m_driveSlider->setBounds (336, 357, 72, 72);
     m_curveSlider->setBounds (219, 370, 50, 50);
-    m_biasSlider->setBounds (475, 370, 50, 50);
+    m_satSlider->setBounds (475, 370, 50, 50);
     m_feedbackSlider->setBounds (640, 148, 72, 72);
     m_gainSlider->setBounds (640, 277, 72, 72);
     m_cutoffLabel->setBounds (24, 111, 80, 20);
     m_resoLabel->setBounds (24, 369, 80, 20);
     m_driveLabel->setBounds (332, 450, 80, 20);
     m_curveLabel->setBounds (204, 440, 80, 20);
-    m_biasLabel->setBounds (462, 440, 80, 20);
+    m_satLabel->setBounds (462, 440, 80, 20);
     m_feedbackLabel->setBounds (637, 111, 80, 20);
     m_gainLabel->setBounds (639, 369, 80, 20);
     //[UserResized] Add your own custom resize handling here..
@@ -275,10 +275,11 @@ BEGIN_JUCER_METADATA
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
-  <SLIDER name="Bias" id="a1e434d9a7eda8a0" memberName="m_biasSlider" virtualName=""
-          explicitFocusOrder="0" pos="475 370 50 50" min="0" max="10" int="0"
-          style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox" textBoxEditable="0"
-          textBoxWidth="80" textBoxHeight="20" skewFactor="1" needsCallback="0"/>
+  <SLIDER name="Saturation" id="a1e434d9a7eda8a0" memberName="m_satSlider"
+          virtualName="" explicitFocusOrder="0" pos="475 370 50 50" min="0"
+          max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
+          needsCallback="0"/>
   <SLIDER name="Feedback" id="ecd475fce33f4b83" memberName="m_feedbackSlider"
           virtualName="" explicitFocusOrder="0" pos="640 148 72 72" min="0"
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
@@ -309,7 +310,7 @@ BEGIN_JUCER_METADATA
          edTextCol="ff000000" edBkgCol="0" labelText="CURVE" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="36"/>
-  <LABEL name="Bias Label" id="e8a8527f3f6976cf" memberName="m_biasLabel"
+  <LABEL name="Saturation Label" id="e8a8527f3f6976cf" memberName="m_satLabel"
          virtualName="" explicitFocusOrder="0" pos="462 440 80 20" textCol="ffff8917"
          edTextCol="ff000000" edBkgCol="0" labelText="SATURATION" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"

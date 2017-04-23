@@ -2,17 +2,17 @@ import("stdfaust.lib");
 el = library("./ellip.dsp");
 
 // Pre-filter parameters
-pfilterfc = hslider("filterfc", 16000, 100, 16000, 1.0) : si.smooth(0.995);
-pfilterq = hslider("filterq", 1.0, 1.0, 8, 0.001) : si.smooth(0.995);
+pfilterfc = hslider("Cutoff", 16000, 100, 16000, 1.0) : si.smooth(0.995);
+pfilterq = hslider("Resonance", 1.0, 1.0, 8, 0.001) : si.smooth(0.995);
 
 // Distortion parameters
-pdrive = hslider("drive", 4.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
-poffset = hslider("offset", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
-pcurve = hslider("curve", 1.0, 0.1, 4.0, 0.001) : si.smooth(0.995);
+pdrive = hslider("Drive", 4.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
+psat = hslider("Saturation", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
+pcurve = hslider("Curve", 1.0, 0.1, 4.0, 0.001) : si.smooth(0.995);
 
 // Output parameters
-pfeedback = hslider("feedback", -60, -60, -24, 1) : ba.db2linear : si.smooth(0.995);
-plevel = hslider("level", -3, -12, 12, 1) : ba.db2linear : si.smooth(0.995);
+pfeedback = hslider("Feedback", -60, -60, -24, 1) : ba.db2linear : si.smooth(0.995);
+plevel = hslider("Level", -3, -12, 12, 1) : ba.db2linear : si.smooth(0.995);
 
 // TODO: Worth keeping?
 pmix = hslider("mix", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
@@ -37,7 +37,7 @@ drive(x) = x : *(pdrive) : +(fol(x)) : ma.tanh with {
 //
 // TODO: `ptype` is used here to interpolate between an allpass and a one-zero.
 // Are we keeping that?
-modfilter(x) = x <: _, tap(x) : *(1.0 - poffset), *(poffset) : + : fi.tf1(b0(x), b1(x), a1(x)) with {
+modfilter(x) = x <: _, tap(x) : *(1.0 - psat), *(psat) : + : fi.tf1(b0(x), b1(x), a1(x)) with {
 	b0(x) = ptype * m(x) + (1.0 - ptype);
 	b1(x) = ptype + m(x) * (1.0 - ptype);
 	a1(x) = ptype * m(x);
