@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="e0DLq8" name="Temper" projectType="audioplug" version="1.0.0"
+<JUCERPROJECT id="e0DLq8" name="Temper" projectType="audioplug" version="1.0.0-beta"
               bundleIdentifier="com.creativeintent.temper" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="1" buildAU="1" buildAUv3="0" buildRTAS="0"
               buildAAX="0" pluginName="Temper" pluginDesc="Modern digital distortion."

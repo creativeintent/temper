@@ -42,7 +42,7 @@
 namespace ProjectInfo
 {
     const char* const  projectName    = "Temper";
-    const char* const  versionString  = "1.0.0";
+    const char* const  versionString  = "1.0.0-beta";
     const int          versionNumber  = 0x10000;
 }
 #endif
