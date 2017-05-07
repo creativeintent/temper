@@ -35,37 +35,37 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     //[/Constructor_pre]
 
     addAndMakeVisible (m_cutoffSlider = new Slider ("Cutoff"));
-    m_cutoffSlider->setRange (0, 10, 0);
+    m_cutoffSlider->setRange (100, 16000, 0);
     m_cutoffSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_cutoffSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_resoSlider = new Slider ("Resonance"));
-    m_resoSlider->setRange (0, 10, 0);
+    m_resoSlider->setRange (1, 8, 0);
     m_resoSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_resoSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_driveSlider = new Slider ("Drive"));
-    m_driveSlider->setRange (0, 10, 0);
+    m_driveSlider->setRange (-10, 10, 0);
     m_driveSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_driveSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_curveSlider = new Slider ("Curve"));
-    m_curveSlider->setRange (0, 10, 0);
+    m_curveSlider->setRange (0.1, 4, 0);
     m_curveSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_curveSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_satSlider = new Slider ("Saturation"));
-    m_satSlider->setRange (0, 10, 0);
+    m_satSlider->setRange (0, 1, 0);
     m_satSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_satSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_feedbackSlider = new Slider ("Feedback"));
-    m_feedbackSlider->setRange (0, 10, 0);
+    m_feedbackSlider->setRange (-60, -24, 0);
     m_feedbackSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_feedbackSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_gainSlider = new Slider ("Level"));
-    m_gainSlider->setRange (0, 10, 0);
+    m_gainSlider->setRange (-12, 12, 0);
     m_gainSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_gainSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
@@ -150,6 +150,7 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     levelAttachment = new SliderAttachment(m_vts, "Level", *m_gainSlider);
 
     m_cutoffSlider->setTextValueSuffix("Hz");
+    m_cutoffSlider->setSkewFactorFromMidPoint(800.0);
     m_feedbackSlider->setTextValueSuffix("dB");
     m_gainSlider->setTextValueSuffix("dB");
     //[/Constructor]
@@ -256,38 +257,38 @@ BEGIN_JUCER_METADATA
            mode="0"/>
   </BACKGROUND>
   <SLIDER name="Cutoff" id="80edd5c38c704dd5" memberName="m_cutoffSlider"
-          virtualName="" explicitFocusOrder="0" pos="28 149 72 72" min="0"
-          max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          virtualName="" explicitFocusOrder="0" pos="28 149 72 72" min="100"
+          max="16000" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Resonance" id="3bb5cf0ab68e9733" memberName="m_resoSlider"
-          virtualName="" explicitFocusOrder="0" pos="28 277 72 72" min="0"
-          max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          virtualName="" explicitFocusOrder="0" pos="28 277 72 72" min="1"
+          max="8" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Drive" id="9909e31099819864" memberName="m_driveSlider"
-          virtualName="" explicitFocusOrder="0" pos="336 357 72 72" min="0"
+          virtualName="" explicitFocusOrder="0" pos="336 357 72 72" min="-10"
           max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Curve" id="a56ea73f883bdf8f" memberName="m_curveSlider"
-          virtualName="" explicitFocusOrder="0" pos="219 370 50 50" min="0"
-          max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          virtualName="" explicitFocusOrder="0" pos="219 370 50 50" min="0.10000000000000000555"
+          max="4" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Saturation" id="a1e434d9a7eda8a0" memberName="m_satSlider"
           virtualName="" explicitFocusOrder="0" pos="475 370 50 50" min="0"
-          max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          max="1" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Feedback" id="ecd475fce33f4b83" memberName="m_feedbackSlider"
-          virtualName="" explicitFocusOrder="0" pos="640 148 72 72" min="0"
-          max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          virtualName="" explicitFocusOrder="0" pos="640 148 72 72" min="-60"
+          max="-24" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Level" id="bf47d1ef820213ea" memberName="m_gainSlider"
-          virtualName="" explicitFocusOrder="0" pos="640 277 72 72" min="0"
-          max="10" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          virtualName="" explicitFocusOrder="0" pos="640 277 72 72" min="-12"
+          max="12" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <LABEL name="Cutoff Label" id="8c36484c7dd57b99" memberName="m_cutoffLabel"
