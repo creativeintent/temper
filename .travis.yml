@@ -2,10 +2,6 @@ os: osx
 osx_image: xcode7.3
 language: cpp
 
-compiler:
-- clang
-- gcc
-
 script:
 - xcodebuild -alltargets -configuration Debug -project ./Builds/MacOSX/Temper.xcodeproj/
 - xcodebuild -alltargets -configuration Release -project ./Builds/MacOSX/Temper.xcodeproj/
@@ -15,10 +11,11 @@ deploy:
   provider: s3
   access_key_id: AKIAJCWZQWRGWDG335JA
   secret_access_key:
-    secure: KnCQH53mL5+oSG7nywdzpMsj+haMAnY92e3xnpCnMOgqkwkWtNE2ZIfhgcmo/7aKA202l0Puz4C55no4VCSwFEP7uU7xrUFGXWCgRoOxFHEiFQsE+djbHPJOCJ83wvb+XnbXCjDIiVE17AN5Y4j+6i+Jp31mTtDmkCd3tCCNlTfSqN+bfcQowPU+dXagIjq2q0GBSLYwyqm+xzhbgHXoBFEcKD5vWigG1va/L9MhFqbEKtfur/ze290/MyZWqxjF2PRlU1CLKPwMpFugVu3pO2JWiyI9kvJLVFFD/K+FZ2rsSWoMgmCgW+95Gmmia7ADTdfKmcASdOySPlsT/xVpPD3/JoE+0qehk7Copl6mGm5dnNWHQdv24+IgYyc5FxmkE8ghQwQc+B5FQsB4T3TZvyosYPmY4uKKWSH5sWrz7Xq6bdJ4uKGCdDFYL6W01aCnKahV2abBkFehIIFRr5MRDOmq1xw6FDoCI0ynkcp4zScGn3+7RGJ+OKVlLjMGooVz0K6s+NQv8ZHDxeikkPG9Z2/Llx5OLYScK4rHs9UoRv4ho4dr1H7fsoTJjtBt81sZ4IEXtkwJC7GiNf6SYcG7eX8Cj2sBbBzr8gA/nLZs7Nix6982CIda0q7vuUQi4uhkHuzph17vFQWUtnZzJlHPWi4GLuMbEaWA5/HTTdHFDkQ=
+    secure: pUQxpogc+hTPDm9R7SymuYLnGkFLq7ing7KqPALpZZObKHzhWKptRFR6RBzgMclBWL/9hWCpL3SqAdGVv33yM+/WnkDg+NauzTTcZ/7JNmThQLcyv01eqHlgjWCTIVnEMrg75TfCEvHaje3FAOq0vrvmxSV7HxAI2PVDsoP3wbrjOIDk/jnGTSP5bth3xC2bi6kedekyFnlnnvxAEvPRIbidAzimLcY/BVwYdf0qfqiWm61c7Xe4ffxNu1NcFR9POZXpn/5kNCU2SoKzlOGDWOaJHf1Dbw6kZsTzUYtOjQnYlnrW+3ydMe1PCmyEMD+hFFPwmJeqNFpTwbQGOClM2es0B09ZSy7xqVsMUBuB5neZdq5SNxid/dRVHXJQHaDoDOFtb6ZDvF8BrUaCv/DLRhOqgQaq1ROLPQAcoXBK+QIElEAtZl/yUN5xINDV2VkZCOPqfPho4xEnZo2KDJCKpqmaYnQ2GAywC34gWZuyXUgznOM2C/huxOFki0Ten1cAXIlDVkZJsCcRP3iCPdrQJfNrIrrVQYnewiJmt1Swf+a4OvBx+AMvMDXrND7YZlOrVmDR4HMhv7xVuz7pWWXnAGFYwMQVhHihT526aht1lDro39IUV9AIKCOWSRV6L/MEiagfd5cQQiQvBrA8OCU19l9Kzs5/WRUYVcJ9lzJSFEk=
   bucket: ci-temper
-  upload-dir: $TRAVIS_TAG/Builds/MacOSX
   skip_cleanup: true
-  local_dir: ./Builds/MacOSX/build
+  local-dir: "./Builds/MacOSX/build"
+  upload-dir: "$TRAVIS_TAG/MacOSX"
   on:
     tags: true
+    repo: creativeintent/temper
