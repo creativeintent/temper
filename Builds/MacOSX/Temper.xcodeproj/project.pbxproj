@@ -2948,7 +2948,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-VST.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
@@ -2985,7 +2985,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-VST.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
@@ -3023,7 +3023,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-VST.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
@@ -3059,7 +3059,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-VST3.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST3/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
@@ -3096,7 +3096,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-VST3.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST3/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
@@ -3134,7 +3134,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-VST3.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST3/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
@@ -3170,7 +3170,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-AU.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
@@ -3208,7 +3208,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-AU.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
@@ -3247,7 +3247,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "$(inherited)");
 				INFOPLIST_FILE = Info-AU.plist;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
+				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;

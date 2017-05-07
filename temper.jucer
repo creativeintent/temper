@@ -51,11 +51,15 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" vst3Folder="VST3_SDK">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Temper"
-                       osxArchitecture="64BitUniversal" headerPath="../../Include"/>
+                       osxArchitecture="64BitUniversal" headerPath="../../Include" xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
+                       xcodeVst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" xcodeAudioUnitBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Temper"
-                       osxArchitecture="64BitUniversal" headerPath="../../Include"/>
+                       osxArchitecture="64BitUniversal" headerPath="../../Include" xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
+                       xcodeVst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" xcodeAudioUnitBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"/>
         <CONFIGURATION name="Demo" isDebug="0" optimisation="3" targetName="Temper (Demo)"
-                       osxArchitecture="64BitUniversal" headerPath="../../Include" defines="TEMPER_DEMO_BUILD=1"/>
+                       osxArchitecture="64BitUniversal" headerPath="../../Include" defines="TEMPER_DEMO_BUILD=1"
+                       xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" xcodeVst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
+                       xcodeAudioUnitBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
