@@ -2,10 +2,13 @@ os: osx
 osx_image: xcode7.3
 language: cpp
 
+env:
+ - CONFIG=Debug
+ - CONFIG=Release
+ - CONFIG=Demo
+
 script:
-- xcodebuild -alltargets -configuration Debug -project ./Builds/MacOSX/Temper.xcodeproj/
-- xcodebuild -alltargets -configuration Release -project ./Builds/MacOSX/Temper.xcodeproj/
-- xcodebuild -alltargets -configuration Demo -project ./Builds/MacOSX/Temper.xcodeproj/
+- xcodebuild -alltargets -configuration $CONFIG -project ./Builds/MacOSX/Temper.xcodeproj/
 
 before_deploy:
 - rm -r ./Builds/MacOSX/build/Temper.build/
