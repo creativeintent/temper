@@ -4,7 +4,7 @@ set -e
 
 export PATH=~/Library/Python/2.7/bin/:$PATH
 
-deploy_win() {
+release() {
     S3BUCKET="s3://ci-temper"
     S3DIR="$S3BUCKET/$1"
     TMPDIR="$(mktemp -d)"
@@ -13,13 +13,29 @@ deploy_win() {
 
     aws s3 sync $S3DIR $TMPDIR
 
-    mkdir -p $RELEASEDIR
-    mv $TMPDIR/Builds/VisualStudio2015/Release/*.dll $RELEASEDIR
-    mv $TMPDIR/Builds/VisualStudio2015/Release/*.vst3 $RELEASEDIR
+    # Copy Windows builds
+    mkdir -p "$RELEASEDIR/Win"
+    mv $TMPDIR/Builds/VisualStudio2015/Release/*.dll "$RELEASEDIR/Win"
+    mv $TMPDIR/Builds/VisualStudio2015/Release/*.vst3 "$RELEASEDIR/Win"
+    # Copy OSX Builds
+    mkdir -p "$RELEASEDIR/OSX"
+    mv $TMPDIR/Builds/MacOSX/Release/*.vst "$RELEASEDIR/OSX"
+    mv $TMPDIR/Builds/MacOSX/Release/*.vst3 "$RELEASEDIR/OSX"
+    mv $TMPDIR/Builds/MacOSX/Release/*.component "$RELEASEDIR/OSX"
 
-    mkdir -p $DEMODIR
-    mv $TMPDIR/Builds/VisualStudio2015/Demo/*.dll $DEMODIR
-    mv $TMPDIR/Builds/VisualStudio2015/Demo/*.vst3 $DEMODIR
+    # Copy Windows builds
+    mkdir -p "$DEMODIR/Win"
+    mv $TMPDIR/Builds/VisualStudio2015/Demo/*.dll "$DEMODIR/Win"
+    mv $TMPDIR/Builds/VisualStudio2015/Demo/*.vst3 "$DEMODIR/Win"
+    # Copy OSX Builds
+    mkdir -p "$DEMODIR/OSX"
+    mv $TMPDIR/Builds/MacOSX/Demo/*.vst "$DEMODIR/OSX"
+    mv $TMPDIR/Builds/MacOSX/Demo/*.vst3 "$DEMODIR/OSX"
+    mv $TMPDIR/Builds/MacOSX/Demo/*.component "$DEMODIR/OSX"
+
+    # Copy installation instructions
+    touch $RELEASEDIR/INSTALL.txt
+    touch $DEMODIR/INSTALL.txt
 
     pushd $RELEASEDIR
         zip -rq4 Temper-$1.zip .
@@ -38,11 +54,9 @@ deploy_win() {
     echo "Release: $RELEASEURL"
 }
 
-case "$1" in
-    windows)
-        deploy_win $2
-        ;;
-    *)
-        echo "Usage: ./Scripts/release.sh (windows|osx) (version-tag)"
-        ;;
-esac
+if [ $# -eq 0 ]
+then
+    echo "Usage: ./Scripts/release.sh (version-tag)"
+else
+    release $1
+fi
