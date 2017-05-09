@@ -10,6 +10,7 @@ release() {
     TMPDIR="$(mktemp -d)"
     RELEASEDIR="$TMPDIR/zip/release"
     DEMODIR="$TMPDIR/zip/demo"
+    SCRIPTDIR="${0%/*}"
 
     aws s3 sync $S3DIR $TMPDIR
 
@@ -34,8 +35,8 @@ release() {
     mv $TMPDIR/Builds/MacOSX/Demo/*.component "$DEMODIR/OSX"
 
     # Copy installation instructions
-    touch $RELEASEDIR/INSTALL.txt
-    touch $DEMODIR/INSTALL.txt
+    cp "$SCRIPTDIR/../INSTALL.txt" "$RELEASEDIR"
+    cp "$SCRIPTDIR/../INSTALL.txt" "$DEMODIR"
 
     pushd $RELEASEDIR
         zip -rq4 Temper-$1.zip .

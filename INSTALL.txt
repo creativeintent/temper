@@ -1,0 +1,55 @@
+Thank you for downloading Temper! We hope you like it.
+
+For any support inquiries, comments, questions, or general feedback, please
+send an email to nick@creativeintent.co.
+
+Installation Instructions
+========================================
+
+Installing the Temper plugin is a simple process of copying the correct
+plugin version to the appropriate directory on your system. If after you've
+copied the plugin files you cannot get your plugin host or DAW to recognize
+Temper, please consult your host's documentation, as every host may be different.
+
+Windows
+----------------------------------------
+To install Temper on Windows, copy the desired plugin version from
+the Win/ directory here into the appropriate target directory below.
+
+For 64-bit plugins (Win/Temper (x64).dll and Win/Temper (x64).vst3), 
+
+- C:\Program Files\VstPlugins\
+
+For 32-bit plugins (Win/Temper.dll and Win/Temper.vst3):
+
+- C:\Program Files (x86)\VstPlugins\
+
+
+This assumes that you are working on a 64-bit computer. Consult the documentation
+for your plugin host or DAW to identify whether it supports 64-bit plugins or
+only 32-bit plugins. Trying to load the 64-bit version of Temper in a plugin host
+that only supports 32-bit plugins will cause an error.
+
+OSX
+----------------------------------------
+To install Temper on OSX, copy the desired plugin version from the OSX/ directory
+here into one of the following installation directories.
+
+For VST (OSX/Temper.vst):
+
+- /Library/Audio/Plug-Ins/VST/                   (Preferred)
+- ~/Library/Audio/Plug-Ins/VST/
+
+For VST3 (OSX/Temper.vst3):
+
+- /Library/Audio/Plug-Ins/VST3/
+
+For AU (OSX/Temper.component):
+
+- /Library/Audio/Plug-Ins/Components/            (Preferred)
+- ~/Library/Audio/Plug-Ins/Components/
+
+
+If you have any trouble, please consult the documentation for your plugin
+host or DAW. We are always happy to help if you need, please email nick@creativeintent.co
+to get in touch.
