@@ -4,8 +4,9 @@ set -e
 
 export PATH=~/Library/Python/2.7/bin/:$PATH
 
+S3BUCKET="s3://ci-temper"
+
 release() {
-    S3BUCKET="s3://ci-temper"
     S3DIR="$S3BUCKET/$1"
     TMPDIR="$(mktemp -d)"
     RELEASEDIR="$TMPDIR/zip/release"
@@ -41,23 +42,31 @@ release() {
     pushd $RELEASEDIR
         zip -rq4 Temper-$1.zip .
         aws s3 cp Temper-$1.zip $S3BUCKET
-        RELEASEURL="$(aws s3 presign $S3BUCKET/Temper-$1.zip --expires-in 604800)"
     popd
 
     pushd $DEMODIR
         zip -rq4 Temper-$1-Demo.zip .
         aws s3 cp Temper-$1-Demo.zip $S3BUCKET
-        DEMOURL="$(aws s3 presign $S3BUCKET/Temper-$1-Demo.zip --expires-in 604800)"
     popd
 
     echo "Success!"
+}
+
+presign() {
+    RELEASEURL="$(aws s3 presign $S3BUCKET/Temper-$1.zip --expires-in 604800)"
+    DEMOURL="$(aws s3 presign $S3BUCKET/Temper-$1-Demo.zip --expires-in 604800)"
     echo "Demo: $DEMOURL"
     echo "Release: $RELEASEURL"
 }
 
-if [ $# -eq 0 ]
-then
-    echo "Usage: ./Scripts/release.sh (version-tag)"
-else
-    release $1
-fi
+case $1 in
+    release)
+        release $2
+        ;;
+    presign)
+        presign $2
+        ;;
+    *)
+        echo "Usage: ./Scripts/release.sh (release|presign) (version-tag)"
+        ;;
+esac
