@@ -2,6 +2,8 @@
 
 > Modern digital distortion. 
 
+![Temper Plugin](/screenshot.jpg?raw=true "Temper running inside FL Studio 12.")
+
 Temper is a digital distortion audio plugin targeting VST, VST3, AU, and AUv3
 for OS X and Windows. It builds upon traditional waveshaping techniques using
 modulated filter coefficients to produce a unique phase distortion. The primary
