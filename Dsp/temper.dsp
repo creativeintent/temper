@@ -19,13 +19,14 @@ plevel = hslider("Level", -3, -12, 12, 1) : ba.db2linear : si.smooth(0.995);
 // we use here is pretty unimportant; as long as we can introduce higher harmonics,
 // the coefficient modulation will react. Which harmonics we introduce here seems
 // to affect the resulting sound pretty minimally.
-transfer(x) = ma.tanh(pcurve * x) / ma.tanh(pcurve);
+tanh(x) = x * (27 + x * x) / (27 + 9 * x * x);
+transfer(x) = tanh(pcurve * x) / tanh(pcurve);
 
 // The allpass filter is stable for `|m(x)| <= 1`, but should not linger
 // near +/-1.0 for very long. We therefore clamp the driven signal with a tanh
 // function to ensure smooth coefficient calculation. We also here introduce
 // a modulated DC offset in the signal before the curve.
-drive(x) = x : *(pdrive) : +(fol(x)) : ma.tanh with {
+drive(x) = x : *(pdrive) : +(fol(x)) : max(-3) : min(3) with {
 	fol = an.amp_follower(0.04);
 };
 

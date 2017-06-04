@@ -1,10 +1,10 @@
 //----------------------------------------------------------
 // name: "temper"
 //
-// Code generated with Faust 0.9.96 (http://faust.grame.fr)
+// Code generated with Faust 0.9.100 (http://faust.grame.fr)
 //----------------------------------------------------------
 
-/* link with : "" */
+/* link with  */
 #include <math.h>
 #ifndef FAUSTPOWER
 #define FAUSTPOWER
@@ -93,10 +93,10 @@ class TemperDsp : public dsp {
 	FAUSTFLOAT 	fslider3;
 	float 	fRec15[2];
 	float 	fRec9[3];
-	FAUSTFLOAT 	fslider4;
-	float 	fRec16[2];
 	float 	fConst2;
 	float 	fConst3;
+	float 	fRec16[2];
+	FAUSTFLOAT 	fslider4;
 	float 	fRec17[2];
 	FAUSTFLOAT 	fslider5;
 	float 	fRec18[2];
@@ -114,20 +114,20 @@ class TemperDsp : public dsp {
 
   public:
 	virtual void metadata(Meta* m) { 
+		m->declare("filters.lib/name", "Faust Filters Library");
+		m->declare("filters.lib/version", "0.0");
+		m->declare("signals.lib/name", "Faust Signal Routing Library");
+		m->declare("signals.lib/version", "0.0");
+		m->declare("analyzers.lib/name", "Faust Analyzer Library");
+		m->declare("analyzers.lib/version", "0.0");
+		m->declare("name", "temper");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.0");
 		m->declare("maths.lib/author", "GRAME");
 		m->declare("maths.lib/copyright", "GRAME");
 		m->declare("maths.lib/license", "LGPL with exception");
-		m->declare("filters.lib/name", "Faust Filters Library");
-		m->declare("filters.lib/version", "0.0");
-		m->declare("signals.lib/name", "Faust Signal Routing Library");
-		m->declare("signals.lib/version", "0.0");
 		m->declare("basics.lib/name", "Faust Basic Element Library");
 		m->declare("basics.lib/version", "0.0");
-		m->declare("analyzers.lib/name", "Faust Analyzer Library");
-		m->declare("analyzers.lib/version", "0.0");
-		m->declare("name", "temper");
 	}
 
 	virtual int getNumInputs() { return 1; }
@@ -136,7 +136,7 @@ class TemperDsp : public dsp {
 	}
 	virtual void instanceConstants(int samplingFreq) {
 		fSamplingFreq = samplingFreq;
-		fConst0 = min(1.92e+05f, max(1.0f, (float)fSamplingFreq));
+		fConst0 = min(1.92e+05f, max(1e+03f, (float)fSamplingFreq));
 		fConst1 = (3.1415927f / fConst0);
 		fConst2 = expf((0 - (25.0f / fConst0)));
 		fConst3 = (1.0f - fConst2);
@@ -146,8 +146,8 @@ class TemperDsp : public dsp {
 		fslider1 = -6e+01f;
 		fslider2 = 1.6e+04f;
 		fslider3 = 1.0f;
-		fslider4 = 1.0f;
-		fslider5 = 4.0f;
+		fslider4 = 4.0f;
+		fslider5 = 1.0f;
 		fslider6 = -3.0f;
 	}
 	virtual void instanceClear() {
@@ -189,10 +189,10 @@ class TemperDsp : public dsp {
 		return fSamplingFreq;
 	}
 	virtual void buildUserInterface(UI* ui_interface) {
-		ui_interface->openVerticalBox("0x00");
-		ui_interface->addHorizontalSlider("Curve", &fslider4, 1.0f, 0.1f, 4.0f, 0.001f);
+		ui_interface->openVerticalBox("temper");
+		ui_interface->addHorizontalSlider("Curve", &fslider5, 1.0f, 0.1f, 4.0f, 0.001f);
 		ui_interface->addHorizontalSlider("Cutoff", &fslider2, 1.6e+04f, 1e+02f, 1.6e+04f, 1.0f);
-		ui_interface->addHorizontalSlider("Drive", &fslider5, 4.0f, -1e+01f, 1e+01f, 0.001f);
+		ui_interface->addHorizontalSlider("Drive", &fslider4, 4.0f, -1e+01f, 1e+01f, 0.001f);
 		ui_interface->addHorizontalSlider("Feedback", &fslider1, -6e+01f, -6e+01f, -24.0f, 1.0f);
 		ui_interface->addHorizontalSlider("Level", &fslider6, -3.0f, -12.0f, 12.0f, 1.0f);
 		ui_interface->addHorizontalSlider("Resonance", &fslider3, 1.0f, 1.0f, 8.0f, 0.001f);
@@ -213,8 +213,8 @@ class TemperDsp : public dsp {
 			fRec7[0] = (fSlow0 + (0.995f * fRec7[1]));
 			fRec8[0] = (fSlow1 + (0.995f * fRec8[1]));
 			fRec13[0] = (((float)input0[i] + (1.0637765f * fRec13[1])) - (0.36209202f * fRec13[2]));
-			fRec12[0] = (((0.00048638252f * (fRec13[2] + fRec13[0])) + ((0.61464167f * fRec12[1]) + (0.0009343176f * fRec13[1]))) - (0.5686961f * fRec12[2]));
-			fRec11[0] = (((2.3153434f * (fRec12[2] + fRec12[0])) + ((0.19564603f * fRec11[1]) + (2.447349f * fRec12[1]))) - (0.7792284f * fRec11[2]));
+			fRec12[0] = ((((0.0009343176f * fRec13[1]) + (0.00048638252f * (fRec13[2] + fRec13[0]))) + (0.61464167f * fRec12[1])) - (0.5686961f * fRec12[2]));
+			fRec11[0] = ((((2.447349f * fRec12[1]) + (2.3153434f * (fRec12[2] + fRec12[0]))) + (0.19564603f * fRec11[1])) - (0.7792284f * fRec11[2]));
 			fRec10[0] = (((5.509348f * fRec11[1]) + (3.7421112f * (fRec11[2] + fRec11[0]))) - ((0.014306352f * fRec10[1]) + (0.93285143f * fRec10[2])));
 			fRec14[0] = (fSlow2 + (0.995f * fRec14[1]));
 			float fTemp0 = tanf((fConst1 * fRec14[0]));
@@ -222,25 +222,30 @@ class TemperDsp : public dsp {
 			fRec15[0] = (fSlow3 + (0.995f * fRec15[1]));
 			float fTemp2 = (1.0f / fRec15[0]);
 			float fTemp3 = (((fTemp1 + fTemp2) / fTemp0) + 1);
-			fRec9[0] = (((1.4299138f * fRec10[1]) + (1.6742295f * (fRec10[2] + fRec10[0]))) - (((2 * (fRec9[1] * (1 - (1.0f / faustpower<2>(fTemp0))))) + (fRec9[2] * (((fTemp1 - fTemp2) / fTemp0) + 1))) / fTemp3));
-			float fTemp4 = ((fRec4[1] * fRec8[0]) + ((fRec9[0] + (fRec9[2] + (2.0f * fRec9[1]))) / fTemp3));
-			fRec16[0] = (fSlow4 + (0.995f * fRec16[1]));
+			fRec9[0] = (((1.4299138f * fRec10[1]) + (1.6742295f * (fRec10[2] + fRec10[0]))) - ((((((fTemp1 - fTemp2) / fTemp0) + 1) * fRec9[2]) + (2 * (fRec9[1] * (1 - (1.0f / faustpower<2>(fTemp0)))))) / fTemp3));
+			float fTemp4 = ((fRec4[1] * fRec8[0]) + ((((2.0f * fRec9[1]) + fRec9[0]) + fRec9[2]) / fTemp3));
 			float fTemp5 = fabsf(fTemp4);
-			fRec17[0] = max(fTemp5, ((fConst2 * fRec17[1]) + (fConst3 * fTemp5)));
+			fRec16[0] = max(fTemp5, ((fConst2 * fRec16[1]) + (fConst3 * fTemp5)));
+			fRec17[0] = (fSlow4 + (0.995f * fRec17[1]));
+			float fTemp6 = min((float)3, max((float)-3, (fRec16[0] + (fTemp4 * fRec17[0]))));
 			fRec18[0] = (fSlow5 + (0.995f * fRec18[1]));
-			float fTemp6 = tanhf((fRec16[0] * tanhf((fRec17[0] + (fRec18[0] * fTemp4)))));
-			float fTemp7 = tanhf(fRec16[0]);
-			float fTemp8 = (((1.0f - fRec7[0]) * fTemp4) + (0.24f * ((fRec7[0] * fTemp6) / fTemp7)));
-			fVec0[0] = fTemp8;
-			fRec6[0] = (fVec0[1] + ((fRec6[1] * (0 - (fTemp6 / fTemp7))) + ((fTemp6 * fVec0[0]) / fTemp7)));
-			fRec5[0] = (((0.995f * fRec5[1]) + fRec6[0]) - fRec6[1]);
+			float fTemp7 = faustpower<2>(fRec18[0]);
+			float fTemp8 = (faustpower<2>(fTemp6) * fTemp7);
+			float fTemp9 = (fTemp8 + 27);
+			float fTemp10 = ((9 * fTemp7) + 27);
+			float fTemp11 = (((9 * fTemp8) + 27) * (fTemp7 + 27));
+			float fTemp12 = (((1.0f - fRec7[0]) * fTemp4) + (0.24f * ((((fRec7[0] * fTemp6) * fTemp9) * fTemp10) / fTemp11)));
+			fVec0[0] = fTemp12;
+			float fTemp13 = ((fTemp6 * fTemp9) * fTemp10);
+			fRec6[0] = (fVec0[1] + ((fRec6[1] * (0 - (fTemp13 / fTemp11))) + ((fTemp13 * fVec0[0]) / fTemp11)));
+			fRec5[0] = ((fRec6[0] + (0.995f * fRec5[1])) - fRec6[1]);
 			fRec4[0] = fRec5[0];
 			fRec19[0] = (fSlow6 + (0.995f * fRec19[1]));
-			fRec3[0] = (((1.0637765f * fRec3[1]) + (4.0f * (fRec4[0] * fRec19[0]))) - (0.36209202f * fRec3[2]));
-			fRec2[0] = (((0.00048638252f * (fRec3[2] + fRec3[0])) + ((0.61464167f * fRec2[1]) + (0.0009343176f * fRec3[1]))) - (0.5686961f * fRec2[2]));
-			fRec1[0] = (((2.3153434f * (fRec2[2] + fRec2[0])) + ((0.19564603f * fRec1[1]) + (2.447349f * fRec2[1]))) - (0.7792284f * fRec1[2]));
-			fRec0[0] = (((5.509348f * fRec1[1]) + (3.7421112f * (fRec1[2] + fRec1[0]))) - ((0.014306352f * fRec0[1]) + (0.93285143f * fRec0[2])));
-			output0[i] = (FAUSTFLOAT)((1.4299138f * fRec0[1]) + (1.6742295f * (fRec0[2] + fRec0[0])));
+			fRec3[0] = (((4.0f * (fRec4[0] * fRec19[0])) + (1.0637765f * fRec3[1])) - (0.36209202f * fRec3[2]));
+			fRec2[0] = (((0.61464167f * fRec2[1]) + ((0.0009343176f * fRec3[1]) + (0.00048638252f * (fRec3[0] + fRec3[2])))) - (0.5686961f * fRec2[2]));
+			fRec1[0] = (((0.19564603f * fRec1[1]) + ((2.447349f * fRec2[1]) + (2.3153434f * (fRec2[0] + fRec2[2])))) - (0.7792284f * fRec1[2]));
+			fRec0[0] = (((5.509348f * fRec1[1]) + (3.7421112f * (fRec1[0] + fRec1[2]))) - ((0.014306352f * fRec0[1]) + (0.93285143f * fRec0[2])));
+			output0[i] = (FAUSTFLOAT)((1.4299138f * fRec0[1]) + (1.6742295f * (fRec0[0] + fRec0[2])));
 			// post processing
 			fRec0[2] = fRec0[1]; fRec0[1] = fRec0[0];
 			fRec1[2] = fRec1[1]; fRec1[1] = fRec1[0];
