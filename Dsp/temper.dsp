@@ -2,7 +2,7 @@ import("stdfaust.lib");
 el = library("./ellip.dsp");
 
 // Pre-filter parameters
-pfilterfc = hslider("Cutoff", 16000, 100, 16000, 1.0) : si.smooth(0.995);
+pfilterfc = hslider("Cutoff", 16000, 100, 16000, 1.0);
 pfilterq = hslider("Resonance", 1.0, 1.0, 8, 0.001) : si.smooth(0.995);
 
 // Distortion parameters
@@ -19,6 +19,9 @@ plevel = hslider("Level", -3, -12, 12, 1) : ba.db2linear : si.smooth(0.995);
 // we use here is pretty unimportant; as long as we can introduce higher harmonics,
 // the coefficient modulation will react. Which harmonics we introduce here seems
 // to affect the resulting sound pretty minimally.
+//
+// Also note here that we use an approximation of the `tanh` function for computational
+// improvement. See `http://www.musicdsp.org/showone.php?id=238`.
 tanh(x) = x * (27 + x * x) / (27 + 9 * x * x);
 transfer(x) = tanh(pcurve * x) / tanh(pcurve);
 
@@ -46,9 +49,36 @@ modfilter(x) = x <: _, tap(x) : *(1.0 - psat), *(psat) : + : fi.tf1(b0(x), b1(x)
 	tap(x) = m(x) : *(0.24);
 };
 
+// A fork of the `tf2s` function from the standard filter library which uses a
+// smoothing function after the `tan` computation to move that expensive call
+// outside of the inner loop of the filter function.
+tf2s(b2,b1,b0,a1,a0,w1) = fi.tf2(b0d,b1d,b2d,a1d,a2d)
+with {
+	c   = 1/tan(w1*0.5/ma.SR) : si.smooth(0.995); // bilinear-transform scale-factor
+	csq = c*c;
+	d   = a0 + a1 * c + csq;
+	b0d = (b0 + b1 * c + b2 * csq)/d;
+	b1d = 2 * (b0 - b2 * csq)/d;
+	b2d = (b0 - b1 * c + b2 * csq)/d;
+	a1d = 2 * (a0 - csq)/d;
+	a2d = (a0 - a1*c + csq)/d;
+};
+
+// A fork of the `resonlp` function from the standard filter library which uses
+// a local `tf2s` implementation.
+resonlp(fc,Q,gain) = tf2s(b2,b1,b0,a1,a0,wc)
+with {
+	wc = 2*ma.PI*fc;
+	a1 = 1/Q;
+	a0 = 1;
+	b2 = 0;
+	b1 = 0;
+	b0 = gain;
+};
+
 // We have a resonant lowpass filter at the beginning of our signal chain
 // to control what part of the input signal becomes the modulating signal.
-filter = fi.resonlp(pfilterfc, pfilterq, 1.0);
+filter = resonlp(pfilterfc, pfilterq, 1.0);
 
 // Our main processing block.
 main = (+ : modfilter : fi.dcblocker) ~ *(pfeedback) : gain with {

@@ -114,20 +114,20 @@ class TemperDsp : public dsp {
 
   public:
 	virtual void metadata(Meta* m) { 
-		m->declare("filters.lib/name", "Faust Filters Library");
-		m->declare("filters.lib/version", "0.0");
-		m->declare("signals.lib/name", "Faust Signal Routing Library");
-		m->declare("signals.lib/version", "0.0");
-		m->declare("analyzers.lib/name", "Faust Analyzer Library");
-		m->declare("analyzers.lib/version", "0.0");
-		m->declare("name", "temper");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.0");
 		m->declare("maths.lib/author", "GRAME");
 		m->declare("maths.lib/copyright", "GRAME");
 		m->declare("maths.lib/license", "LGPL with exception");
+		m->declare("filters.lib/name", "Faust Filters Library");
+		m->declare("filters.lib/version", "0.0");
 		m->declare("basics.lib/name", "Faust Basic Element Library");
 		m->declare("basics.lib/version", "0.0");
+		m->declare("analyzers.lib/name", "Faust Analyzer Library");
+		m->declare("analyzers.lib/version", "0.0");
+		m->declare("name", "temper");
+		m->declare("signals.lib/name", "Faust Signal Routing Library");
+		m->declare("signals.lib/version", "0.0");
 	}
 
 	virtual int getNumInputs() { return 1; }
@@ -202,7 +202,7 @@ class TemperDsp : public dsp {
 	virtual void compute (int count, FAUSTFLOAT** input, FAUSTFLOAT** output) {
 		float 	fSlow0 = (0.005f * float(fslider0));
 		float 	fSlow1 = (0.005f * powf(10,(0.05f * float(fslider1))));
-		float 	fSlow2 = (0.005f * float(fslider2));
+		float 	fSlow2 = (0.005f / tanf((fConst1 * float(fslider2))));
 		float 	fSlow3 = (0.005f * float(fslider3));
 		float 	fSlow4 = (0.005f * float(fslider4));
 		float 	fSlow5 = (0.005f * float(fslider5));
@@ -213,38 +213,36 @@ class TemperDsp : public dsp {
 			fRec7[0] = (fSlow0 + (0.995f * fRec7[1]));
 			fRec8[0] = (fSlow1 + (0.995f * fRec8[1]));
 			fRec13[0] = (((float)input0[i] + (1.0637765f * fRec13[1])) - (0.36209202f * fRec13[2]));
-			fRec12[0] = ((((0.0009343176f * fRec13[1]) + (0.00048638252f * (fRec13[2] + fRec13[0]))) + (0.61464167f * fRec12[1])) - (0.5686961f * fRec12[2]));
-			fRec11[0] = ((((2.447349f * fRec12[1]) + (2.3153434f * (fRec12[2] + fRec12[0]))) + (0.19564603f * fRec11[1])) - (0.7792284f * fRec11[2]));
-			fRec10[0] = (((5.509348f * fRec11[1]) + (3.7421112f * (fRec11[2] + fRec11[0]))) - ((0.014306352f * fRec10[1]) + (0.93285143f * fRec10[2])));
+			fRec12[0] = ((((0.0009343176f * fRec13[1]) + (0.00048638252f * (fRec13[0] + fRec13[2]))) + (0.61464167f * fRec12[1])) - (0.5686961f * fRec12[2]));
+			fRec11[0] = ((((2.447349f * fRec12[1]) + (2.3153434f * (fRec12[0] + fRec12[2]))) + (0.19564603f * fRec11[1])) - (0.7792284f * fRec11[2]));
+			fRec10[0] = (((5.509348f * fRec11[1]) + (3.7421112f * (fRec11[0] + fRec11[2]))) - ((0.014306352f * fRec10[1]) + (0.93285143f * fRec10[2])));
 			fRec14[0] = (fSlow2 + (0.995f * fRec14[1]));
-			float fTemp0 = tanf((fConst1 * fRec14[0]));
-			float fTemp1 = (1.0f / fTemp0);
 			fRec15[0] = (fSlow3 + (0.995f * fRec15[1]));
-			float fTemp2 = (1.0f / fRec15[0]);
-			float fTemp3 = (((fTemp1 + fTemp2) / fTemp0) + 1);
-			fRec9[0] = (((1.4299138f * fRec10[1]) + (1.6742295f * (fRec10[2] + fRec10[0]))) - ((((((fTemp1 - fTemp2) / fTemp0) + 1) * fRec9[2]) + (2 * (fRec9[1] * (1 - (1.0f / faustpower<2>(fTemp0)))))) / fTemp3));
-			float fTemp4 = ((fRec4[1] * fRec8[0]) + ((((2.0f * fRec9[1]) + fRec9[0]) + fRec9[2]) / fTemp3));
-			float fTemp5 = fabsf(fTemp4);
-			fRec16[0] = max(fTemp5, ((fConst2 * fRec16[1]) + (fConst3 * fTemp5)));
+			float fTemp0 = (1.0f / fRec15[0]);
+			float fTemp1 = ((fRec14[0] * (fRec14[0] + fTemp0)) + 1);
+			fRec9[0] = (((1.4299138f * fRec10[1]) + (1.6742295f * (fRec10[0] + fRec10[2]))) - (((fRec9[2] * ((fRec14[0] * (fRec14[0] - fTemp0)) + 1)) + (2 * (fRec9[1] * (1 - faustpower<2>(fRec14[0]))))) / fTemp1));
+			float fTemp2 = ((fRec8[0] * fRec4[1]) + ((fRec9[2] + (fRec9[0] + (2.0f * fRec9[1]))) / fTemp1));
+			float fTemp3 = fabsf(fTemp2);
+			fRec16[0] = max(fTemp3, ((fConst2 * fRec16[1]) + (fConst3 * fTemp3)));
 			fRec17[0] = (fSlow4 + (0.995f * fRec17[1]));
-			float fTemp6 = min((float)3, max((float)-3, (fRec16[0] + (fTemp4 * fRec17[0]))));
+			float fTemp4 = min((float)3, max((float)-3, (fRec16[0] + (fRec17[0] * fTemp2))));
 			fRec18[0] = (fSlow5 + (0.995f * fRec18[1]));
-			float fTemp7 = faustpower<2>(fRec18[0]);
-			float fTemp8 = (faustpower<2>(fTemp6) * fTemp7);
-			float fTemp9 = (fTemp8 + 27);
-			float fTemp10 = ((9 * fTemp7) + 27);
-			float fTemp11 = (((9 * fTemp8) + 27) * (fTemp7 + 27));
-			float fTemp12 = (((1.0f - fRec7[0]) * fTemp4) + (0.24f * ((((fRec7[0] * fTemp6) * fTemp9) * fTemp10) / fTemp11)));
-			fVec0[0] = fTemp12;
-			float fTemp13 = ((fTemp6 * fTemp9) * fTemp10);
-			fRec6[0] = (fVec0[1] + ((fRec6[1] * (0 - (fTemp13 / fTemp11))) + ((fTemp13 * fVec0[0]) / fTemp11)));
+			float fTemp5 = faustpower<2>(fRec18[0]);
+			float fTemp6 = (fTemp5 * faustpower<2>(fTemp4));
+			float fTemp7 = (fTemp6 + 27);
+			float fTemp8 = ((9 * fTemp5) + 27);
+			float fTemp9 = (((9 * fTemp6) + 27) * (fTemp5 + 27));
+			float fTemp10 = (((1.0f - fRec7[0]) * fTemp2) + (0.24f * ((((fRec7[0] * fTemp4) * fTemp7) * fTemp8) / fTemp9)));
+			fVec0[0] = fTemp10;
+			float fTemp11 = ((fTemp4 * fTemp7) * fTemp8);
+			fRec6[0] = (fVec0[1] + ((fRec6[1] * (0 - (fTemp11 / fTemp9))) + ((fTemp11 * fVec0[0]) / fTemp9)));
 			fRec5[0] = ((fRec6[0] + (0.995f * fRec5[1])) - fRec6[1]);
 			fRec4[0] = fRec5[0];
 			fRec19[0] = (fSlow6 + (0.995f * fRec19[1]));
 			fRec3[0] = (((4.0f * (fRec4[0] * fRec19[0])) + (1.0637765f * fRec3[1])) - (0.36209202f * fRec3[2]));
 			fRec2[0] = (((0.61464167f * fRec2[1]) + ((0.0009343176f * fRec3[1]) + (0.00048638252f * (fRec3[0] + fRec3[2])))) - (0.5686961f * fRec2[2]));
-			fRec1[0] = (((0.19564603f * fRec1[1]) + ((2.447349f * fRec2[1]) + (2.3153434f * (fRec2[0] + fRec2[2])))) - (0.7792284f * fRec1[2]));
-			fRec0[0] = (((5.509348f * fRec1[1]) + (3.7421112f * (fRec1[0] + fRec1[2]))) - ((0.014306352f * fRec0[1]) + (0.93285143f * fRec0[2])));
+			fRec1[0] = (((2.3153434f * (fRec2[0] + fRec2[2])) + ((0.19564603f * fRec1[1]) + (2.447349f * fRec2[1]))) - (0.7792284f * fRec1[2]));
+			fRec0[0] = (((5.509348f * fRec1[1]) + (3.7421112f * (fRec1[2] + fRec1[0]))) - ((0.014306352f * fRec0[1]) + (0.93285143f * fRec0[2])));
 			output0[i] = (FAUSTFLOAT)((1.4299138f * fRec0[1]) + (1.6742295f * (fRec0[0] + fRec0[2])));
 			// post processing
 			fRec0[2] = fRec0[1]; fRec0[1] = fRec0[0];
