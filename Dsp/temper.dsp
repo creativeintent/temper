@@ -36,7 +36,7 @@ drive(x) = x : *(pdrive) : +(fol(x)) : max(-3) : min(3) with {
 // Our modulated filter is an allpass with coefficients governed by the input
 // signal applied through our wave shaper. Before the filter, we mix the dry
 // input signal with the raw waveshaper output according to the `psat` parameter.
-// Note the constant gain coefficient on the waveshaper tap; that number is to offset
+// Note the constant gain coefficient on the waveshaper; that number is to offset
 // the global gain from the waveshaper to make sure the shaping process stays
 // under unity gain. The maximum differential gain of the waveshaper can be found
 // by evaluating the derivative of the transfer function at x0 where x0 is the
@@ -45,8 +45,8 @@ modfilter(x) = x <: _, tap(x) : *(1.0 - psat), *(psat) : + : fi.tf1(b0(x), b1(x)
 	b0(x) = m(x);
 	b1(x) = 1.0;
 	a1(x) = m(x);
-	m(x) = drive(x) : transfer;
-	tap(x) = m(x) : *(0.24);
+	m(x) = drive(x) : transfer : *(0.24);
+	tap(x) = m(x);
 };
 
 // A fork of the `tf2s` function from the standard filter library which uses a
