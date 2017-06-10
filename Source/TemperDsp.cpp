@@ -93,10 +93,10 @@ class TemperDsp : public dsp {
 	FAUSTFLOAT 	fslider3;
 	float 	fRec15[2];
 	float 	fRec9[3];
-	FAUSTFLOAT 	fslider4;
-	float 	fRec16[2];
 	float 	fConst2;
 	float 	fConst3;
+	float 	fRec16[2];
+	FAUSTFLOAT 	fslider4;
 	float 	fRec17[2];
 	FAUSTFLOAT 	fslider5;
 	float 	fRec18[2];
@@ -114,6 +114,13 @@ class TemperDsp : public dsp {
 
   public:
 	virtual void metadata(Meta* m) { 
+		m->declare("signals.lib/name", "Faust Signal Routing Library");
+		m->declare("signals.lib/version", "0.0");
+		m->declare("basics.lib/name", "Faust Basic Element Library");
+		m->declare("basics.lib/version", "0.0");
+		m->declare("analyzers.lib/name", "Faust Analyzer Library");
+		m->declare("analyzers.lib/version", "0.0");
+		m->declare("name", "temper");
 		m->declare("maths.lib/name", "Faust Math Library");
 		m->declare("maths.lib/version", "2.0");
 		m->declare("maths.lib/author", "GRAME");
@@ -121,13 +128,6 @@ class TemperDsp : public dsp {
 		m->declare("maths.lib/license", "LGPL with exception");
 		m->declare("filters.lib/name", "Faust Filters Library");
 		m->declare("filters.lib/version", "0.0");
-		m->declare("analyzers.lib/name", "Faust Analyzer Library");
-		m->declare("analyzers.lib/version", "0.0");
-		m->declare("signals.lib/name", "Faust Signal Routing Library");
-		m->declare("signals.lib/version", "0.0");
-		m->declare("name", "temper");
-		m->declare("basics.lib/name", "Faust Basic Element Library");
-		m->declare("basics.lib/version", "0.0");
 	}
 
 	virtual int getNumInputs() { return 1; }
@@ -194,7 +194,7 @@ class TemperDsp : public dsp {
 		ui_interface->addHorizontalSlider("Cutoff", &fslider2, 1.6e+04f, 1e+02f, 1.6e+04f, 1.0f);
 		ui_interface->addHorizontalSlider("Drive", &fslider4, 4.0f, -1e+01f, 1e+01f, 0.001f);
 		ui_interface->addHorizontalSlider("Feedback", &fslider1, -6e+01f, -6e+01f, -24.0f, 1.0f);
-		ui_interface->addHorizontalSlider("Level", &fslider6, -3.0f, -12.0f, 12.0f, 1.0f);
+		ui_interface->addHorizontalSlider("Level", &fslider6, -3.0f, -24.0f, 24.0f, 1.0f);
 		ui_interface->addHorizontalSlider("Resonance", &fslider3, 1.0f, 1.0f, 8.0f, 0.001f);
 		ui_interface->addHorizontalSlider("Saturation", &fslider0, 0.0f, 0.0f, 1.0f, 0.001f);
 		ui_interface->closeBox();
@@ -213,22 +213,22 @@ class TemperDsp : public dsp {
 			fRec7[0] = (fSlow0 + (0.995f * fRec7[1]));
 			fRec8[0] = (fSlow1 + (0.995f * fRec8[1]));
 			fRec13[0] = (((float)input0[i] + (1.0637765f * fRec13[1])) - (0.36209202f * fRec13[2]));
-			fRec12[0] = ((((0.0009343176f * fRec13[1]) + (0.00048638252f * (fRec13[2] + fRec13[0]))) + (0.61464167f * fRec12[1])) - (0.5686961f * fRec12[2]));
-			fRec11[0] = ((((2.447349f * fRec12[1]) + (2.3153434f * (fRec12[2] + fRec12[0]))) + (0.19564603f * fRec11[1])) - (0.7792284f * fRec11[2]));
-			fRec10[0] = (((5.509348f * fRec11[1]) + (3.7421112f * (fRec11[2] + fRec11[0]))) - ((0.014306352f * fRec10[1]) + (0.93285143f * fRec10[2])));
+			fRec12[0] = ((((0.0009343176f * fRec13[1]) + (0.00048638252f * (fRec13[0] + fRec13[2]))) + (0.61464167f * fRec12[1])) - (0.5686961f * fRec12[2]));
+			fRec11[0] = ((((2.447349f * fRec12[1]) + (2.3153434f * (fRec12[0] + fRec12[2]))) + (0.19564603f * fRec11[1])) - (0.7792284f * fRec11[2]));
+			fRec10[0] = (((5.509348f * fRec11[1]) + (3.7421112f * (fRec11[0] + fRec11[2]))) - ((0.014306352f * fRec10[1]) + (0.93285143f * fRec10[2])));
 			fRec14[0] = (fSlow2 + (0.995f * fRec14[1]));
 			fRec15[0] = (fSlow3 + (0.995f * fRec15[1]));
 			float fTemp0 = (1.0f / fRec15[0]);
-			float fTemp1 = (((fTemp0 + fRec14[0]) * fRec14[0]) + 1);
-			fRec9[0] = (((1.4299138f * fRec10[1]) + (1.6742295f * (fRec10[2] + fRec10[0]))) - (((fRec9[2] * (((fRec14[0] - fTemp0) * fRec14[0]) + 1)) + (2 * (fRec9[1] * (1 - faustpower<2>(fRec14[0]))))) / fTemp1));
-			float fTemp2 = ((fRec4[1] * fRec8[0]) + ((fRec9[2] + ((2.0f * fRec9[1]) + fRec9[0])) / fTemp1));
-			fRec16[0] = (fSlow4 + (0.995f * fRec16[1]));
+			float fTemp1 = ((fRec14[0] * (fRec14[0] + fTemp0)) + 1);
+			fRec9[0] = (((1.4299138f * fRec10[1]) + (1.6742295f * (fRec10[0] + fRec10[2]))) - (((fRec9[2] * ((fRec14[0] * (fRec14[0] - fTemp0)) + 1)) + (2 * (fRec9[1] * (1 - faustpower<2>(fRec14[0]))))) / fTemp1));
+			float fTemp2 = ((fRec8[0] * fRec4[1]) + ((fRec9[2] + (fRec9[0] + (2.0f * fRec9[1]))) / fTemp1));
 			float fTemp3 = fabsf(fTemp2);
-			fRec17[0] = max(fTemp3, ((fConst2 * fRec17[1]) + (fConst3 * fTemp3)));
-			float fTemp4 = min((float)3, max((float)-3, ((fTemp2 * fRec16[0]) + fRec17[0])));
+			fRec16[0] = max(fTemp3, ((fConst2 * fRec16[1]) + (fConst3 * fTemp3)));
+			fRec17[0] = (fSlow4 + (0.995f * fRec17[1]));
+			float fTemp4 = min((float)3, max((float)-3, (fRec16[0] + (fRec17[0] * fTemp2))));
 			fRec18[0] = (fSlow5 + (0.995f * fRec18[1]));
 			float fTemp5 = faustpower<2>(fRec18[0]);
-			float fTemp6 = (faustpower<2>(fTemp4) * fTemp5);
+			float fTemp6 = (fTemp5 * faustpower<2>(fTemp4));
 			float fTemp7 = (fTemp6 + 27);
 			float fTemp8 = ((9 * fTemp5) + 27);
 			float fTemp9 = (((9 * fTemp6) + 27) * (fTemp5 + 27));

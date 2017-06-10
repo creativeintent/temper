@@ -65,7 +65,7 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     m_feedbackSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
     addAndMakeVisible (m_gainSlider = new Slider ("Level"));
-    m_gainSlider->setRange (-12, 12, 0);
+    m_gainSlider->setRange (-24, 24, 0);
     m_gainSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_gainSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
@@ -287,8 +287,8 @@ BEGIN_JUCER_METADATA
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Level" id="bf47d1ef820213ea" memberName="m_gainSlider"
-          virtualName="" explicitFocusOrder="0" pos="640 277 72 72" min="-12"
-          max="12" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          virtualName="" explicitFocusOrder="0" pos="640 277 72 72" min="-24"
+          max="24" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <LABEL name="Cutoff Label" id="8c36484c7dd57b99" memberName="m_cutoffLabel"

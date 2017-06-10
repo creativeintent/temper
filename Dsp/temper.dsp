@@ -12,7 +12,7 @@ pcurve = hslider("Curve", 1.0, 0.1, 4.0, 0.001) : si.smooth(0.995);
 
 // Output parameters
 pfeedback = hslider("Feedback", -60, -60, -24, 1) : ba.db2linear : si.smooth(0.995);
-plevel = hslider("Level", -3, -12, 12, 1) : ba.db2linear : si.smooth(0.995);
+plevel = hslider("Level", -3, -24, 24, 1) : ba.db2linear : si.smooth(0.995);
 
 // A fairly standard wave shaping curve; we use this to shape the input signal
 // before modulating the filter coefficients by this signal. Which shaping curve
