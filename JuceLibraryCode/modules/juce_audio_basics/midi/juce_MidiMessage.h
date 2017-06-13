@@ -2,28 +2,25 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2015 - ROLI Ltd.
+   Copyright (c) 2017 - ROLI Ltd.
 
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
+   JUCE is an open source library subject to commercial or open-source
+   licensing.
 
-   Details of these licenses can be found at: www.gnu.org/licenses
+   The code included in this file is provided under the terms of the ISC license
+   http://www.isc.org/downloads/software-support-policy/isc-license. Permission
+   To use, copy, modify, and/or distribute this software for any purpose with or
+   without fee is hereby granted provided that the above copyright notice and
+   this permission notice appear in all copies.
 
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
-   ------------------------------------------------------------------------------
-
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
+   JUCE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY, AND ALL WARRANTIES, WHETHER
+   EXPRESSED OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR PURPOSE, ARE
+   DISCLAIMED.
 
   ==============================================================================
 */
 
-#ifndef JUCE_MIDIMESSAGE_H_INCLUDED
-#define JUCE_MIDIMESSAGE_H_INCLUDED
+#pragma once
 
 
 //==============================================================================
@@ -62,6 +59,18 @@ public:
                                 use any particular units, so will be application-specific
     */
     MidiMessage (int byte1, double timeStamp = 0) noexcept;
+
+    /** Creates a midi message from a list of bytes. */
+    template <typename... Data>
+    MidiMessage (int byte1, int byte2, int byte3, Data... otherBytes)  : size (3 + sizeof... (otherBytes))
+    {
+        // this checks that the length matches the data..
+        jassert (size > 3 || byte1 >= 0xf0 || getMessageLengthFromFirstByte ((uint8) byte1) == size);
+
+        const uint8 data[] = { (uint8) byte1, (uint8) byte2, (uint8) byte3, static_cast<uint8> (otherBytes)... };
+        memcpy (allocateSpace (size), data, (size_t) size);
+    }
+
 
     /** Creates a midi message from a block of data. */
     MidiMessage (const void* data, int numBytes, double timeStamp = 0);
@@ -109,10 +118,11 @@ public:
     /** Copies this message from another one. */
     MidiMessage& operator= (const MidiMessage& other);
 
-   #if JUCE_COMPILER_SUPPORTS_MOVE_SEMANTICS
+    /** Move constructor */
     MidiMessage (MidiMessage&&) noexcept;
+
+    /** Move assignment operator */
     MidiMessage& operator= (MidiMessage&&) noexcept;
-   #endif
 
     //==============================================================================
     /** Returns a pointer to the raw midi data.
@@ -467,7 +477,6 @@ public:
     bool isControllerOfType (int controllerType) const noexcept;
 
     /** Creates a controller message.
-
         @param channel          the midi channel, in the range 1 to 16
         @param controllerType   the type of controller
         @param value            the controller value
@@ -488,21 +497,18 @@ public:
     bool isAllSoundOff() const noexcept;
 
     /** Creates an all-notes-off message.
-
         @param channel              the midi channel, in the range 1 to 16
         @see isAllNotesOff
     */
     static MidiMessage allNotesOff (int channel) noexcept;
 
     /** Creates an all-sound-off message.
-
         @param channel              the midi channel, in the range 1 to 16
         @see isAllSoundOff
     */
     static MidiMessage allSoundOff (int channel) noexcept;
 
     /** Creates an all-controllers-off message.
-
         @param channel              the midi channel, in the range 1 to 16
     */
     static MidiMessage allControllersOff (int channel) noexcept;
@@ -922,7 +928,7 @@ private:
     };
 
     PackedData packedData;
-    double timeStamp;
+    double timeStamp = 0;
     int size;
    #endif
 
@@ -930,5 +936,3 @@ private:
     inline uint8* getData() const noexcept        { return isHeapAllocated() ? packedData.allocatedData : (uint8*) packedData.asBytes; }
     uint8* allocateSpace (int);
 };
-
-#endif   // JUCE_MIDIMESSAGE_H_INCLUDED

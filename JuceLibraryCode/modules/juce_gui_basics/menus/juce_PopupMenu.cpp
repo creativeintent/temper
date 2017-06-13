@@ -2,22 +2,24 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2015 - ROLI Ltd.
+   Copyright (c) 2017 - ROLI Ltd.
 
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
+   JUCE is an open source library subject to commercial or open-source
+   licensing.
 
-   Details of these licenses can be found at: www.gnu.org/licenses
+   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
+   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
+   27th April 2017).
 
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+   End User License Agreement: www.juce.com/juce-5-licence
+   Privacy Policy: www.juce.com/juce-5-privacy-policy
 
-   ------------------------------------------------------------------------------
+   Or: You may also use this code under the terms of the GPL v3 (see
+   www.gnu.org/licenses).
 
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
+   JUCE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY, AND ALL WARRANTIES, WHETHER
+   EXPRESSED OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR PURPOSE, ARE
+   DISCLAIMED.
 
   ==============================================================================
 */
@@ -162,7 +164,7 @@ private:
 
             for (int i = 0; i < keyPresses.size(); ++i)
             {
-                const String key (keyPresses.getReference(i).getTextDescriptionWithIcons());
+                const String key (keyPresses.getReference (i).getTextDescriptionWithIcons());
 
                 if (shortcutKey.isNotEmpty())
                     shortcutKey << ", ";
@@ -230,7 +232,7 @@ public:
 
         for (int i = 0; i < menu.items.size(); ++i)
         {
-            PopupMenu::Item* const item = menu.items.getUnchecked(i);
+            PopupMenu::Item* const item = menu.items.getUnchecked (i);
 
             if (i < menu.items.size() - 1 || ! item->isSeparator)
                 items.add (new ItemComponent (*item, options.standardHeight, *this));
@@ -431,7 +433,7 @@ public:
 
         for (int i = mouseSourceStates.size(); --i >= 0;)
         {
-            mouseSourceStates.getUnchecked(i)->timerCallback();
+            mouseSourceStates.getUnchecked (i)->timerCallback();
 
             if (deletionChecker == nullptr)
                 return;
@@ -512,7 +514,7 @@ public:
     {
         for (int i = mouseSourceStates.size(); --i >= 0;)
         {
-            MouseSourceState& ms = *mouseSourceStates.getUnchecked(i);
+            MouseSourceState& ms = *mouseSourceStates.getUnchecked (i);
             if (ms.source == source)
                 return ms;
         }
@@ -538,7 +540,7 @@ public:
     bool isAnyMouseOver() const
     {
         for (int i = 0; i < mouseSourceStates.size(); ++i)
-            if (mouseSourceStates.getUnchecked(i)->isOver())
+            if (mouseSourceStates.getUnchecked (i)->isOver())
                 return true;
 
         return false;
@@ -767,7 +769,7 @@ public:
 
         for (int i = items.size(); --i >= 0;)
         {
-            if (ItemComponent* const m = items.getUnchecked(i))
+            if (ItemComponent* const m = items.getUnchecked (i))
             {
                 if (m->item.itemID == itemID
                      && windowPos.getHeight() > PopupMenuSettings::scrollZone * 4)
@@ -1185,7 +1187,7 @@ private:
             int amount = 0;
 
             for (int i = 0; i < window.items.size() && amount == 0; ++i)
-                amount = ((int) scrollAcceleration) * window.items.getUnchecked(i)->getHeight();
+                amount = ((int) scrollAcceleration) * window.items.getUnchecked (i)->getHeight();
 
             window.alterChildYPos (amount * direction);
             lastScrollTime = timeNow;
@@ -1216,7 +1218,7 @@ struct NormalComponentWrapper : public PopupMenu::CustomComponent
 
     void resized() override
     {
-        if (Component* const child = getChildComponent(0))
+        if (Component* const child = getChildComponent (0))
             child->setBounds (getLocalBounds());
     }
 
@@ -1251,7 +1253,6 @@ PopupMenu& PopupMenu::operator= (const PopupMenu& other)
     return *this;
 }
 
-#if JUCE_COMPILER_SUPPORTS_MOVE_SEMANTICS
 PopupMenu::PopupMenu (PopupMenu&& other) noexcept
     : lookAndFeel (other.lookAndFeel)
 {
@@ -1266,7 +1267,6 @@ PopupMenu& PopupMenu::operator= (PopupMenu&& other) noexcept
     lookAndFeel = other.lookAndFeel;
     return *this;
 }
-#endif
 
 PopupMenu::~PopupMenu()
 {
@@ -1711,7 +1711,7 @@ int PopupMenu::getNumItems() const noexcept
     int num = 0;
 
     for (int i = items.size(); --i >= 0;)
-        if (! items.getUnchecked(i)->isSeparator)
+        if (! items.getUnchecked (i)->isSeparator)
             ++num;
 
     return num;
@@ -1800,21 +1800,44 @@ PopupMenu::CustomCallback::CustomCallback() {}
 PopupMenu::CustomCallback::~CustomCallback() {}
 
 //==============================================================================
-PopupMenu::MenuItemIterator::MenuItemIterator (const PopupMenu& m)  : menu (m), index (0) {}
+PopupMenu::MenuItemIterator::MenuItemIterator (const PopupMenu& m, bool searchR) : searchRecursively (searchR)
+{
+    currentItem = nullptr;
+    index.add (0);
+    menus.add (&m);
+}
+
 PopupMenu::MenuItemIterator::~MenuItemIterator() {}
 
 bool PopupMenu::MenuItemIterator::next()
 {
-    if (index >= menu.items.size())
+    if (index.size() == 0 || menus.getLast()->items.size() == 0)
         return false;
 
-    const Item* const item = menu.items.getUnchecked (index++);
+    currentItem = menus.getLast()->items.getUnchecked (index.getLast());
 
-    return ! (item->isSeparator && index >= menu.items.size()); // (avoid showing a separator at the end)
+    if (searchRecursively && currentItem->subMenu != nullptr)
+    {
+        index.add (0);
+        menus.add (currentItem->subMenu);
+    }
+    else
+        index.setUnchecked (index.size() - 1, index.getLast() + 1);
+
+    while (index.size() > 0 && index.getLast() >= menus.getLast()->items.size())
+    {
+        index.removeLast();
+        menus.removeLast();
+
+        if (index.size() > 0)
+            index.setUnchecked (index.size() - 1, index.getLast() + 1);
+    }
+
+    return true;
 }
 
-const PopupMenu::Item& PopupMenu::MenuItemIterator::getItem() const noexcept
+PopupMenu::Item& PopupMenu::MenuItemIterator::getItem() const noexcept
 {
-    jassert (isPositiveAndBelow (index - 1, menu.items.size()));
-    return *menu.items.getUnchecked (index - 1);
+    jassert (currentItem != nullptr);
+    return *(currentItem);
 }

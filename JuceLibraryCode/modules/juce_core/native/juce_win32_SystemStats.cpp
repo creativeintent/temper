@@ -1,27 +1,21 @@
 /*
   ==============================================================================
 
-   This file is part of the juce_core module of the JUCE library.
-   Copyright (c) 2015 - ROLI Ltd.
+   This file is part of the JUCE library.
+   Copyright (c) 2017 - ROLI Ltd.
 
-   Permission to use, copy, modify, and/or distribute this software for any purpose with
-   or without fee is hereby granted, provided that the above copyright notice and this
-   permission notice appear in all copies.
+   JUCE is an open source library subject to commercial or open-source
+   licensing.
 
-   THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD
-   TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN
-   NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
-   DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
-   IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
-   CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+   The code included in this file is provided under the terms of the ISC license
+   http://www.isc.org/downloads/software-support-policy/isc-license. Permission
+   To use, copy, modify, and/or distribute this software for any purpose with or
+   without fee is hereby granted provided that the above copyright notice and
+   this permission notice appear in all copies.
 
-   ------------------------------------------------------------------------------
-
-   NOTE! This permissive ISC license applies ONLY to files within the juce_core module!
-   All other JUCE modules are covered by a dual GPL/commercial license, so if you are
-   using any other modules, be sure to check that you also comply with their license.
-
-   For more details, visit www.juce.com
+   JUCE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY, AND ALL WARRANTIES, WHETHER
+   EXPRESSED OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR PURPOSE, ARE
+   DISCLAIMED.
 
   ==============================================================================
 */
@@ -60,7 +54,11 @@ static void callCPUID (int result[4], uint32 type)
 #else
 static void callCPUID (int result[4], int infoType)
 {
+   #if JUCE_PROJUCER_LIVE_BUILD
+    std::fill (result, result + 4, 0);
+   #else
     __cpuid (result, infoType);
+   #endif
 }
 #endif
 
@@ -75,6 +73,49 @@ String SystemStats::getCpuVendor()
     memcpy (v + 8, info + 2, 4);
 
     return String (v, 12);
+}
+
+String SystemStats::getCpuModel()
+{
+    char name[65] = { 0 };
+    int info[4] = { 0 };
+
+    callCPUID (info, 0x80000000);
+
+    const int numExtIDs = info[0];
+
+    if (numExtIDs < 0x80000004)  // if brand string is unsupported
+        return {};
+
+    callCPUID (info, 0x80000002);
+    memcpy (name, info, sizeof (info));
+
+    callCPUID (info, 0x80000003);
+    memcpy (name + 16, info, sizeof (info));
+
+    callCPUID (info, 0x80000004);
+    memcpy (name + 32, info, sizeof (info));
+
+    return String (name).trim();
+}
+
+static int findNumberOfPhysicalCores() noexcept
+{
+    int numPhysicalCores = 0;
+    DWORD bufferSize = 0;
+    GetLogicalProcessorInformation (nullptr, &bufferSize);
+
+    if (auto numBuffers = (size_t) (bufferSize / sizeof (SYSTEM_LOGICAL_PROCESSOR_INFORMATION)))
+    {
+        HeapBlock<SYSTEM_LOGICAL_PROCESSOR_INFORMATION> buffer (numBuffers);
+
+        if (GetLogicalProcessorInformation (buffer, &bufferSize))
+            for (size_t i = 0; i < numBuffers; ++i)
+                if (buffer[i].Relationship == RelationProcessorCore)
+                    ++numPhysicalCores;
+    }
+
+    return numPhysicalCores;
 }
 
 //==============================================================================
@@ -100,7 +141,11 @@ void CPUInformation::initialise() noexcept
 
     SYSTEM_INFO systemInfo;
     GetNativeSystemInfo (&systemInfo);
-    numCpus = (int) systemInfo.dwNumberOfProcessors;
+    numLogicalCPUs  = (int) systemInfo.dwNumberOfProcessors;
+    numPhysicalCPUs = findNumberOfPhysicalCores();
+
+    if (numPhysicalCPUs <= 0)
+        numPhysicalCPUs = numLogicalCPUs;
 }
 
 #if JUCE_MSVC && JUCE_CHECK_MEMORY_LEAKS
@@ -193,7 +238,7 @@ String SystemStats::getOperatingSystemName()
 
 String SystemStats::getDeviceDescription()
 {
-    return String();
+    return {};
 }
 
 bool SystemStats::isOperatingSystem64Bit()
@@ -367,8 +412,10 @@ bool Time::setSystemTimeToThisTime() const
 
     // do this twice because of daylight saving conversion problems - the
     // first one sets it up, the second one kicks it in.
-    return SetLocalTime (&st) != 0
-            && SetLocalTime (&st) != 0;
+    // NB: the local variable is here to avoid analysers warning about having
+    // two identical sub-expressions in the return statement
+    bool firstCallToSetTimezone = SetLocalTime (&st) != 0;
+    return firstCallToSetTimezone && SetLocalTime (&st) != 0;
 }
 
 int SystemStats::getPageSize()

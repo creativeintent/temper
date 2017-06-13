@@ -2,22 +2,24 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2015 - ROLI Ltd.
+   Copyright (c) 2017 - ROLI Ltd.
 
-   Permission is granted to use this software under the terms of either:
-   a) the GPL v2 (or any later version)
-   b) the Affero GPL v3
+   JUCE is an open source library subject to commercial or open-source
+   licensing.
 
-   Details of these licenses can be found at: www.gnu.org/licenses
+   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
+   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
+   27th April 2017).
 
-   JUCE is distributed in the hope that it will be useful, but WITHOUT ANY
-   WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-   A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+   End User License Agreement: www.juce.com/juce-5-licence
+   Privacy Policy: www.juce.com/juce-5-privacy-policy
 
-   ------------------------------------------------------------------------------
+   Or: You may also use this code under the terms of the GPL v3 (see
+   www.gnu.org/licenses).
 
-   To release a closed-source product which uses JUCE, commercial licenses are
-   available: visit www.juce.com for more information.
+   JUCE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY, AND ALL WARRANTIES, WHETHER
+   EXPRESSED OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR PURPOSE, ARE
+   DISCLAIMED.
 
   ==============================================================================
 */
@@ -389,15 +391,26 @@ namespace CoreTextTypeLayout
     static void drawToCGContext (const AttributedString& text, const Rectangle<float>& area,
                                  const CGContextRef& context, const float flipHeight)
     {
-        CTFrameRef frame = createCTFrame (text, CGRectMake ((CGFloat) area.getX(), flipHeight - (CGFloat) area.getBottom(),
-                                                            (CGFloat) area.getWidth(), (CGFloat) area.getHeight()));
+        Rectangle<float> ctFrameArea;
 
         const int verticalJustification = text.getJustification().getOnlyVerticalFlags();
+
+        // Ugly hack to fix a bug in OS X Sierra where the CTFrame needs to be slightly
+        // larger than the font height - otherwise the CTFrame will be invalid
+        if (verticalJustification == Justification::verticallyCentred)
+            ctFrameArea = area.withSizeKeepingCentre (area.getWidth(), area.getHeight() * 1.1f);
+        else if (verticalJustification == Justification::bottom)
+            ctFrameArea = area.withTop (area.getY() - (area.getHeight() * 0.1f));
+        else
+            ctFrameArea = area.withHeight (area.getHeight() * 1.1f);
+
+        CTFrameRef frame = createCTFrame (text, CGRectMake ((CGFloat) ctFrameArea.getX(), flipHeight - (CGFloat) ctFrameArea.getBottom(),
+                                                            (CGFloat) ctFrameArea.getWidth(), (CGFloat) ctFrameArea.getHeight()));
 
         if (verticalJustification == Justification::verticallyCentred
              || verticalJustification == Justification::bottom)
         {
-            float adjust = area.getHeight() - findCTFrameHeight (frame);
+            float adjust = ctFrameArea.getHeight() - findCTFrameHeight (frame);
 
             if (verticalJustification == Justification::verticallyCentred)
                 adjust *= 0.5f;
@@ -541,13 +554,24 @@ public:
           fontHeightToPointsFactor (1.0f),
           renderingTransform (CGAffineTransformIdentity),
           isMemoryFont (true),
+          dataCopy (data, dataSize),
           attributedStringAtts (nullptr),
           ascent (0.0f),
           unitsToHeightScaleFactor (0.0f)
     {
-        CFDataRef cfData = CFDataCreateWithBytesNoCopy (kCFAllocatorDefault, (const UInt8*) data, (CFIndex) dataSize, kCFAllocatorNull);
+        // We can't use CFDataCreate here as this triggers a false positive in ASAN
+        // so copy the data manually and use CFDataCreateWithBytesNoCopy
+        CFDataRef cfData = CFDataCreateWithBytesNoCopy (kCFAllocatorDefault, (const UInt8*) dataCopy.getData(),
+                                                        (CFIndex) dataCopy.getSize(), kCFAllocatorNull);
         CGDataProviderRef provider = CGDataProviderCreateWithCFData (cfData);
         CFRelease (cfData);
+
+       #if JUCE_IOS
+        // Workaround for a an obscure iOS bug which can cause the app to dead-lock
+        // when loading custom type faces. See: http://www.openradar.me/18778790 and
+        // http://stackoverflow.com/questions/40242370/app-hangs-in-simulator
+        [UIFont systemFontOfSize: 12];
+       #endif
 
         fontRef = CGFontCreateWithDataProvider (provider);
         CGDataProviderRelease (provider);
@@ -709,6 +733,7 @@ public:
     bool isMemoryFont;
 
 private:
+    MemoryBlock dataCopy;
     CFDictionaryRef attributedStringAtts;
     float ascent, unitsToHeightScaleFactor;
     AffineTransform pathTransform;

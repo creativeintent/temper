@@ -1,27 +1,21 @@
 /*
   ==============================================================================
 
-   This file is part of the juce_core module of the JUCE library.
-   Copyright (c) 2015 - ROLI Ltd.
+   This file is part of the JUCE library.
+   Copyright (c) 2017 - ROLI Ltd.
 
-   Permission to use, copy, modify, and/or distribute this software for any purpose with
-   or without fee is hereby granted, provided that the above copyright notice and this
-   permission notice appear in all copies.
+   JUCE is an open source library subject to commercial or open-source
+   licensing.
 
-   THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD
-   TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN
-   NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
-   DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
-   IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
-   CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+   The code included in this file is provided under the terms of the ISC license
+   http://www.isc.org/downloads/software-support-policy/isc-license. Permission
+   To use, copy, modify, and/or distribute this software for any purpose with or
+   without fee is hereby granted provided that the above copyright notice and
+   this permission notice appear in all copies.
 
-   ------------------------------------------------------------------------------
-
-   NOTE! This permissive ISC license applies ONLY to files within the juce_core module!
-   All other JUCE modules are covered by a dual GPL/commercial license, so if you are
-   using any other modules, be sure to check that you also comply with their license.
-
-   For more details, visit www.juce.com
+   JUCE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY, AND ALL WARRANTIES, WHETHER
+   EXPRESSED OR IMPLIED, INCLUDING MERCHANTABILITY AND FITNESS FOR PURPOSE, ARE
+   DISCLAIMED.
 
   ==============================================================================
 */
@@ -37,10 +31,19 @@
 
 #if JUCE_WINDOWS
  typedef int       juce_socklen_t;
+ typedef int       juce_recvsend_size_t;
  typedef SOCKET    SocketHandle;
+ static const SocketHandle invalidSocket = INVALID_SOCKET;
+#elif JUCE_ANDROID
+ typedef socklen_t juce_socklen_t;
+ typedef size_t    juce_recvsend_size_t;
+ typedef int       SocketHandle;
+ static const SocketHandle invalidSocket = -1;
 #else
  typedef socklen_t juce_socklen_t;
+ typedef socklen_t juce_recvsend_size_t;
  typedef int       SocketHandle;
+ static const SocketHandle invalidSocket = -1;
 #endif
 
 //==============================================================================
@@ -169,6 +172,17 @@ namespace SocketHelpers
         return -1;
     }
 
+    static String getConnectedAddress (const SocketHandle handle) noexcept
+    {
+        struct sockaddr_in addr;
+        socklen_t len = sizeof (addr);
+
+        if (getpeername (handle, (struct sockaddr*) &addr, &len) >= 0)
+            return inet_ntoa (addr.sin_addr);
+
+        return String ("0.0.0.0");
+    }
+
     static int readSocket (const SocketHandle handle,
                            void* const destBuffer, const int maxBytesToRead,
                            bool volatile& connected,
@@ -183,7 +197,7 @@ namespace SocketHelpers
         {
             long bytesThisTime = -1;
             char* const buffer = static_cast<char*> (destBuffer) + bytesRead;
-            const juce_socklen_t numToRead = (juce_socklen_t) (maxBytesToRead - bytesRead);
+            const juce_recvsend_size_t numToRead = (juce_recvsend_size_t) (maxBytesToRead - bytesRead);
 
             {
                 // avoid race-condition
@@ -341,7 +355,7 @@ namespace SocketHelpers
             {
                 const SocketHandle newHandle = socket (i->ai_family, i->ai_socktype, 0);
 
-                if (newHandle >= 0)
+                if (newHandle != invalidSocket)
                 {
                     setSocketBlockingState (newHandle, false);
                     const int result = ::connect (newHandle, i->ai_addr, (socklen_t) i->ai_addrlen);
@@ -452,7 +466,7 @@ int StreamingSocket::write (const void* sourceBuffer, const int numBytesToWrite)
     if (isListener || ! connected)
         return -1;
 
-    return (int) ::send (handle, (const char*) sourceBuffer, (juce_socklen_t) numBytesToWrite, 0);
+    return (int) ::send (handle, (const char*) sourceBuffer, (juce_recvsend_size_t) numBytesToWrite, 0);
 }
 
 //==============================================================================
@@ -576,7 +590,19 @@ StreamingSocket* StreamingSocket::waitForNextConnection() const
 
 bool StreamingSocket::isLocal() const noexcept
 {
-    return hostName == "127.0.0.1";
+    if (! isConnected())
+        return false;
+
+    Array<IPAddress> localAddresses;
+    IPAddress::findAllAddresses (localAddresses);
+    IPAddress currentIP (SocketHelpers::getConnectedAddress (handle));
+
+    const int n = localAddresses.size();
+    for (int i = 0; i < n; ++i)
+        if (localAddresses.getReference (i) == currentIP)
+            return true;
+
+    return (hostName == "127.0.0.1");
 }
 
 
@@ -703,7 +729,7 @@ int DatagramSocket::write (const String& remoteHostname, int remotePortNumber,
     }
 
     return (int) ::sendto (handle, (const char*) sourceBuffer,
-                           (juce_socklen_t) numBytesToWrite, 0,
+                           (juce_recvsend_size_t) numBytesToWrite, 0,
                            info->ai_addr, (socklen_t) info->ai_addrlen);
 }
 
@@ -725,7 +751,9 @@ bool DatagramSocket::leaveMulticast (const String& multicastIPAddress)
 
 bool DatagramSocket::setEnablePortReuse (bool enabled)
 {
-   #if ! JUCE_ANDROID
+   #if JUCE_ANDROID
+    ignoreUnused (enabled);
+   #else
     if (handle >= 0)
         return SocketHelpers::setOption (handle,
                                         #if JUCE_WINDOWS || JUCE_LINUX

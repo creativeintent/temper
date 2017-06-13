@@ -11,8 +11,7 @@
 
 */
 
-#ifndef __JUCE_APPCONFIG_E0DLQ8__
-#define __JUCE_APPCONFIG_E0DLQ8__
+#pragma once
 
 //==============================================================================
 // [BEGIN_USER_CODE_SECTION]
@@ -20,6 +19,27 @@
 // (You can add your own code in this section, and the Projucer will not overwrite it)
 
 // [END_USER_CODE_SECTION]
+
+/*
+  ==============================================================================
+
+   In accordance with the terms of the JUCE 5 End-Use License Agreement, the
+   JUCE Code in SECTION A cannot be removed, changed or otherwise rendered
+   ineffective unless you have a JUCE Indie or Pro license, or are using JUCE
+   under the GPL v3 license.
+
+   End User License Agreement: www.juce.com/juce-5-licence
+  ==============================================================================
+*/
+
+// BEGIN SECTION A
+
+#define JUCE_DISPLAY_SPLASH_SCREEN 1
+#define JUCE_REPORT_APP_USAGE 1
+
+// END SECTION A
+
+#define JUCE_USE_DARK_SPLASH_SCREEN 1
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_juce_audio_basics             1
@@ -39,7 +59,7 @@
 
 //==============================================================================
 #ifndef    JUCE_STANDALONE_APPLICATION
- #ifdef JucePlugin_Build_Standalone
+ #if defined(JucePlugin_Name) && defined(JucePlugin_Build_Standalone)
   #define  JUCE_STANDALONE_APPLICATION JucePlugin_Build_Standalone
  #else
   #define  JUCE_STANDALONE_APPLICATION 0
@@ -79,6 +99,10 @@
  //#define JUCE_USE_ANDROID_OPENSLES
 #endif
 
+#ifndef    JUCE_USE_WINRT_MIDI
+ //#define JUCE_USE_WINRT_MIDI
+#endif
+
 //==============================================================================
 // juce_audio_formats flags:
 
@@ -107,6 +131,10 @@
 
 #ifndef    JUCE_FORCE_USE_LEGACY_PARAM_IDS
  //#define JUCE_FORCE_USE_LEGACY_PARAM_IDS
+#endif
+
+#ifndef    JUCE_USE_STUDIO_ONE_COMPATIBLE_PARAMETERS
+ //#define JUCE_USE_STUDIO_ONE_COMPATIBLE_PARAMETERS
 #endif
 
 //==============================================================================
@@ -157,6 +185,13 @@
 
 #ifndef    JUCE_ALLOW_STATIC_NULL_VARIABLES
  //#define JUCE_ALLOW_STATIC_NULL_VARIABLES
+#endif
+
+//==============================================================================
+// juce_events flags:
+
+#ifndef    JUCE_EXECUTE_APP_SUSPEND_ON_IOS_BACKGROUND_TASK
+ //#define JUCE_EXECUTE_APP_SUSPEND_ON_IOS_BACKGROUND_TASK
 #endif
 
 //==============================================================================
@@ -219,7 +254,6 @@
  //#define JUCE_USE_CAMERA
 #endif
 
-
 //==============================================================================
 // Audio plugin settings..
 
@@ -243,6 +277,9 @@
 #endif
 #ifndef  JucePlugin_Build_STANDALONE
  #define JucePlugin_Build_STANDALONE       0
+#endif
+#ifndef  JucePlugin_Enable_IAA
+ #define JucePlugin_Enable_IAA             0
 #endif
 #ifndef  JucePlugin_Name
  #define JucePlugin_Name                   "Temper"
@@ -346,5 +383,12 @@
 #ifndef  JucePlugin_AAXDisableMultiMono
  #define JucePlugin_AAXDisableMultiMono    0
 #endif
-
-#endif  // __JUCE_APPCONFIG_E0DLQ8__
+#ifndef  JucePlugin_IAAType
+ #define JucePlugin_IAAType                0x61757278 // 'aurx'
+#endif
+#ifndef  JucePlugin_IAASubType
+ #define JucePlugin_IAASubType             JucePlugin_PluginCode
+#endif
+#ifndef  JucePlugin_IAAName
+ #define JucePlugin_IAAName                "Creative Intent: Temper"
+#endif
