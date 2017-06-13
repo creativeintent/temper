@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaBaseController__
-#define __mdaBaseController__
+#pragma once
 
 #include "public.sdk/source/vst/vsteditcontroller.h"
 #include "public.sdk/source/vst/vstparameters.h"
@@ -33,24 +32,26 @@ class BaseController : public EditControllerEx1, public IMidiMapping
 public:
 	BaseController ();
 
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API setComponentState (IBStream* state);
-	tresult PLUGIN_API notify (IMessage* message);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API setComponentState (IBStream* state) SMTG_OVERRIDE;
+	tresult PLUGIN_API notify (IMessage* message) SMTG_OVERRIDE;
 
-	int32 PLUGIN_API getProgramListCount ();
-	tresult PLUGIN_API getProgramListInfo (int32 listIndex, ProgramListInfo& info /*out*/);
-	tresult PLUGIN_API getProgramName (ProgramListID listId, int32 programIndex, String128 name /*out*/);
+	int32 PLUGIN_API getProgramListCount () SMTG_OVERRIDE;
+	tresult PLUGIN_API getProgramListInfo (int32 listIndex, ProgramListInfo& info /*out*/) SMTG_OVERRIDE;
+	tresult PLUGIN_API getProgramName (ProgramListID listId, int32 programIndex, String128 name /*out*/) SMTG_OVERRIDE;
 
-	tresult PLUGIN_API getMidiControllerAssignment (int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& tag/*out*/);
+	tresult PLUGIN_API getMidiControllerAssignment (int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& tag/*out*/) SMTG_OVERRIDE;
 
 	ParameterContainer& getParameters () { return parameters; }
 
 	//-----------------------------
 	DELEGATE_REFCOUNT (EditControllerEx1)
-	tresult PLUGIN_API queryInterface (const char* iid, void** obj);
+	tresult PLUGIN_API queryInterface (const char* iid, void** obj) SMTG_OVERRIDE;
 	//-----------------------------
 
 	enum {
+		kMagicNumber = 9999999,
+
 		kBypassParam = 'bpas',
 		kPresetParam = 'prst',
 		kModWheelParam = 'modw',
@@ -70,5 +71,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

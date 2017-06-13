@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Base Module
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -105,7 +105,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a43cb3155da3a95365940b11cc42cbba8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1FArrayDeleter.html#a43cb3155da3a95365940b11cc42cbba8">FArrayDeleter</a> (T *_arrayToDelete)</td></tr>
-<tr class="memdesc:a43cb3155da3a95365940b11cc42cbba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. _arrayToDelete is a pointer to the dynamically allocated array of objects that is to be deleted when this <a class="el" href="structSteinberg_1_1FArrayDeleter.html" title="Template definition for classes that help guarding against memory leaks. ">FArrayDeleter</a> object's destructor is executed.  <a href="#a43cb3155da3a95365940b11cc42cbba8">More...</a><br /></td></tr>
+<tr class="memdesc:a43cb3155da3a95365940b11cc42cbba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a43cb3155da3a95365940b11cc42cbba8">More...</a><br /></td></tr>
 <tr class="separator:a43cb3155da3a95365940b11cc42cbba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34f230dc8f23cd2085bcc7ccf23f7b3f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1FArrayDeleter.html#a34f230dc8f23cd2085bcc7ccf23f7b3f">~FArrayDeleter</a> ()</td></tr>
 <tr class="memdesc:a34f230dc8f23cd2085bcc7ccf23f7b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. Calls delete[] on the at construction time passed pointer.  <a href="#a34f230dc8f23cd2085bcc7ccf23f7b3f">More...</a><br /></td></tr>
@@ -122,7 +122,7 @@ Data Fields</h2></td></tr>
 struct Steinberg::FArrayDeleter&lt; T &gt;</h3>
 
 <p>Template definition for classes that help guarding against memory leaks. </p>
-<p>A stack allocated object of this type autonomically deletes an at construction time passed dynamically allocated array of objects when it reaches the end of its scope. <br />
+<p>A stack allocated object of this type automatically deletes an at construction time passed dynamically allocated array of objects when it reaches the end of its scope. <br />
 <br />
 Intended usage: </p><div class="fragment"><div class="line">{</div>
 <div class="line">    <span class="keywordtype">int</span>* pointerToIntArray = <span class="keyword">new</span> <span class="keywordtype">int</span>[10];</div>
@@ -154,7 +154,8 @@ Intended usage: </p><div class="fragment"><div class="line">{</div>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor. _arrayToDelete is a pointer to the dynamically allocated array of objects that is to be deleted when this <a class="el" href="structSteinberg_1_1FArrayDeleter.html" title="Template definition for classes that help guarding against memory leaks. ">FArrayDeleter</a> object's destructor is executed. </p>
+<p>Constructor. </p>
+<p>_arrayToDelete is a pointer to the dynamically allocated array of objects that is to be deleted when this <a class="el" href="structSteinberg_1_1FArrayDeleter.html" title="Template definition for classes that help guarding against memory leaks. ">FArrayDeleter</a> object's destructor is executed. </p>
 
 </div>
 </div>
@@ -200,17 +201,17 @@ Intended usage: </p><div class="fragment"><div class="line">{</div>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

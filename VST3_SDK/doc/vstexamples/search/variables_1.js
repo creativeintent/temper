@@ -3,7 +3,6 @@ var searchData=
   ['b0a0',['b0a0',['../classSteinberg_1_1Vst_1_1NoteExpressionSynth_1_1Filter.html#a156c1393ed43e0fb904eac6033477536',1,'Steinberg::Vst::NoteExpressionSynth::Filter']]],
   ['b1a0',['b1a0',['../classSteinberg_1_1Vst_1_1NoteExpressionSynth_1_1Filter.html#ac9f06cbe99c465e11675b4457327513e',1,'Steinberg::Vst::NoteExpressionSynth::Filter']]],
   ['b2a0',['b2a0',['../classSteinberg_1_1Vst_1_1NoteExpressionSynth_1_1Filter.html#ab0a3f2ba4ea3fe5cbce7ed372047b743',1,'Steinberg::Vst::NoteExpressionSynth::Filter']]],
-  ['background',['background',['../classSteinberg_1_1Vst_1_1AGainEditorView.html#ac5e930e2d2d0c0788300f52cf3ea9699',1,'Steinberg::Vst::AGainEditorView']]],
   ['band',['band',['../classSteinberg_1_1Vst_1_1mda_1_1SpecMeterProcessor.html#a662b3318cb60154336e5c344eca5501c',1,'Steinberg::Vst::mda::SpecMeterProcessor']]],
   ['barpositionmusic',['barPositionMusic',['../../vstinterfaces/structSteinberg_1_1Vst_1_1ProcessContext.html#a9081efe983722f59098a542b149bb07f',1,'Steinberg::Vst::ProcessContext']]],
   ['bassnote',['bassNote',['../../vstinterfaces/structSteinberg_1_1Vst_1_1ChordEvent.html#a4f5c7e14d27cd2000f90c5fca2adb9a7',1,'Steinberg::Vst::ChordEvent']]],

@@ -7,33 +7,14 @@
 // Description : Basic Interface
 //
 //-----------------------------------------------------------------------------
-// LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// This file is part of a Steinberg SDK. It is subject to the license terms
+// in the LICENSE file found in the top-level directory of this distribution
+// and at www.steinberg.net/sdklicenses. 
+// No part of the SDK, including this file, may be copied, modified, propagated,
+// or distributed except according to the terms contained in the LICENSE file.
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-// OF THE POSSIBILITY OF SUCH DAMAGE.
-//------------------------------------------------------------------------------
 
-#ifndef __funknown__
 #include "funknown.h"
-#endif
 
 #include "fstrdefs.h"
 
@@ -52,6 +33,10 @@
 #pragma GCC diagnostic ignored "-Wformat"
 #endif
 
+#endif
+
+#if LINUX
+#include <ext/atomicity.h>
 #endif
 
 namespace Steinberg {
@@ -86,7 +71,11 @@ int32 PLUGIN_API atomicAdd (int32& var, int32 d)
 	return InterlockedExchangeAdd (&var, d) + d;
 #elif MAC
 	return OSAtomicAdd32Barrier (d, (int32_t*)&var);
+#elif LINUX
+	__gnu_cxx::__atomic_add (&var, d);
+	return var;
 #else
+#warning implement me!
 	var += d;
 	return var;
 #endif
@@ -113,7 +102,20 @@ FUID::FUID (const FUID& f)
 {
 	memcpy (data, f.data, sizeof (TUID));
 }
-
+	
+//------------------------------------------------------------------------
+#if SMTG_CPP11_STDLIBSUPPORT
+FUID::FUID (FUID&& other) {
+	memcpy (data, other.data, sizeof (TUID));
+}
+	
+FUID& FUID::operator= (FUID&& other)
+{
+	memcpy (data, other.data, sizeof (TUID));
+	return *this;
+}
+#endif
+	
 //------------------------------------------------------------------------
 bool FUID::generate ()
 {
@@ -143,7 +145,7 @@ bool FUID::generate ()
 	return false;
 
 #else
-	// implement me!
+#warning implement me!
 	return false;
 #endif
 }
@@ -469,4 +471,5 @@ static void fromString8 (const char8* string, char* data, int32 i1, int32 i2)
 	}
 }
 
-} // Steinberg
+//------------------------------------------------------------------------
+} // namespace Steinberg

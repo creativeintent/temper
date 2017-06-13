@@ -43,6 +43,7 @@ FUID EPianoProcessor::uid (0xFED93DB8, 0x5E81448F, 0xA3B14028, 0x879FA824);
 
 //-----------------------------------------------------------------------------
 EPianoProcessor::EPianoProcessor ()
+: currentProgram (0)
 {
 	setControllerClass (EPianoController::uid);
 	allocParameters (NPARAMS);
@@ -203,6 +204,18 @@ void EPianoProcessor::setParameter (ParamID index, ParamValue newValue, int32 sa
 			notes[eventPos++] = EVENTS_DONE;
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------
+void EPianoProcessor::setCurrentProgram (Steinberg::uint32 val)
+{
+	currentProgram = val;
+}
+
+//-----------------------------------------------------------------------------
+void EPianoProcessor::setCurrentProgramNormalized (ParamValue val)
+{
+	setCurrentProgram (std::min<int32> (kNumPrograms - 1, (int32)(val * kNumPrograms)));
 }
 
 //-----------------------------------------------------------------------------

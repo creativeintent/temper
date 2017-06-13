@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaDitherProcessor__
-#define __mdaDitherProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,18 +29,18 @@ public:
 	DitherProcessor ();
 	~DitherProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new DitherProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float dith;
 	int32  rnd1, rnd3;
@@ -50,5 +49,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

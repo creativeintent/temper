@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['obj',['obj',['../classSteinberg_1_1Vst_1_1SingleComponentEffect.html#a2fac3b38c6d73b2e9a98e62d8ce53baf',1,'Steinberg::Vst::SingleComponentEffect']]],
+  ['obj',['obj',['../module__mac_8mm.html#a456f81687ab23bfa518d25165d688aa4',1,'module_mac.mm']]],
   ['offset',['offset',['../structSteinberg_1_1Vst_1_1PresetFile_1_1Entry.html#a3695b4badbf1fecec9ceaad8ce6bdc50',1,'Steinberg::Vst::PresetFile::Entry']]],
   ['onceexecuted',['onceExecuted',['../classSteinberg_1_1Vst_1_1VstAutomationTest.html#a9c2f66bef9b7542b9f63b068fa6d0d7d',1,'Steinberg::Vst::VstAutomationTest']]],
   ['outputevents',['outputEvents',['../../vstinterfaces/structSteinberg_1_1Vst_1_1ProcessData.html#a96d006aea0bdbfe90120674e485f0c1a',1,'Steinberg::Vst::ProcessData']]],

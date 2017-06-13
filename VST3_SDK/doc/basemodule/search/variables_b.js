@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['left',['left',['../classSteinberg_1_1Rect.html#a3f8c54ce0c1f34e3719086cc8b326376',1,'Steinberg::Rect']]],
-  ['len',['len',['../classSteinberg_1_1ConstString.html#a63941c3a03dc9736f3234bb756d9a305',1,'Steinberg::ConstString']]],
-  ['lock',['lock',['../classSteinberg_1_1FBlockAllocator.html#a73d04912f0af10195de965a59121f822',1,'Steinberg::FBlockAllocator::lock()'],['../classSteinberg_1_1UpdateHandler.html#ac3b3acb56a5664131244aafb10fa82df',1,'Steinberg::UpdateHandler::lock()']]]
+  ['singletoninstances',['singletonInstances',['../namespaceSteinberg_1_1Singleton.html#ab5cb5c38a31d778cf922b01947589311',1,'Steinberg::Singleton']]],
+  ['singletonslock',['singletonsLock',['../namespaceSteinberg_1_1Singleton.html#a29266b1d4111658632fadb4ef9b57b23',1,'Steinberg::Singleton']]],
+  ['singletonsterminated',['singletonsTerminated',['../namespaceSteinberg_1_1Singleton.html#ae52f18a708ab305abe54c48ffc1c9840',1,'Steinberg::Singleton']]],
+  ['sizepos',['sizePos',['../classSteinberg_1_1FStreamSizeHolder.html#a4ed2befe00e711ba9345b04f59d18a69',1,'Steinberg::FStreamSizeHolder']]],
+  ['stream',['stream',['../classSteinberg_1_1FStreamSizeHolder.html#a826abaebde6da276f12b3250c52ad90a',1,'Steinberg::FStreamSizeHolder::stream()'],['../classSteinberg_1_1IBStreamer.html#a78d49eed9e150f042fe1e0434fb52102',1,'Steinberg::IBStreamer::stream()']]]
 ];

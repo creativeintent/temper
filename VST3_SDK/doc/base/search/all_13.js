@@ -8,6 +8,7 @@ var searchData=
   ['thissize',['thisSize',['../classSteinberg_1_1UString.html#a59ceecccb2f1154af32e79123fa041f4',1,'Steinberg::UString']]],
   ['to4int',['to4Int',['../classSteinberg_1_1FUID.html#aa8cc6a07a3f18cf01313393f7e5e8c87',1,'Steinberg::FUID']]],
   ['toascii',['toAscii',['../classSteinberg_1_1UString.html#a6d5a9bd9b704922faa0d453b2670068d',1,'Steinberg::UString']]],
+  ['tonormalized',['ToNormalized',['../namespaceSteinberg.html#a3b853af91258cfec3aaaf03bff12541b',1,'Steinberg']]],
   ['toopposite',['toOpposite',['../namespaceSteinberg_1_1GeoConstants.html#aff2eb279b5ae69049a3283a004a0fce2',1,'Steinberg::GeoConstants']]],
   ['toorientation',['toOrientation',['../namespaceSteinberg_1_1GeoConstants.html#a94f8ae4df9a9950ee4332d29456d12e9',1,'Steinberg::GeoConstants']]],
   ['toorthogonalorientation',['toOrthogonalOrientation',['../namespaceSteinberg_1_1GeoConstants.html#a1f7b523a922afe5e4fc87ecc6dfd2a7d',1,'Steinberg::GeoConstants']]],

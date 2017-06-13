@@ -17,7 +17,8 @@
 #include "mdaTestToneProcessor.h"
 #include "mdaTestToneController.h"
 
-#include <math.h>
+#include <cmath>
+#include <cstdlib>
 
 namespace Steinberg {
 namespace Vst {

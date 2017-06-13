@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/pitchnames/source/pitchnames.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -40,7 +39,6 @@
 #include "public.sdk/source/vst/vsteditcontroller.h"
 #include "public.sdk/source/vst/vstaudioeffect.h"
 #include "base/source/fstring.h"
-#include "base/source/tdictionary.h"
 #include "vstgui/plugin-bindings/vst3editor.h"
 
 namespace Steinberg {
@@ -50,26 +48,24 @@ namespace Vst {
 class PitchNamesController : public EditControllerEx1, public VSTGUI::VST3EditorDelegate
 {
 public:
-	tresult PLUGIN_API initialize (FUnknown* context) override;
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
 
 	tresult PLUGIN_API getUnitByBus (MediaType type, BusDirection dir, int32 busIndex,
-	                                 int32 channel, UnitID& unitId /*out*/) override;
+	                                 int32 channel, UnitID& unitId /*out*/) SMTG_OVERRIDE;
 
-	IPlugView* PLUGIN_API createView (FIDString name) override;
+	IPlugView* PLUGIN_API createView (FIDString name) SMTG_OVERRIDE;
 
 	VSTGUI::CView* createCustomView (VSTGUI::UTF8StringPtr name,
 	                                 const VSTGUI::UIAttributes& attributes,
 	                                 const VSTGUI::IUIDescription* description,
-	                                 VSTGUI::VST3Editor* editor) override;
+	                                 VSTGUI::VST3Editor* editor) SMTG_OVERRIDE;
 
 	static FUnknown* createInstance (void*)
 	{
 		return (IEditController*)new PitchNamesController ();
 	}
-	static FUID cid;
 
-protected:
-	TDictionary<int16, String> pitchNames;
+	static FUID cid;
 };
 
 //-----------------------------------------------------------------------------
@@ -78,8 +74,8 @@ class PitchNamesProcessor : public AudioEffect
 public:
 	PitchNamesProcessor ();
 
-	tresult PLUGIN_API initialize (FUnknown* context) override;
-	tresult PLUGIN_API process (ProcessData& data) override;
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API process (ProcessData& data) SMTG_OVERRIDE;
 
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new PitchNamesProcessor (); }
 	static FUID cid;

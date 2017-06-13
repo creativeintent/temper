@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Interfaces
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -94,88 +94,88 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 As soon as the Plug-in provides this IInfoListener interface, the host will call setChannelContextInfos for each change occurring to this channel (new name, new color, new indexation,...)</p>
 <h1><a class="anchor" id="IChannelContextExample"></a>
 Example</h1>
-<div class="fragment"><div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyPlugin::setChannelContextInfos (IAttributeList* list)</div>
+<div class="fragment"><div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyPlugin::setChannelContextInfos (IAttributeList* list)</div>
 <div class="line">{</div>
 <div class="line">    <span class="keywordflow">if</span> (list)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// optional we can ask for the Channel Name Length</span></div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aecfc3c54bd29ad5964e1c1c3ccbf89df">int64</a> length;</div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a175778add2bfeafd5b184f4e47869e80">ChannelContext::kChannelNameLengthKey</a>, length) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aecfc3c54bd29ad5964e1c1c3ccbf89df">int64</a> length;</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a175778add2bfeafd5b184f4e47869e80">ChannelContext::kChannelNameLengthKey</a>, length) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
 <div class="line">            ...</div>
 <div class="line">        }</div>
 <div class="line">        </div>
 <div class="line">        <span class="comment">// get the Channel Name where we, as Plug-in, are instantiated</span></div>
 <div class="line">        <a class="code" href="group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47">String128</a> name;</div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getString (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a355d0e3fe55ba9c58ebe6cb29cf27ce5">ChannelContext::kChannelNameKey</a>, name, sizeof (name)) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getString (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a355d0e3fe55ba9c58ebe6cb29cf27ce5">ChannelContext::kChannelNameKey</a>, name, sizeof (name)) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
 <div class="line">            ...</div>
 <div class="line">        }</div>
 <div class="line"></div>
 <div class="line">        <span class="comment">// get the Channel UID</span></div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getString (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a68ad60e2a9bdcefda0e2296e7f9296f9">ChannelContext::kChannelUIDKey</a>, name, sizeof (name)) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getString (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a68ad60e2a9bdcefda0e2296e7f9296f9">ChannelContext::kChannelUIDKey</a>, name, sizeof (name)) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
 <div class="line">            ...</div>
 <div class="line">        }</div>
 <div class="line">        </div>
 <div class="line">        <span class="comment">// get Channel Index</span></div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aecfc3c54bd29ad5964e1c1c3ccbf89df">int64</a> index;</div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a42930b877ebbb27bf3daa78d02780be1">ChannelContext::kChannelIndexKey</a>, index) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aecfc3c54bd29ad5964e1c1c3ccbf89df">int64</a> index;</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a42930b877ebbb27bf3daa78d02780be1">ChannelContext::kChannelIndexKey</a>, index) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
 <div class="line">            ...</div>
 <div class="line">        }</div>
 <div class="line">        </div>
 <div class="line">        <span class="comment">// get the Channel Color</span></div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aecfc3c54bd29ad5964e1c1c3ccbf89df">int64</a> color;</div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a218d5777a06f7780c7ded2a14c9f2922">ChannelContext::kChannelColorKey</a>, color) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aecfc3c54bd29ad5964e1c1c3ccbf89df">int64</a> color;</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a218d5777a06f7780c7ded2a14c9f2922">ChannelContext::kChannelColorKey</a>, color) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">uint32</a> channelColor = (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">uint32</a>)color;</div>
+<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">uint32</a> channelColor = (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">uint32</a>)color;</div>
 <div class="line">            String str;</div>
-<div class="line">            str.printf (<span class="stringliteral">&quot;%x%x%x%x&quot;</span>, <a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a59f0bbea32d4ae966062be29a76bd969">ChannelContext::GetAlpha</a> (channelColor),</div>
-<div class="line">            <a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a0631a9689c90dab1e9267681bc3d351a">ChannelContext::GetRed</a> (channelColor),</div>
-<div class="line">            <a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a85a872d79e8879f75593a51a62e3c61b">ChannelContext::GetGreen</a> (channelColor),</div>
-<div class="line">            <a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a641c048e19cbdf7b753446f6e06b92e9">ChannelContext::GetBlue</a> (channelColor));</div>
+<div class="line">            str.printf (<span class="stringliteral">&quot;%x%x%x%x&quot;</span>, ChannelContext::GetAlpha (channelColor),</div>
+<div class="line">            ChannelContext::GetRed (channelColor),</div>
+<div class="line">            ChannelContext::GetGreen (channelColor),</div>
+<div class="line">            ChannelContext::GetBlue (channelColor));</div>
 <div class="line">            <a class="code" href="group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47">String128</a> string128;</div>
-<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (str);</div>
+<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (str);</div>
 <div class="line">            ...</div>
 <div class="line">        }</div>
 <div class="line"></div>
 <div class="line">        <span class="comment">// get Channel Index Namespace Order of the current used index namespace</span></div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#acd822b1c74f9c7e9afaa16b0ce578f7e">ChannelContext::kChannelIndexNamespaceOrderKey</a>, index) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#acd822b1c74f9c7e9afaa16b0ce578f7e">ChannelContext::kChannelIndexNamespaceOrderKey</a>, index) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
 <div class="line">            ...</div>
 <div class="line">        }</div>
 <div class="line">    </div>
 <div class="line">        <span class="comment">// get the channel Index Namespace Length</span></div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a9b082b198abef61a8397bafcf4e30a72">ChannelContext::kChannelIndexNamespaceLengthKey</a>, length) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a9b082b198abef61a8397bafcf4e30a72">ChannelContext::kChannelIndexNamespaceLengthKey</a>, length) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
 <div class="line">            ...</div>
 <div class="line">        }</div>
 <div class="line">        </div>
 <div class="line">        <span class="comment">// get the channel Index Namespace</span></div>
 <div class="line">        <a class="code" href="group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47">String128</a> namespaceName;</div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getString (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a9dee889cb7b726bf9bf9f21c79334261">ChannelContext::kChannelIndexNamespaceKey</a>, namespaceName, sizeof (namespaceName)) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getString (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a9dee889cb7b726bf9bf9f21c79334261">ChannelContext::kChannelIndexNamespaceKey</a>, namespaceName, sizeof (namespaceName)) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
 <div class="line">            ...</div>
 <div class="line">        }</div>
 <div class="line"></div>
-<div class="line">        <span class="comment">// get Plugin Channel Location</span></div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aecfc3c54bd29ad5964e1c1c3ccbf89df">int64</a> location;</div>
-<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a1836e6445deeff80efc1d389b8ba7ac5">ChannelContext::kChannelPluginLocationKey</a>, location) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">        <span class="comment">// get Plug-in Channel Location</span></div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aecfc3c54bd29ad5964e1c1c3ccbf89df">int64</a> location;</div>
+<div class="line">        <span class="keywordflow">if</span> (list-&gt;getInt (<a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#a1836e6445deeff80efc1d389b8ba7ac5">ChannelContext::kChannelPluginLocationKey</a>, location) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">        {</div>
 <div class="line">            <a class="code" href="group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47">String128</a> string128;</div>
 <div class="line">            <span class="keywordflow">switch</span> (location)</div>
 <div class="line">            {</div>
 <div class="line">                <span class="keywordflow">case</span> <a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#ac6ac8886bd59deb9f997179931a168afa21f636e119b96f85db893e981c6d0fbb">ChannelContext::kPreVolumeFader</a>:</div>
-<div class="line">                    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (<span class="stringliteral">&quot;PreVolFader&quot;</span>);</div>
+<div class="line">                    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (<span class="stringliteral">&quot;PreVolFader&quot;</span>);</div>
 <div class="line">                <span class="keywordflow">break</span>;</div>
 <div class="line">                <span class="keywordflow">case</span> <a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#ac6ac8886bd59deb9f997179931a168afa352f87b06111d7eb4502ca8884ba1bfb">ChannelContext::kPostVolumeFader</a>:</div>
-<div class="line">                    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (<span class="stringliteral">&quot;PostVolFader&quot;</span>);</div>
+<div class="line">                    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (<span class="stringliteral">&quot;PostVolFader&quot;</span>);</div>
 <div class="line">                <span class="keywordflow">break</span>;</div>
 <div class="line">                <span class="keywordflow">case</span> <a class="code" href="namespaceSteinberg_1_1Vst_1_1ChannelContext.html#ac6ac8886bd59deb9f997179931a168afab4d561ce249fb47b1411e92455468810">ChannelContext::kUsedAsPanner</a>:</div>
-<div class="line">                    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (<span class="stringliteral">&quot;UsedAsPanner&quot;</span>);</div>
+<div class="line">                    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (<span class="stringliteral">&quot;UsedAsPanner&quot;</span>);</div>
 <div class="line">                <span class="keywordflow">break</span>;</div>
-<div class="line">                <span class="keywordflow">default</span>: <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (<span class="stringliteral">&quot;unknown!&quot;</span>);</div>
+<div class="line">                <span class="keywordflow">default</span>: <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html">Steinberg::UString</a> (string128, 128).<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1">fromAscii</a> (<span class="stringliteral">&quot;unknown!&quot;</span>);</div>
 <div class="line">                <span class="keywordflow">break</span>;</div>
 <div class="line">            }</div>
 <div class="line">        }</div>
@@ -188,17 +188,17 @@ Back to <b><a class="el" href="index.html#vst3Contents">Contents</a></b> <br />
 </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

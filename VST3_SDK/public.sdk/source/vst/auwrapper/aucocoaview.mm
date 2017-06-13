@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/auwrapper/aucocoaview.mm
@@ -9,30 +8,35 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 /// \cond ignore
+
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 #import "aucocoaview.h"
 #import "auwrapper.h"
@@ -40,17 +44,16 @@
 #import "pluginterfaces/gui/iplugview.h"
 #import "base/source/fobject.h"
 
-
 namespace Steinberg {
 DEF_CLASS_IID(IPlugFrame)
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 class AUPlugFrame : public FObject, public IPlugFrame
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 {
 public:
 	AUPlugFrame (NSView* parent) : parent (parent) {}
-	tresult PLUGIN_API resizeView (IPlugView* view, ViewRect* vr)
+	tresult PLUGIN_API resizeView (IPlugView* view, ViewRect* vr) SMTG_OVERRIDE
 	{
 		NSRect newSize = NSMakeRect ([parent frame].origin.x, [parent frame].origin.y, vr->right - vr->left, vr->bottom - vr->top);
 		[parent setFrame:newSize];
@@ -68,9 +71,9 @@ protected:
 
 using namespace Steinberg;
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 @interface SMTGCocoa_NSViewWrapperForAU : NSView {
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 	IPlugView* plugView;
 	Vst::IEditController* editController;
 	AudioUnit audioUnit;
@@ -84,26 +87,26 @@ using namespace Steinberg;
 
 @end
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 // SMTG_AU_PLUGIN_NAMESPACE (SMTGAUPluginCocoaView)
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 @implementation SMTG_AU_PLUGIN_NAMESPACE (SMTGAUPluginCocoaView)
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 - (unsigned) interfaceVersion
 {
     return 0;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 - (NSString *) description
 {
     return @"Cocoa View";
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 - (NSView *)uiViewForAudioUnit:(AudioUnit)inAU withSize:(NSSize)inPreferredSize
 {
     Vst::IEditController* editController = 0;
@@ -115,9 +118,9 @@ using namespace Steinberg;
 
 @end
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 @implementation SMTGCocoa_NSViewWrapperForAU
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 - (id) initWithEditController: (Vst::IEditController*) _editController audioUnit: (AudioUnit) au preferredSize: (NSSize) size
 {
 	self = [super initWithFrame: NSMakeRect (0, 0, size.width, size.height)];
@@ -157,7 +160,7 @@ using namespace Steinberg;
 }
 
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 - (void) setFrame: (NSRect) newSize
 {
 	[super setFrame: newSize];
@@ -168,10 +171,10 @@ using namespace Steinberg;
 }
 
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 - (BOOL)isFlipped { return YES; }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 - (void)viewDidMoveToSuperview
 {
 	if (plugView)
@@ -194,7 +197,7 @@ using namespace Steinberg;
 	}
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 - (void) dealloc
 {
 	if (plugView)

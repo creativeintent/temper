@@ -9,31 +9,33 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-#ifndef __fstring__
-#define __fstring__
+#pragma once
 
 #include "pluginterfaces/base/ftypes.h"
 #include "pluginterfaces/base/fstrdefs.h"
@@ -47,6 +49,7 @@
 namespace Steinberg {
 
 class FVariant;
+class String;
 
 #ifdef UNICODE
 static const bool kWideStringDefault = true;
@@ -165,8 +168,8 @@ public:
 	// compare ----------------------------------------------------------------
 	enum CompareMode
 	{
-		kCaseSensitive,		///< Comparision is done with regard to character's case
-		kCaseInsensitive	///< Comparision is done without regard to character's case
+		kCaseSensitive,		///< Comparison is done with regard to character's case
+		kCaseInsensitive	///< Comparison is done without regard to character's case
 	};
 
 	int32 compareAt (uint32 index, const ConstString& str, int32 n = -1, CompareMode m = kCaseSensitive) const; 				///< Compare n characters of str with n characters of this starting at index (return: see above)
@@ -322,10 +325,10 @@ public:
 
 	// access------------------------------------------------------------------
 	void updateLength (); ///< Call this when the string is truncated outside (not recommended though)
-	virtual const char8* text8 () const;
-	virtual const char16* text16 () const;
-	virtual char8 getChar8 (uint32 index) const;
-	virtual char16 getChar16 (uint32 index) const;
+	virtual const char8* text8 () const SMTG_OVERRIDE;
+	virtual const char16* text16 () const SMTG_OVERRIDE;
+	virtual char8 getChar8 (uint32 index) const SMTG_OVERRIDE;
+	virtual char16 getChar16 (uint32 index) const SMTG_OVERRIDE;
 
 	bool setChar8 (uint32 index, char8 c);
 	bool setChar16 (uint32 index, char16 c);
@@ -455,6 +458,7 @@ protected:
 
 private:
 	void tryFreeBuffer ();
+	bool checkToMultiByte (uint32 destCodePage = kCP_Default) const; // to remove debug code from inline - const_cast inside!!!
 };
 
 // String concatenation functions.
@@ -532,7 +536,6 @@ inline tchar ConstString::getCharAt (uint32 index) const
 	return getChar8 (index);
 }
 
-
 //-----------------------------------------------------------------------------
 inline int64 ConstString::getNumber () const
 {
@@ -577,7 +580,6 @@ inline bool ConstString::scanInt32 (const tchar* text, int32& value, bool scanTo
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 inline bool ConstString::scanUInt32_8 (const char8* text, uint32& value, bool scanToEnd)
 {
@@ -614,23 +616,12 @@ inline bool ConstString::scanUInt32 (const tchar* text, uint32& value, bool scan
 	return false;
 }
 
-#define SMTG_STRING_CHECK_CONVERSION 1
-
 //-----------------------------------------------------------------------------
 inline const char8* String::text8 () const
 {
 	if (isWide && !isEmpty ())
-	{
-#if DEVELOPMENT && SMTG_STRING_CHECK_CONVERSION
-		for (int32 i = 0; i < length (); i++)
-		{
-			if (buffer16[i] > 127)
-				FDebugBreak ("Indirect string conversion information loss !\n");
-		}
-#endif
-		// this should be avoided, since it can lead to information loss
-		const_cast <String&> (*this).toMultiByte ();
-	}
+		checkToMultiByte (); // this should be avoided, since it can lead to information loss
+
 	return ConstString::text8 ();
 }
 
@@ -639,7 +630,7 @@ inline const char16* String::text16 () const
 {
 	if (!isWide && !isEmpty ())
 	{
-		const_cast <String&> (*this).toWideString ();
+		const_cast<String&> (*this).toWideString ();
 	}
 	return ConstString::text16 ();
 }
@@ -648,17 +639,8 @@ inline const char16* String::text16 () const
 inline char8 String::getChar8 (uint32 index) const
 {
 	if (isWide && !isEmpty ())
-	{
-#if DEVELOPMENT && SMTG_STRING_CHECK_CONVERSION
-		for (int32 i = 0; i < length (); i++)
-		{
-			if (buffer16[i] > 127)
-				FDebugBreak ("Indirect string conversion information loss !\n");
-		}
-#endif
-		// this should be avoided, since it can lead to information loss
-		const_cast <String&> (*this).toMultiByte ();
-	}
+		checkToMultiByte (); // this should be avoided, since it can lead to information loss
+
 	return ConstString::getChar8 (index);
 }
 
@@ -667,7 +649,7 @@ inline char16 String::getChar16 (uint32 index) const
 {
 	if (!isWide && !isEmpty ())
 	{
-		const_cast <String&> (*this).toWideString ();
+		const_cast<String&> (*this).toWideString ();
 	}
 	return ConstString::getChar16 (index);
 }
@@ -722,8 +704,9 @@ inline int32 strnatcmp (const tchar* s1, const tchar* s2, bool caseSensitive = t
 }
 
 //-----------------------------------------------------------------------------
-/** StringObject implements IStringResult and IString methods. 
-	It can therefore be exchanged with other Steinberg objects using one or both of these interfaces.
+/** StringObject implements IStringResult and IString methods.
+    It can therefore be exchanged with other Steinberg objects using one or both of these
+interfaces.
 
 \see String, ConstString
 */
@@ -742,24 +725,23 @@ public:
 	using String::operator=;
 
 	// IStringResult ----------------------------------------------------------
-	virtual void PLUGIN_API setText (const char8* text);
+	virtual void PLUGIN_API setText (const char8* text) SMTG_OVERRIDE;
 	//-------------------------------------------------------------------------
 
 	// IString-----------------------------------------------------------------
-	virtual void PLUGIN_API setText8 (const char8* text);    
-	virtual void PLUGIN_API setText16 (const char16* text);
+	virtual void PLUGIN_API setText8 (const char8* text) SMTG_OVERRIDE;
+	virtual void PLUGIN_API setText16 (const char16* text) SMTG_OVERRIDE;
 
-	virtual const char8* PLUGIN_API getText8 ();    
-	virtual const char16* PLUGIN_API getText16 ();    
+	virtual const char8* PLUGIN_API getText8 () SMTG_OVERRIDE;
+	virtual const char16* PLUGIN_API getText16 () SMTG_OVERRIDE;
 
-	virtual void PLUGIN_API take (void* s, bool _isWide);
-	virtual bool PLUGIN_API isWideString () const;
+	virtual void PLUGIN_API take (void* s, bool _isWide) SMTG_OVERRIDE;
+	virtual bool PLUGIN_API isWideString () const SMTG_OVERRIDE;
 	//-------------------------------------------------------------------------
 
 	OBJ_METHODS (StringObject, FObject)
 	FUNKNOWN_METHODS2 (IStringResult, IString, FObject)
 };
 
+//------------------------------------------------------------------------
 } // namespace Steinberg
-
-#endif

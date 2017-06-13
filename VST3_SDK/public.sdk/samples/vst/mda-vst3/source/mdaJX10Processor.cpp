@@ -89,6 +89,7 @@ FUID JX10Processor::uid (0x82CD49DE, 0x13D743BA, 0xABDAC299, 0x1CE06F7C);
 
 //-----------------------------------------------------------------------------
 JX10Processor::JX10Processor ()
+: currentProgram (0)
 {
 	setControllerClass (JX10Controller::uid);
 	allocParameters (NPARAMS);
@@ -160,8 +161,8 @@ void JX10Processor::setParameter (ParamID index, ParamValue newValue, int32 samp
 		BaseProcessor::setParameter (index, newValue, sampleOffset);
 	else if (index == BaseController::kPresetParam) // program change
 	{
-		int32 program = std::min<int32> (kNumPrograms-1, (int32)(newValue * kNumPrograms));
-		const float* newParams = programParams[program];
+		currentProgram = std::min<int32> (kNumPrograms - 1, (int32)(newValue * kNumPrograms));
+		const float* newParams = programParams[currentProgram];
 		if (newParams)
 		{
 			for (int32 i = 0; i < NPARAMS; i++)
@@ -200,6 +201,18 @@ void JX10Processor::setParameter (ParamID index, ParamValue newValue, int32 samp
 		newValue *= 127.;
 		press = 0.00001f * (float)(newValue * newValue);
 	}
+}
+
+//-----------------------------------------------------------------------------
+void JX10Processor::setCurrentProgram (Steinberg::uint32 val)
+{
+	currentProgram = val;
+}
+
+//-----------------------------------------------------------------------------
+void JX10Processor::setCurrentProgramNormalized (ParamValue val)
+{
+	setCurrentProgram (std::min<int32> (kNumPrograms - 1, (int32)(val * kNumPrograms)));
 }
 
 //-----------------------------------------------------------------------------

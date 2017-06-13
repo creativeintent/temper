@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaAmbienceController__
-#define __mdaAmbienceController__
+#pragma once
 
 #include "mdaBaseController.h"
 #include "mdaAmbienceProcessor.h"
@@ -31,8 +30,8 @@ public:
 	AmbienceController ();
 	~AmbienceController ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IEditController*)new AmbienceController; }
@@ -40,5 +39,3 @@ public:
 };
 
 }}} // namespaces
-
-#endif

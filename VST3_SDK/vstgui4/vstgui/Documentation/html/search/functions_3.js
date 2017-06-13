@@ -58,7 +58,7 @@ var searchData=
   ['drawhandle',['drawHandle',['../class_v_s_t_g_u_i_1_1_c_knob.html#a8553dad65359a30fed274fc45f109013',1,'VSTGUI::CKnob']]],
   ['drawhandleascircle',['drawHandleAsCircle',['../class_v_s_t_g_u_i_1_1_c_knob.html#a909d81efaadf43eafdbb35e862f372c1',1,'VSTGUI::CKnob']]],
   ['drawhandleasline',['drawHandleAsLine',['../class_v_s_t_g_u_i_1_1_c_knob.html#a6590df97b907472bc0c904ab7cbfd782',1,'VSTGUI::CKnob']]],
-  ['drawiconandtext',['drawIconAndText',['../namespace_v_s_t_g_u_i_1_1_c_draw_methods.html#a46d935bdf260519c07e691ec67dfdfb4',1,'VSTGUI::CDrawMethods']]],
+  ['drawiconandtext',['drawIconAndText',['../namespace_v_s_t_g_u_i_1_1_c_draw_methods.html#a9ecdd41e45eb5efc6f86e818a979a3e3',1,'VSTGUI::CDrawMethods']]],
   ['drawline',['drawLine',['../class_v_s_t_g_u_i_1_1_c_draw_context.html#ae8712bb20e6b83738488b8465dd49239',1,'VSTGUI::CDrawContext::drawLine(const CPoint &amp;start, const CPoint &amp;end)'],['../class_v_s_t_g_u_i_1_1_c_draw_context.html#a165e6cfba3b177e6362f035886fcb681',1,'VSTGUI::CDrawContext::drawLine(const LinePair &amp;line)=0']]],
   ['drawlines',['drawLines',['../class_v_s_t_g_u_i_1_1_c_draw_context.html#a0a2ed30473ca6b1bb431e2c4a4e8f101',1,'VSTGUI::CDrawContext::drawLines(const CPoint *points, const int32_t &amp;numberOfLines)'],['../class_v_s_t_g_u_i_1_1_c_draw_context.html#a593feeb3d342cb587d9d8383ff206326',1,'VSTGUI::CDrawContext::drawLines(const LineList &amp;lines)=0']]],
   ['drawopengl',['drawOpenGL',['../class_v_s_t_g_u_i_1_1_c_open_g_l_view.html#a793a17d58af3b20dfbe3294132b1b416',1,'VSTGUI::COpenGLView']]],

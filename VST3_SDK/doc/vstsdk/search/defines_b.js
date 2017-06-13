@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['use_5fxmm_5fintrin',['USE_XMM_INTRIN',['../vstaudioprocessoralgo_8h.html#a42bf32286030ec3b6bf45a27dee56579',1,'vstaudioprocessoralgo.h']]]
+  ['vstgui_5fint32',['VSTGUI_INT32',['../vstguieditor_8h.html#abadb0c7013f002aa8ce4dc4ede5174f4',1,'vstguieditor.h']]]
 ];

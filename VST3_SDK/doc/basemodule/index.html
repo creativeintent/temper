@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Base Module
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -92,17 +92,6 @@ Strings</h1>
 <li><a class="el" href="classSteinberg_1_1ConstString.html" title="Invariant String. ">Steinberg::ConstString</a></li>
 <li><a class="el" href="classSteinberg_1_1String.html" title="String. ">Steinberg::String</a></li>
 </ul>
-<h1><a class="anchor" id="baseContainers"></a>
-Containers</h1>
-<ul>
-<li>See Module <a class="el" href="group__baseContainer.html">Template Containers</a></li>
-</ul>
-<h1><a class="anchor" id="baseFThread"></a>
-FThread</h1>
-<ul>
-<li>For a platform independent Thread implementation with locks and signals see <a class="el" href="fthread_8h.html">base/source/fthread.h</a></li>
-<li>See <a class="el" href="group__baseThread.html">Thread Handling</a></li>
-</ul>
 <h1><a class="anchor" id="baseIPtr"></a>
 IPtr Smart Pointer</h1>
 <ul>
@@ -117,11 +106,6 @@ Steinberg::FObject</h1>
 <li>Defines and implements all basic Steinberg::FUnknown methods and some more stuff that works inside of the base module.</li>
 <li>Pointer casting is done via the template methods <a class="el" href="namespaceSteinberg.html#a7eedfe7a9261c91c5c4725c762d0302d" title="FCast overload 1 - FObject to FObject. ">Steinberg::FCast()</a>. There are overloads - one casting <a class="el" href="classSteinberg_1_1FObject.html" title="Implements FUnknown and IDependent. ">Steinberg::FObject</a>'s and one casting Steinberg::FUnknown's.</li>
 <li><a class="el" href="namespaceSteinberg_1_1Singleton.html" title="Automatic creation and destruction of singleton instances. ">Steinberg::Singleton</a> <a class="el" href="classSteinberg_1_1FObject.html" title="Implements FUnknown and IDependent. ">Steinberg::FObject</a> supports a new conception for <a class="el" href="namespaceSteinberg_1_1Singleton.html">Steinberg::Singleton</a> singletons. These objects are automatically deleted on program termination.</li>
-</ul>
-<h1><a class="anchor" id="baseINITIALIZE_TERMINATE"></a>
-INITIALIZE / TERMINATE</h1>
-<p>With this, you may register code to be executed at program startup and/or termination.</p><ul>
-<li>see <a class="el" href="finitializer_8h.html">base/source/finitializer.h</a></li>
 </ul>
 <h1><a class="anchor" id="baseDependencies"></a>
 Dependencies</h1>
@@ -140,37 +124,27 @@ Debugging</h1>
 Also useful</h1>
 <ul>
 <li><a class="el" href="classSteinberg_1_1FStreamer.html" title="Byteorder-aware base class for typed stream i/o. ">Steinberg::FStreamer</a></li>
-<li><a class="el" href="classSteinberg_1_1Rect.html" title="Rectangle Class. ">Steinberg::Rect</a></li>
-<li><a class="el" href="classSteinberg_1_1Point.html" title="Point Representation. ">Steinberg::Point</a></li>
 <li><a class="el" href="classSteinberg_1_1Buffer.html" title="Buffer. ">Steinberg::Buffer</a></li>
 <li><a class="el" href="classSteinberg_1_1FDynLibrary.html" title="Platform independent dynamic library loader. ">Steinberg::FDynLibrary</a></li>
 <li><a class="el" href="classSteinberg_1_1Timer.html" title="Timer is a class that allows you to receive triggers at regular intervals. ">Steinberg::Timer</a></li>
 <li><a class="el" href="namespaceSteinberg_1_1CommandLine.html" title="Very simple command-line parser. ">Steinberg::CommandLine</a></li>
-<li><a class="el" href="fmemory_8h.html">base/source/fmemory.h</a></li>
-<li><a class="el" href="fatomic_8h.html">base/source/fatomic.h</a></li>
 <li>Platform defines (fplatform.h)</li>
 <li>Basic Types (ftypes.h)</li>
-<li>Standard Methods Macros (<a class="el" href="fstdmethods_8h.html" title="Convenient macros to create setter and getter methods. ">fstdmethods.h</a>)</li>
-</ul>
-<h1><a class="anchor" id="compilerSystemRequirements"></a>
-Compiler &amp; System Requirements</h1>
-<ul>
-<li>Mac: Xcode 3.x and Mac OS X 10.5.x is needed to use the included project. Even though you can add the sources to your own project and compile it on Mac OS X 10.4.x</li>
-<li>Win: Visual Studio 2005/2008/2010, Windows XP, Vista, 7 and later </li>
+<li>Standard Methods Macros (<a class="el" href="fstdmethods_8h.html" title="Convenient macros to create setter and getter methods. ">fstdmethods.h</a>) </li>
 </ul>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

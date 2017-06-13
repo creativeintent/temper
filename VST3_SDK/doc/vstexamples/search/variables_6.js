@@ -8,8 +8,6 @@ var searchData=
   ['gain1',['gain1',['../classSteinberg_1_1Vst_1_1mda_1_1BandistoProcessor.html#a908a4dce49e93ede6f1b2f02e35cfb38',1,'Steinberg::Vst::mda::BandistoProcessor::gain1()'],['../classSteinberg_1_1Vst_1_1mda_1_1MultiBandProcessor.html#a908a4dce49e93ede6f1b2f02e35cfb38',1,'Steinberg::Vst::mda::MultiBandProcessor::gain1()']]],
   ['gain2',['gain2',['../classSteinberg_1_1Vst_1_1mda_1_1BandistoProcessor.html#a6737117454e90f8caca87dcfda6f98b1',1,'Steinberg::Vst::mda::BandistoProcessor::gain2()'],['../classSteinberg_1_1Vst_1_1mda_1_1MultiBandProcessor.html#a6737117454e90f8caca87dcfda6f98b1',1,'Steinberg::Vst::mda::MultiBandProcessor::gain2()']]],
   ['gain3',['gain3',['../classSteinberg_1_1Vst_1_1mda_1_1BandistoProcessor.html#a58c6bdf31a2bef33a474b4cfb9409f84',1,'Steinberg::Vst::mda::BandistoProcessor::gain3()'],['../classSteinberg_1_1Vst_1_1mda_1_1MultiBandProcessor.html#a58c6bdf31a2bef33a474b4cfb9409f84',1,'Steinberg::Vst::mda::MultiBandProcessor::gain3()']]],
-  ['gainslider',['gainSlider',['../classSteinberg_1_1Vst_1_1AGainEditorView.html#a3aba046bf0cee3a7530437371859ae69',1,'Steinberg::Vst::AGainEditorView']]],
-  ['gaintextedit',['gainTextEdit',['../classSteinberg_1_1Vst_1_1AGainEditorView.html#a7ddb6c109a18102efef014ae198c31bf',1,'Steinberg::Vst::AGainEditorView']]],
   ['gatt',['gatt',['../classSteinberg_1_1Vst_1_1mda_1_1DynamicsProcessor.html#ae6dcfa01294dc9910a3cef1d2fdda8fd',1,'Steinberg::Vst::mda::DynamicsProcessor']]],
   ['genv',['genv',['../classSteinberg_1_1Vst_1_1mda_1_1DynamicsProcessor.html#a292680ecc20b2e089bbfe3f95dd26acf',1,'Steinberg::Vst::mda::DynamicsProcessor']]],
   ['glide',['glide',['../classSteinberg_1_1Vst_1_1mda_1_1JX10Processor.html#adcd0e853401db58c92eaa3c2768ff6d4',1,'Steinberg::Vst::mda::JX10Processor']]],

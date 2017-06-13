@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/again/source/againsimple.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,21 +34,25 @@
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-#include "againsimple.h"	
+#include "againsimple.h"
 #include "againparamids.h"
-#include "version.h"	// for versionning
+#include "againuimessagecontroller.h"
+#include "version.h" // for versionning
 
 #include "public.sdk/source/main/pluginfactoryvst3.h"
 
 #include "pluginterfaces/base/ibstream.h"
-#include "pluginterfaces/vst/ivstparameterchanges.h"
-#include "pluginterfaces/vst/ivstevents.h"
 #include "pluginterfaces/base/ustring.h"
+#include "pluginterfaces/vst/ivstevents.h"
+#include "pluginterfaces/vst/ivstparameterchanges.h"
 
-#include <stdio.h>
+#include "vstgui/plugin-bindings/vst3editor.h"
+
 #include <math.h>
+#include <stdio.h>
 
-#define AGAIN_TEST 1 // this allows to enable the communication example between again and its controller
+// this allows to enable the communication example between again and its controller
+#define AGAIN_TEST 1
 
 namespace Steinberg {
 namespace Vst {
@@ -63,8 +66,8 @@ class GainParameter : public Parameter
 public:
 	GainParameter (int32 flags, int32 id);
 
-	virtual void toString (ParamValue normValue, String128 string) const;
-	virtual bool fromString (const TChar* string, ParamValue& normValue) const;
+	void toString (ParamValue normValue, String128 string) const SMTG_OVERRIDE;
+	bool fromString (const TChar* string, ParamValue& normValue) const SMTG_OVERRIDE;
 };
 
 //------------------------------------------------------------------------
@@ -74,13 +77,13 @@ GainParameter::GainParameter (int32 flags, int32 id)
 {
 	Steinberg::UString (info.title, USTRINGSIZE (info.title)).assign (USTRING ("Gain"));
 	Steinberg::UString (info.units, USTRINGSIZE (info.units)).assign (USTRING ("dB"));
-	
+
 	info.flags = flags;
 	info.id = id;
 	info.stepCount = 0;
 	info.defaultNormalizedValue = 0.5f;
 	info.unitId = kRootUnitId;
-	
+
 	setNormalized (1.f);
 }
 
@@ -113,9 +116,6 @@ bool GainParameter::fromString (const TChar* string, ParamValue& normValue) cons
 	return false;
 }
 
-
-
-
 //------------------------------------------------------------------------
 // AGain Implementation
 //------------------------------------------------------------------------
@@ -129,7 +129,6 @@ AGainSimple::AGainSimple ()
 {
 }
 
-
 //------------------------------------------------------------------------
 tresult PLUGIN_API AGainSimple::initialize (FUnknown* context)
 {
@@ -139,15 +138,14 @@ tresult PLUGIN_API AGainSimple::initialize (FUnknown* context)
 
 	//---create Audio In/Out buses------
 	// we want a stereo Input and a Stereo Output
-	addAudioInput  (USTRING ("Stereo In"),  SpeakerArr::kStereo);
+	addAudioInput (USTRING ("Stereo In"), SpeakerArr::kStereo);
 	addAudioOutput (USTRING ("Stereo Out"), SpeakerArr::kStereo);
 
 	//---create MIDI In/Out buses (1 bus with only 1 channel)------
 	addEventInput (USTRING ("MIDI In"), 1);
 
-
 	//---Create Parameters------------
-	
+
 	//---Gain parameter--
 	GainParameter* gainParam = new GainParameter (ParameterInfo::kCanAutomate, kGainId);
 	parameters.addParameter (gainParam);
@@ -162,7 +160,7 @@ tresult PLUGIN_API AGainSimple::initialize (FUnknown* context)
 	//---Bypass parameter---
 	stepCount = 1;
 	defaultVal = 0;
-	flags = ParameterInfo::kCanAutomate|ParameterInfo::kIsBypass;
+	flags = ParameterInfo::kCanAutomate | ParameterInfo::kIsBypass;
 	tag = kBypassId;
 	parameters.addParameter (USTRING ("Bypass"), 0, stepCount, defaultVal, flags, tag);
 
@@ -170,15 +168,13 @@ tresult PLUGIN_API AGainSimple::initialize (FUnknown* context)
 
 	UString str (defaultMessageText, 128);
 	str.fromAscii ("Hello World!");
-	
+
 	return result;
 }
 
 //------------------------------------------------------------------------
-tresult PLUGIN_API AGainSimple::terminate  ()
+tresult PLUGIN_API AGainSimple::terminate ()
 {
-	viewsArray.removeAll ();
-	
 	return SingleComponentEffect::terminate ();
 }
 
@@ -191,7 +187,7 @@ tresult PLUGIN_API AGainSimple::setActive (TBool state)
 	else
 		fprintf (stderr, "[AGainSimple] Deactivated \n");
 #endif
-	
+
 	// reset the VuMeter value
 	fVuPPMOld = 0.f;
 
@@ -204,10 +200,10 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 	// finally the process function
 	// In this example there are 4 steps:
 	// 1) Read inputs parameters coming from host (in order to adapt our model values)
-	// 2) Read inputs events coming from host (we apply a gain reduction depending of the velocity of pressed key)
+	// 2) Read inputs events coming from host (we apply a gain reduction depending of the velocity
+	// of pressed key)
 	// 3) Process the gain of the input buffer to the output buffer
 	// 4) Write the new VUmeter value to the output Parameters queue
-
 
 	//---1) Read inputs parameter changes-----------
 	IParameterChanges* paramChanges = data.inputParameterChanges;
@@ -222,29 +218,32 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 			{
 				int32 offsetSamples;
 				double value;
-				int32 numPoints = paramQueue->getPointCount ();				
+				int32 numPoints = paramQueue->getPointCount ();
 				switch (paramQueue->getParameterId ())
 				{
 					case kGainId:
 						// we use in this example only the last point of the queue.
-						// in some wanted case for specific kind of parameter it makes sense to retrieve all points
+						// in some wanted case for specific kind of parameter it makes sense to
+						// retrieve all points
 						// and process the whole audio block in small blocks.
-						if (paramQueue->getPoint (numPoints - 1,  offsetSamples, value) == kResultTrue)
+						if (paramQueue->getPoint (numPoints - 1, offsetSamples, value) ==
+						    kResultTrue)
 							fGain = (float)value;
 						break;
 
 					case kBypassId:
-						if (paramQueue->getPoint (numPoints - 1,  offsetSamples, value) == kResultTrue)
+						if (paramQueue->getPoint (numPoints - 1, offsetSamples, value) ==
+						    kResultTrue)
 							bBypass = (value > 0.5f);
 						break;
 				}
 			}
 		}
 	}
-	
+
 	//---2) Read input events-------------
 	IEventList* eventList = data.inputEvents;
-	if (eventList) 
+	if (eventList)
 	{
 		int32 numEvent = eventList->getEventCount ();
 		for (int32 i = 0; i < numEvent; i++)
@@ -254,13 +253,13 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 			{
 				switch (event.type)
 				{
-					//----------------------
+                //----------------------
 					case Event::kNoteOnEvent:
 						// use the velocity as gain modifier
 						fGainReduction = event.noteOn.velocity;
 						break;
-					
-					//----------------------
+
+                //----------------------
 					case Event::kNoteOffEvent:
 						// noteOff reset the reduction
 						fGainReduction = 0.f;
@@ -269,20 +268,21 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 			}
 		}
 	}
-		
-	//-------------------------------------
+
+	//--- ----------------------------------
 	//---3) Process Audio---------------------
-	//-------------------------------------
+	//--- ----------------------------------
 	if (data.numInputs == 0 || data.numOutputs == 0)
 	{
 		// nothing to do
 		return kResultOk;
 	}
 
-	// (simplification) we suppose in this example that we have the same input channel count than the output
+	// (simplification) we suppose in this example that we have the same input channel count than
+	// the output
 	int32 numChannels = data.inputs[0].numChannels;
 	//---get audio buffers----------------
-	float** in  = data.inputs[0].channelBuffers32;
+	float** in = data.inputs[0].channelBuffers32;
 	float** out = data.outputs[0].channelBuffers32;
 
 	//---check if silence---------------
@@ -291,12 +291,14 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 	{
 		// mark output silence too
 		data.outputs[0].silenceFlags = data.inputs[0].silenceFlags;
-		
-		// the Plug-in has to be sure that if it sets the flags silence that the output buffer are clear
+
+		// the Plug-in has to be sure that if it sets the flags silence that the output buffer are
+		// clear
 		int32 sampleFrames = data.numSamples;
 		for (int32 i = 0; i < numChannels; i++)
 		{
-			// dont need to be cleared if the buffers are the same (in this case input buffer are already cleared by the host)
+			// do not need to be cleared if the buffers are the same (in this case input buffer are
+			// already cleared by the host)
 			if (in[i] != out[i])
 			{
 				memset (out[i], 0, sampleFrames * sizeof (float));
@@ -316,11 +318,11 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 		int32 sampleFrames = data.numSamples;
 		for (int32 i = 0; i < numChannels; i++)
 		{
-			// dont need to be copied if the buffers are the same
+			// do not need to be copied if the buffers are the same
 			if (in[i] != out[i])
 				memcpy (out[i], in[i], sampleFrames * sizeof (float));
 		}
-		// in this example we dont update the VuMeter in Bypass
+		// in this example we do not update the VuMeter in Bypass
 	}
 	else
 	{
@@ -340,16 +342,18 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 			{
 				memset (out[i], 0, sampleFrames * sizeof (float));
 			}
-			data.outputs[0].silenceFlags = (1 << numChannels) - 1;  // this will set to 1 all channels
+			data.outputs[0].silenceFlags =
+			    (1 << numChannels) - 1; // this will set to 1 all channels
 			fVuPPM = 0.f;
 		}
 		else
 		{
-			// in real Plug-in it would be better to do dezippering to avoid jump (click) in gain value
+			// in real Plug-in it would be better to do dezippering to avoid jump (click) in gain
+			// value
 			for (int32 i = 0; i < numChannels; i++)
 			{
 				int32 sampleFrames = data.numSamples;
-				float* ptrIn  = in[i];
+				float* ptrIn = in[i];
 				float* ptrOut = out[i];
 				float tmp;
 				while (--sampleFrames >= 0)
@@ -358,7 +362,7 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 					tmp = (*ptrIn++) * gain;
 					(*ptrOut++) = tmp;
 
-					// check only positiv values
+					// check only positive values
 					if (tmp > fVuPPM)
 						fVuPPM = tmp;
 				}
@@ -367,7 +371,7 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 
 		//---3) Write outputs parameter changes-----------
 		IParameterChanges* paramChanges = data.outputParameterChanges;
-		// a new value of VuMeter will be send to the host 
+		// a new value of VuMeter will be send to the host
 		// (the host will send it back in sync to our controller for updating our editor)
 		if (paramChanges && fVuPPMOld != fVuPPM)
 		{
@@ -376,7 +380,7 @@ tresult PLUGIN_API AGainSimple::process (ProcessData& data)
 			if (paramQueue)
 			{
 				int32 index2 = 0;
-				paramQueue->addPoint (0, fVuPPM, index2); 
+				paramQueue->addPoint (0, fVuPPM, index2);
 			}
 		}
 		fVuPPMOld = fVuPPM;
@@ -399,10 +403,10 @@ tresult PLUGIN_API AGainSimple::setState (IBStream* state)
 		if (state->read (&savedGainReduction, 4) != kResultOk)
 			return kResultFalse;
 
-		#if BYTEORDER == kBigEndian
-			SWAP_32 (savedGain)
-			SWAP_32 (savedGainReduction)
-		#endif
+#if BYTEORDER == kBigEndian
+		SWAP_32 (savedGain)
+		SWAP_32 (savedGainReduction)
+#endif
 
 		fGain = savedGain;
 		fGainReduction = savedGainReduction;
@@ -412,7 +416,6 @@ tresult PLUGIN_API AGainSimple::setState (IBStream* state)
 
 	return kResultOk;
 }
-
 
 //------------------------------------------------------------------------
 tresult PLUGIN_API AGainSimple::getState (IBStream* state)
@@ -429,17 +432,17 @@ tresult PLUGIN_API AGainSimple::getState (IBStream* state)
 	return state->write (&savedGainReduction, 4);
 }
 
-
 //------------------------------------------------------------------------
 tresult PLUGIN_API AGainSimple::setupProcessing (ProcessSetup& newSetup)
 {
 	currentProcessMode = newSetup.processMode;
-	
+
 	return SingleComponentEffect::setupProcessing (newSetup);
 }
 
 //------------------------------------------------------------------------
-tresult PLUGIN_API AGainSimple::setBusArrangements (SpeakerArrangement* inputs, int32 numIns, SpeakerArrangement* outputs, int32 numOuts)
+tresult PLUGIN_API AGainSimple::setBusArrangements (SpeakerArrangement* inputs, int32 numIns,
+                                                    SpeakerArrangement* outputs, int32 numOuts)
 {
 	if (numIns == 1 && numOuts == 1)
 	{
@@ -451,7 +454,7 @@ tresult PLUGIN_API AGainSimple::setBusArrangements (SpeakerArrangement* inputs, 
 				if (bus->getArrangement () != SpeakerArr::kMono)
 				{
 					removeAudioBusses ();
-					addAudioInput  (USTRING ("Mono In"),  SpeakerArr::kMono);
+					addAudioInput (USTRING ("Mono In"), SpeakerArr::kMono);
 					addAudioOutput (USTRING ("Mono Out"), SpeakerArr::kMono);
 				}
 				return kResultOk;
@@ -465,7 +468,7 @@ tresult PLUGIN_API AGainSimple::setBusArrangements (SpeakerArrangement* inputs, 
 				if (bus->getArrangement () != SpeakerArr::kStereo)
 				{
 					removeAudioBusses ();
-					addAudioInput  (USTRING ("Stereo In"),  SpeakerArr::kStereo);
+					addAudioInput (USTRING ("Stereo In"), SpeakerArr::kStereo);
 					addAudioOutput (USTRING ("Stereo Out"), SpeakerArr::kStereo);
 				}
 				return kResultOk;
@@ -475,19 +478,31 @@ tresult PLUGIN_API AGainSimple::setBusArrangements (SpeakerArrangement* inputs, 
 	return kResultFalse;
 }
 
-
 //------------------------------------------------------------------------
 IPlugView* PLUGIN_API AGainSimple::createView (const char* name)
 {
 	// someone wants my editor
 	if (name && strcmp (name, ViewType::kEditor) == 0)
 	{
-		AGainEditorView* view = new AGainEditorView (this);
+		VST3Editor* view = new VST3Editor (this, "view", "again.uidesc");
 		return view;
 	}
 	return 0;
 }
 
+//------------------------------------------------------------------------
+IController* AGainSimple::createSubController (UTF8StringPtr name,
+                                               const IUIDescription* description,
+                                               VST3Editor* editor)
+{
+	if (UTF8StringView (name) == "MessageController")
+	{
+		UIMessageController* controller = new UIMessageController (this);
+		addUIMessageController (controller);
+		return controller;
+	}
+	return 0;
+}
 
 //------------------------------------------------------------------------
 tresult PLUGIN_API AGainSimple::setEditorState (IBStream* state)
@@ -507,15 +522,11 @@ tresult PLUGIN_API AGainSimple::setEditorState (IBStream* state)
 			SWAP_16 (defaultMessageText[i])
 	}
 
-	// update our editors
-	for (int32 i = 0; i < viewsArray.total (); i++)
-	{
-		if (viewsArray.at (i))
-		{
-			viewsArray.at (i)->messageTextChanged ();
-		}
-	}
-	
+	for (UIMessageControllerList::iterator it = uiMessageControllers.begin (),
+	                                       end = uiMessageControllers.end ();
+	     it != end; ++it)
+		(*it)->setMessageText (defaultMessageText);
+
 	return result;
 }
 
@@ -528,7 +539,7 @@ tresult PLUGIN_API AGainSimple::getEditorState (IBStream* state)
 	int8 byteOrder = BYTEORDER;
 	if (state->write (&byteOrder, sizeof (int8)) == kResultTrue)
 		return state->write (defaultMessageText, 128 * sizeof (TChar));
-	
+
 	return kResultFalse;
 }
 
@@ -537,69 +548,37 @@ tresult PLUGIN_API AGainSimple::setParamNormalized (ParamID tag, ParamValue valu
 {
 	// called from host to update our parameters state
 	tresult result = SingleComponentEffect::setParamNormalized (tag, value);
-	
-	for (int32 i = 0; i < viewsArray.total (); i++)
-	{
-		if (viewsArray.at (i))
-		{
-			viewsArray.at (i)->update (tag, value);
-		}
-	}
-
 	return result;
 }
 
 //------------------------------------------------------------------------
-tresult PLUGIN_API AGainSimple::getParamStringByValue (ParamID tag, ParamValue valueNormalized, String128 string)
+tresult PLUGIN_API AGainSimple::getParamStringByValue (ParamID tag, ParamValue valueNormalized,
+                                                       String128 string)
 {
 	return SingleComponentEffect::getParamStringByValue (tag, valueNormalized, string);
 }
 
 //------------------------------------------------------------------------
-tresult PLUGIN_API AGainSimple::getParamValueByString (ParamID tag, TChar* string, ParamValue& valueNormalized)
+tresult PLUGIN_API AGainSimple::getParamValueByString (ParamID tag, TChar* string,
+                                                       ParamValue& valueNormalized)
 {
 	return SingleComponentEffect::getParamValueByString (tag, string, valueNormalized);
 }
 
 //------------------------------------------------------------------------
-void AGainSimple::addDependentView (AGainEditorView* view)
+void AGainSimple::addUIMessageController (UIMessageController* controller)
 {
-	viewsArray.add (view);
+	uiMessageControllers.push_back (controller);
 }
 
 //------------------------------------------------------------------------
-void AGainSimple::removeDependentView (AGainEditorView* view)
+void AGainSimple::removeUIMessageController (UIMessageController* controller)
 {
-	for (int32 i = 0; i < viewsArray.total (); i++)
-	{
-		if (viewsArray.at (i) == view)
-		{
-			viewsArray.removeAt (i);
-			break;
-		}
-	}
+	UIMessageControllerList::const_iterator it =
+	    std::find (uiMessageControllers.begin (), uiMessageControllers.end (), controller);
+	if (it != uiMessageControllers.end ())
+		uiMessageControllers.erase (it);
 }
-
-//------------------------------------------------------------------------
-void AGainSimple::editorAttached (EditorView* editor)
-{
-	AGainEditorView* view = dynamic_cast<AGainEditorView*> (editor);
-	if (view)
-	{
-		addDependentView (view);
-	}
-}
-
-//------------------------------------------------------------------------
-void AGainSimple::editorRemoved (EditorView* editor)
-{
-	AGainEditorView* view = dynamic_cast<AGainEditorView*> (editor);
-	if (view)
-	{
-		removeDependentView (view);
-	}
-}
-
 
 //------------------------------------------------------------------------
 void AGainSimple::setDefaultMessageText (String128 text)
@@ -618,500 +597,9 @@ TChar* AGainSimple::getDefaultMessageText ()
 enum
 {
 	// UI size
-	kEditorWidth  = 350,
+	kEditorWidth = 350,
 	kEditorHeight = 120
 };
-
-/// \cond ignore
-//------------------------------------------------------------------------
-// CTextButton - define a simple text button
-//------------------------------------------------------------------------
-class CTextButton: public VSTGUI::CTextLabel
-{
-public:
-//------------------------------------------------------------------------
-	CTextButton (const CRect& size, CControlListener* listener = 0, long tag = 0, const char* _title = 0)
-	: CTextLabel (size)
-	{
-		setListener (listener);
-		setTag (tag);
-		setText (_title);
-	}
-
-	///---from CTextLabel--------------
-	virtual	void draw (CDrawContext* pContext)
-	{
-		pContext->setFillColor (kGreyCColor);
-		pContext->setFrameColor (kBlackCColor);
-		pContext->drawRect (size, kDrawFilledAndStroked);
-		CTextLabel::draw (pContext);
-	}
-
-	virtual CMouseEventResult onMouseDown (CPoint& where, const long& buttons)
-	{
-		if (listener)
-			listener->valueChanged (this);
-		return kMouseEventHandled;
-	}
-
-	CLASS_METHODS (CTextButton, CControl)
-//------------------------------------------------------------------------
-};
-/// \endcond
-
-
-//------------------------------------------------------------------------
-// AGainEditorView Implementation
-//------------------------------------------------------------------------
-AGainEditorView::AGainEditorView (void* controller)
-: VSTGUIEditor (controller)
-, textEdit (0)
-, gainSlider (0)
-, gainTextEdit (0)
-, vuMeter (0)
-, background (0)
-, lastVuMeterValue (0.f)
-{
-	setIdleRate (50); // 1000ms/50ms = 20Hz
-
-	// set the default View size
-	ViewRect viewRect (0, 0, kEditorWidth, kEditorHeight);
-	setRect (viewRect);
-}
-
-//------------------------------------------------------------------------
-tresult PLUGIN_API AGainEditorView::onSize (ViewRect* newSize)
-{
-	tresult res = VSTGUIEditor::onSize (newSize);
-	return res;
-}
-
-//------------------------------------------------------------------------
-tresult PLUGIN_API AGainEditorView::checkSizeConstraint (ViewRect* rect)
-{
-	if (rect->right - rect->left < kEditorWidth)
-	{
-		rect->right = rect->left + kEditorWidth;
-	}
-	else if (rect->right - rect->left > kEditorWidth+50)
-	{
-		rect->right = rect->left + kEditorWidth+50;
-	}
-	if (rect->bottom - rect->top < kEditorHeight)
-	{
-		rect->bottom = rect->top + kEditorHeight;
-	}
-	else if (rect->bottom - rect->top > kEditorHeight+50)
-	{
-		rect->bottom = rect->top + kEditorHeight+50;
-	}
-	return kResultTrue;
-}
-
-//------------------------------------------------------------------------
-tresult PLUGIN_API AGainEditorView::findParameter (int32 xPos, int32 yPos, ParamID& resultTag)
-{
-	// look up the parameter (view) which is located at xPos/yPos.
-
-	CPoint where (xPos, yPos);
-
-	// Implementation 1:
-	// The parameter xPos/yPos are relative coordinates to the AGainEditorView coordinates.
-	// If the window of the VST 3 plugin is moved, xPos is always >= 0 and <= AGainEditorView width.
-	// yPos is always >= 0 and <= AGainEditorView height.
-	// 
-	// gainSlider->hitTest() is a short cut for:
-	// CRect sliderRect = gainSlider->getMouseableArea ();
-	// if (where.isInside (sliderRect))
-	// {
-	//      resultTag = kGainId;
-	//      return kResultOk;
-	// }
-
-	// test wether xPos/yPos is inside the gainSlider.
-	if (gainSlider->hitTest (where, 0))
-	{
-		// return the VST 3 parameter ID, which is also used for IParamValueQueue::getParameterId(),
-		// IComponentHandler::performEdit() or IEditController::getParamStringByValue() etc.
-		resultTag = kGainId;
-		return kResultOk;
-	}
-
-	// test wether xPos/yPos is inside the gain text view.
-	if (gainTextEdit->hitTest (where, 0))
-	{
-		resultTag = kGainId;
-		return kResultOk;
-	}
-
-	// Implementation 2:
-	// An alternative solution with VSTGui can look like this. (This requires C++ RTTI)
-	// 
-	// if (frame)
-	// {
-	//  CControl* controlAtPos = dynamic_cast<CControl*>(frame->getViewAt (where, true);
-	//  if (controlAtPos)
-	//  {
-	//      switch (controlAtPos->getTag ())
-	//      {
-	//          case 'Gain':
-	//          case 'GaiT':
-	//              resultTag = resultTag;
-	//              return kResultOk;
-	//      }
-	//  }
-	// 
-
-	// Implementation 3:
-	// The another "dirty" way is to hard code the coordinates for the views (see also AGainEditorView::open):
-	// CRect gainSliderSize (0, 0, 130, 18);
-	// gainSliderSize.offset (45, 40);
-	// if (where.isInside (gainSliderSize))
-	//  {
-	//      resultTag = kGainId;
-	//      return kResultOk;
-	//  }
-	// CRect gainTextSize (0, 0, 40, 18);
-	// gainTextSize.offset (50 + gainSliderSize.getWidth (), 40);
-	// if (where.isInside (gainTextSize))
-	//  {
-	//      resultTag = kGainId;
-	//      return kResultOk;
-	//  }
-	return kResultFalse;
-}
-
-//------------------------------------------------------------------------
-tresult PLUGIN_API AGainEditorView::queryInterface (const char* iid, void** obj)
-{
-	QUERY_INTERFACE (iid, obj, IParameterFinder::iid, IParameterFinder)
-	QUERY_INTERFACE (iid, obj, IContextMenuTarget::iid, IContextMenuTarget)
-	return VSTGUIEditor::queryInterface (iid, obj);
-}
-
-//------------------------------------------------------------------------
-bool AGainEditorView::open (void* parent)
-{
-	if (frame) // already attached!
-	{
-		return false;
-	}
-
-	CRect editorSize (0, 0, kEditorWidth, kEditorHeight);
-
-	frame = new CFrame (editorSize, parent, this);
-	frame->setBackgroundColor (kGreyCColor);
-
-	background = new CBitmap ("background.png");
-	frame->setBackground (background);
-
-	//---Test communication between Component and Controller------
-	CRect size (0, 0, 200, 20);
-	size.offset (10, 10);
-	textEdit = new CTextEdit (size, this, 'Text', "Hello World!", 0, k3DOut);
-	frame->addView (textEdit);
-
-	size (0, 0, 50, 20);
-	size.offset (220, 10);
-	CTextButton* textButton = new CTextButton (size, this, 'Send', "Send!");
-	frame->addView (textButton);
-	//-----------------------------------------------------------
-
-	//---Gain--------------------
-
-	//---Gain Label--------
-	size (0, 0, 30, 18);
-	size.offset (10, 40);
-	CTextLabel* label = new CTextLabel (size, "Gain", 0, kShadowText);
-	frame->addView (label);
-
-	//---Gain slider-------
-	CBitmap* handle = new CBitmap ("slider_handle.png");
-	CBitmap* backgroundSlider = new CBitmap ("slider_background.bmp");
-
-	size (0, 0, 130, 18);
-	size.offset (45, 40);
-	CPoint offset;
-	CPoint offsetHandle (0, 2);
-	gainSlider = new CHorizontalSlider (size, this, 'Gain', offsetHandle, size.getWidth (), handle, backgroundSlider, offset, kLeft); 
-	frame->addView (gainSlider);
-	handle->forget ();
-	backgroundSlider->forget ();
-
-	//---Gain Textedit--------
-	size (0, 0, 40, 18);
-	size.offset (50 + gainSlider->getWidth (), 40);
-	gainTextEdit = new CTextEdit (size, this, 'GaiT', "", 0, k3DIn);
-	gainTextEdit->setFont (kNormalFontSmall);
-	frame->addView (gainTextEdit);
-
-
-	//---VuMeter--------------------
-	CBitmap* onBitmap = new CBitmap ("vu_on.bmp");
-	CBitmap* offBitmap = new CBitmap ("vu_off.bmp");
-		 
-	size (0, 0, 12, 105);
-	size.offset (290, 10);
-	vuMeter = new CVuMeter (size, onBitmap, offBitmap, 26, kVertical);
-	frame->addView (vuMeter);
-	onBitmap->forget ();
-	offBitmap->forget ();
-
-	// sync UI controls with controller parameter values
-	ParamValue value = getController ()->getParamNormalized (kGainId);
-	update (kGainId, value);
-
-	messageTextChanged ();
-
-	return true;
-}
-
-//------------------------------------------------------------------------
-void AGainEditorView::messageTextChanged ()
-{
-	AGainSimple* controller = dynamic_cast<AGainSimple*> (getController ());
-	if (controller)
-	{
-		String text (controller->getDefaultMessageText ());
-		char8 asciiText[128];
-		text.copyTo8 (asciiText, 0, 127);
-		textEdit->setText (asciiText);
-	}
-}
-
-//------------------------------------------------------------------------
-void PLUGIN_API AGainEditorView::close ()
-{
-	if (frame)
-	{
-		delete frame;
-		frame = 0;
-	}
-	
-	if (background)
-	{
-		background->forget ();
-		background = 0;
-	}
-	
-	textEdit = 0;
-	gainSlider = 0;
-	gainTextEdit = 0;
-	vuMeter = 0;
-}
-
-//------------------------------------------------------------------------
-void AGainEditorView::valueChanged (CControl* pControl)
-{
-	switch (pControl->getTag ())
-	{
-		//------------------
-		case 'Send':
-		{
-			//---send a text message
-			char text[256] = {0};
-			textEdit->getText (text);
-			controller->sendTextMessage (text);
-
-			//---send a binary message
-			IMessage* message = controller->allocateMessage ();
-			if (message)
-			{
-				FReleaser msgReleaser (message);
-				message->setMessageID ("BinaryMessage");
-				
-				uint32 size = 100;
-				char8 data[100];
-				memset (data, 0, size * sizeof (char));
-				// fill my data with dummy stuff
-				for (uint32 i = 0; i < size; i++)
-					data[i] = i;
-				message->getAttributes ()->setBinary ("MyData", data, size);
-				controller->sendMessage (message);
-			}
-
-			static bool bgToggle = false;
-			if (bgToggle)
-				frame->setBackground (background);
-			else
-				frame->setBackground (0);
-			
-			frame->invalid ();
-			bgToggle = !bgToggle;
-		}	break;
-
-		//------------------
-		case 'Gain':
-		{
-			controller->setParamNormalized (kGainId, pControl->getValue ());
-			controller->performEdit (kGainId, pControl->getValue ());
-		}	break;
-
-		//------------------
-		case 'GaiT':
-		{
-			char text[128];
-			gainTextEdit->getText (text);
-			
-			String128 string;
-			String tmp (text);
-			tmp.copyTo (string, 0, 127);
-
-			ParamValue valueNormalized;
-			controller->getParamValueByString (kGainId, string, valueNormalized);
-			
-			gainSlider->setValue ((float)valueNormalized);
-			valueChanged (gainSlider);
-			gainSlider->invalid ();
-		}	break;
-
-		//------------------
-		case 'Text':
-		{
-			AGainSimple* controller = dynamic_cast<AGainSimple*> (getController ());
-			if (controller)
-			{
-				char text[128];
-				textEdit->getText (text);
-				String tmp (text);
-				String128 string;
-				tmp.copyTo (string, 0, 127);
-
-				controller->setDefaultMessageText (string);
-			}
-		}	break;
-	}		
-}
-
-//------------------------------------------------------------------------
-tresult PLUGIN_API AGainEditorView::executeMenuItem (int32 tag)
-{
-	// our menu item was choosen by the user
-	if (tag == 1234)
-	{
-		ParameterInfo paramInfo;
-		controller->getParameterInfo (kGainId, paramInfo);
-		
-		controller->beginEdit (kGainId);
-		controller->setParamNormalized (kGainId, paramInfo.defaultNormalizedValue);
-		controller->performEdit (kGainId, paramInfo.defaultNormalizedValue);
-		controller->endEdit (kGainId);
-
-		return kResultTrue;
-	}
-	return kResultFalse;
-}
-
-//------------------------------------------------------------------------
-long AGainEditorView::controlModifierClicked (CControl* pControl, long button)
-{
-	switch (pControl->getTag ())
-	{
-		//------------------
-		case 'GaiT':
-		case 'Gain':
-		{
-			if (button & kRButton)
-			{
-				FUnknownPtr<IComponentHandler3> ch3 (controller->getComponentHandler ());
-				if (ch3)
-				{
-					ParamID pid = kGainId;
-					IContextMenu* menu = ch3->createContextMenu (this, &pid);
-					if (menu)
-					{
-						// here we add our item (optional)
-						IContextMenu::Item item = {0};
-						ConstString ("Set Gain to Default").copyTo (item.name, 0, 127);
-						item.tag = 1234;
-						menu->addItem (item, this);
-
-						// now we could pop-up the menu
-						CPoint pos;
-						frame->getCurrentMouseLocation (pos);
-						menu->popup (pos.x, pos.y);
-						menu->release ();
-
-						return 1;
-					}
-				}
-			}
-		}	break;
-	}
-	return 0;
-}
-
-//------------------------------------------------------------------------
-void AGainEditorView::controlBeginEdit (CControl* pControl)
-{
-	switch (pControl->getTag ())
-	{
-		//------------------
-		case 'Gain':
-		{
-			controller->beginEdit (kGainId);
-		}	break;
-	}
-}
-
-//------------------------------------------------------------------------
-void AGainEditorView::controlEndEdit (CControl* pControl)
-{
-	switch (pControl->getTag ())
-	{
-		//------------------
-		case 'Gain':
-		{
-			controller->endEdit (kGainId);
-		}	break;
-	}
-}
-
-//------------------------------------------------------------------------
-void AGainEditorView::update (ParamID tag, ParamValue value)
-{
-	switch (tag)
-	{
-		//------------------
-		case kGainId:
-			if (gainSlider)
-			{
-				gainSlider->setValue ((float)value);
-								
-				if (gainTextEdit)
-				{
-					String128 string;
-					controller->getParamStringByValue (kGainId, value, string);
-					
-					String tmp (string);
-					char text[128];
-					tmp.copyTo8 (text, 0, 127);
-				
-					gainTextEdit->setText (text);
-				}
-			}
-			break;
-
-		//------------------
-		case kVuPPMId:
-			lastVuMeterValue = (float)value;
-			break;
-	}
-}
-
-//------------------------------------------------------------------------
-CMessageResult AGainEditorView::notify (CBaseObject* sender, const char* message)
-{
-	if (message == CVSTGUITimer::kMsgTimer)
-	{
-		if (vuMeter)
-		{
-			vuMeter->setValue (1.f - ((lastVuMeterValue - 1.f) * (lastVuMeterValue - 1.f)));
-			lastVuMeterValue = 0.f;
-		}
-	}
-	return VSTGUIEditor::notify (sender, message);
-}
 
 //------------------------------------------------------------------------
 } // namespace Vst
@@ -1123,18 +611,17 @@ CMessageResult AGainEditorView::notify (CBaseObject* sender, const char* message
 
 //------------------------------------------------------------------------
 // called when library is loaded
-bool InitModule ()   
+bool InitModule ()
 {
-	return true; 
+	return true;
 }
 
 //------------------------------------------------------------------------
 // called when library is unloaded
 bool DeinitModule ()
 {
-	return true; 
+	return true;
 }
-
 
 //------------------------------------------------------------------------
 BEGIN_FACTORY_DEF ("Steinberg Media Technologies", 
@@ -1151,6 +638,6 @@ BEGIN_FACTORY_DEF ("Steinberg Media Technologies",
 				"Fx",										// Subcategory for this Plug-in (to be changed)
 				FULL_VERSION_STR,							// Plug-in version (to be changed)
 				kVstVersionString,							// the VST 3 SDK version (dont changed this, use always this define)
-				Steinberg::Vst::AGainSimple::createInstance)// function pointer called when this component should be instanciated
+				Steinberg::Vst::AGainSimple::createInstance)// function pointer called when this component should be instantiated
 
 END_FACTORY

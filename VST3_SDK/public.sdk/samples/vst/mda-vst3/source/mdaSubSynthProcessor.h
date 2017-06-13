@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaSubSynthProcessor__
-#define __mdaSubSynthProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,18 +29,18 @@ public:
 	SubSynthProcessor ();
 	~SubSynthProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new SubSynthProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float filt1, filt2, filt3, filt4, filti, filto;
 	float thr, rls, dry, wet, dvd, phs, osc, env, phi, dphi;
@@ -49,5 +48,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

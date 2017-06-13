@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 SDK
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -136,7 +136,7 @@ Code changes:</h1>
 <h1><a class="anchor" id="iaa_editor"></a>
 Creating a different UI when running on iOS</h1>
 <p>To create a different view for iOS, you can check the host context for the IInterAppAudioWrapper interface: </p><div class="fragment"><div class="line"><span class="comment">//-----------------------------------------------------------------------------</span></div>
-<div class="line">IPlugView* PLUGIN_API MyEditController::createView (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#ad4c02134d1ee42389f3d94717935a1d5">FIDString</a> _name)</div>
+<div class="line">IPlugView* PLUGIN_API MyEditController::createView (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#ad4c02134d1ee42389f3d94717935a1d5">FIDString</a> _name)</div>
 <div class="line">{</div>
 <div class="line">  ConstString name (_name);</div>
 <div class="line">  <span class="keywordflow">if</span> (name == ViewType::kEditor)</div>
@@ -165,17 +165,17 @@ Host UI Integration</h1>
 <p>But you can also implement the host UI integration into your plug-in view. Your edit controller will get an interface to IInterAppAudioHost via its initialize method which you can use to get the host icon and send commands or switch to the host. If you use this method to show the host controls you should implement the IInterAppAudioConnectionNotification interface in your edit controller to conditionally show or hide the controls depending on the connection state. </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

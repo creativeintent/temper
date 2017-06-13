@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/again/source/againcontroller.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -37,13 +36,15 @@
 
 #include "againcontroller.h"
 #include "againparamids.h"
-#include "againeditor.h"
+#include "againuimessagecontroller.h"
 
 #include "pluginterfaces/base/ibstream.h"
 #include "pluginterfaces/base/ustring.h"
 #include "pluginterfaces/vst/ivstmidicontrollers.h"
 
 #include "base/source/fstring.h"
+
+#include "vstgui/uidescription/delegationcontroller.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -116,7 +117,6 @@ bool GainParameter::fromString (const TChar* string, ParamValue& normValue) cons
 	return false;
 }
 
-
 //------------------------------------------------------------------------
 // AGainController Implementation
 //------------------------------------------------------------------------
@@ -185,8 +185,6 @@ tresult PLUGIN_API AGainController::initialize (FUnknown* context)
 //------------------------------------------------------------------------
 tresult PLUGIN_API AGainController::terminate  ()
 {
-	viewsArray.removeAll ();
-	
 	return EditControllerEx1::terminate ();
 }
 
@@ -231,10 +229,24 @@ IPlugView* PLUGIN_API AGainController::createView (const char* name)
 	// someone wants my editor
 	if (name && strcmp (name, "editor") == 0)
 	{
-		AGainEditorView* view = new AGainEditorView (this);
+		VST3Editor* view = new VST3Editor (this, "view", "again.uidesc");
 		return view;
 	}
 	return 0;
+}
+
+//------------------------------------------------------------------------
+IController* AGainController::createSubController (UTF8StringPtr name,
+                                                   const IUIDescription* /*description*/,
+                                                   VST3Editor* /*editor*/)
+{
+	if (UTF8StringView (name) == "MessageController")
+	{
+		UIMessageController* controller = new UIMessageController (this);
+		addUIMessageController (controller);
+		return controller;
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------
@@ -262,13 +274,8 @@ tresult PLUGIN_API AGainController::setState (IBStream* state)
 	}
 
 	// update our editors
-	for (int32 i = 0; i < viewsArray.total (); i++)
-	{
-		if (viewsArray.at (i))
-		{
-			viewsArray.at (i)->messageTextChanged ();
-		}
-	}
+	for (UIMessageControllerList::iterator it = uiMessageControllers.begin (), end = uiMessageControllers.end (); it != end; ++it)
+		(*it)->setMessageText (defaultMessageText);
 	
 	return result;
 }
@@ -305,15 +312,6 @@ tresult PLUGIN_API AGainController::setParamNormalized (ParamID tag, ParamValue 
 {
 	// called from host to update our parameters state
 	tresult result = EditControllerEx1::setParamNormalized (tag, value);
-	
-	for (int32 i = 0; i < viewsArray.total (); i++)
-	{
-		if (viewsArray.at (i))
-		{
-			viewsArray.at (i)->update (tag, value);
-		}
-	}
-
 	return result;
 }
 
@@ -363,42 +361,17 @@ tresult PLUGIN_API AGainController::getParamValueByString (ParamID tag, TChar* s
 }
 
 //------------------------------------------------------------------------
-void AGainController::addDependentView (AGainEditorView* view)
+void AGainController::addUIMessageController (UIMessageController* controller)
 {
-	viewsArray.add (view);
+	uiMessageControllers.push_back (controller);
 }
 
 //------------------------------------------------------------------------
-void AGainController::removeDependentView (AGainEditorView* view)
+void AGainController::removeUIMessageController (UIMessageController* controller)
 {
-	for (int32 i = 0; i < viewsArray.total (); i++)
-	{
-		if (viewsArray.at (i) == view)
-		{
-			viewsArray.removeAt (i);
-			break;
-		}
-	}
-}
-
-//------------------------------------------------------------------------
-void AGainController::editorAttached (EditorView* editor)
-{
-	AGainEditorView* view = dynamic_cast<AGainEditorView*> (editor);
-	if (view)
-	{
-		addDependentView (view);
-	}
-}
-
-//------------------------------------------------------------------------
-void AGainController::editorRemoved (EditorView* editor)
-{
-	AGainEditorView* view = dynamic_cast<AGainEditorView*> (editor);
-	if (view)
-	{
-		removeDependentView (view);
-	}
+	UIMessageControllerList::const_iterator it = std::find (uiMessageControllers.begin (), uiMessageControllers.end (), controller);
+	if (it != uiMessageControllers.end ())
+		uiMessageControllers.erase (it);
 }
 
 //------------------------------------------------------------------------

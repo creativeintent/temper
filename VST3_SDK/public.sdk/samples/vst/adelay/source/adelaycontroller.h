@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/adelay/source/adelaycontroller.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -57,13 +56,13 @@ public:
 	static FUnknown* createInstance (void*) { return (IEditController*)new ADelayController (); }
 
 	//---from IPluginBase--------
-	tresult PLUGIN_API initialize (FUnknown* context);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
 	
 	//---from EditController-----
 #if TARGET_OS_IPHONE
-	IPlugView* PLUGIN_API createView (FIDString name) override;
+	IPlugView* PLUGIN_API createView (FIDString name) SMTG_OVERRIDE;
 #endif
-	tresult PLUGIN_API setComponentState (IBStream* state);
+	tresult PLUGIN_API setComponentState (IBStream* state) SMTG_OVERRIDE;
 };
 
 //------------------------------------------------------------------------

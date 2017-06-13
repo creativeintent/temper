@@ -2,6 +2,7 @@ var searchData=
 [
   ['chord',['Chord',['../../vstinterfaces/structSteinberg_1_1Vst_1_1Chord.html',1,'Steinberg::Vst']]],
   ['chordevent',['ChordEvent',['../../vstinterfaces/structSteinberg_1_1Vst_1_1ChordEvent.html',1,'Steinberg::Vst']]],
+  ['classinfo',['ClassInfo',['../../vstsdk/classVST3_1_1Hosting_1_1ClassInfo.html',1,'VST3::Hosting']]],
   ['combocontroller',['ComboController',['../classSteinberg_1_1Vst_1_1mda_1_1ComboController.html',1,'Steinberg::Vst::mda']]],
   ['comboprocessor',['ComboProcessor',['../classSteinberg_1_1Vst_1_1mda_1_1ComboProcessor.html',1,'Steinberg::Vst::mda']]],
   ['component',['Component',['../../vstsdk/classSteinberg_1_1Vst_1_1Component.html',1,'Steinberg::Vst']]],

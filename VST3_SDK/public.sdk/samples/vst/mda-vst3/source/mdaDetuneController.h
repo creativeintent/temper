@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaDetuneController__
-#define __mdaDetuneController__
+#pragma once
 
 #include "mdaBaseController.h"
 #include "mdaDetuneProcessor.h"
@@ -31,11 +30,11 @@ public:
 	DetuneController ();
 	~DetuneController ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
 
-	tresult PLUGIN_API getParamStringByValue (ParamID tag, ParamValue valueNormalized, String128 string);
-	tresult PLUGIN_API getParamValueByString (ParamID tag, TChar* string, ParamValue& valueNormalized);
+	tresult PLUGIN_API getParamStringByValue (ParamID tag, ParamValue valueNormalized, String128 string) SMTG_OVERRIDE;
+	tresult PLUGIN_API getParamValueByString (ParamID tag, TChar* string, ParamValue& valueNormalized) SMTG_OVERRIDE;
 
 	//-----------------------------------------------------------------------------
 	enum ParameterIDs {
@@ -52,5 +51,3 @@ public:
 };
 
 }}} // namespaces
-
-#endif

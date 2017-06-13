@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Interfaces
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -107,7 +107,7 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a8cecee2171d29eb98141c9364baa346e"><td class="memItemLeft" align="right" valign="top">NoteExpressionTypeID&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1Vst_1_1NoteExpressionValueEvent.html#a8cecee2171d29eb98141c9364baa346e">typeId</a></td></tr>
 <tr class="memdesc:a8cecee2171d29eb98141c9364baa346e"><td class="mdescLeft">&#160;</td><td class="mdescRight">see NoteExpressionTypeID  <a href="#a8cecee2171d29eb98141c9364baa346e">More...</a><br /></td></tr>
 <tr class="separator:a8cecee2171d29eb98141c9364baa346e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10cb194b5adb5b7bd968688cdd58de53"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1Vst_1_1NoteExpressionValueEvent.html#a10cb194b5adb5b7bd968688cdd58de53">noteId</a></td></tr>
+<tr class="memitem:a10cb194b5adb5b7bd968688cdd58de53"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1Vst_1_1NoteExpressionValueEvent.html#a10cb194b5adb5b7bd968688cdd58de53">noteId</a></td></tr>
 <tr class="memdesc:a10cb194b5adb5b7bd968688cdd58de53"><td class="mdescLeft">&#160;</td><td class="mdescRight">associated note identifier to apply the change  <a href="#a10cb194b5adb5b7bd968688cdd58de53">More...</a><br /></td></tr>
 <tr class="separator:a10cb194b5adb5b7bd968688cdd58de53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af14764c28881d46fddcda927a2c107ce"><td class="memItemLeft" align="right" valign="top">NoteExpressionValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1Vst_1_1NoteExpressionValueEvent.html#af14764c28881d46fddcda927a2c107ce">value</a></td></tr>
@@ -116,7 +116,7 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Note Expression Value event. </p>
-<p>Used in <a class="el" href="structSteinberg_1_1Vst_1_1Event.html">Event</a> (union) A note expression event affects one single playing note (referring its noteId). This kind of event is send from host to the Plug-in like other events (<a class="el" href="structSteinberg_1_1Vst_1_1NoteOnEvent.html" title="Note-on event specific data. ">NoteOnEvent</a>, <a class="el" href="structSteinberg_1_1Vst_1_1NoteOffEvent.html" title="Note-off event specific data. ">NoteOffEvent</a>,...) in <a class="el" href="structSteinberg_1_1Vst_1_1ProcessData.html">ProcessData</a> during the process call. Note expression events for a specific noteId can only occur after a <a class="el" href="structSteinberg_1_1Vst_1_1NoteOnEvent.html" title="Note-on event specific data. ">NoteOnEvent</a>. The host must take care that the event list (<a class="el" href="classSteinberg_1_1Vst_1_1IEventList.html">IEventList</a>) is properly sorted. Expression events are always absolute normalized values [0.0, 1.0]. The predefined types have a predefined mapping of the normalized values (see NoteExpressionTypeIDs) </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html" title="Extended IEditController interface for note expression event support. ">INoteExpressionController</a> </dd></dl>
+<p>Used in <a class="el" href="structSteinberg_1_1Vst_1_1Event.html">Event</a> (union) A note expression event affects one single playing note (referring its noteId). This kind of event is send from host to the Plug-in like other events (<a class="el" href="structSteinberg_1_1Vst_1_1NoteOnEvent.html" title="Note-on event specific data. ">NoteOnEvent</a>, <a class="el" href="structSteinberg_1_1Vst_1_1NoteOffEvent.html" title="Note-off event specific data. ">NoteOffEvent</a>,...) in <a class="el" href="structSteinberg_1_1Vst_1_1ProcessData.html">ProcessData</a> during the process call. Note expression events for a specific noteId can only occur after a <a class="el" href="structSteinberg_1_1Vst_1_1NoteOnEvent.html" title="Note-on event specific data. ">NoteOnEvent</a>. The host must take care that the event list (<a class="el" href="classSteinberg_1_1Vst_1_1IEventList.html">IEventList</a>) is properly sorted. Expression events are always absolute normalized values [0.0, 1.0]. The predefined types have a predefined mapping of the normalized values (see NoteExpressionTypeIDs) </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html" title="Extended Plug-in interface IEditController for note expression event support. ">INoteExpressionController</a> </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a8cecee2171d29eb98141c9364baa346e"></a>
 <div class="memitem">
@@ -137,7 +137,7 @@ Data Fields</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> noteId</td>
+          <td class="memname"><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> noteId</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -162,17 +162,17 @@ Data Fields</h2></td></tr>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

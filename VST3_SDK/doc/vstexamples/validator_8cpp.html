@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Examples
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -83,37 +83,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_07b4b1a524c28e476697c206dee7f848.html">public.sdk</a></li><li class="navelem"><a class="el" href="dir_774f893916bb8f90170e393505cba6f7.html">samples</a></li><li class="navelem"><a class="el" href="dir_52772df2a4656d8bb319b4dec76cc958.html">vst</a></li><li class="navelem"><a class="el" href="dir_83065335814c2fbdb417105d865dd96d.html">validator</a></li><li class="navelem"><a class="el" href="dir_39812d36c888669c0c2cc66bf5dbee1e.html">source</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_06b2911d428eab5a2cf7ddc3164ebf47.html">public.sdk</a></li><li class="navelem"><a class="el" href="dir_14ae8cef5b4cd5ebc5413814d7bbe8ce.html">samples</a></li><li class="navelem"><a class="el" href="dir_5898a34b900eeb5b54fd3cf30212c70a.html">vst</a></li><li class="navelem"><a class="el" href="dir_504f3f6582c88869dcb0e7c0fcff5bdc.html">validator</a></li><li class="navelem"><a class="el" href="dir_eb2e981a61e9630c0aca99d05100f0ec.html">source</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">validator.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="validator_8h.html">validator.h</a>&quot;</code><br />
-<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivstcomponent_8h.html">pluginterfaces/vst/ivstcomponent.h</a>&quot;</code><br />
-<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivstaudioprocessor_8h.html">pluginterfaces/vst/ivstaudioprocessor.h</a>&quot;</code><br />
-<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivsthostapplication_8h.html">pluginterfaces/vst/ivsthostapplication.h</a>&quot;</code><br />
-<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivsteditcontroller_8h.html">pluginterfaces/vst/ivsteditcontroller.h</a>&quot;</code><br />
-<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivstunits_8h.html">pluginterfaces/vst/ivstunits.h</a>&quot;</code><br />
-<code>#include &quot;base/source/fstring.h&quot;</code><br />
-<code>#include &quot;base/source/fcontainer.h&quot;</code><br />
-<code>#include &quot;base/source/tarray.h&quot;</code><br />
-<code>#include &quot;base/source/tdictionary.h&quot;</code><br />
+<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstsdk/vstsdk.tag:../vstsdk/" href="../vstsdk/plugprovider_8h.html">public.sdk/source/vst/hosting/plugprovider.h</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstsdk/vstsdk.tag:../vstsdk/" href="../vstsdk/stringconvert_8h.html">public.sdk/source/vst/hosting/stringconvert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivstcomponent_8h.html">pluginterfaces/vst/ivstcomponent.h</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivstaudioprocessor_8h.html">pluginterfaces/vst/ivstaudioprocessor.h</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivsthostapplication_8h.html">pluginterfaces/vst/ivsthostapplication.h</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivsteditcontroller_8h.html">pluginterfaces/vst/ivsteditcontroller.h</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/ivstunits_8h.html">pluginterfaces/vst/ivstunits.h</a>&quot;</code><br />
 <code>#include &quot;base/source/fcommandline.h&quot;</code><br />
 <code>#include &lt;cstdio&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespaceSteinberg"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html">Steinberg</a></td></tr>
+<tr class="memitem:namespaceSteinberg"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html">Steinberg</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespaceSteinberg_1_1Vst"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/namespaceSteinberg_1_1Vst.html">Steinberg::Vst</a></td></tr>
+<tr class="memitem:namespaceSteinberg_1_1Vst"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/namespaceSteinberg_1_1Vst.html">Steinberg::Vst</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -130,10 +129,17 @@ Macros</h2></td></tr>
 <tr class="separator:a1cea1f2f66a395a6e91f0df45833d15a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad10ee17c8ff5dae8cf4ec3aaa071c033"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="validator_8cpp.html#ad10ee17c8ff5dae8cf4ec3aaa071c033">kTestComponentPath</a>&#160;&#160;&#160;&quot;test-component&quot;</td></tr>
 <tr class="separator:ad10ee17c8ff5dae8cf4ec3aaa071c033"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f8529ab0bdb3534e701e2575022c151"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="validator_8cpp.html#a7f8529ab0bdb3534e701e2575022c151">kLookupInstalledPlugIns</a>&#160;&#160;&#160;&quot;list&quot;</td></tr>
+<tr class="separator:a7f8529ab0bdb3534e701e2575022c151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:afa68f5ed80bcc519b74d081502e142d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><b>printAllInstalledPlugins</b> ()</td></tr>
+<tr class="separator:afa68f5ed80bcc519b74d081502e142d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ae321ca2b045da80954622c101138b2b7"><td class="memItemLeft" align="right" valign="top">FUnknown *&#160;</td><td class="memItemRight" valign="bottom"><b>gStandardPluginContext</b> = 0</td></tr>
+<tr class="memitem:ae321ca2b045da80954622c101138b2b7"><td class="memItemLeft" align="right" valign="top">FUnknown *&#160;</td><td class="memItemRight" valign="bottom"><b>gStandardPluginContext</b> = nullptr</td></tr>
 <tr class="separator:ae321ca2b045da80954622c101138b2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -209,19 +215,31 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a7f8529ab0bdb3534e701e2575022c151"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define kLookupInstalledPlugIns&#160;&#160;&#160;&quot;list&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

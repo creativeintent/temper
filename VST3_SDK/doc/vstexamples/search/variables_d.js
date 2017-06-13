@@ -3,7 +3,6 @@ var searchData=
   ['o',['O',['../classSteinberg_1_1Vst_1_1mda_1_1TalkBoxProcessor.html#aa35bff9c0358f8518b0c04b870b54fb2',1,'Steinberg::Vst::mda::TalkBoxProcessor']]],
   ['o2l',['o2l',['../classSteinberg_1_1Vst_1_1mda_1_1SplitterProcessor.html#abb8c05b6bc595f4dee2ca893d5b67013',1,'Steinberg::Vst::mda::SplitterProcessor']]],
   ['o2r',['o2r',['../classSteinberg_1_1Vst_1_1mda_1_1SplitterProcessor.html#aea981f2241e675aa4d3032b0231c7dc7',1,'Steinberg::Vst::mda::SplitterProcessor']]],
-  ['obj',['obj',['../../vstsdk/classSteinberg_1_1Vst_1_1SingleComponentEffect.html#a2fac3b38c6d73b2e9a98e62d8ce53baf',1,'Steinberg::Vst::SingleComponentEffect::obj()'],['../classSteinberg_1_1Vst_1_1AGainController.html#a2fac3b38c6d73b2e9a98e62d8ce53baf',1,'Steinberg::Vst::AGainController::obj()'],['../classSteinberg_1_1Vst_1_1AGainEditorView.html#a2fac3b38c6d73b2e9a98e62d8ce53baf',1,'Steinberg::Vst::AGainEditorView::obj()'],['../classSteinberg_1_1Vst_1_1mda_1_1BaseController.html#a2fac3b38c6d73b2e9a98e62d8ce53baf',1,'Steinberg::Vst::mda::BaseController::obj()']]],
   ['offs',['offs',['../classSteinberg_1_1Vst_1_1mda_1_1DitherProcessor.html#a227a2314c1dde5c8bdf9c5c48400b820',1,'Steinberg::Vst::mda::DitherProcessor']]],
   ['offset',['offset',['../../vstsdk/structSteinberg_1_1Vst_1_1PresetFile_1_1Entry.html#a3695b4badbf1fecec9ceaad8ce6bdc50',1,'Steinberg::Vst::PresetFile::Entry']]],
   ['ogain',['ogain',['../classSteinberg_1_1Vst_1_1mda_1_1LoudnessProcessor.html#ab29569cfc938b2e44f2430e869228958',1,'Steinberg::Vst::mda::LoudnessProcessor']]],

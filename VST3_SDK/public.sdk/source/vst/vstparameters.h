@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vstparameters.h
@@ -9,37 +8,40 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+// 
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
 #pragma once
 
-#include "base/source/tarray.h"
-#include "base/source/tdictionary.h"
 #include "base/source/fobject.h"
-#include "base/source/fcontainer.h"
 #include "pluginterfaces/vst/ivsteditcontroller.h"
 #include "pluginterfaces/vst/ivstunits.h"
+
+#include <vector>
+#include <map>
 
 //------------------------------------------------------------------------
 namespace Steinberg {
@@ -123,14 +125,14 @@ public:
 	virtual void setMax (ParamValue value) {maxPlain = value;}
 
 	/** Converts a normalized value to a string. */
-	virtual void toString (ParamValue _valueNormalized, String128 string) const;
+	virtual void toString (ParamValue _valueNormalized, String128 string) const SMTG_OVERRIDE;
 	/** Converts a string to a normalized value. */
-	virtual bool fromString (const TChar* string, ParamValue& _valueNormalized) const;
+	virtual bool fromString (const TChar* string, ParamValue& _valueNormalized) const SMTG_OVERRIDE;
 
 	/** Converts a normalized value to plain value (e.g. 0.5 to 10000.0Hz). */
-	virtual ParamValue toPlain (ParamValue _valueNormalized) const;
+	virtual ParamValue toPlain (ParamValue _valueNormalized) const SMTG_OVERRIDE;
 	/** Converts a plain value to a normalized value (e.g. 10000 to 0.5). */
-	virtual ParamValue toNormalized (ParamValue plainValue) const;
+	virtual ParamValue toNormalized (ParamValue plainValue) const SMTG_OVERRIDE;
 
 	OBJ_METHODS (RangeParameter, Parameter)
 //------------------------------------------------------------------------
@@ -160,19 +162,20 @@ public:
 	virtual bool replaceString (int32 index, const String128 string);
 
 	/** Converts a normalized value to a string. */
-	virtual void toString (ParamValue _valueNormalized, String128 string) const;
+	virtual void toString (ParamValue _valueNormalized, String128 string) const SMTG_OVERRIDE;
 	/** Converts a string to a normalized value. */
-	virtual bool fromString (const TChar* string, ParamValue& _valueNormalized) const;
+	virtual bool fromString (const TChar* string, ParamValue& _valueNormalized) const SMTG_OVERRIDE;
 
 	/** Converts a normalized value to plain value (e.g. 0.5 to 10000.0Hz). */
-	virtual ParamValue toPlain (ParamValue _valueNormalized) const;
+	virtual ParamValue toPlain (ParamValue _valueNormalized) const SMTG_OVERRIDE;
 	/** Converts a plain value to a normalized value (e.g. 10000 to 0.5). */
-	virtual ParamValue toNormalized (ParamValue plainValue) const;
+	virtual ParamValue toNormalized (ParamValue plainValue) const SMTG_OVERRIDE;
 
 	OBJ_METHODS (StringListParameter, Parameter)
 //------------------------------------------------------------------------
 protected:
-	TArray<TChar*> strings;
+	typedef std::vector<TChar*> StringVector;
+	StringVector strings;
 };
 
 //------------------------------------------------------------------------
@@ -204,21 +207,23 @@ public:
 	Parameter* addParameter (Parameter* p);
 
 	/** Returns the count of parameters. */
-	int32 getParameterCount () const { return params ? params->total () : 0; }
+	int32 getParameterCount () const { return params ? static_cast<int32> (params->size ()) : 0; }
 
 	/** Gets parameter by index. */
 	Parameter* getParameterByIndex (int32 index) { return params ? params->at (index) : 0; }
 
 	/** Removes all parameters. */
-	void removeAll () { if (params) params->removeAll (); id2index.removeAll (); }
+	void removeAll () { if (params) params->clear (); id2index.clear (); }
 
 	/** Gets parameter by ID. */
 	Parameter* getParameter (ParamID tag);
 
 //------------------------------------------------------------------------
 protected:
-	TArray<IPtr<Parameter> >* params;
-	THashDictionary<ParamID, int32> id2index;
+	typedef std::vector<IPtr<Parameter> > ParameterPtrVector;
+	typedef std::map<ParamID, ParameterPtrVector::size_type> IndexMap;
+	ParameterPtrVector* params;
+	IndexMap id2index;
 };
 
 //------------------------------------------------------------------------

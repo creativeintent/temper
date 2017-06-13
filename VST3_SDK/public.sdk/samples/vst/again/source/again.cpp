@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/again/source/again.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -36,6 +35,7 @@
 //-----------------------------------------------------------------------------
 
 #include "again.h"
+#include "againprocess.h"
 #include "againparamids.h"
 #include "againcids.h"	// for class ids
 
@@ -300,40 +300,11 @@ tresult PLUGIN_API AGain::process (ProcessData& data)
 }
 
 //------------------------------------------------------------------------
-template <typename SampleType>
-SampleType AGain::processAudio (SampleType** in, SampleType** out, int32 numChannels, int32 sampleFrames, float gain)
-{
-	SampleType vuPPM = 0;
-
-	// in real Plug-in it would be better to do dezippering to avoid jump (click) in gain value
-	for (int32 i = 0; i < numChannels; i++)
-	{
-		int32 samples = sampleFrames;
-		SampleType* ptrIn = (SampleType*)in[i];
-		SampleType* ptrOut = (SampleType*)out[i];
-		SampleType tmp;
-		while (--samples >= 0)
-		{
-			// apply gain
-			tmp = (*ptrIn++) * gain;
-			(*ptrOut++) = tmp;
-
-			// check only positive values
-			if (tmp > vuPPM)
-			{
-				vuPPM = tmp;
-			}
-		}
-	}
-	return vuPPM;
-}
-
-//------------------------------------------------------------------------
 tresult AGain::receiveText (const char* text)
 {
 	// received from Controller
 	fprintf (stderr, "[AGain] received: ");
-	fprintf (stderr, text);
+	fprintf (stderr, "%s", text);
 	fprintf (stderr, "\n");
 	
 	bHalfGain = !bHalfGain;
@@ -522,7 +493,7 @@ tresult PLUGIN_API AGain::notify (IMessage* message)
 			// size should be 100
 			if (size == 100 && ((char*)data)[1] == 1) // yeah...
 			{
-				
+				fprintf (stderr, "[AGain] received the binary message!\n");
 			}
 			return kResultOk;
 		}

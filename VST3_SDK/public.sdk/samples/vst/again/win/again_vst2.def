@@ -1,6 +1,0 @@
-EXPORTS
-	GetPluginFactory
-	InitDll
-	ExitDll
-	VSTPluginMain
-	

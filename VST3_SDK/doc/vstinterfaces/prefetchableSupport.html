@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Interfaces
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -90,9 +90,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>[released: 3.6.5]</li>
 <li>[optional]</li>
 </ul>
+<p>The Plug-in should implement this interface if it needs to dynamically change between Prefetchable or not. By default (without implementing this interface) the host will decide in which mode the Plug-in will be process. For more info about Prefetch processing mode check ProcessModes::kPrefetch documentation.</p>
 <h1><a class="anchor" id="IPrefetchableSupportExample"></a>
 Example</h1>
-<div class="fragment"><div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API myPlug::getPrefetchableSupport (PrefetchableSupport&amp; prefetchable)</div>
+<div class="fragment"><div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API myPlug::getPrefetchableSupport (PrefetchableSupport&amp; prefetchable)</div>
 <div class="line">{</div>
 <div class="line">    prefetchable = kIsNeverPrefetchable;</div>
 <div class="line"></div>
@@ -102,24 +103,24 @@ Example</h1>
 <div class="line">        <span class="keywordflow">case</span> 1: prefetchable = kIsYetPrefetchable; <span class="keywordflow">break</span>;</div>
 <div class="line">        <span class="keywordflow">case</span> 2: prefetchable = kIsNotYetPrefetchable; <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">kResultOk</a>;</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">kResultOk</a>;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><br />
 Back to <b><a class="el" href="index.html#vst3Contents">Contents</a></b> <br />
 </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

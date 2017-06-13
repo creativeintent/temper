@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bschunktype',['BSChunkType',['../classSteinberg_1_1BitSet.html#a3be9ed21f03bf40395e5bd63c50d7275',1,'Steinberg::BitSet']]]
+  ['objectvector',['ObjectVector',['../namespaceSteinberg_1_1Singleton.html#a58c6334745c4803ff167fcfc2570bcbe',1,'Steinberg::Singleton']]]
 ];

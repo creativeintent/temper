@@ -2,7 +2,6 @@
 
 #//------------------------------------------------------------------------
 #// Project     : VST SDK
-#// Version     : 3.6.5
 #//
 #// Category    : Examples
 #// Filename    : public.sdk/samples/vst/mac/make_vst3_symbolic_link.sh
@@ -11,7 +10,7 @@
 #//
 #//-----------------------------------------------------------------------------
 #// LICENSE
-#// (c) 2015, Steinberg Media Technologies GmbH, All Rights Reserved
+#// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 #//-----------------------------------------------------------------------------
 #// Redistribution and use in source and binary forms, with or without modification,
 #// are permitted provided that the following conditions are met:

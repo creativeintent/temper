@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaTestToneProcessor__
-#define __mdaTestToneProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,18 +29,18 @@ public:
 	TestToneProcessor ();
 	~TestToneProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new TestToneProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float thru, left, right, len;
 	float zz0, zz1, zz2, zz3, zz4, zz5, phi, dphi;
@@ -51,5 +50,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

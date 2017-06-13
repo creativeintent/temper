@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Examples
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -113,12 +113,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a55bd748f268d0eb38f2d30f3ee8d1e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0b1cd34ac95c57615252d99f32f134d"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1DirtyFlagController.html#ae0b1cd34ac95c57615252d99f32f134d">~DirtyFlagController</a> ()</td></tr>
 <tr class="separator:ae0b1cd34ac95c57615252d99f32f134d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae51e3e31dbb5aa22d3c9e854a08f3c75"><td class="memItemLeft" align="right" valign="top">virtual VSTGUI::CView *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1DirtyFlagController.html#ae51e3e31dbb5aa22d3c9e854a08f3c75">verifyView</a> (VSTGUI::CView *view, const VSTGUI::UIAttributes &amp;attributes, VSTGUI::IUIDescription *description)</td></tr>
-<tr class="separator:ae51e3e31dbb5aa22d3c9e854a08f3c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a329fd33ac4a059c09c58e6781b9e163a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1DirtyFlagController.html#a329fd33ac4a059c09c58e6781b9e163a">valueChanged</a> (VSTGUI::CControl *pControl)</td></tr>
-<tr class="separator:a329fd33ac4a059c09c58e6781b9e163a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5db917a18b6c04a2903b89d3a553e89a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1DirtyFlagController.html#a5db917a18b6c04a2903b89d3a553e89a">controlBeginEdit</a> (VSTGUI::CControl *pControl)</td></tr>
-<tr class="separator:a5db917a18b6c04a2903b89d3a553e89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99c77cf034e7d83887d020cffbca82f3"><td class="memItemLeft" align="right" valign="top">virtual VSTGUI::CView *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1DirtyFlagController.html#a99c77cf034e7d83887d020cffbca82f3">verifyView</a> (VSTGUI::CView *view, const VSTGUI::UIAttributes &amp;attributes, const VSTGUI::IUIDescription *description) VSTGUI_OVERRIDE_VMETHOD</td></tr>
+<tr class="separator:a99c77cf034e7d83887d020cffbca82f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a948d3b7b7fad235f855fb6ec89051d6c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1DirtyFlagController.html#a948d3b7b7fad235f855fb6ec89051d6c">valueChanged</a> (VSTGUI::CControl *pControl) VSTGUI_OVERRIDE_VMETHOD</td></tr>
+<tr class="separator:a948d3b7b7fad235f855fb6ec89051d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d29ba6b37740b95d3477b2317739be0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1DirtyFlagController.html#a9d29ba6b37740b95d3477b2317739be0">controlBeginEdit</a> (VSTGUI::CControl *pControl) VSTGUI_OVERRIDE_VMETHOD</td></tr>
+<tr class="separator:a9d29ba6b37740b95d3477b2317739be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a55bd748f268d0eb38f2d30f3ee8d1e85"></a>
@@ -161,7 +161,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ae51e3e31dbb5aa22d3c9e854a08f3c75"></a>
+<a class="anchor" id="a99c77cf034e7d83887d020cffbca82f3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -183,7 +183,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">VSTGUI::IUIDescription *&#160;</td>
+          <td class="paramtype">const VSTGUI::IUIDescription *&#160;</td>
           <td class="paramname"><em>description</em>&#160;</td>
         </tr>
         <tr>
@@ -201,7 +201,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a329fd33ac4a059c09c58e6781b9e163a"></a>
+<a class="anchor" id="a948d3b7b7fad235f855fb6ec89051d6c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -225,7 +225,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5db917a18b6c04a2903b89d3a553e89a"></a>
+<a class="anchor" id="a9d29ba6b37740b95d3477b2317739be0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -251,17 +251,17 @@ Public Member Functions</h2></td></tr>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

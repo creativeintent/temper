@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/again/source/againcontroller.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -37,64 +36,75 @@
 
 #pragma once
 
+#include "vstgui/plugin-bindings/vst3editor.h"
 #include "public.sdk/source/vst/vsteditcontroller.h"
+
+#include <vector>
 
 namespace Steinberg {
 namespace Vst {
 
-//------------------------------------------------------------------------
-class AGainEditorView;
+template <typename T>
+class AGainUIMessageController;
 
 //------------------------------------------------------------------------
 // AGainController
 //------------------------------------------------------------------------
-class AGainController: public EditControllerEx1, public IMidiMapping
+class AGainController : public EditControllerEx1, public IMidiMapping, public VST3EditorDelegate
 {
 public:
-//------------------------------------------------------------------------
-// create function required for Plug-in factory,
-// it will be called to create new instances of this controller
-//------------------------------------------------------------------------
-	static FUnknown* createInstance (void* context)
+	typedef AGainUIMessageController<AGainController> UIMessageController;
+	//--- ---------------------------------------------------------------------
+	// create function required for Plug-in factory,
+	// it will be called to create new instances of this controller
+	//--- ---------------------------------------------------------------------
+	static FUnknown* createInstance (void* /*context*/)
 	{
 		return (IEditController*)new AGainController;
 	}
 
 	//---from IPluginBase--------
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate  ();
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
 
 	//---from EditController-----
-	tresult PLUGIN_API setComponentState (IBStream* state);
-	IPlugView* PLUGIN_API createView (const char* name);
-	tresult PLUGIN_API setState (IBStream* state);
-	tresult PLUGIN_API getState (IBStream* state);
-	tresult PLUGIN_API setParamNormalized (ParamID tag, ParamValue value);
-	tresult PLUGIN_API getParamStringByValue (ParamID tag, ParamValue valueNormalized, String128 string);
-	tresult PLUGIN_API getParamValueByString (ParamID tag, TChar* string, ParamValue& valueNormalized);
-	void editorDestroyed (EditorView* editor) {} // nothing to do here
-	void editorAttached (EditorView* editor);
-	void editorRemoved (EditorView* editor);
+	tresult PLUGIN_API setComponentState (IBStream* state) SMTG_OVERRIDE;
+	IPlugView* PLUGIN_API createView (const char* name) SMTG_OVERRIDE;
+	tresult PLUGIN_API setState (IBStream* state) SMTG_OVERRIDE;
+	tresult PLUGIN_API getState (IBStream* state) SMTG_OVERRIDE;
+	tresult PLUGIN_API setParamNormalized (ParamID tag, ParamValue value) SMTG_OVERRIDE;
+	tresult PLUGIN_API getParamStringByValue (ParamID tag, ParamValue valueNormalized,
+	                                          String128 string) SMTG_OVERRIDE;
+	tresult PLUGIN_API getParamValueByString (ParamID tag, TChar* string,
+	                                          ParamValue& valueNormalized) SMTG_OVERRIDE;
 
 	//---from ComponentBase-----
-	tresult receiveText (const char* text);
+	tresult receiveText (const char* text) SMTG_OVERRIDE;
 
 	//---from IMidiMapping-----------------
-	tresult PLUGIN_API getMidiControllerAssignment (int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& tag);
+	tresult PLUGIN_API getMidiControllerAssignment (int32 busIndex, int16 channel,
+	                                                CtrlNumber midiControllerNumber,
+	                                                ParamID& tag) SMTG_OVERRIDE;
+
+	//---from VST3EditorDelegate-----------
+	IController* createSubController (UTF8StringPtr name, const IUIDescription* description,
+	                                  VST3Editor* editor) SMTG_OVERRIDE;
 
 	DELEGATE_REFCOUNT (EditController)
-	tresult PLUGIN_API queryInterface (const char* iid, void** obj);
+	tresult PLUGIN_API queryInterface (const char* iid, void** obj) SMTG_OVERRIDE;
 
 	//---Internal functions-------
-	void addDependentView (AGainEditorView* view);
-	void removeDependentView (AGainEditorView* view);
+	void addUIMessageController (UIMessageController* controller);
+	void removeUIMessageController (UIMessageController* controller);
 
 	void setDefaultMessageText (String128 text);
 	TChar* getDefaultMessageText ();
 //------------------------------------------------------------------------
 
 private:
-	TArray <AGainEditorView*> viewsArray;
+	typedef std::vector<UIMessageController*> UIMessageControllerList;
+	UIMessageControllerList uiMessageControllers;
+
 	String128 defaultMessageText;
 };
 

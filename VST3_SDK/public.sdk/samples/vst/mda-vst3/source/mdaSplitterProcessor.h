@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaSplitterProcessor__
-#define __mdaSplitterProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,18 +29,18 @@ public:
 	SplitterProcessor ();
 	~SplitterProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new SplitterProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float freq, fdisp, buf0, buf1, buf2, buf3;  //filter
 	float level, ldisp, env, att, rel;          //level switch
@@ -50,5 +49,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

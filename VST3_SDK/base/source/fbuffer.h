@@ -9,37 +9,39 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-#ifndef __fbuffer__
-#define __fbuffer__
+#pragma once
 
-#include "base/source/basefwd.h"
 #include "pluginterfaces/base/ftypes.h"
 #include <cstring> 
 
 namespace Steinberg {
+class String;
 
 //------------------------------------------------------------------------
 /** Buffer.
@@ -109,7 +111,7 @@ public:
 	\return true, if the Buffer could be grown successfully, else false
 	*/
 	bool grow (uint32 memSize);
-	bool setMaxSize (uint32 memSize) {return grow (memSize);}	///< see \ref grow()
+	bool setMaxSize (uint32 size) {return grow (size);}	///< see \ref grow()
 
 	void fillup (uint8 initVal = 0);				///< set from fillSize to end
 	uint32 getFillSize ()const {return fillSize;}	///< \return the actual fill size
@@ -145,19 +147,19 @@ public:
 	// strings ----------------
 	bool appendString (const tchar* s);
 	bool appendString (tchar* s);
-	bool appendString (tchar c)                     { return put (c); }
+	bool appendString (tchar c)                   { return put (c); }
 
 	bool appendString8 (const char8* s);	
 	bool appendString16 (const char16* s);
 
-	bool appendString8 (char8* s)                   { return appendString8 ((const char8*)s); }
-	bool appendString8 (unsigned char* s)		   { return appendString8 ((const char8*)s); }         
-	bool appendString8 (const unsigned char* s)     { return appendString8 ((const char8*)s); }
+	bool appendString8 (char8* s)                 { return appendString8 ((const char8*)s); }
+	bool appendString8 (unsigned char* s)		  { return appendString8 ((const char8*)s); }         
+	bool appendString8 (const unsigned char* s)   { return appendString8 ((const char8*)s); }
 
-	bool appendString8 (char8 c)                     { return put ((uint8)c); }
-	bool appendString8 (unsigned char c)            { return put (c); }
-	bool appendString16 (char16 c)                  { return put (c); }
-	bool appendString16 (char16* s)                 { return appendString16 ((const char16*)s); }
+	bool appendString8 (char8 c)                  { return put ((uint8)c); }
+	bool appendString8 (unsigned char c)          { return put (c); }
+	bool appendString16 (char16 c)                { return put (c); }
+	bool appendString16 (char16* s)               { return appendString16 ((const char16*)s); }
 
 	bool prependString (const tchar* s);   
 	bool prependString (tchar* s);   
@@ -167,22 +169,22 @@ public:
 	bool prependString16 (const char16* s);
 
 	bool prependString8 (char8 c);
-	bool prependString8 (unsigned char c)           { return prependString8 ((char8)c); }
-	bool prependString8 (char8* s)                   { return prependString8 ((const char8*)s); }
-	bool prependString8 (unsigned char* s)          { return prependString8((const char8*)s); }           
-	bool prependString8 (const unsigned char* s)    { return prependString8 ((const char8*)s); } 
+	bool prependString8 (unsigned char c)         { return prependString8 ((char8)c); }
+	bool prependString8 (char8* s)                { return prependString8 ((const char8*)s); }
+	bool prependString8 (unsigned char* s)        { return prependString8((const char8*)s); }           
+	bool prependString8 (const unsigned char* s)  { return prependString8 ((const char8*)s); } 
 	bool prependString16 (char16 c);
-	bool prependString16 (char16* s)                { return prependString16 ((const char16*)s); }
+	bool prependString16 (char16* s)              { return prependString16 ((const char16*)s); }
 
-	bool operator+= (const char* s)                {return appendString8 (s); }
-	bool operator+= (char c)                       {return appendString8 (c); }
-	bool operator+= (const char16* s)             {return appendString16 (s); }
-	bool operator+= (char16 c)                    {return appendString16 (c); }
+	bool operator+= (const char* s)               { return appendString8 (s); }
+	bool operator+= (char c)                      { return appendString8 (c); }
+	bool operator+= (const char16* s)             { return appendString16 (s); }
+	bool operator+= (char16 c)                    { return appendString16 (c); }
 
-	bool operator= (const char* s)                 { flush (); return appendString8 (s); }
+	bool operator= (const char* s)                { flush (); return appendString8 (s); }
 	bool operator= (const char16* s)              { flush (); return appendString16 (s); }
-	bool operator= (char8 c)                        { flush (); return appendString8 (c); }
-	bool operator= (char16 c)                        { flush (); return appendString16 (c); }
+	bool operator= (char8 c)                      { flush (); return appendString8 (c); }
+	bool operator= (char16 c)                     { flush (); return appendString16 (c); }
 
 	void endString () {put (tchar (0));}
 	void endString8 () {put (char8 (0));}
@@ -249,7 +251,7 @@ inline bool Buffer::put (uint8 * p, uint32 count)   { return put ((const void*)p
 inline bool Buffer::put (char8* p, uint32 count)    { return put ((const void*)p , count ); }
 inline bool Buffer::put (const uint8* p, uint32 count) { return put ((const void*)p , count ); }
 inline bool Buffer::put (const char8* p, uint32 count) { return put ((const void*)p , count ); }
-	
+
 //------------------------------------------------------------------------
 inline bool Buffer::appendString (const tchar* s)
 {
@@ -300,6 +302,5 @@ inline bool Buffer::prependString (tchar c)
 #endif
 }
 
+//------------------------------------------------------------------------
 } // namespace Steinberg
-
-#endif

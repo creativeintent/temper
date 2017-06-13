@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/channelcontext/source/plug.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -60,14 +59,14 @@ public:
 	// AudioEffect overrides:
 //------------------------------------------------------------------------
 	/** Called at first after constructor */
-	tresult PLUGIN_API initialize (FUnknown* context) override;
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
 
 	/** Here we go...the process call */
-	tresult PLUGIN_API process (ProcessData& data) override;
+	tresult PLUGIN_API process (ProcessData& data) SMTG_OVERRIDE;
 
 	/** For persistence */
-	tresult PLUGIN_API setState (IBStream* state) override;
-	tresult PLUGIN_API getState (IBStream* state) override;
+	tresult PLUGIN_API setState (IBStream* state) SMTG_OVERRIDE;
+	tresult PLUGIN_API getState (IBStream* state) SMTG_OVERRIDE;
 
 //------------------------------------------------------------------------
 protected:

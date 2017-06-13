@@ -15,6 +15,7 @@ var searchData=
   ['commandcategory',['commandCategory',['../class_v_s_t_g_u_i_1_1_c_command_menu_item.html#ab1c8ab3081ae2c96a4ebe9ed2ab49519',1,'VSTGUI::CCommandMenuItem']]],
   ['commandname',['commandName',['../class_v_s_t_g_u_i_1_1_c_command_menu_item.html#aaeb16723070f85c3a89a82459ecaff69',1,'VSTGUI::CCommandMenuItem']]],
   ['containersize',['containerSize',['../class_v_s_t_g_u_i_1_1_c_scroll_view.html#acc639bfdaf5f4b9cde46e48d6e47943c',1,'VSTGUI::CScrollView']]],
+  ['contentscalefactor',['contentScaleFactor',['../class_v_s_t_g_u_i_1_1_v_s_t3_editor.html#ad83b9ed5680c484debc8e5c21d1d882a',1,'VSTGUI::VST3Editor']]],
   ['control',['control',['../struct_v_s_t_g_u_i_1_1_c_control_private_1_1_control_listener_call.html#ab9202f5f8d4fb52fce0bc202fd813ab7',1,'VSTGUI::CControlPrivate::ControlListenerCall']]],
   ['controller',['controller',['../class_v_s_t_g_u_i_1_1_delegation_controller.html#aa611c25d4b4cb60fddc1925a2907524f',1,'VSTGUI::DelegationController::controller()'],['../class_v_s_t_g_u_i_1_1_u_i_description.html#aa611c25d4b4cb60fddc1925a2907524f',1,'VSTGUI::UIDescription::controller()'],['../class_v_s_t_g_u_i_1_1_u_i_view_switch_container.html#a717bbbc5618e104128f353409bdce01f',1,'VSTGUI::UIViewSwitchContainer::controller()']]],
   ['controls',['controls',['../class_v_s_t_g_u_i_1_1_parameter_change_listener.html#a187e38cb07c75c6f05a3b5f7c1634a3e',1,'VSTGUI::ParameterChangeListener::controls()'],['../class_v_s_t_g_u_i_1_1_group_controller.html#a187e38cb07c75c6f05a3b5f7c1634a3e',1,'VSTGUI::GroupController::controls()']]],

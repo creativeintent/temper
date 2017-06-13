@@ -4,6 +4,7 @@ var searchData=
   ['freleaser',['FReleaser',['../structSteinberg_1_1FReleaser.html#a9aeee674f38393febf98f8cf953657f5',1,'Steinberg::FReleaser']]],
   ['from4int',['from4Int',['../classSteinberg_1_1FUID.html#ad4ecb2d9af5f8cf17d6ec497f871f13a',1,'Steinberg::FUID']]],
   ['fromascii',['fromAscii',['../structSteinberg_1_1PClassInfoW.html#a4bf4cd78c431e64f21d4bd2005813e9d',1,'Steinberg::PClassInfoW::fromAscii()'],['../classSteinberg_1_1UString.html#a3862d0f352b58aaf5159ff9751d1b3d1',1,'Steinberg::UString::fromAscii()']]],
+  ['fromnormalized',['FromNormalized',['../namespaceSteinberg.html#a15c8c1bdcb98836c8074a36c9458c048',1,'Steinberg']]],
   ['fromregistrystring',['fromRegistryString',['../classSteinberg_1_1FUID.html#a8124e38def2946aa169b72c0fdb115bb',1,'Steinberg::FUID']]],
   ['fromstring',['fromString',['../classSteinberg_1_1FUID.html#a1e809eb52c1b13101a137f4f722d93ab',1,'Steinberg::FUID']]],
   ['fuid',['FUID',['../classSteinberg_1_1FUID.html#aef4d827e945c171d056b9ed79a8964f8',1,'Steinberg::FUID::FUID()'],['../classSteinberg_1_1FUID.html#a0a711b0b8889b1bb6631111104a6fff4',1,'Steinberg::FUID::FUID(const TUID uid)'],['../classSteinberg_1_1FUID.html#a29217891f71b9c22549ae79a894f480f',1,'Steinberg::FUID::FUID(uint32 l1, uint32 l2, uint32 l3, uint32 l4)'],['../classSteinberg_1_1FUID.html#a0404d1a9d834c21a3c91a2d9b8c1a361',1,'Steinberg::FUID::FUID(const FUID &amp;)']]],

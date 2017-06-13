@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Base Module
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -105,7 +105,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9fd1a507ebc6f2535cd3130e5bf7cb04"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1FNuller.html#a9fd1a507ebc6f2535cd3130e5bf7cb04">FNuller</a> (T &amp;_toNull)</td></tr>
-<tr class="memdesc:a9fd1a507ebc6f2535cd3130e5bf7cb04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. _toNull is a reference to the object that is to be assigned 0 when this <a class="el" href="structSteinberg_1_1FNuller.html" title="Template definition for classes that help resetting an object&#39;s value. ">FNuller</a> object's destructor is executed.  <a href="#a9fd1a507ebc6f2535cd3130e5bf7cb04">More...</a><br /></td></tr>
+<tr class="memdesc:a9fd1a507ebc6f2535cd3130e5bf7cb04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9fd1a507ebc6f2535cd3130e5bf7cb04">More...</a><br /></td></tr>
 <tr class="separator:a9fd1a507ebc6f2535cd3130e5bf7cb04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9191536eaf9f59f8fe55bad97cf001d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1FNuller.html#ab9191536eaf9f59f8fe55bad97cf001d">~FNuller</a> ()</td></tr>
 <tr class="memdesc:ab9191536eaf9f59f8fe55bad97cf001d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. Assigns 0 to the at construction time passed object reference.  <a href="#ab9191536eaf9f59f8fe55bad97cf001d">More...</a><br /></td></tr>
@@ -122,15 +122,16 @@ Data Fields</h2></td></tr>
 struct Steinberg::FNuller&lt; T &gt;</h3>
 
 <p>Template definition for classes that help resetting an object's value. </p>
-<p>A stack allocated object of this type autonomically resets the value of an at construction time passed object to null when it reaches the end of its scope. <br />
+<p>A stack allocated object of this type automatically resets the value of an at construction time passed object to null when it reaches the end of its scope. <br />
 <br />
-Intended usage: </p><div class="fragment"><div class="line"><span class="keywordtype">int</span> theObject = 0;</div>
-<div class="line">{</div>
-<div class="line">    <a class="code" href="structSteinberg_1_1FNuller.html">Steinberg::FNuller&lt;int&gt;</a> theNuller (theObject);</div>
+ Intended usage:</p><div class="fragment"><div class="line"> <span class="keywordtype">int</span> theObject</div>
+<div class="line">= 0;</div>
+<div class="line">    {</div>
+<div class="line">        <a class="code" href="structSteinberg_1_1FNuller.html">Steinberg::FNuller&lt;int&gt;</a> theNuller (theObject);</div>
 <div class="line"></div>
-<div class="line">    theObject = 1;</div>
+<div class="line">        theObject = 1;</div>
 <div class="line"></div>
-<div class="line">} <span class="comment">// Here the destructor of theNuller resets the value of theObject to 0.</span></div>
+<div class="line">    } <span class="comment">// Here the destructor of theNuller resets the value of theObject to 0.</span></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9fd1a507ebc6f2535cd3130e5bf7cb04"></a>
 <div class="memitem">
@@ -154,7 +155,8 @@ Intended usage: </p><div class="fragment"><div class="line"><span class="keyword
 </table>
 </div><div class="memdoc">
 
-<p>Constructor. _toNull is a reference to the object that is to be assigned 0 when this <a class="el" href="structSteinberg_1_1FNuller.html" title="Template definition for classes that help resetting an object&#39;s value. ">FNuller</a> object's destructor is executed. </p>
+<p>Constructor. </p>
+<p>_toNull is a reference to the object that is to be assigned 0 when this <a class="el" href="structSteinberg_1_1FNuller.html" title="Template definition for classes that help resetting an object&#39;s value. ">FNuller</a> object's destructor is executed. </p>
 
 </div>
 </div>
@@ -200,17 +202,17 @@ Intended usage: </p><div class="fragment"><div class="line"><span class="keyword
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

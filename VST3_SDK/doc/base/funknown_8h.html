@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Interface Technology Basics
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -99,7 +99,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">funknown.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="ftypes_8h.html">pluginterfaces/base/ftypes.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="fplatform_8h.html">pluginterfaces/base/fplatform.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ftypes_8h.html">pluginterfaces/base/ftypes.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="smartpointer_8h.html">pluginterfaces/base/smartpointer.h</a>&quot;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
@@ -237,7 +238,7 @@ Functions</h2></td></tr>
 <div class="line">    (<a class="code" href="namespaceSteinberg.html#ae47c588f3ab8c61121c1c7ab7edc47cd">::Steinberg::int8</a>)((l4 &amp; 0xFF000000) &gt;&gt; 24), (::<a class="code" href="namespaceSteinberg.html#ae47c588f3ab8c61121c1c7ab7edc47cd">Steinberg::int8</a>)((l4 &amp; 0x00FF0000) &gt;&gt; 16), \</div>
 <div class="line">    (<a class="code" href="namespaceSteinberg.html#ae47c588f3ab8c61121c1c7ab7edc47cd">::Steinberg::int8</a>)((l4 &amp; 0x0000FF00) &gt;&gt;  8), (::<a class="code" href="namespaceSteinberg.html#ae47c588f3ab8c61121c1c7ab7edc47cd">Steinberg::int8</a>)((l4 &amp; 0x000000FF)      )  \</div>
 <div class="line">}</div>
-<div class="ttc" id="namespaceSteinberg_html_ae47c588f3ab8c61121c1c7ab7edc47cd"><div class="ttname"><a href="namespaceSteinberg.html#ae47c588f3ab8c61121c1c7ab7edc47cd">Steinberg::int8</a></div><div class="ttdeci">char int8</div><div class="ttdef"><b>Definition:</b> ftypes.h:57</div></div>
+<div class="ttc" id="namespaceSteinberg_html_ae47c588f3ab8c61121c1c7ab7edc47cd"><div class="ttname"><a href="namespaceSteinberg.html#ae47c588f3ab8c61121c1c7ab7edc47cd">Steinberg::int8</a></div><div class="ttdeci">char int8</div><div class="ttdef"><b>Definition:</b> ftypes.h:39</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -403,16 +404,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>:                                                                                               <a class="code" href="namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">\</a></div>
-<div class="line"><a class="code" href="namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">	virtual ::Steinberg::tresult</a> PLUGIN_API queryInterface (<a class="code" href="namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">const ::Steinberg::TUID</a> _iid, <span class="keywordtype">void</span>** obj); <a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">\</a></div>
-<div class="line"><a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">	virtual ::Steinberg::uint32</a> PLUGIN_API addRef ();                                                 <a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">\</a></div>
-<div class="line"><a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">	virtual ::Steinberg::uint32</a> PLUGIN_API release ();                                                \</div>
+<div class="line"><a class="code" href="namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">	virtual ::Steinberg::tresult</a> PLUGIN_API queryInterface (<a class="code" href="namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">const ::Steinberg::TUID</a> _iid, <span class="keywordtype">void</span>** obj) <a class="code" href="fplatform_8h.html#a3c5f727b2149b22fddea9edf2add04a8">SMTG_OVERRIDE</a>; <a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">\</a></div>
+<div class="line"><a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">	virtual ::Steinberg::uint32</a> PLUGIN_API addRef () <a class="code" href="fplatform_8h.html#a3c5f727b2149b22fddea9edf2add04a8">SMTG_OVERRIDE</a>;                                                 \</div>
+<div class="line">    virtual ::Steinberg::<a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">uint32</a> PLUGIN_API release () <a class="code" href="fplatform_8h.html#a3c5f727b2149b22fddea9edf2add04a8">SMTG_OVERRIDE</a>;                                                \</div>
 <div class="line">protected :                                                                                           \</div>
-<div class="line">    <a class="code" href="namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">::Steinberg::int32</a> __funknownRefCount;                                                            \</div>
+<div class="line">    ::Steinberg::<a class="code" href="namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> __funknownRefCount;                                                            \</div>
 <div class="line">public:</div>
-<div class="ttc" id="namespaceSteinberg_html_a4b435a49c74bb91f284f075e63416cb6"><div class="ttname"><a href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">Steinberg::uint32</a></div><div class="ttdeci">unsigned long uint32</div><div class="ttdef"><b>Definition:</b> ftypes.h:69</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a32680add5f0b1c8a81e5b1c4cfe6a30c"><div class="ttname"><a href="namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">Steinberg::TUID</a></div><div class="ttdeci">int8 TUID[16]</div><div class="ttdoc">plain UID type </div><div class="ttdef"><b>Definition:</b> funknown.h:217</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a902761e005a6252e538c766de48fc957"><div class="ttname"><a href="namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">Steinberg::tresult</a></div><div class="ttdeci">int32 tresult</div><div class="ttdef"><b>Definition:</b> ftypes.h:94</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a4ca2d97e571b049be6f4cdcfaa1ab946"><div class="ttname"><a href="namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">Steinberg::int32</a></div><div class="ttdeci">long int32</div><div class="ttdef"><b>Definition:</b> ftypes.h:68</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a1134b580f8da4de94ca6b1de4d37975e"><div class="ttname"><a href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">Steinberg::uint32</a></div><div class="ttdeci">unsigned int uint32</div><div class="ttdef"><b>Definition:</b> ftypes.h:51</div></div>
+<div class="ttc" id="fplatform_8h_html_a3c5f727b2149b22fddea9edf2add04a8"><div class="ttname"><a href="fplatform_8h.html#a3c5f727b2149b22fddea9edf2add04a8">SMTG_OVERRIDE</a></div><div class="ttdeci">#define SMTG_OVERRIDE</div><div class="ttdef"><b>Definition:</b> fplatform.h:146</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a32680add5f0b1c8a81e5b1c4cfe6a30c"><div class="ttname"><a href="namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">Steinberg::TUID</a></div><div class="ttdeci">int8 TUID[16]</div><div class="ttdoc">plain UID type </div><div class="ttdef"><b>Definition:</b> funknown.h:200</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a902761e005a6252e538c766de48fc957"><div class="ttname"><a href="namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">Steinberg::tresult</a></div><div class="ttdeci">int32 tresult</div><div class="ttdef"><b>Definition:</b> ftypes.h:76</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a56f1a81c92849566ae864511088eb7e8"><div class="ttname"><a href="namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">Steinberg::int32</a></div><div class="ttdeci">int int32</div><div class="ttdef"><b>Definition:</b> ftypes.h:50</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -429,10 +431,11 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>:                                                                                 <a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">\</a></div>
-<div class="line"><a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">	virtual ::Steinberg::uint32</a> PLUGIN_API addRef ()  { <span class="keywordflow">return</span> ClassName::addRef ();  }    <a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">\</a></div>
-<div class="line"><a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">	virtual ::Steinberg::uint32</a> PLUGIN_API release () { <span class="keywordflow">return</span> ClassName::release (); }</div>
-<div class="ttc" id="namespaceSteinberg_html_a4b435a49c74bb91f284f075e63416cb6"><div class="ttname"><a href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">Steinberg::uint32</a></div><div class="ttdeci">unsigned long uint32</div><div class="ttdef"><b>Definition:</b> ftypes.h:69</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">public</span>:                                                                                 <a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">\</a></div>
+<div class="line"><a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">	virtual ::Steinberg::uint32</a> PLUGIN_API addRef () <a class="code" href="fplatform_8h.html#a3c5f727b2149b22fddea9edf2add04a8">SMTG_OVERRIDE</a> { <span class="keywordflow">return</span> ClassName::addRef ();  }   <a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">\</a></div>
+<div class="line"><a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">	virtual ::Steinberg::uint32</a> PLUGIN_API release () <a class="code" href="fplatform_8h.html#a3c5f727b2149b22fddea9edf2add04a8">SMTG_OVERRIDE</a> { <span class="keywordflow">return</span> ClassName::release (); }</div>
+<div class="ttc" id="namespaceSteinberg_html_a1134b580f8da4de94ca6b1de4d37975e"><div class="ttname"><a href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">Steinberg::uint32</a></div><div class="ttdeci">unsigned int uint32</div><div class="ttdef"><b>Definition:</b> ftypes.h:51</div></div>
+<div class="ttc" id="fplatform_8h_html_a3c5f727b2149b22fddea9edf2add04a8"><div class="ttname"><a href="fplatform_8h.html#a3c5f727b2149b22fddea9edf2add04a8">SMTG_OVERRIDE</a></div><div class="ttdeci">#define SMTG_OVERRIDE</div><div class="ttdef"><b>Definition:</b> fplatform.h:146</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -449,11 +452,11 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">::Steinberg::uint32</a> PLUGIN_API ClassName::addRef ()                            \</div>
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">::Steinberg::uint32</a> PLUGIN_API ClassName::addRef ()                            \</div>
 <div class="line">{                                                                              <a class="code" href="namespaceSteinberg_1_1FUnknownPrivate.html#aeab173beb18bb16a5737f9fbe0a45289">\</a></div>
 <div class="line"><a class="code" href="namespaceSteinberg_1_1FUnknownPrivate.html#aeab173beb18bb16a5737f9fbe0a45289">	return ::Steinberg::FUnknownPrivate::atomicAdd</a> (__funknownRefCount, 1);    \</div>
 <div class="line">}                                                                              \</div>
-<div class="line"><a class="code" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">::Steinberg::uint32</a> PLUGIN_API ClassName::release ()                           \</div>
+<div class="line"><a class="code" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">::Steinberg::uint32</a> PLUGIN_API ClassName::release ()                           \</div>
 <div class="line">{                                                                              \</div>
 <div class="line">    if (::<a class="code" href="namespaceSteinberg_1_1FUnknownPrivate.html#aeab173beb18bb16a5737f9fbe0a45289">Steinberg::FUnknownPrivate::atomicAdd</a> (__funknownRefCount, -1) == 0) \</div>
 <div class="line">    {                                                                          \</div>
@@ -462,8 +465,8 @@ Functions</h2></td></tr>
 <div class="line">    }                                                                          \</div>
 <div class="line">    return __funknownRefCount;                                                 \</div>
 <div class="line">}</div>
-<div class="ttc" id="namespaceSteinberg_html_a4b435a49c74bb91f284f075e63416cb6"><div class="ttname"><a href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">Steinberg::uint32</a></div><div class="ttdeci">unsigned long uint32</div><div class="ttdef"><b>Definition:</b> ftypes.h:69</div></div>
-<div class="ttc" id="namespaceSteinberg_1_1FUnknownPrivate_html_aeab173beb18bb16a5737f9fbe0a45289"><div class="ttname"><a href="namespaceSteinberg_1_1FUnknownPrivate.html#aeab173beb18bb16a5737f9fbe0a45289">Steinberg::FUnknownPrivate::atomicAdd</a></div><div class="ttdeci">int32 atomicAdd(int32 &amp;var, int32 d)</div><div class="ttdef"><b>Definition:</b> funknown.cpp:83</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a1134b580f8da4de94ca6b1de4d37975e"><div class="ttname"><a href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">Steinberg::uint32</a></div><div class="ttdeci">unsigned int uint32</div><div class="ttdef"><b>Definition:</b> ftypes.h:51</div></div>
+<div class="ttc" id="namespaceSteinberg_1_1FUnknownPrivate_html_aeab173beb18bb16a5737f9fbe0a45289"><div class="ttname"><a href="namespaceSteinberg_1_1FUnknownPrivate.html#aeab173beb18bb16a5737f9fbe0a45289">Steinberg::FUnknownPrivate::atomicAdd</a></div><div class="ttdeci">int32 atomicAdd(int32 &amp;var, int32 d)</div><div class="ttdef"><b>Definition:</b> funknown.cpp:68</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -532,8 +535,8 @@ Functions</h2></td></tr>
 <div class="line">    *obj = <span class="keyword">static_cast&lt;</span> InterfaceName* <span class="keyword">&gt;</span>(<span class="keyword">this</span>);                 <a class="code" href="namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">\</a></div>
 <div class="line"><a class="code" href="namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">	return ::Steinberg::kResultOk</a>;                              \</div>
 <div class="line">}</div>
-<div class="ttc" id="namespaceSteinberg_1_1FUnknownPrivate_html_aa492cc7f50f5f6bfb7bd727a115e211e"><div class="ttname"><a href="namespaceSteinberg_1_1FUnknownPrivate.html#aa492cc7f50f5f6bfb7bd727a115e211e">Steinberg::FUnknownPrivate::iidEqual</a></div><div class="ttdeci">SMTG_ALWAYS_INLINE bool iidEqual(const void *iid1, const void *iid2)</div><div class="ttdef"><b>Definition:</b> funknown.h:222</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df"><div class="ttname"><a href="namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">Steinberg::kResultOk</a></div><div class="ttdef"><b>Definition:</b> funknown.h:200</div></div>
+<div class="ttc" id="namespaceSteinberg_1_1FUnknownPrivate_html_aa492cc7f50f5f6bfb7bd727a115e211e"><div class="ttname"><a href="namespaceSteinberg_1_1FUnknownPrivate.html#aa492cc7f50f5f6bfb7bd727a115e211e">Steinberg::FUnknownPrivate::iidEqual</a></div><div class="ttdeci">SMTG_ALWAYS_INLINE bool iidEqual(const void *iid1, const void *iid2)</div><div class="ttdef"><b>Definition:</b> funknown.h:205</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df"><div class="ttname"><a href="namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">Steinberg::kResultOk</a></div><div class="ttdef"><b>Definition:</b> funknown.h:183</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -573,11 +576,11 @@ Functions</h2></td></tr>
 <div class="line">    *obj = <span class="keyword">nullptr</span>;                                                                                       <a class="code" href="namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba21f2c8af375a407ff9fb8d10e8e73a17">\</a></div>
 <div class="line"><a class="code" href="namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba21f2c8af375a407ff9fb8d10e8e73a17">	return ::Steinberg::kNoInterface</a>;                                                               \</div>
 <div class="line">}</div>
-<div class="ttc" id="funknown_8h_html_a1884893f6b75952d6e29bcd333f3ea40"><div class="ttname"><a href="funknown_8h.html#a1884893f6b75952d6e29bcd333f3ea40">QUERY_INTERFACE</a></div><div class="ttdeci">#define QUERY_INTERFACE(iid, obj, InterfaceIID, InterfaceName)</div><div class="ttdef"><b>Definition:</b> funknown.h:138</div></div>
-<div class="ttc" id="classSteinberg_1_1FUnknown_html_ae78a44399218c930be44d3aa46521d0e"><div class="ttname"><a href="classSteinberg_1_1FUnknown.html#ae78a44399218c930be44d3aa46521d0e">Steinberg::FUnknown::iid</a></div><div class="ttdeci">static const FUID iid</div><div class="ttdef"><b>Definition:</b> funknown.h:374</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a32680add5f0b1c8a81e5b1c4cfe6a30c"><div class="ttname"><a href="namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">Steinberg::TUID</a></div><div class="ttdeci">int8 TUID[16]</div><div class="ttdoc">plain UID type </div><div class="ttdef"><b>Definition:</b> funknown.h:217</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a902761e005a6252e538c766de48fc957"><div class="ttname"><a href="namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">Steinberg::tresult</a></div><div class="ttdeci">int32 tresult</div><div class="ttdef"><b>Definition:</b> ftypes.h:94</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a06fc87d81c62e9abb8790b6e5713c55ba21f2c8af375a407ff9fb8d10e8e73a17"><div class="ttname"><a href="namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba21f2c8af375a407ff9fb8d10e8e73a17">Steinberg::kNoInterface</a></div><div class="ttdef"><b>Definition:</b> funknown.h:199</div></div>
+<div class="ttc" id="funknown_8h_html_a1884893f6b75952d6e29bcd333f3ea40"><div class="ttname"><a href="funknown_8h.html#a1884893f6b75952d6e29bcd333f3ea40">QUERY_INTERFACE</a></div><div class="ttdeci">#define QUERY_INTERFACE(iid, obj, InterfaceIID, InterfaceName)</div><div class="ttdef"><b>Definition:</b> funknown.h:121</div></div>
+<div class="ttc" id="classSteinberg_1_1FUnknown_html_ae78a44399218c930be44d3aa46521d0e"><div class="ttname"><a href="classSteinberg_1_1FUnknown.html#ae78a44399218c930be44d3aa46521d0e">Steinberg::FUnknown::iid</a></div><div class="ttdeci">static const FUID iid</div><div class="ttdef"><b>Definition:</b> funknown.h:363</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a32680add5f0b1c8a81e5b1c4cfe6a30c"><div class="ttname"><a href="namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">Steinberg::TUID</a></div><div class="ttdeci">int8 TUID[16]</div><div class="ttdoc">plain UID type </div><div class="ttdef"><b>Definition:</b> funknown.h:200</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a902761e005a6252e538c766de48fc957"><div class="ttname"><a href="namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">Steinberg::tresult</a></div><div class="ttdeci">int32 tresult</div><div class="ttdef"><b>Definition:</b> ftypes.h:76</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a06fc87d81c62e9abb8790b6e5713c55ba21f2c8af375a407ff9fb8d10e8e73a17"><div class="ttname"><a href="namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba21f2c8af375a407ff9fb8d10e8e73a17">Steinberg::kNoInterface</a></div><div class="ttdef"><b>Definition:</b> funknown.h:182</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -612,24 +615,24 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><a class="code" href="funknown_8h.html#ae3db5eac4c75b5199dcdc4462b6289aa">IMPLEMENT_REFCOUNT</a> (ClassName)                                   <a class="code" href="funknown_8h.html#a023a5c16eb6b8a0057d712343f9d752c">\</a></div>
 <div class="line"><a class="code" href="funknown_8h.html#a023a5c16eb6b8a0057d712343f9d752c">	IMPLEMENT_QUERYINTERFACE</a> (ClassName, InterfaceName, ClassIID)</div>
-<div class="ttc" id="funknown_8h_html_a023a5c16eb6b8a0057d712343f9d752c"><div class="ttname"><a href="funknown_8h.html#a023a5c16eb6b8a0057d712343f9d752c">IMPLEMENT_QUERYINTERFACE</a></div><div class="ttdeci">#define IMPLEMENT_QUERYINTERFACE(ClassName, InterfaceName, ClassIID)</div><div class="ttdef"><b>Definition:</b> funknown.h:147</div></div>
-<div class="ttc" id="funknown_8h_html_ae3db5eac4c75b5199dcdc4462b6289aa"><div class="ttname"><a href="funknown_8h.html#ae3db5eac4c75b5199dcdc4462b6289aa">IMPLEMENT_REFCOUNT</a></div><div class="ttdeci">#define IMPLEMENT_REFCOUNT(ClassName)</div><div class="ttdef"><b>Definition:</b> funknown.h:118</div></div>
+<div class="ttc" id="funknown_8h_html_a023a5c16eb6b8a0057d712343f9d752c"><div class="ttname"><a href="funknown_8h.html#a023a5c16eb6b8a0057d712343f9d752c">IMPLEMENT_QUERYINTERFACE</a></div><div class="ttdeci">#define IMPLEMENT_QUERYINTERFACE(ClassName, InterfaceName, ClassIID)</div><div class="ttdef"><b>Definition:</b> funknown.h:130</div></div>
+<div class="ttc" id="funknown_8h_html_ae3db5eac4c75b5199dcdc4462b6289aa"><div class="ttname"><a href="funknown_8h.html#ae3db5eac4c75b5199dcdc4462b6289aa">IMPLEMENT_REFCOUNT</a></div><div class="ttdeci">#define IMPLEMENT_REFCOUNT(ClassName)</div><div class="ttdef"><b>Definition:</b> funknown.h:101</div></div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

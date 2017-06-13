@@ -71,6 +71,11 @@ tresult PLUGIN_API ThruZeroProcessor::initialize (FUnknown* context)
 //-----------------------------------------------------------------------------
 tresult PLUGIN_API ThruZeroProcessor::terminate ()
 {
+	if (buffer)
+		delete [] buffer;
+	if (buffer2)
+		delete [] buffer2;
+	buffer = buffer2 = 0;
 	return BaseProcessor::terminate ();
 }
 

@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.0
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/adelay/source/exampletest.cpp
@@ -59,7 +58,7 @@ tresult PLUGIN_API ADelayTestFactory::createTests (FUnknown* context, ITestSuite
 	FUnknownPtr<IPlugProvider> plugProvider (context);
 	if (plugProvider)
 	{
-		parentSuite->addTest ("ExampleTest", new ADelayTest (plugProvider));
+		parentSuite->addTest ("ExampleTest", owned (new ADelayTest (plugProvider)));
 	}
 	return kResultTrue;
 }
@@ -91,6 +90,7 @@ bool PLUGIN_API ADelayTest::run (ITestResult* testResult)
 		testResult->addMessage (String ("Correct IComponent"));
 	else
 		testResult->addErrorMessage (String ("Unknown IComponent"));
+	plugProvider->releasePlugIn (processor, controller);
 	return (controller && processor);
 }
 

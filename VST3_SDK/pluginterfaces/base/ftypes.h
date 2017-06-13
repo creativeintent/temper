@@ -7,32 +7,14 @@
 // Description : Basic data types
 //
 //-----------------------------------------------------------------------------
-// LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// This file is part of a Steinberg SDK. It is subject to the license terms
+// in the LICENSE file found in the top-level directory of this distribution
+// and at www.steinberg.net/sdklicenses. 
+// No part of the SDK, including this file, may be copied, modified, propagated,
+// or distributed except according to the terms contained in the LICENSE file.
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-// OF THE POSSIBILITY OF SUCH DAMAGE.
-//------------------------------------------------------------------------------
 
-#ifndef __ftypes__
-#define __ftypes__
+#pragma once
 
 #include "fplatform.h"
 
@@ -61,12 +43,12 @@ namespace Steinberg
 	typedef short int16;
 	typedef unsigned short uint16;
 
-#if (MAC && __LP64__) || TARGET_OS_IPHONE
-	typedef int int32;
-	typedef unsigned int uint32;
-#else
+#if WINDOWS && !defined(__GNUC__)
 	typedef long int32;
 	typedef unsigned long uint32;
+#else
+	typedef int int32;
+	typedef unsigned int uint32;
 #endif
 
 	static const int32 kMaxLong = 0x7fffffff;
@@ -135,12 +117,15 @@ namespace Steinberg
 	const FIDString kPlatformStringWin = "WIN";
 	const FIDString kPlatformStringMac = "MAC";
 	const FIDString kPlatformStringIOS = "IOS";
+	const FIDString kPlatformStringLinux = "Linux";
 #if WINDOWS
 	const FIDString kPlatformString = kPlatformStringWin;
 #elif TARGET_OS_IPHONE
 	const FIDString kPlatformString = kPlatformStringIOS;
 #elif MAC
 	const FIDString kPlatformString = kPlatformStringMac;
+#elif LINUX
+	const FIDString kPlatformString = kPlatformStringLinux;
 #endif
 
 //------------------------------------------------------------------------
@@ -185,7 +170,7 @@ namespace Steinberg
 // always inline macros (only when RELEASE is 1)
 //----------------------------------------------------------------------------
 #if RELEASE
-	#if MAC
+	#if MAC || LINUX
 		#define SMTG_ALWAYS_INLINE	__inline__ __attribute__((__always_inline__))
 		#define SMTG_NEVER_INLINE __attribute__((noinline))
 	#elif WINDOWS
@@ -205,5 +190,3 @@ namespace Steinberg
 // Enable this for old compilers
 // #define nullptr NULL
 #endif
-
-#endif	// __ftypes__

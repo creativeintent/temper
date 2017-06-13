@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['max',['Max',['../../base/namespaceSteinberg.html#a0f480f7384f085c2606eff5f310ad194',1,'Steinberg']]],
-  ['memorystream',['MemoryStream',['../classSteinberg_1_1MemoryStream.html#a28d4c334557e9abb58b418e80c709905',1,'Steinberg::MemoryStream::MemoryStream()'],['../classSteinberg_1_1MemoryStream.html#a6bcbcbec3385623cdb252d1082ae5766',1,'Steinberg::MemoryStream::MemoryStream(void *memory, TSize memorySize)']]],
-  ['min',['Min',['../../base/namespaceSteinberg.html#affba9ed0dfe13309d79094f10bbc6021',1,'Steinberg']]],
-  ['mix32',['mix32',['../namespaceSteinberg_1_1Vst_1_1Algo.html#a24782ecf71e6cf327e0614ec373624cc',1,'Steinberg::Vst::Algo']]],
-  ['mix64',['mix64',['../namespaceSteinberg_1_1Vst_1_1Algo.html#a462ca40a45befc344ea3de34256c067b',1,'Steinberg::Vst::Algo']]]
+  ['licensecheck',['licenseCheck',['../classVST3_1_1Hosting_1_1FactoryInfo.html#a8f0936359821bafbd5ec36603d6b7874',1,'VST3::Hosting::FactoryInfo']]],
+  ['load',['load',['../classVST3_1_1Hosting_1_1Module.html#ad210dec17843e489c4c87cb1d401444c',1,'VST3::Hosting::Module']]],
+  ['loadattributes',['loadAttributes',['../../base/classSteinberg_1_1IPersistent.html#a34ba5d29ec54b8d49213549ada3d59fe',1,'Steinberg::IPersistent']]],
+  ['loadnextpreset',['loadNextPreset',['../../vstinterfaces/classSteinberg_1_1Vst_1_1IInterAppAudioPresetManager.html#a6d707548076cb27d64e04c155ccba7d2',1,'Steinberg::Vst::IInterAppAudioPresetManager::loadNextPreset()'],['../classSteinberg_1_1Vst_1_1InterAppAudio_1_1PresetManager.html#a3cabde7a9da60ba41d928d08bc60b374',1,'Steinberg::Vst::InterAppAudio::PresetManager::loadNextPreset()']]],
+  ['loadpreset',['loadPreset',['../classSteinberg_1_1Vst_1_1PresetFile.html#ab9774c647c07cb6efbdab5e84b3fe476',1,'Steinberg::Vst::PresetFile::loadPreset()'],['../classSteinberg_1_1Vst_1_1InterAppAudio_1_1PresetManager.html#a499c00d1698d113024242d598d5ace69',1,'Steinberg::Vst::InterAppAudio::PresetManager::loadPreset(bool next)'],['../classSteinberg_1_1Vst_1_1InterAppAudio_1_1PresetManager.html#a89d71e499b5dd3bf4c5ed2d75811f1b5',1,'Steinberg::Vst::InterAppAudio::PresetManager::loadPreset(const char *path)']]],
+  ['loadpreviouspreset',['loadPreviousPreset',['../../vstinterfaces/classSteinberg_1_1Vst_1_1IInterAppAudioPresetManager.html#a726a6db5c25f476bcb9d0f8bc7f24245',1,'Steinberg::Vst::IInterAppAudioPresetManager::loadPreviousPreset()'],['../classSteinberg_1_1Vst_1_1InterAppAudio_1_1PresetManager.html#a03e03c3eacafc1b39524a5ccbab50faf',1,'Steinberg::Vst::InterAppAudio::PresetManager::loadPreviousPreset()']]]
 ];

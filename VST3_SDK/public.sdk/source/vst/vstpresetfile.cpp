@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vstpresetfile.cpp
@@ -9,31 +8,35 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
 #include "vstpresetfile.h"
 
+#include <algorithm>
 
 namespace Steinberg {
 namespace Vst {
@@ -100,7 +103,7 @@ bool PresetFile::savePreset (IBStream* stream, const FUID& classID,
 
 //------------------------------------------------------------------------
 bool PresetFile::loadPreset (IBStream* stream, const FUID& classID, IComponent* component, 
-							 IEditController* editController, TArray<FUID>* otherClassIDArray)
+							 IEditController* editController, std::vector<FUID>* otherClassIDArray)
 {
 	PresetFile pf (stream);
 	if (!pf.readChunkList ())
@@ -110,7 +113,9 @@ bool PresetFile::loadPreset (IBStream* stream, const FUID& classID, IComponent* 
 	{
 		if (otherClassIDArray)
 		{
-			if (!otherClassIDArray->contains (pf.getClassID ()))
+			// continue to load only if found in supported ID else abort load
+			if (std::find (otherClassIDArray->begin (), otherClassIDArray->end (),
+			               pf.getClassID ()) == otherClassIDArray->end ())
 				return false;
 		}
 		else
@@ -864,9 +869,35 @@ tresult PLUGIN_API BufferStream::seek (int64 pos, int32 mode, int64* result)
 	bool res = false;
 	switch (mode)
 	{
-		case IBStream::kIBSeekSet: res = mBuffer.setFillSize (pos); break;
-		case IBStream::kIBSeekCur: res = mBuffer.setFillSize (mBuffer.getFillSize () + pos); break;
-		case IBStream::kIBSeekEnd: res = mBuffer.setFillSize (mBuffer.getSize () - pos); break;
+		//--- -----------------
+		case IBStream::kIBSeekSet:
+		{
+			int64 tmp = pos;
+			if (tmp < 0)
+				tmp = 0;
+			res = mBuffer.setFillSize (static_cast<uint32> (tmp));
+		}
+		break;
+
+		//--- -----------------
+		case IBStream::kIBSeekCur:
+		{
+			int64 tmp = mBuffer.getFillSize () + pos;
+			if (tmp < 0)
+				tmp = 0;
+			res = mBuffer.setFillSize (static_cast<uint32> (tmp));
+		}
+		break;
+
+		//--- -----------------
+		case IBStream::kIBSeekEnd:
+		{
+			int64 tmp = mBuffer.getSize () - pos;
+			if (tmp < 0)
+				tmp = 0;
+			res = mBuffer.setFillSize (static_cast<uint32> (tmp));
+		}
+		break;
 	}
 	if (res && result)
 		*result = mBuffer.getFillSize ();

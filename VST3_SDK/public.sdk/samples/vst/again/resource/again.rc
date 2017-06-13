@@ -3,11 +3,13 @@
 
 #define APSTUDIO_READONLY_SYMBOLS
 
-slider_handle.png		DATA  "slider_handle.png"
-slider_background.bmp	DATA  "slider_background.bmp"
-vu_on.bmp				DATA  "vu_on.bmp"
-vu_off.bmp				DATA  "vu_off.bmp"
-background.png			DATA  "background.png"
+again.uidesc            DATA  "again.uidesc"
+slider_handle.png		PNG  "slider_handle.png"
+slider_handle#2x.png	PNG  "slider_handle#2x.png"
+slider_background.png	PNG  "slider_background.png"
+vu_on.png				PNG  "vu_on.png"
+vu_off.png				PNG  "vu_off.png"
+background.png			PNG  "background.png"
 
 /////////////////////////////////////////////////////////////////////////////
 // Version

@@ -1,8 +1,9 @@
 var searchData=
 [
+  ['how_20to_20use_20cmake_20for_20building_20vst_203_20plug_2din',['How to use cmake for Building VST 3 Plug-in',['../../vstinterfaces/cmakeUse.html',1,'']]],
   ['hasdelay',['hasDelay',['../structSteinberg_1_1Vst_1_1BypassProcessor_1_1Delay.html#a1a013a451f71921f677fc504173431e3',1,'Steinberg::Vst::BypassProcessor::Delay']]],
-  ['haspitchnames',['hasPitchNames',['../classSteinberg_1_1Vst_1_1ProgramList.html#abcd21a0dc142da8852f0c14e8bc01dcf',1,'Steinberg::Vst::ProgramList::hasPitchNames()'],['../classSteinberg_1_1Vst_1_1ProgramListWithPitchNames.html#aad7de2a4c771c626db7490baabc1ceff',1,'Steinberg::Vst::ProgramListWithPitchNames::hasPitchNames()']]],
-  ['hasprogrampitchnames',['hasProgramPitchNames',['../../vstinterfaces/classSteinberg_1_1Vst_1_1IUnitInfo.html#a63c02601259d4e8690f26eefaad53195',1,'Steinberg::Vst::IUnitInfo::hasProgramPitchNames()'],['../classSteinberg_1_1Vst_1_1EditControllerEx1.html#ab46f3e7b124b32780b6dda4b7ba77ab0',1,'Steinberg::Vst::EditControllerEx1::hasProgramPitchNames()']]],
+  ['haspitchnames',['hasPitchNames',['../classSteinberg_1_1Vst_1_1ProgramList.html#abcd21a0dc142da8852f0c14e8bc01dcf',1,'Steinberg::Vst::ProgramList::hasPitchNames()'],['../classSteinberg_1_1Vst_1_1ProgramListWithPitchNames.html#a64c521f40929f86cadce19cab89cf272',1,'Steinberg::Vst::ProgramListWithPitchNames::hasPitchNames()']]],
+  ['hasprogrampitchnames',['hasProgramPitchNames',['../../vstinterfaces/classSteinberg_1_1Vst_1_1IUnitInfo.html#a63c02601259d4e8690f26eefaad53195',1,'Steinberg::Vst::IUnitInfo::hasProgramPitchNames()'],['../classSteinberg_1_1Vst_1_1EditControllerEx1.html#a803746c6ff155524e28fe85754483a23',1,'Steinberg::Vst::EditControllerEx1::hasProgramPitchNames()']]],
   ['havepointsbeenread',['havePointsBeenRead',['../classSteinberg_1_1Vst_1_1ParamChanges.html#ad9ef33d81be2e39cc162a3ac4f9a8983',1,'Steinberg::Vst::ParamChanges']]],
   ['host',['host',['../../vstinterfaces/structSteinberg_1_1Vst_1_1RepresentationInfo.html#a74766a169cd1c18bc001b99e1984a901',1,'Steinberg::Vst::RepresentationInfo']]],
   ['hostapp_2eh',['HostApp.h',['../HostApp_8h.html',1,'']]],

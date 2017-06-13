@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaImageController__
-#define __mdaImageController__
+#pragma once
 
 #include "mdaBaseController.h"
 #include "mdaImageProcessor.h"
@@ -31,8 +30,8 @@ public:
 	ImageController ();
 	~ImageController ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
 
 	//-----------------------------------------------------------------------------
 	enum ParameterIDs {
@@ -51,5 +50,3 @@ public:
 };
 
 }}} // namespaces
-
-#endif

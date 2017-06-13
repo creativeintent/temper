@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['optr',['OPtr',['../classSteinberg_1_1OPtr.html',1,'Steinberg']]]
+  ['keycode',['KeyCode',['../structSteinberg_1_1KeyCode.html',1,'Steinberg']]]
 ];

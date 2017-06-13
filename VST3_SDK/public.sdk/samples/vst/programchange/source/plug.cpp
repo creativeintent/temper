@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/XX/source/plug.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,14 +34,14 @@
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-
 #include "plug.h"
 #include "plugparamids.h"
-#include "plugcids.h"	// for class ids
+#include "plugcids.h" // for class ids
 
 #include "pluginterfaces/base/ibstream.h"
 #include "pluginterfaces/vst/ivstparameterchanges.h"
 #include "pluginterfaces/vst/ivstevents.h"
+#include "pluginterfaces/base/futils.h"
 
 #include <stdio.h>
 
@@ -52,8 +51,7 @@ namespace Vst {
 //------------------------------------------------------------------------
 // Plug Implementation
 //------------------------------------------------------------------------
-Plug::Plug ()
-: bBypass (false)
+Plug::Plug () : bBypass (false), currentProgram (0), currentGainValue (0.f)
 {
 	// register its editor class (the same than used in plugentry.cpp)
 	setControllerClass (PlugControllerUID);
@@ -72,7 +70,7 @@ tresult PLUGIN_API Plug::initialize (FUnknown* context)
 
 	//---create Audio In/Out busses------
 	// we want a stereo Input and a Stereo Output
-	addAudioInput  (STR16 ("Stereo In"),  SpeakerArr::kStereo);
+	addAudioInput (STR16 ("Stereo In"), SpeakerArr::kStereo);
 	addAudioOutput (STR16 ("Stereo Out"), SpeakerArr::kStereo);
 
 	return kResultOk;
@@ -94,43 +92,77 @@ tresult PLUGIN_API Plug::process (ProcessData& data)
 			{
 				int32 offsetSamples;
 				double value;
-				int32 numPoints = paramQueue->getPointCount ();				
+				int32 numPoints = paramQueue->getPointCount ();
 				switch (paramQueue->getParameterId ())
 				{
 					case kBypassId:
-						if (paramQueue->getPoint (numPoints - 1,  offsetSamples, value) == kResultTrue)
+						if (paramQueue->getPoint (numPoints - 1, offsetSamples, value) ==
+						    kResultTrue)
 						{
 							bBypass = (value > 0.5f);
 						}
 						break;
 
 					case kProgramId:
-						if (paramQueue->getPoint (numPoints - 1, offsetSamples, value) == kResultTrue)
+						if (paramQueue->getPoint (numPoints - 1, offsetSamples, value) ==
+						    kResultTrue)
 						{
 							// here we get the last set program
-							currentProgram = int32 (value * 100.f + 0.5f);
+							currentProgram = FromNormalized<ParamValue> (value, kNumProgs - 1);
+						}
+						break;
+
+					case kGainId:
+						if (paramQueue->getPoint (numPoints - 1, offsetSamples, value) ==
+						    kResultTrue)
+						{
+							currentGainValue = value;
 						}
 						break;
 				}
 			}
 		}
 	}
-	
-	//-------------------------------------
+
+	//--- ----------------------------------
 	//---3) Process Audio---------------------
-	//-------------------------------------
+	//--- ----------------------------------
 	if (data.numInputs == 0 || data.numOutputs == 0)
 	{
 		// nothing to do
 		return kResultOk;
 	}
 
-	// (simplification) we suppose in this example that we have the same input channel count than the output
+	// (simplification) we suppose in this example that we have the same input channel count than
+	// the output
 	int32 numChannels = data.inputs[0].numChannels;
 
 	//---get audio buffers----------------
-	float** in  = data.inputs[0].channelBuffers32;
+	float** in = data.inputs[0].channelBuffers32;
 	float** out = data.outputs[0].channelBuffers32;
+
+	if (data.inputs[0].silenceFlags != 0)
+	{
+		// mark output silence too
+		data.outputs[0].silenceFlags = data.inputs[0].silenceFlags;
+
+		int32 sampleFrames = data.numSamples;
+
+		// the Plug-in has to be sure that if it sets the flags silence that the output buffer are
+		// clear
+		for (int32 i = 0; i < numChannels; i++)
+		{
+			// do not need to be cleared if the buffers are the same (in this case input buffer are
+			// already cleared by the host)
+			if (in[i] != out[i])
+			{
+				memset (out[i], 0, sampleFrames * sizeof (float));
+			}
+		}
+
+		// nothing to do at this point
+		return kResultOk;
+	}
 
 	// mark our outputs has not silent
 	data.outputs[0].silenceFlags = 0;
@@ -141,7 +173,7 @@ tresult PLUGIN_API Plug::process (ProcessData& data)
 		int32 sampleFrames = data.numSamples;
 		for (int32 i = 0; i < numChannels; i++)
 		{
-			// dont need to be copied if the buffers are the same
+			// do not need to be copied if the buffers are the same
 			if (in[i] != out[i])
 			{
 				memcpy (out[i], in[i], sampleFrames * sizeof (float));
@@ -151,13 +183,13 @@ tresult PLUGIN_API Plug::process (ProcessData& data)
 	else
 	{
 		// here we use the current program as gain value...
-		float gain = currentProgram / 100.f;
+		float gain = currentGainValue;
 
 		// in real Plug-in it would be better to do dezippering to avoid jump (click) in gain value
 		for (int32 i = 0; i < numChannels; i++)
 		{
 			int32 sampleFrames = data.numSamples;
-			float* ptrIn  = in[i];
+			float* ptrIn = in[i];
 			float* ptrOut = out[i];
 			float tmp;
 			while (--sampleFrames >= 0)
@@ -186,9 +218,8 @@ tresult PLUGIN_API Plug::setState (IBStream* state)
 #if BYTEORDER == kBigEndian
 	SWAP_32 (savedBypass)
 #endif
-	
-	bBypass = savedBypass > 0;
 
+	bBypass = savedBypass > 0;
 
 	//--- -----
 	int32 savedProgram = 0;
@@ -203,6 +234,18 @@ tresult PLUGIN_API Plug::setState (IBStream* state)
 
 	currentProgram = savedProgram;
 
+	// read the Gain param
+	float val;
+	if (state->read (&val, sizeof (val)) != kResultOk)
+	{
+		return kResultFalse;
+	}
+
+#if BYTEORDER == kBigEndian
+	SWAP_32 (val)
+#endif
+	currentGainValue = val;
+
 	return kResultOk;
 }
 
@@ -216,7 +259,7 @@ tresult PLUGIN_API Plug::getState (IBStream* state)
 #if BYTEORDER == kBigEndian
 	SWAP_32 (toSaveBypass)
 #endif
-	state->write (&toSaveBypass, sizeof (int32));
+	state->write (&toSaveBypass, sizeof (toSaveBypass));
 
 	//--- -----
 	int32 toSaveProgram = currentProgram;
@@ -224,10 +267,17 @@ tresult PLUGIN_API Plug::getState (IBStream* state)
 #if BYTEORDER == kBigEndian
 	SWAP_32 (toSaveProgram)
 #endif
-	state->write (&toSaveProgram, sizeof (int32));
-		
+	state->write (&toSaveProgram, sizeof (toSaveProgram));
+
+	//--- -----
+	float toSaveGain = currentGainValue;
+
+#if BYTEORDER == kBigEndian
+	SWAP_32 (toSaveGain)
+#endif
+	state->write (&toSaveGain, sizeof (toSaveGain));
+
 	return kResultOk;
 }
-
-
-}} // namespaces
+}
+} // namespaces

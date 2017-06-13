@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaTalkBoxProcessor__
-#define __mdaTalkBoxProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,18 +29,18 @@ public:
 	TalkBoxProcessor ();
 	~TalkBoxProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new TalkBoxProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 	void lpc(float *buf, float *car, int32 n, int32 o);
 	void lpc_durbin(float *r, int32 p, float *k, float *g);
 
@@ -58,5 +57,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

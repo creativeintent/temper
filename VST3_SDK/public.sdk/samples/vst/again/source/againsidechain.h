@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/again/source/againsidechain.h
@@ -11,7 +10,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -47,23 +46,26 @@ namespace Vst {
 //------------------------------------------------------------------------
 // AGainWithSideChain: directly derived from AGain
 //------------------------------------------------------------------------
-class AGainWithSideChain: public AGain
+class AGainWithSideChain : public AGain
 {
 public:
 	// just overwrite some functions
-	static FUnknown* createInstance (void* context)
+	static FUnknown* createInstance (void* /*context*/)
 	{
 		return (IAudioProcessor*)new AGainWithSideChain;
 	}
 
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API process (ProcessData& data);
-	tresult PLUGIN_API setBusArrangements (SpeakerArrangement* inputs, int32 numIns, SpeakerArrangement* outputs, int32 numOuts);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API process (ProcessData& data) SMTG_OVERRIDE;
+	tresult PLUGIN_API setBusArrangements (SpeakerArrangement* inputs, int32 numIns,
+	                                       SpeakerArrangement* outputs,
+	                                       int32 numOuts) SMTG_OVERRIDE;
 
 protected:
 	//==============================================================================
 	template <typename SampleType>
-	SampleType processAudioWithSideChain (SampleType** in, SampleType** out, SampleType** aux, int32 numChannels, int32 sampleFrames, float gain);
+	SampleType processAudioWithSideChain (SampleType** in, SampleType** out, SampleType** aux,
+	                                      int32 numChannels, int32 sampleFrames, float gain);
 };
 
 //------------------------------------------------------------------------

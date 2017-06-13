@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSTGUI
-   &#160;<span id="projectnumber">4.3</span>
+   &#160;<span id="projectnumber">4.4</span>
    </div>
    <div id="projectbrief">Graphical User Interface Framework not only for VST plugins</div>
   </td>
@@ -120,12 +120,16 @@ $(document).ready(function(){initNavTree('class_v_s_t_g_u_i_1_1_i_split_view_con
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab82c1e3b5b31dcc78f6f2f31dc5b7d4e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_i_split_view_controller.html#ab82c1e3b5b31dcc78f6f2f31dc5b7d4e">getSplitViewSizeConstraint</a> (int32_t index, <a class="el" href="namespace_v_s_t_g_u_i.html#a885c146cc8f8489307da8a7654cde482">CCoord</a> &amp;minSize, <a class="el" href="namespace_v_s_t_g_u_i.html#a885c146cc8f8489307da8a7654cde482">CCoord</a> &amp;maxSize, <a class="el" href="class_v_s_t_g_u_i_1_1_c_split_view.html">CSplitView</a> *splitView)=0</td></tr>
+<tr class="memdesc:ab82c1e3b5b31dcc78f6f2f31dc5b7d4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the minimum and maximum size (width or height) of a view.  <a href="#ab82c1e3b5b31dcc78f6f2f31dc5b7d4e">More...</a><br /></td></tr>
 <tr class="separator:ab82c1e3b5b31dcc78f6f2f31dc5b7d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ba666b563a523bc8ab020fa8303d159"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_v_s_t_g_u_i_1_1_i_split_view_separator_drawer.html">ISplitViewSeparatorDrawer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_i_split_view_controller.html#a3ba666b563a523bc8ab020fa8303d159">getSplitViewSeparatorDrawer</a> (<a class="el" href="class_v_s_t_g_u_i_1_1_c_split_view.html">CSplitView</a> *splitView)=0</td></tr>
+<tr class="memdesc:a3ba666b563a523bc8ab020fa8303d159"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the separator drawer.  <a href="#a3ba666b563a523bc8ab020fa8303d159">More...</a><br /></td></tr>
 <tr class="separator:a3ba666b563a523bc8ab020fa8303d159"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cbf3519cc4093ffc0adc1f21cb07403"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_i_split_view_controller.html#a3cbf3519cc4093ffc0adc1f21cb07403">storeViewSize</a> (int32_t index, const <a class="el" href="namespace_v_s_t_g_u_i.html#a885c146cc8f8489307da8a7654cde482">CCoord</a> &amp;size, <a class="el" href="class_v_s_t_g_u_i_1_1_c_split_view.html">CSplitView</a> *splitView)=0</td></tr>
+<tr class="memdesc:a3cbf3519cc4093ffc0adc1f21cb07403"><td class="mdescLeft">&#160;</td><td class="mdescRight">store the size of the view.  <a href="#a3cbf3519cc4093ffc0adc1f21cb07403">More...</a><br /></td></tr>
 <tr class="separator:a3cbf3519cc4093ffc0adc1f21cb07403"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70809c44eaadecda65ee0e0c289980c1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_i_split_view_controller.html#a70809c44eaadecda65ee0e0c289980c1">restoreViewSize</a> (int32_t index, <a class="el" href="namespace_v_s_t_g_u_i.html#a885c146cc8f8489307da8a7654cde482">CCoord</a> &amp;size, <a class="el" href="class_v_s_t_g_u_i_1_1_c_split_view.html">CSplitView</a> *splitView)=0</td></tr>
+<tr class="memdesc:a70809c44eaadecda65ee0e0c289980c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">restore the size of the view.  <a href="#a70809c44eaadecda65ee0e0c289980c1">More...</a><br /></td></tr>
 <tr class="separator:a70809c44eaadecda65ee0e0c289980c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -154,18 +158,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>return the separator drawer. </p>
 
-<p><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_i_split_view_controller_a3ba666b563a523bc8ab020fa8303d159_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_i_split_view_controller_a3ba666b563a523bc8ab020fa8303d159_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_i_split_view_controller_a3ba666b563a523bc8ab020fa8303d159_icgraph" id="class_v_s_t_g_u_i_1_1_i_split_view_controller_a3ba666b563a523bc8ab020fa8303d159_icgraph">
-</map>
-</div>
-</p>
+<p>return the separator drawer. </p>
 
 </div>
 </div>
@@ -212,18 +206,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>return the minimum and maximum size (width or height) of a view. </p>
 
-<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_i_split_view_controller_ab82c1e3b5b31dcc78f6f2f31dc5b7d4e_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_i_split_view_controller_ab82c1e3b5b31dcc78f6f2f31dc5b7d4e_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_i_split_view_controller_ab82c1e3b5b31dcc78f6f2f31dc5b7d4e_icgraph" id="class_v_s_t_g_u_i_1_1_i_split_view_controller_ab82c1e3b5b31dcc78f6f2f31dc5b7d4e_icgraph">
-</map>
-</div>
-</p>
+<p>return the minimum and maximum size (width or height) of a view. </p>
 
 </div>
 </div>
@@ -264,18 +248,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>restore the size of the view. </p>
 
-<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_i_split_view_controller_a70809c44eaadecda65ee0e0c289980c1_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_i_split_view_controller_a70809c44eaadecda65ee0e0c289980c1_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_i_split_view_controller_a70809c44eaadecda65ee0e0c289980c1_icgraph" id="class_v_s_t_g_u_i_1_1_i_split_view_controller_a70809c44eaadecda65ee0e0c289980c1_icgraph">
-</map>
-</div>
-</p>
+<p>restore the size of the view. </p>
 
 </div>
 </div>
@@ -316,18 +290,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>store the size of the view. </p>
 
-<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_i_split_view_controller_a3cbf3519cc4093ffc0adc1f21cb07403_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_i_split_view_controller_a3cbf3519cc4093ffc0adc1f21cb07403_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_i_split_view_controller_a3cbf3519cc4093ffc0adc1f21cb07403_icgraph" id="class_v_s_t_g_u_i_1_1_i_split_view_controller_a3cbf3519cc4093ffc0adc1f21cb07403_icgraph">
-</map>
-</div>
-</p>
+<p>store the size of the view. </p>
 
 </div>
 </div>
@@ -340,7 +304,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_v_s_t_g_u_i.html">VSTGUI</a></li><li class="navelem"><a class="el" href="class_v_s_t_g_u_i_1_1_i_split_view_controller.html">ISplitViewController</a></li>
-    <li class="footer">Generated on Mon Jun 27 2016 16:32:22 for VSTGUI by
+    <li class="footer">Generated on Fri Mar 3 2017 10:55:28 for VSTGUI by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

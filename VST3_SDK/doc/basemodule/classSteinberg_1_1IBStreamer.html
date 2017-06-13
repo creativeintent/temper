@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Base Module
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -119,18 +119,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa119920e997774dcbfdcabeffcbc231b"><td class="memItemLeft" align="right" valign="top">IBStream *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#aa119920e997774dcbfdcabeffcbc231b">getStream</a> ()</td></tr>
 <tr class="memdesc:aa119920e997774dcbfdcabeffcbc231b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the associated IBStream.  <a href="#aa119920e997774dcbfdcabeffcbc231b">More...</a><br /></td></tr>
 <tr class="separator:aa119920e997774dcbfdcabeffcbc231b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30c5d72899e925b78e7fcccc9c7bff27"><td class="memItemLeft" align="right" valign="top">TSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#a30c5d72899e925b78e7fcccc9c7bff27">readRaw</a> (void *, TSize)</td></tr>
-<tr class="memdesc:a30c5d72899e925b78e7fcccc9c7bff27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one buffer of size.  <a href="#a30c5d72899e925b78e7fcccc9c7bff27">More...</a><br /></td></tr>
-<tr class="separator:a30c5d72899e925b78e7fcccc9c7bff27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b0b36e7030ef93b2f442c4c1d8ef3fe"><td class="memItemLeft" align="right" valign="top">TSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#a8b0b36e7030ef93b2f442c4c1d8ef3fe">writeRaw</a> (const void *, TSize)</td></tr>
-<tr class="memdesc:a8b0b36e7030ef93b2f442c4c1d8ef3fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write one buffer of size.  <a href="#a8b0b36e7030ef93b2f442c4c1d8ef3fe">More...</a><br /></td></tr>
-<tr class="separator:a8b0b36e7030ef93b2f442c4c1d8ef3fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5476a1dd552c04ca3b0d77dcd033d0c"><td class="memItemLeft" align="right" valign="top">int64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#ab5476a1dd552c04ca3b0d77dcd033d0c">seek</a> (int64, <a class="el" href="namespaceSteinberg.html#a78e5e10c2df97a6a5a6096069ade24db">FSeekMode</a>)</td></tr>
-<tr class="memdesc:ab5476a1dd552c04ca3b0d77dcd033d0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set file position for stream.  <a href="#ab5476a1dd552c04ca3b0d77dcd033d0c">More...</a><br /></td></tr>
-<tr class="separator:ab5476a1dd552c04ca3b0d77dcd033d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76f3809a9ad84bf7a50bef8cdca46d1d"><td class="memItemLeft" align="right" valign="top">int64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#a76f3809a9ad84bf7a50bef8cdca46d1d">tell</a> ()</td></tr>
-<tr class="memdesc:a76f3809a9ad84bf7a50bef8cdca46d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return current file position.  <a href="#a76f3809a9ad84bf7a50bef8cdca46d1d">More...</a><br /></td></tr>
-<tr class="separator:a76f3809a9ad84bf7a50bef8cdca46d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa597b90907c098d23d7a15daf951528b"><td class="memItemLeft" align="right" valign="top">TSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#aa597b90907c098d23d7a15daf951528b">readRaw</a> (void *, TSize) SMTG_OVERRIDE</td></tr>
+<tr class="memdesc:aa597b90907c098d23d7a15daf951528b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one buffer of size.  <a href="#aa597b90907c098d23d7a15daf951528b">More...</a><br /></td></tr>
+<tr class="separator:aa597b90907c098d23d7a15daf951528b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27a86b2c85316f0677a4bd40296b1494"><td class="memItemLeft" align="right" valign="top">TSize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#a27a86b2c85316f0677a4bd40296b1494">writeRaw</a> (const void *, TSize) SMTG_OVERRIDE</td></tr>
+<tr class="memdesc:a27a86b2c85316f0677a4bd40296b1494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write one buffer of size.  <a href="#a27a86b2c85316f0677a4bd40296b1494">More...</a><br /></td></tr>
+<tr class="separator:a27a86b2c85316f0677a4bd40296b1494"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1120bb884a96a4c670b8d2650f8659c1"><td class="memItemLeft" align="right" valign="top">int64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#a1120bb884a96a4c670b8d2650f8659c1">seek</a> (int64, <a class="el" href="namespaceSteinberg.html#a78e5e10c2df97a6a5a6096069ade24db">FSeekMode</a>) SMTG_OVERRIDE</td></tr>
+<tr class="memdesc:a1120bb884a96a4c670b8d2650f8659c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set file position for stream.  <a href="#a1120bb884a96a4c670b8d2650f8659c1">More...</a><br /></td></tr>
+<tr class="separator:a1120bb884a96a4c670b8d2650f8659c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea7097a277d6bf8ccf33c9f07ddad79a"><td class="memItemLeft" align="right" valign="top">int64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1IBStreamer.html#aea7097a277d6bf8ccf33c9f07ddad79a">tell</a> () SMTG_OVERRIDE</td></tr>
+<tr class="memdesc:aea7097a277d6bf8ccf33c9f07ddad79a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return current file position.  <a href="#aea7097a277d6bf8ccf33c9f07ddad79a">More...</a><br /></td></tr>
+<tr class="separator:aea7097a277d6bf8ccf33c9f07ddad79a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classSteinberg_1_1FStreamer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classSteinberg_1_1FStreamer')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classSteinberg_1_1FStreamer.html">FStreamer</a></td></tr>
 <tr class="memitem:a326b593fe85c31981865746c8cf0303d inherit pub_methods_classSteinberg_1_1FStreamer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FStreamer.html#a326b593fe85c31981865746c8cf0303d">FStreamer</a> (int16 <a class="el" href="classSteinberg_1_1FStreamer.html#a1f29a6ebae4e2b64b0ac03ce73924b46">byteOrder</a>=BYTEORDER)</td></tr>
 <tr class="separator:a326b593fe85c31981865746c8cf0303d inherit pub_methods_classSteinberg_1_1FStreamer"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -327,7 +327,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a30c5d72899e925b78e7fcccc9c7bff27"></a>
+<a class="anchor" id="aa597b90907c098d23d7a15daf951528b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -365,7 +365,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8b0b36e7030ef93b2f442c4c1d8ef3fe"></a>
+<a class="anchor" id="a27a86b2c85316f0677a4bd40296b1494"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -403,7 +403,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5476a1dd552c04ca3b0d77dcd033d0c"></a>
+<a class="anchor" id="a1120bb884a96a4c670b8d2650f8659c1"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -441,7 +441,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a76f3809a9ad84bf7a50bef8cdca46d1d"></a>
+<a class="anchor" id="aea7097a277d6bf8ccf33c9f07ddad79a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -491,17 +491,17 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

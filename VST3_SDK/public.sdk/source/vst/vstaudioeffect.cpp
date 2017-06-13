@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vstaudioeffect.cpp
@@ -9,26 +8,29 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+// 
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
@@ -54,7 +56,7 @@ AudioBus* AudioEffect::addAudioInput (const TChar* name, SpeakerArrangement arr,
 									  BusType busType, int32 flags)
 {
 	AudioBus* newBus = new AudioBus (name, busType, flags, arr);
-	audioInputs.append (IPtr<Vst::Bus> (newBus, false));
+	audioInputs.push_back (IPtr<Vst::Bus> (newBus, false));
 	return newBus;
 }
 
@@ -63,7 +65,7 @@ AudioBus* AudioEffect::addAudioOutput (const TChar* name, SpeakerArrangement arr
 									   BusType busType, int32 flags)
 {
 	AudioBus* newBus = new AudioBus (name, busType, flags, arr);
-	audioOutputs.append (IPtr<Vst::Bus> (newBus, false));
+	audioOutputs.push_back (IPtr<Vst::Bus> (newBus, false));
 	return newBus;
 }
 
@@ -86,7 +88,7 @@ EventBus* AudioEffect::addEventInput (const TChar* name, int32 channels,
 									  BusType busType, int32 flags)
 {
 	EventBus* newBus = new EventBus (name, busType, flags, channels);
-	eventInputs.append (IPtr<Vst::Bus> (newBus, false));
+	eventInputs.push_back (IPtr<Vst::Bus> (newBus, false));
 	return newBus;
 }
 
@@ -95,7 +97,7 @@ EventBus* AudioEffect::addEventOutput (const TChar* name, int32 channels,
 									   BusType busType, int32 flags)
 {
 	EventBus* newBus = new EventBus (name, busType, flags, channels);
-	eventOutputs.append (IPtr<Vst::Bus> (newBus, false));
+	eventOutputs.push_back (IPtr<Vst::Bus> (newBus, false));
 	return newBus;
 }
 
@@ -117,22 +119,26 @@ EventBus* AudioEffect::getEventOutput (int32 index)
 tresult PLUGIN_API AudioEffect::setBusArrangements (SpeakerArrangement* inputs, int32 numIns,
 													SpeakerArrangement* outputs, int32 numOuts)
 {
-	if (numIns > audioInputs.total () || numOuts > audioOutputs.total ())
+	if (numIns < 0 || numOuts < 0)
+		return kInvalidArgument;
+
+	if (numIns > static_cast<int32> (audioInputs.size ()) ||
+	    numOuts > static_cast<int32> (audioOutputs.size ()))
 		return kResultFalse;
 
-	int32 counter = 0;
-	FOREACH_CAST (IPtr<Vst::Bus>, Vst::AudioBus, bus, audioInputs)
-		if (counter < numIns)
-			bus->setArrangement (inputs[counter]);
-		counter++;
-	ENDFOR
+	for (int32 index = 0; index < audioInputs.size (); ++index)
+	{
+		if (index >= numIns)
+			break;
+		FCast<Vst::AudioBus> (audioInputs[index].get ())->setArrangement (inputs[index]);
+	}
 
-	counter = 0;
-	FOREACH_CAST (IPtr<Vst::Bus>, Vst::AudioBus, bus, audioOutputs)
-		if (counter < numOuts)
-			bus->setArrangement (outputs[counter]);
-		counter++;
-	ENDFOR
+	for (int32 index = 0; index < audioOutputs.size (); ++index)
+	{
+		if (index >= numOuts)
+			break;
+		FCast<Vst::AudioBus> (audioOutputs[index].get ())->setArrangement (outputs[index]);
+	}
 
 	return kResultTrue;
 }
@@ -141,7 +147,9 @@ tresult PLUGIN_API AudioEffect::setBusArrangements (SpeakerArrangement* inputs, 
 tresult PLUGIN_API AudioEffect::getBusArrangement (BusDirection dir, int32 busIndex, SpeakerArrangement& arr)
 {
 	BusList* busList = getBusList (kAudio, dir);
-	AudioBus* audioBus = busList ? FCast<Vst::AudioBus> (busList->at (busIndex)) : 0;
+	if (!busList || busIndex < 0 || busList->size () <= busIndex)
+		return kInvalidArgument;
+	AudioBus* audioBus = FCast<Vst::AudioBus> (busList->at (busIndex));
 	if (audioBus)
 	{
 		arr = audioBus->getArrangement ();

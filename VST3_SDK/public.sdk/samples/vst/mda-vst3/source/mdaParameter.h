@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaParameter__
-#define __mdaParameter__
+#pragma once
 
 #include "public.sdk/source/vst/vstparameters.h"
 #include "pluginterfaces/base/ustring.h"
@@ -38,8 +37,8 @@ public:
 						int32 tag,
 						UnitID unitID = kRootUnitId);
 
-	bool fromString (const TChar* string, ParamValue& _valueNormalized) const;
-	bool setNormalized (ParamValue v);
+	bool fromString (const TChar* string, ParamValue& _valueNormalized) const SMTG_OVERRIDE;
+	bool setNormalized (ParamValue v) SMTG_OVERRIDE;
 
 };
 
@@ -55,11 +54,11 @@ public:
 						int32 tag,
 						UnitID unitID = kRootUnitId);
 
-	ParamValue toPlain (ParamValue _valueNormalized) const;
-	ParamValue toNormalized (ParamValue plainValue) const;
+	ParamValue toPlain (ParamValue _valueNormalized) const SMTG_OVERRIDE;
+	ParamValue toNormalized (ParamValue plainValue) const SMTG_OVERRIDE;
 
-	void toString (ParamValue _valueNormalized, String128 string) const;
-	bool fromString (const TChar* string, ParamValue& _valueNormalized) const;
+	void toString (ParamValue _valueNormalized, String128 string) const SMTG_OVERRIDE;
+	bool fromString (const TChar* string, ParamValue& _valueNormalized) const SMTG_OVERRIDE;
 
 	void setIndexString (int32 index, const String128 str);
 protected:
@@ -82,11 +81,11 @@ public:
 						bool printAsInteger = false,
 						UnitID unitID = kRootUnitId);
 
-	ParamValue toPlain (ParamValue _valueNormalized) const;
-	ParamValue toNormalized (ParamValue plainValue) const;
+	ParamValue toPlain (ParamValue _valueNormalized) const SMTG_OVERRIDE;
+	ParamValue toNormalized (ParamValue plainValue) const SMTG_OVERRIDE;
 
-	void toString (ParamValue _valueNormalized, String128 string) const;
-	bool fromString (const TChar* string, ParamValue& _valueNormalized) const;
+	void toString (ParamValue _valueNormalized, String128 string) const SMTG_OVERRIDE;
+	bool fromString (const TChar* string, ParamValue& _valueNormalized) const SMTG_OVERRIDE;
 protected:
 	ParamValue minValue;
 	ParamValue maxValue;
@@ -94,5 +93,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

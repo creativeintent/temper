@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Interfaces
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -105,10 +105,10 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 <li>The instrument Plug-in must have at least one input event bus. <br />
 <br />
 <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleProcessor::initialize (FUnknown* context)</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleProcessor::initialize (FUnknown* context)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">//---always initialize the parent-------</span></div>
-<div class="line">    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> result = AudioEffect::initialize (context);</div>
+<div class="line">    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> result = AudioEffect::initialize (context);</div>
 <div class="line">    <span class="keywordflow">if</span> (result == kResultTrue)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// we want a Stereo Output</span></div>
@@ -122,17 +122,17 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 <div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
 </div><!-- fragment --> <br />
 </li>
-<li>The controller must provide the <a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html" title="Extended IEditController interface for note expression event support. ">Steinberg::Vst::INoteExpressionController</a> interface, like below: <br />
+<li>The controller must provide the <a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html" title="Extended Plug-in interface IEditController for note expression event support. ">Steinberg::Vst::INoteExpressionController</a> interface, like below: <br />
  <div class="fragment"><div class="line"><span class="comment">//-----------------------------------------------------------------------------</span></div>
 <div class="line"><span class="keyword">class </span>MyExampleController: <span class="keyword">public</span> EditController, <span class="keyword">public</span> INoteExpressionController</div>
 <div class="line">{</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">...</div>
 <div class="line">    <span class="comment">//---from INoteExpressionController</span></div>
-<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> PLUGIN_API getNoteExpressionCount (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel);</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API getNoteExpressionInfo (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> noteExpressionIndex, NoteExpressionTypeInfo&amp; info);</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API getNoteExpressionStringByValue (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, NoteExpressionTypeID <span class="keywordtype">id</span>, NoteExpressionValue valueNormalized , <a class="code" href="group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47">String128</a> <span class="keywordtype">string</span>);</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API getNoteExpressionValueByString (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, NoteExpressionTypeID <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="group__vst3typedef.html#ga9cc7040d53a88b14ecab90ffb052276d">TChar</a>* <span class="keywordtype">string</span>, NoteExpressionValue&amp; valueNormalized);</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> PLUGIN_API getNoteExpressionCount (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel);</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API getNoteExpressionInfo (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> noteExpressionIndex, NoteExpressionTypeInfo&amp; info);</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API getNoteExpressionStringByValue (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, NoteExpressionTypeID <span class="keywordtype">id</span>, NoteExpressionValue valueNormalized , <a class="code" href="group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47">String128</a> <span class="keywordtype">string</span>);</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API getNoteExpressionValueByString (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, NoteExpressionTypeID <span class="keywordtype">id</span>, <span class="keyword">const</span> <a class="code" href="group__vst3typedef.html#ga9cc7040d53a88b14ecab90ffb052276d">TChar</a>* <span class="keywordtype">string</span>, NoteExpressionValue&amp; valueNormalized);</div>
 <div class="line">...</div>
 <div class="line"></div>
 <div class="line">    OBJ_METHODS (MyExampleController, EditController)</div>
@@ -148,9 +148,9 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 </ol>
 <p><br />
 </p><ol type="1">
-<li>Now we have to implement the <a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html" title="Extended IEditController interface for note expression event support. ">Steinberg::Vst::INoteExpressionController</a> interface, in our example <a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html#a197a1b66cc45ba1935d9ce0894b1ee02" title="Returns number of supported note change types for event bus index and channel. ">Steinberg::Vst::INoteExpressionController::getNoteExpressionCount</a> should return 1 as we only want to support tuning: <br />
+<li>Now we have to implement the <a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html" title="Extended Plug-in interface IEditController for note expression event support. ">Steinberg::Vst::INoteExpressionController</a> interface, in our example <a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html#a197a1b66cc45ba1935d9ce0894b1ee02" title="Returns number of supported note change types for event bus index and channel. ">Steinberg::Vst::INoteExpressionController::getNoteExpressionCount</a> should return 1 as we only want to support tuning: <br />
  <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> MyExampleController::getNoteExpressionCount (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel)</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> MyExampleController::getNoteExpressionCount (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// we accept only the first bus and 1 channel</span></div>
 <div class="line">    <span class="keywordflow">if</span> (busIndex == 0 &amp;&amp; channel == 0)</div>
@@ -164,7 +164,7 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 </p><ol type="1">
 <li>Then we have to implement <a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html#ab12d543cbd83560a9f098ed4a5c76af8" title="Returns note change type info. ">Steinberg::Vst::INoteExpressionController::getNoteExpressionInfo</a> which describes what note expression the Plug-in supports: <br />
  <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleController::getNoteExpressionInfo (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> noteExpressionIndex, </div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleController::getNoteExpressionInfo (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> noteExpressionIndex, </div>
 <div class="line">                            NoteExpressionTypeInfo&amp; info)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// we accept only the first bus and 1 channel and only 1 Note Expression (tuning)</span></div>
@@ -176,9 +176,9 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 <div class="line">        info.typeId = kTuningTypeID;</div>
 <div class="line"></div>
 <div class="line">        <span class="comment">// set some strings</span></div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Tuning&quot;</span>).copyTo (info.title, 128);</div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Tun&quot;</span>).copyTo (info.shortTitle, 128);</div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Half Tone&quot;</span>).copyTo (info.units, 128);</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Tuning&quot;</span>).copyTo (info.title, 128);</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Tun&quot;</span>).copyTo (info.shortTitle, 128);</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Half Tone&quot;</span>).copyTo (info.units, 128);</div>
 <div class="line"></div>
 <div class="line">        info.unitID = -1; <span class="comment">// no unit wanted</span></div>
 <div class="line">        info.associatedParameterID = -1; <span class="comment">// no associated parameter wanted</span></div>
@@ -194,10 +194,10 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 <div class="line">        info.valueDesc.defaultValue = 0.5; <span class="comment">// middle of [0, 1] =&gt; no detune (240 * (0.5 - 0.5) = 0)</span></div>
 <div class="line">        info.valueDesc.stepCount = 0; <span class="comment">// we want continuous (no step)</span></div>
 <div class="line">    </div>
-<div class="line">        <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55bab954d2583eb15d3a762c5df29270f483">kResultFalse</a>;</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55bab954d2583eb15d3a762c5df29270f483">kResultFalse</a>;</div>
 <div class="line">}</div>
 <div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
 </div><!-- fragment --></li>
@@ -208,22 +208,22 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 <ul>
 <li><a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html#a457f017fc3566d143914e44523425d23" title="Gets a user readable representation of the normalized note change value. ">Steinberg::Vst::INoteExpressionController::getNoteExpressionStringByValue</a> : normalized value -&gt; string <br />
  <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleController::getNoteExpressionStringByValue (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, NoteExpressionTypeID <span class="keywordtype">id</span>,</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleController::getNoteExpressionStringByValue (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, NoteExpressionTypeID <span class="keywordtype">id</span>,</div>
 <div class="line">                            NoteExpressionValue valueNormalized , <a class="code" href="group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47">String128</a> <span class="keywordtype">string</span>);</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// here we use the id (not the index)</span></div>
 <div class="line">    <span class="keywordflow">if</span> (busIndex == 0 &amp;&amp; channel == 0 &amp;&amp; <span class="keywordtype">id</span> == kTuningTypeID)   </div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// here we have to convert a normalized value to a Tuning string representation</span></div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aa92186fdeda699e7a0cc7ac6c45d07e5">UString128</a> wrapper;</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aa92186fdeda699e7a0cc7ac6c45d07e5">UString128</a> wrapper;</div>
 <div class="line">        valueNormalized = (240 * valueNormalized) - 120; <span class="comment">// compute half Tones</span></div>
 <div class="line">        wrapper.printFloat (valueNormalized, 2);</div>
 <div class="line">        wrapper.copyTo (<span class="keywordtype">string</span>, 128);</div>
 <div class="line">        </div>
-<div class="line">        <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55bab954d2583eb15d3a762c5df29270f483">kResultFalse</a>;</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55bab954d2583eb15d3a762c5df29270f483">kResultFalse</a>;</div>
 <div class="line">}</div>
 <div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
 </div><!-- fragment --></li>
@@ -234,7 +234,7 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 </p><ul>
 <li><a class="el" href="classSteinberg_1_1Vst_1_1INoteExpressionController.html#ab79e988315e33b4c30c8f2bd47a0cffc" title="Converts the user readable representation to the normalized note change value. ">Steinberg::Vst::INoteExpressionController::getNoteExpressionValueByString</a> : string -&gt; normalized value <br />
  <div class="fragment"><div class="line"><span class="comment">//-----------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleController::getNoteExpressionValueByString (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, NoteExpressionTypeID <span class="keywordtype">id</span>, </div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleController::getNoteExpressionValueByString (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, NoteExpressionTypeID <span class="keywordtype">id</span>, </div>
 <div class="line">                            <span class="keyword">const</span> <a class="code" href="group__vst3typedef.html#ga9cc7040d53a88b14ecab90ffb052276d">TChar</a>* <span class="keywordtype">string</span>, NoteExpressionValue&amp; valueNormalized);</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// here we use the id (not the index)</span></div>
@@ -246,11 +246,11 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 <div class="line">        <span class="keywordflow">if</span> (wrapper.scanFloat (tmp))</div>
 <div class="line">        {</div>
 <div class="line">            valueNormalized = (tmp + 120) / 240;</div>
-<div class="line">            <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
+<div class="line">            <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55bab954d2583eb15d3a762c5df29270f483">kResultFalse</a>;</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55bab954d2583eb15d3a762c5df29270f483">kResultFalse</a>;</div>
 <div class="line">}</div>
 <div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
 </div><!-- fragment --></li>
@@ -259,7 +259,7 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 </p><ol type="1">
 <li>Last step, in the processor component we have to adapt the process call to interpret the note expression event (<a class="el" href="structSteinberg_1_1Vst_1_1NoteExpressionValueEvent.html" title="Note Expression Value event. ">Steinberg::Vst::NoteExpressionValueEvent</a>) send from the host to the Plug-in: <br />
  <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> MyExampleProcessor::process (ProcessData&amp; data)</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> MyExampleProcessor::process (ProcessData&amp; data)</div>
 <div class="line">{</div>
 <div class="line">    ....</div>
 <div class="line"></div>
@@ -268,12 +268,12 @@ We want a mono-timbral (1 channel) instrument Plug-in with 1 event bus and suppo
 <div class="line">    <span class="keywordflow">if</span> (inputEvents)</div>
 <div class="line">    {</div>
 <div class="line">        Event e;</div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> numEvents = inputEvents-&gt;getEventCount ();</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> numEvents = inputEvents-&gt;getEventCount ();</div>
 <div class="line">        </div>
 <div class="line">        <span class="comment">// for each events check it..</span></div>
-<div class="line">        <span class="keywordflow">for</span> (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> i = 0; i &lt; numEvents; i++)</div>
+<div class="line">        <span class="keywordflow">for</span> (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> i = 0; i &lt; numEvents; i++)</div>
 <div class="line">        {</div>
-<div class="line">            <span class="keywordflow">if</span> (inputEvents-&gt;getEvent (i, e) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">            <span class="keywordflow">if</span> (inputEvents-&gt;getEvent (i, e) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">            {</div>
 <div class="line">                <span class="keywordflow">switch</span> (e.type)</div>
 <div class="line">                {</div>
@@ -327,17 +327,17 @@ Back to <b><a class="el" href="index.html#vst3Contents">Contents</a></b> <br />
 </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

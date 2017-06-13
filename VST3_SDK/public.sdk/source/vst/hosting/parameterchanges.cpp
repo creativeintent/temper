@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/hosting/parameterchanges.cpp
@@ -9,26 +8,29 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
@@ -37,14 +39,14 @@
 namespace Steinberg {
 namespace Vst {
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 IMPLEMENT_FUNKNOWN_METHODS (ParameterChanges, IParameterChanges, IParameterChanges::iid)
 IMPLEMENT_FUNKNOWN_METHODS (ParameterValueQueue, IParamValueQueue, IParamValueQueue::iid)
 
 
 const int32 kQueueReservedPoints = 5;
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ParameterValueQueue::ParameterValueQueue (ParamID paramID) 
 : paramID (paramID)
 { 
@@ -52,25 +54,25 @@ ParameterValueQueue::ParameterValueQueue (ParamID paramID)
 	FUNKNOWN_CTOR
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ParameterValueQueue::~ParameterValueQueue () 
 { 
 	FUNKNOWN_DTOR 
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void ParameterValueQueue::clear ()
 {
 	values.clear ();
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 int32 PLUGIN_API ParameterValueQueue::getPointCount () 
 { 
 	return (int32)values.size ();
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 tresult PLUGIN_API ParameterValueQueue::getPoint (int32 index, int32& sampleOffset, ParamValue& value)
 {
 	if (index < (int32)values.size ())
@@ -83,7 +85,7 @@ tresult PLUGIN_API ParameterValueQueue::getPoint (int32 index, int32& sampleOffs
 	return kResultFalse;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 tresult PLUGIN_API ParameterValueQueue::addPoint (int32 sampleOffset, ParamValue value, int32& index)
 {
 	int32 destIndex = (int32)values.size ();
@@ -114,9 +116,9 @@ tresult PLUGIN_API ParameterValueQueue::addPoint (int32 sampleOffset, ParamValue
 	return kResultTrue;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // ParameterChanges
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ParameterChanges::ParameterChanges (int32 maxParameters)
 : usedQueueCount (0)
 {
@@ -124,7 +126,7 @@ ParameterChanges::ParameterChanges (int32 maxParameters)
 	setMaxParameters (maxParameters);
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ParameterChanges::~ParameterChanges ()
 {
 	setMaxParameters (0);
@@ -132,7 +134,7 @@ ParameterChanges::~ParameterChanges ()
 	FUNKNOWN_DTOR
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void ParameterChanges::setMaxParameters (int32 maxParameters)
 {
 	if (maxParameters < 0)
@@ -153,27 +155,27 @@ void ParameterChanges::setMaxParameters (int32 maxParameters)
 		usedQueueCount = maxParameters;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void ParameterChanges::clearQueue ()
 {
 	usedQueueCount = 0;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 int32 PLUGIN_API ParameterChanges::getParameterCount ()
 {
 	return usedQueueCount;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 IParamValueQueue* PLUGIN_API ParameterChanges::getParameterData (int32 index)
 {
 	if (index < usedQueueCount)
 		return queues[index];
-	return 0;
+	return nullptr;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 IParamValueQueue* PLUGIN_API ParameterChanges::addParameterData (const ParamID& pid, int32& index)
 {
 	for (int32 i = 0; i < usedQueueCount; i++)
@@ -185,7 +187,7 @@ IParamValueQueue* PLUGIN_API ParameterChanges::addParameterData (const ParamID& 
 		}
 	}
 	
-	ParameterValueQueue* valueQueue = 0;
+	ParameterValueQueue* valueQueue = nullptr;
 	if (usedQueueCount < (int32)queues.size ())
 	{
 		valueQueue = queues[usedQueueCount];
@@ -204,25 +206,25 @@ IParamValueQueue* PLUGIN_API ParameterChanges::addParameterData (const ParamID& 
 }
 
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 // ParameterChangeTransfer
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ParameterChangeTransfer::ParameterChangeTransfer (int32 maxParameters)
-: changes (0)
-, size (0)
+: size (0)
+, changes (nullptr)
 , readIndex (0)
 , writeIndex (0)
 {
 	setMaxParameters (maxParameters);
 }
 	
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ParameterChangeTransfer::~ParameterChangeTransfer ()
 {
 	setMaxParameters (0);
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void ParameterChangeTransfer::setMaxParameters (int32 maxParameters)
 {
 	// reserve memory for twice the amount of all parameters
@@ -231,21 +233,21 @@ void ParameterChangeTransfer::setMaxParameters (int32 maxParameters)
 	{
 		if (changes)
 			delete [] changes;
-		changes = 0;
+		changes = nullptr;
 		size = newSize;
 		if (size > 0)
 			changes = new ParameterChange [size];
 	}
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void ParameterChangeTransfer::addChange (ParamID pid, ParamValue value, int32 sampleOffset)
 {
 	if (changes)
 	{
-		changes [writeIndex].id = pid;
-		changes [writeIndex].value = value;
-		changes [writeIndex].sampleOffset = sampleOffset;
+		changes[writeIndex].id = pid;
+		changes[writeIndex].value = value;
+		changes[writeIndex].sampleOffset = sampleOffset;
 
 		int32 newWriteIndex = writeIndex + 1;
 		if (newWriteIndex >= size)
@@ -255,30 +257,29 @@ void ParameterChangeTransfer::addChange (ParamID pid, ParamValue value, int32 sa
 	}
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 bool ParameterChangeTransfer::getNextChange (ParamID& pid, ParamValue& value, int32& sampleOffset)
 {
-	if (changes)
+	if (!changes)
+		return false;
+	
+	int32 currentWriteIndex = writeIndex;
+	if (readIndex != currentWriteIndex)
 	{
-		int32 currentWriteIndex = writeIndex;
-		if (readIndex != currentWriteIndex)
-		{
-			pid = changes [readIndex].id;
-			value = changes [readIndex].value;
-			sampleOffset = changes [readIndex].sampleOffset;
+		pid = changes [readIndex].id;
+		value = changes [readIndex].value;
+		sampleOffset = changes [readIndex].sampleOffset;
 
-			int32 newReadIndex = readIndex + 1;
-			if (newReadIndex >= size)
-				newReadIndex = 0;
-			readIndex = newReadIndex;
-			return true;
-		}
+		int32 newReadIndex = readIndex + 1;
+		if (newReadIndex >= size)
+			newReadIndex = 0;
+		readIndex = newReadIndex;
+		return true;
 	}
 	return false;
 }
 
-
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void ParameterChangeTransfer::transferChangesTo (ParameterChanges& dest)
 {
 	ParamID pid;
@@ -296,7 +297,7 @@ void ParameterChangeTransfer::transferChangesTo (ParameterChanges& dest)
 	}
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void ParameterChangeTransfer::transferChangesFrom (ParameterChanges& source)
 {
 	ParamValue value;

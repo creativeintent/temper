@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/XX/source/plugparamids.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,12 +34,15 @@
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-
 #pragma once
 
 enum
 {
 	/** parameter ID */
-	kBypassId = 0,		///< Bypass value (we will handle the bypass process) (is automatable)
-	kProgramId
+	kBypassId = 0, ///< Bypass value (we will handle the bypass process) (is automatable)
+	kProgramId,
+
+	kGainId,
+
+	kNumProgs = 100
 };

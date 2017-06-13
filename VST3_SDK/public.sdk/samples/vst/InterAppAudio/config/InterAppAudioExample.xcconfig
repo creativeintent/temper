@@ -3,7 +3,7 @@
 //  InterAppAudioExample
 //
 //  Created by Arne Scheffler on 7/29/13.
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //
 
 PRODUCT_NAME = $(TARGET_NAME)

@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaLoudnessProcessor__
-#define __mdaLoudnessProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,19 +29,19 @@ public:
 	LoudnessProcessor ();
 	~LoudnessProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
-	void checkSilence (ProcessData& data) {}
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
+	void checkSilence (ProcessData& data) SMTG_OVERRIDE {}
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new LoudnessProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float Z0, Z1, Z2, Z3, A0, A1, A2, gain;
 	float igain, ogain;
@@ -50,5 +49,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

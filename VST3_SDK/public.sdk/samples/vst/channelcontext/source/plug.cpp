@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/channelcontext/source/plug.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -118,12 +117,36 @@ tresult PLUGIN_API Plug::process (ProcessData& data)
 		return kResultOk;
 	}
 
-	// (simplification) we suppose in this example that we have the same input channel count than the output
+	// (simplification) we suppose in this example that we have the same input channel count than
+	// the output
 	int32 numChannels = Min (data.inputs[0].numChannels, data.outputs[0].numChannels);
 
 	//---get audio buffers----------------
-	float** in  = data.inputs[0].channelBuffers32;
+	float** in = data.inputs[0].channelBuffers32;
 	float** out = data.outputs[0].channelBuffers32;
+
+	if (data.inputs[0].silenceFlags != 0)
+	{
+		// mark output silence too
+		data.outputs[0].silenceFlags = data.inputs[0].silenceFlags;
+
+		int32 sampleFrames = data.numSamples;
+
+		// the Plug-in has to be sure that if it sets the flags silence that the output buffer are
+		// clear
+		for (int32 i = 0; i < numChannels; i++)
+		{
+			// do not need to be cleared if the buffers are the same (in this case input buffer are
+			// already cleared by the host)
+			if (in[i] != out[i])
+			{
+				memset (out[i], 0, sampleFrames * sizeof (float));
+			}
+		}
+
+		// nothing to do at this point
+		return kResultOk;
+	}
 
 	// mark our outputs has not silent
 	data.outputs[0].silenceFlags = 0;
@@ -134,7 +157,7 @@ tresult PLUGIN_API Plug::process (ProcessData& data)
 		int32 sampleFrames = data.numSamples;
 		for (int32 i = 0; i < numChannels; i++)
 		{
-			// dont need to be copied if the buffers are the same
+			// do not need to be copied if the buffers are the same
 			if (in[i] != out[i])
 			{
 				memcpy (out[i], in[i], sampleFrames * sizeof (float));

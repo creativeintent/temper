@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loadattributes',['loadAttributes',['../classSteinberg_1_1IPersistent.html#a34ba5d29ec54b8d49213549ada3d59fe',1,'Steinberg::IPersistent']]]
+  ['keycode',['KeyCode',['../structSteinberg_1_1KeyCode.html#a369196628f59121a2b3316e30b3b4c63',1,'Steinberg::KeyCode']]]
 ];

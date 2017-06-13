@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['key',['key',['../classSteinberg_1_1TAssociation.html#ab77c4c8730a993b4ed27533b3513d6af',1,'Steinberg::TAssociation::key()'],['../classSteinberg_1_1TAssociation.html#ac61f4b6f931081482fde5145922b937c',1,'Steinberg::TAssociation::key() const '],['../classSteinberg_1_1TAssociation.html#ae886569524350b235f9d6bd26736213a',1,'Steinberg::TAssociation::key(const T &amp;)']]]
+  ['makehexstring',['makeHexString',['../classSteinberg_1_1Buffer.html#a22c9694174100cb1feff3900a2b826cf',1,'Steinberg::Buffer']]],
+  ['move',['move',['../classSteinberg_1_1Buffer.html#a0a728693e22178550b0bda95b139e684',1,'Steinberg::Buffer']]],
+  ['multibytetowidestring',['multiByteToWideString',['../classSteinberg_1_1ConstString.html#aae9eb74628356d91bdd0e50426577d02',1,'Steinberg::ConstString']]]
 ];

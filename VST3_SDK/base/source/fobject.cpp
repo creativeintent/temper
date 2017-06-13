@@ -9,33 +9,36 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
 #include "base/source/fobject.h"
-#include "base/source/fatomic.h"
-#include "base/source/tarray.h"
-#include "base/source/fthread.h"
+#include "base/source/flock.h"
+
+#include <vector>
 
 namespace Steinberg {
 
@@ -60,14 +63,13 @@ struct FObjectIIDInitializer
 //------------------------------------------------------------------------
 uint32 PLUGIN_API FObject::addRef ()  
 {                                      
-	FAtomicIncrement (refCount);
-	return refCount;
+	return FUnknownPrivate::atomicAdd (refCount, 1);
 }                                             
 
 //------------------------------------------------------------------------
 uint32 PLUGIN_API FObject::release () 
 {                                              
-	if (FAtomicDecrement (refCount) == 1)
+	if (FUnknownPrivate::atomicAdd (refCount, -1) == 0)
 	{
 		refCount = -1000;
 		delete this;
@@ -123,7 +125,8 @@ void FObject::deferUpdate (int32 msg)
 //------------------------------------------------------------------------
 namespace Singleton 
 {
-	TArray<FObject**>* singletonInstances = 0;
+	typedef std::vector<FObject**> ObjectVector;
+	ObjectVector* singletonInstances = 0;
 	bool singletonsTerminated = false;
 	FLock* singletonsLock;
 
@@ -146,8 +149,8 @@ namespace Singleton
 		if (singletonsTerminated == false)
 		{
 			if (singletonInstances == 0)
-				singletonInstances = NEW TArray<FObject**>;
-			singletonInstances->add (o);
+				singletonInstances = NEW std::vector<FObject**>;
+			singletonInstances->push_back (o);
 		}
 	}
 
@@ -158,10 +161,14 @@ namespace Singleton
 			singletonsTerminated = true;
 			if (singletonInstances)
 			{
-				FOREACH_T (FObject**, inst, *singletonInstances)
-					(*inst)->release ();
-					*inst = 0;
-				ENDFOR
+				for (ObjectVector::iterator it = singletonInstances->begin (),
+											end = singletonInstances->end ();
+					 it != end; ++it)
+				{
+					FObject** obj = (*it);
+					(*obj)->release ();
+					obj = 0;
+				}
 
 				delete singletonInstances;
 				singletonInstances = 0;
@@ -172,5 +179,5 @@ namespace Singleton
 	} deleter;
 }
 
+//------------------------------------------------------------------------
 } // namespace Steinberg
-

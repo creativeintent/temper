@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSTGUI
-   &#160;<span id="projectnumber">4.3</span>
+   &#160;<span id="projectnumber">4.4</span>
    </div>
    <div id="projectbrief">Graphical User Interface Framework not only for VST plugins</div>
   </td>
@@ -126,21 +126,13 @@ $(document).ready(function(){initNavTree('class_v_s_t_g_u_i_1_1_c_draw_context.h
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context__inherit__graph.png" border="0" usemap="#_c_draw_context_inherit__map" alt="Inheritance graph"/></div>
 <map name="_c_draw_context_inherit__map" id="_c_draw_context_inherit__map">
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
-<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Collaboration diagram for CDrawContext:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context__coll__graph.png" border="0" usemap="#_c_draw_context_coll__map" alt="Collaboration graph"/></div>
-<map name="_c_draw_context_coll__map" id="_c_draw_context_coll__map">
-</map>
+<area shape="rect" id="node5" href="class_v_s_t_g_u_i_1_1_c_offscreen_context.html" title="A draw context using a bitmap as it&#39;s back buffer. " alt="" coords="5,155,128,181"/><area shape="rect" id="node2" href="class_v_s_t_g_u_i_1_1_c_base_object.html" title="Base Object with reference counter. " alt="" coords="21,6,112,32"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_v_s_t_g_u_i_1_1_c_draw_context_1_1_transform.html">Transform</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a transform to all draw routines.  <a href="struct_v_s_t_g_u_i_1_1_c_draw_context_1_1_transform.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -155,8 +147,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaf248cb201bf89979b96525b82c5041f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a624f67fa321bcb03a632d38161b1f216"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html">CBaseObject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_draw_context.html#a624f67fa321bcb03a632d38161b1f216">newCopy</a> () const </td></tr>
 <tr class="separator:a624f67fa321bcb03a632d38161b1f216"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7109cc8e58c631f14b338c5e60633d7b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b">beforeDelete</a> ()</td></tr>
-<tr class="separator:a7109cc8e58c631f14b338c5e60633d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Line Mode</div></td></tr>
 <tr class="memitem:a622734e81b6fc1a89480d47fc4dc6f01"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_draw_context.html#a622734e81b6fc1a89480d47fc4dc6f01">setLineStyle</a> (const <a class="el" href="class_v_s_t_g_u_i_1_1_c_line_style.html">CLineStyle</a> &amp;style)</td></tr>
 <tr class="memdesc:a622734e81b6fc1a89480d47fc4dc6f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the current line style  <a href="#a622734e81b6fc1a89480d47fc4dc6f01">More...</a><br /></td></tr>
@@ -249,19 +239,24 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af2f8fb0ef26ea37214d7d0dbbbbacfd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96606a41f40f88c589639861b8c82a44"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_v_s_t_g_u_i_1_1_c_rect.html">CRect</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_draw_context.html#a96606a41f40f88c589639861b8c82a44">getAbsoluteClipRect</a> () const </td></tr>
 <tr class="separator:a96606a41f40f88c589639861b8c82a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Reference Counting Methods</div></td></tr>
-<tr class="memitem:ad63e28fbe95a3458c97c60bfacd47ab8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8">forget</a> ()</td></tr>
-<tr class="memdesc:ad63e28fbe95a3458c97c60bfacd47ab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">decrease refcount and delete object if refcount == 0  <a href="#ad63e28fbe95a3458c97c60bfacd47ab8">More...</a><br /></td></tr>
-<tr class="separator:ad63e28fbe95a3458c97c60bfacd47ab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada0719d1daaca4af1795018001769311"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#ada0719d1daaca4af1795018001769311">remember</a> ()</td></tr>
-<tr class="memdesc:ada0719d1daaca4af1795018001769311"><td class="mdescLeft">&#160;</td><td class="mdescRight">increase refcount  <a href="#ada0719d1daaca4af1795018001769311">More...</a><br /></td></tr>
-<tr class="separator:ada0719d1daaca4af1795018001769311"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9597331adf9f9f0cd442f9f722a37ed6"><td class="memItemLeft" align="right" valign="top">virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#a9597331adf9f9f0cd442f9f722a37ed6">getNbReference</a> () const </td></tr>
-<tr class="memdesc:a9597331adf9f9f0cd442f9f722a37ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get refcount  <a href="#a9597331adf9f9f0cd442f9f722a37ed6">More...</a><br /></td></tr>
-<tr class="separator:a9597331adf9f9f0cd442f9f722a37ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Message Methods</div></td></tr>
-<tr class="memitem:ab18c3bcc0cb674396848861dfd78a83a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespace_v_s_t_g_u_i.html#a2c1cd94c80c1fa6feeb2d29e8116caa7">CMessageResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#ab18c3bcc0cb674396848861dfd78a83a">notify</a> (<a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html">CBaseObject</a> *sender, <a class="el" href="namespace_v_s_t_g_u_i.html#a13546ed3f569dee6006d7fa86193c38b">IdStringPtr</a> message)</td></tr>
-<tr class="separator:ab18c3bcc0cb674396848861dfd78a83a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_v_s_t_g_u_i_1_1_c_base_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html">CBaseObject</a></td></tr>
+<tr class="memitem:aa10706d4aba918ad1168417d77520ceb inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#aa10706d4aba918ad1168417d77520ceb">CBaseObject</a> ()</td></tr>
+<tr class="separator:aa10706d4aba918ad1168417d77520ceb inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a752e76beefb75b99054ccf7fc43a481d inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#a752e76beefb75b99054ccf7fc43a481d">~CBaseObject</a> ()</td></tr>
+<tr class="separator:a752e76beefb75b99054ccf7fc43a481d inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7109cc8e58c631f14b338c5e60633d7b inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#a7109cc8e58c631f14b338c5e60633d7b">beforeDelete</a> ()</td></tr>
+<tr class="separator:a7109cc8e58c631f14b338c5e60633d7b inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad63e28fbe95a3458c97c60bfacd47ab8 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#ad63e28fbe95a3458c97c60bfacd47ab8">forget</a> ()</td></tr>
+<tr class="memdesc:ad63e28fbe95a3458c97c60bfacd47ab8 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">decrease refcount and delete object if refcount == 0  <a href="#ad63e28fbe95a3458c97c60bfacd47ab8">More...</a><br /></td></tr>
+<tr class="separator:ad63e28fbe95a3458c97c60bfacd47ab8 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada0719d1daaca4af1795018001769311 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#ada0719d1daaca4af1795018001769311">remember</a> ()</td></tr>
+<tr class="memdesc:ada0719d1daaca4af1795018001769311 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">increase refcount  <a href="#ada0719d1daaca4af1795018001769311">More...</a><br /></td></tr>
+<tr class="separator:ada0719d1daaca4af1795018001769311 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9597331adf9f9f0cd442f9f722a37ed6 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memItemLeft" align="right" valign="top">virtual int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#a9597331adf9f9f0cd442f9f722a37ed6">getNbReference</a> () const </td></tr>
+<tr class="memdesc:a9597331adf9f9f0cd442f9f722a37ed6 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">get refcount  <a href="#a9597331adf9f9f0cd442f9f722a37ed6">More...</a><br /></td></tr>
+<tr class="separator:a9597331adf9f9f0cd442f9f722a37ed6 inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab18c3bcc0cb674396848861dfd78a83a inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespace_v_s_t_g_u_i.html#a2c1cd94c80c1fa6feeb2d29e8116caa7">CMessageResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html#ab18c3bcc0cb674396848861dfd78a83a">notify</a> (<a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html">CBaseObject</a> *sender, <a class="el" href="namespace_v_s_t_g_u_i.html#a13546ed3f569dee6006d7fa86193c38b">IdStringPtr</a> message)</td></tr>
+<tr class="separator:ab18c3bcc0cb674396848861dfd78a83a inherit pub_methods_class_v_s_t_g_u_i_1_1_c_base_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -470,56 +465,9 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a5ed6bab1dfa5325b04d9fb03411d53f1_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a5ed6bab1dfa5325b04d9fb03411d53f1_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a5ed6bab1dfa5325b04d9fb03411d53f1_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a5ed6bab1dfa5325b04d9fb03411d53f1_cgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a7109cc8e58c631f14b338c5e60633d7b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void beforeDelete </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reimplemented in <a class="el" href="class_v_s_t_g_u_i_1_1_c_view.html#aa6edde21aa70e8f234a5d49ecc4c937e">CView</a>.</p>
-
-<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_base_object_a7109cc8e58c631f14b338c5e60633d7b_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_base_object_a7109cc8e58c631f14b338c5e60633d7b_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_base_object_a7109cc8e58c631f14b338c5e60633d7b_icgraph" id="class_v_s_t_g_u_i_1_1_c_base_object_a7109cc8e58c631f14b338c5e60633d7b_icgraph">
-</map>
-</div>
-</p>
-
-</div>
-</div>
 <a class="anchor" id="aa5ef99d8c2a851134d359b84ddc9577d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -563,28 +511,6 @@ Graphics Paths</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ae0c5f28e389dcccd7e49d8474846a016_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ae0c5f28e389dcccd7e49d8474846a016_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ae0c5f28e389dcccd7e49d8474846a016_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ae0c5f28e389dcccd7e49d8474846a016_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ae0c5f28e389dcccd7e49d8474846a016_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ae0c5f28e389dcccd7e49d8474846a016_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ae0c5f28e389dcccd7e49d8474846a016_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ae0c5f28e389dcccd7e49d8474846a016_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -637,17 +563,6 @@ Graphics Paths</h2></td></tr>
 
 <p>create a graphics path object, you need to forget it after usage </p>
 
-<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a674489a3852313daca850240742481c6_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a674489a3852313daca850240742481c6_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a674489a3852313daca850240742481c6_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a674489a3852313daca850240742481c6_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="aae150cd1619e66491930247a9092ce60"></a>
@@ -675,28 +590,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>create a rect with round corners as graphics path, you need to forget it after usage </p>
-
-<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_aae150cd1619e66491930247a9092ce60_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_aae150cd1619e66491930247a9092ce60_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_aae150cd1619e66491930247a9092ce60_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_aae150cd1619e66491930247a9092ce60_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_aae150cd1619e66491930247a9092ce60_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_aae150cd1619e66491930247a9092ce60_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_aae150cd1619e66491930247a9092ce60_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_aae150cd1619e66491930247a9092ce60_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -830,17 +723,6 @@ Graphics Paths</h2></td></tr>
 
 <p>don't call directly, please use <a class="el" href="class_v_s_t_g_u_i_1_1_c_bitmap.html#abe4a2d2349bc6a85310950ec9363beac">CBitmap::draw</a> instead </p>
 
-<p><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a90db9382b9c2c390af6f4630109dbee0_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a90db9382b9c2c390af6f4630109dbee0_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a90db9382b9c2c390af6f4630109dbee0_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a90db9382b9c2c390af6f4630109dbee0_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a2b601330cbc20235e5769a771fab8005"></a>
@@ -887,28 +769,6 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a2b601330cbc20235e5769a771fab8005_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a2b601330cbc20235e5769a771fab8005_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a2b601330cbc20235e5769a771fab8005_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a2b601330cbc20235e5769a771fab8005_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a2b601330cbc20235e5769a771fab8005_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a2b601330cbc20235e5769a771fab8005_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a2b601330cbc20235e5769a771fab8005_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a2b601330cbc20235e5769a771fab8005_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="adad7a8279a61254eb43c235550d25f4e"></a>
@@ -944,17 +804,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>draw an ellipse </p>
-
-<p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_adad7a8279a61254eb43c235550d25f4e_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_adad7a8279a61254eb43c235550d25f4e_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_adad7a8279a61254eb43c235550d25f4e_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_adad7a8279a61254eb43c235550d25f4e_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -996,17 +845,6 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a3f16731acd9e86412d7b36e293ee0f5e_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a3f16731acd9e86412d7b36e293ee0f5e_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a3f16731acd9e86412d7b36e293ee0f5e_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a3f16731acd9e86412d7b36e293ee0f5e_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ae8712bb20e6b83738488b8465dd49239"></a>
@@ -1040,28 +878,6 @@ Graphics Paths</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p><div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ae8712bb20e6b83738488b8465dd49239_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ae8712bb20e6b83738488b8465dd49239_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ae8712bb20e6b83738488b8465dd49239_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ae8712bb20e6b83738488b8465dd49239_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-15-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ae8712bb20e6b83738488b8465dd49239_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ae8712bb20e6b83738488b8465dd49239_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ae8712bb20e6b83738488b8465dd49239_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ae8712bb20e6b83738488b8465dd49239_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -1283,17 +1099,6 @@ Graphics Paths</h2></td></tr>
 
 <p>draw a rect </p>
 
-<p><div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-16-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-16-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ac9c3a91724de57693bb7a353091db3bc_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ac9c3a91724de57693bb7a353091db3bc_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ac9c3a91724de57693bb7a353091db3bc_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ac9c3a91724de57693bb7a353091db3bc_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ab6f84da4fdd3ce79d6347bfb9225ae6c"></a>
@@ -1334,28 +1139,6 @@ Graphics Paths</h2></td></tr>
 
 <p>draw an UTF-8 encoded string </p>
 
-<p><div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-17-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-17-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ab6f84da4fdd3ce79d6347bfb9225ae6c_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ab6f84da4fdd3ce79d6347bfb9225ae6c_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ab6f84da4fdd3ce79d6347bfb9225ae6c_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ab6f84da4fdd3ce79d6347bfb9225ae6c_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-18-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-18-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ab6f84da4fdd3ce79d6347bfb9225ae6c_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ab6f84da4fdd3ce79d6347bfb9225ae6c_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ab6f84da4fdd3ce79d6347bfb9225ae6c_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ab6f84da4fdd3ce79d6347bfb9225ae6c_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a7b81958ed229f22fcd27a041c04a6e94"></a>
@@ -1389,17 +1172,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>draw an UTF-8 encoded string </p>
-
-<p><div id="dynsection-19" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-19-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-19-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a7b81958ed229f22fcd27a041c04a6e94_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a7b81958ed229f22fcd27a041c04a6e94_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a7b81958ed229f22fcd27a041c04a6e94_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a7b81958ed229f22fcd27a041c04a6e94_cgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -1440,17 +1212,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>draw a platform string </p>
-
-<p><div id="dynsection-20" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-20-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-20-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a22b991c831981b7fb1d13420ee518b12_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a22b991c831981b7fb1d13420ee518b12_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a22b991c831981b7fb1d13420ee518b12_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a22b991c831981b7fb1d13420ee518b12_cgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -1567,17 +1328,6 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-21" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-21-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-21-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_aa39590e1a477c16edeb4c08cc2762502_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_aa39590e1a477c16edeb4c08cc2762502_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_aa39590e1a477c16edeb4c08cc2762502_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_aa39590e1a477c16edeb4c08cc2762502_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a3fdbfcadc151ba7e09168b0090e811f0"></a>
@@ -1642,17 +1392,6 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-22-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a3fdbfcadc151ba7e09168b0090e811f0_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a3fdbfcadc151ba7e09168b0090e811f0_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a3fdbfcadc151ba7e09168b0090e811f0_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a3fdbfcadc151ba7e09168b0090e811f0_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a07e13b92a6da8f440f5688cfedc1686d"></a>
@@ -1699,64 +1438,6 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-23" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-23-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-23-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a07e13b92a6da8f440f5688cfedc1686d_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a07e13b92a6da8f440f5688cfedc1686d_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a07e13b92a6da8f440f5688cfedc1686d_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a07e13b92a6da8f440f5688cfedc1686d_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-24" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-24-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-24-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-24-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a07e13b92a6da8f440f5688cfedc1686d_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a07e13b92a6da8f440f5688cfedc1686d_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a07e13b92a6da8f440f5688cfedc1686d_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a07e13b92a6da8f440f5688cfedc1686d_icgraph">
-</map>
-</div>
-</p>
-
-</div>
-</div>
-<a class="anchor" id="ad63e28fbe95a3458c97c60bfacd47ab8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void forget </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>decrease refcount and delete object if refcount == 0 </p>
-
-<p><div id="dynsection-25" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-25-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-25-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_base_object_ad63e28fbe95a3458c97c60bfacd47ab8_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_base_object_ad63e28fbe95a3458c97c60bfacd47ab8_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_base_object_ad63e28fbe95a3458c97c60bfacd47ab8_cgraph" id="class_v_s_t_g_u_i_1_1_c_base_object_ad63e28fbe95a3458c97c60bfacd47ab8_cgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a96606a41f40f88c589639861b8c82a44"></a>
@@ -1798,28 +1479,6 @@ Graphics Paths</h2></td></tr>
 
 <p>get the current clip </p>
 
-<p><div id="dynsection-26" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-26-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-26-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a42623d0fc45883e1a9ac3fe21272a49e_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a42623d0fc45883e1a9ac3fe21272a49e_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a42623d0fc45883e1a9ac3fe21272a49e_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a42623d0fc45883e1a9ac3fe21272a49e_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-27" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-27-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-27-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a42623d0fc45883e1a9ac3fe21272a49e_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a42623d0fc45883e1a9ac3fe21272a49e_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a42623d0fc45883e1a9ac3fe21272a49e_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a42623d0fc45883e1a9ac3fe21272a49e_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="af2f8fb0ef26ea37214d7d0dbbbbacfd2"></a>
@@ -1834,17 +1493,6 @@ Graphics Paths</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p><div id="dynsection-28" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-28-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-28-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_af2f8fb0ef26ea37214d7d0dbbbbacfd2_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_af2f8fb0ef26ea37214d7d0dbbbbacfd2_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_af2f8fb0ef26ea37214d7d0dbbbbacfd2_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_af2f8fb0ef26ea37214d7d0dbbbbacfd2_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -1894,28 +1542,6 @@ Graphics Paths</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p><div id="dynsection-29" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-29-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-29-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ae02f4a64e6c2b077988f56ed305ec140_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ae02f4a64e6c2b077988f56ed305ec140_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ae02f4a64e6c2b077988f56ed305ec140_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ae02f4a64e6c2b077988f56ed305ec140_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-30" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-30-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-30-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ae02f4a64e6c2b077988f56ed305ec140_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ae02f4a64e6c2b077988f56ed305ec140_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ae02f4a64e6c2b077988f56ed305ec140_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ae02f4a64e6c2b077988f56ed305ec140_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -2042,17 +1668,6 @@ Graphics Paths</h2></td></tr>
 
 <p>get current global alpha value </p>
 
-<p><div id="dynsection-31" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-31-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-31-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a05cbaf1e227e4ca42ea47df2a6b38c32_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a05cbaf1e227e4ca42ea47df2a6b38c32_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a05cbaf1e227e4ca42ea47df2a6b38c32_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a05cbaf1e227e4ca42ea47df2a6b38c32_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a9493ccf05b665ae0616f17e0091d32ee"></a>
@@ -2129,31 +1744,6 @@ Graphics Paths</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9597331adf9f9f0cd442f9f722a37ed6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual int32_t getNbReference </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>get refcount </p>
-
-</div>
-</div>
 <a class="anchor" id="a92f5d52be92fb0667dde5b3592a00e03"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2175,17 +1765,6 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-32" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-32-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-32-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a92f5d52be92fb0667dde5b3592a00e03_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a92f5d52be92fb0667dde5b3592a00e03_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a92f5d52be92fb0667dde5b3592a00e03_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a92f5d52be92fb0667dde5b3592a00e03_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a9e5bd28c677a27446677e4d1a2f5e5e4"></a>
@@ -2203,17 +1782,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>get the width of an UTF-8 encoded string </p>
-
-<p><div id="dynsection-33" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-33-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-33-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a9e5bd28c677a27446677e4d1a2f5e5e4_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a9e5bd28c677a27446677e4d1a2f5e5e4_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a9e5bd28c677a27446677e4d1a2f5e5e4_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a9e5bd28c677a27446677e4d1a2f5e5e4_cgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -2256,17 +1824,6 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-34" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-34-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-34-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-34-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a02fd73d861ef2e4aabb38c0c9ff82947_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a02fd73d861ef2e4aabb38c0c9ff82947_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a02fd73d861ef2e4aabb38c0c9ff82947_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a02fd73d861ef2e4aabb38c0c9ff82947_cgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="aaf248cb201bf89979b96525b82c5041f"></a>
@@ -2308,17 +1865,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 <dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000007">Deprecated:</a></b></dt><dd>use drawLine </dd></dl>
 
-<p><div id="dynsection-35" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-35-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-35-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-35-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_afc75c2c7a436f68d86adb095882143b4_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_afc75c2c7a436f68d86adb095882143b4_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_afc75c2c7a436f68d86adb095882143b4_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_afc75c2c7a436f68d86adb095882143b4_cgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="aaba395ec2e6473a5042d88d1d9a1b7de"></a>
@@ -2358,53 +1904,6 @@ Graphics Paths</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ab18c3bcc0cb674396848861dfd78a83a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="namespace_v_s_t_g_u_i.html#a2c1cd94c80c1fa6feeb2d29e8116caa7">CMessageResult</a> notify </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_v_s_t_g_u_i_1_1_c_base_object.html">CBaseObject</a> *&#160;</td>
-          <td class="paramname"><em>sender</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespace_v_s_t_g_u_i.html#a13546ed3f569dee6006d7fa86193c38b">IdStringPtr</a>&#160;</td>
-          <td class="paramname"><em>message</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reimplemented in <a class="el" href="class_v_s_t_g_u_i_1_1_c_view.html#a15414e56ad0060f4b50f81ff44ad2a3e">CView</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_generic_string_list_data_browser_source.html#a15414e56ad0060f4b50f81ff44ad2a3e">GenericStringListDataBrowserSource</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_c_data_browser.html#a15414e56ad0060f4b50f81ff44ad2a3e">CDataBrowser</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_c_view_container.html#ab18c3bcc0cb674396848861dfd78a83a">CViewContainer</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_c_rocker_switch.html#a15414e56ad0060f4b50f81ff44ad2a3e">CRockerSwitch</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_c_scroll_view.html#a15414e56ad0060f4b50f81ff44ad2a3e">CScrollView</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_c_animation_splash_screen.html#a15414e56ad0060f4b50f81ff44ad2a3e">CAnimationSplashScreen</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_u_i_description_view_switch_controller.html#a15414e56ad0060f4b50f81ff44ad2a3e">UIDescriptionViewSwitchController</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_c_row_column_view.html#a15414e56ad0060f4b50f81ff44ad2a3e">CRowColumnView</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_c_shadow_view_container.html#a15414e56ad0060f4b50f81ff44ad2a3e">CShadowViewContainer</a>, <a class="el" href="class_v_s_t_g_u_i_1_1_c_tooltip_support.html#adf7a90a05ccc2d119ba9f4a81697b5d0">CTooltipSupport</a>, and <a class="el" href="class_v_s_t_g_u_i_1_1_c_scrollbar.html#a15414e56ad0060f4b50f81ff44ad2a3e">CScrollbar</a>.</p>
-
-<p><div id="dynsection-36" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-36-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-36-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-36-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_base_object_ab18c3bcc0cb674396848861dfd78a83a_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_base_object_ab18c3bcc0cb674396848861dfd78a83a_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_base_object_ab18c3bcc0cb674396848861dfd78a83a_icgraph" id="class_v_s_t_g_u_i_1_1_c_base_object_ab18c3bcc0cb674396848861dfd78a83a_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -2452,53 +1951,6 @@ Graphics Paths</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p><div id="dynsection-37" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-37-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-37-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-37-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_accc4eb8710cad9dd06c16d7f17c43cd7_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_accc4eb8710cad9dd06c16d7f17c43cd7_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_accc4eb8710cad9dd06c16d7f17c43cd7_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_accc4eb8710cad9dd06c16d7f17c43cd7_icgraph">
-</map>
-</div>
-</p>
-
-</div>
-</div>
-<a class="anchor" id="ada0719d1daaca4af1795018001769311"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void remember </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>increase refcount </p>
-
-<p><div id="dynsection-38" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-38-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-38-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-38-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_base_object_ada0719d1daaca4af1795018001769311_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_base_object_ada0719d1daaca4af1795018001769311_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_base_object_ada0719d1daaca4af1795018001769311_icgraph" id="class_v_s_t_g_u_i_1_1_c_base_object_ada0719d1daaca4af1795018001769311_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -2548,17 +2000,6 @@ Graphics Paths</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><div id="dynsection-39" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-39-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-39-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-39-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_afd1fd1c13b9b2831aa5dc374dfce78d3_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_afd1fd1c13b9b2831aa5dc374dfce78d3_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_afd1fd1c13b9b2831aa5dc374dfce78d3_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_afd1fd1c13b9b2831aa5dc374dfce78d3_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a5e5c5433a0882c009dbb80af5587b184"></a>
@@ -2581,17 +2022,6 @@ Graphics Paths</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p><div id="dynsection-40" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-40-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-40-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-40-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a5e5c5433a0882c009dbb80af5587b184_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a5e5c5433a0882c009dbb80af5587b184_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a5e5c5433a0882c009dbb80af5587b184_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a5e5c5433a0882c009dbb80af5587b184_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -2619,28 +2049,6 @@ Graphics Paths</h2></td></tr>
 
 <p>set the current clip </p>
 
-<p><div id="dynsection-41" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-41-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-41-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-41-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a3eb686895016175b3aa34feff499eb7c_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a3eb686895016175b3aa34feff499eb7c_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a3eb686895016175b3aa34feff499eb7c_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a3eb686895016175b3aa34feff499eb7c_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-42" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-42-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-42-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-42-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a3eb686895016175b3aa34feff499eb7c_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a3eb686895016175b3aa34feff499eb7c_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a3eb686895016175b3aa34feff499eb7c_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a3eb686895016175b3aa34feff499eb7c_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ab4bef9a3e8c1344693fc3f53a9a1b51b"></a>
@@ -2667,17 +2075,6 @@ Graphics Paths</h2></td></tr>
 
 <p>set the current draw mode, see <a class="el" href="struct_v_s_t_g_u_i_1_1_c_draw_mode.html">CDrawMode</a> </p>
 
-<p><div id="dynsection-43" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-43-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-43-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-43-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ab4bef9a3e8c1344693fc3f53a9a1b51b_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ab4bef9a3e8c1344693fc3f53a9a1b51b_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ab4bef9a3e8c1344693fc3f53a9a1b51b_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ab4bef9a3e8c1344693fc3f53a9a1b51b_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a500577d63c24a75702a9e4cf45dbb67c"></a>
@@ -2703,17 +2100,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>set current fill color </p>
-
-<p><div id="dynsection-44" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-44-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-44-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-44-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a500577d63c24a75702a9e4cf45dbb67c_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a500577d63c24a75702a9e4cf45dbb67c_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a500577d63c24a75702a9e4cf45dbb67c_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a500577d63c24a75702a9e4cf45dbb67c_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -2757,28 +2143,6 @@ Graphics Paths</h2></td></tr>
 
 <p>set current font </p>
 
-<p><div id="dynsection-45" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-45-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-45-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-45-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_aa88b4cee28d3836ba68eeb55cd3bdca4_cgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_aa88b4cee28d3836ba68eeb55cd3bdca4_cgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_aa88b4cee28d3836ba68eeb55cd3bdca4_cgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_aa88b4cee28d3836ba68eeb55cd3bdca4_cgraph">
-</map>
-</div>
-</p>
-
-<p><div id="dynsection-46" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-46-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-46-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-46-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_aa88b4cee28d3836ba68eeb55cd3bdca4_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_aa88b4cee28d3836ba68eeb55cd3bdca4_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_aa88b4cee28d3836ba68eeb55cd3bdca4_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_aa88b4cee28d3836ba68eeb55cd3bdca4_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ae55294dcf820a4e8367f3b7e622d8027"></a>
@@ -2804,17 +2168,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>set current font color </p>
-
-<p><div id="dynsection-47" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-47-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-47-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-47-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ae55294dcf820a4e8367f3b7e622d8027_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ae55294dcf820a4e8367f3b7e622d8027_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ae55294dcf820a4e8367f3b7e622d8027_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ae55294dcf820a4e8367f3b7e622d8027_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -2842,17 +2195,6 @@ Graphics Paths</h2></td></tr>
 
 <p>set current stroke color </p>
 
-<p><div id="dynsection-48" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-48-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-48-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-48-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_ae44181e37622cc3aeb857617ee21f595_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_ae44181e37622cc3aeb857617ee21f595_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_ae44181e37622cc3aeb857617ee21f595_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_ae44181e37622cc3aeb857617ee21f595_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a4bb34e24ac4f435ab6d7f7be7bce9776"></a>
@@ -2878,17 +2220,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>sets the global alpha value[0..1] </p>
-
-<p><div id="dynsection-49" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-49-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-49-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-49-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a4bb34e24ac4f435ab6d7f7be7bce9776_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a4bb34e24ac4f435ab6d7f7be7bce9776_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a4bb34e24ac4f435ab6d7f7be7bce9776_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a4bb34e24ac4f435ab6d7f7be7bce9776_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -2916,17 +2247,6 @@ Graphics Paths</h2></td></tr>
 
 <p>set the current line style </p>
 
-<p><div id="dynsection-50" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-50-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-50-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-50-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a622734e81b6fc1a89480d47fc4dc6f01_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a622734e81b6fc1a89480d47fc4dc6f01_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a622734e81b6fc1a89480d47fc4dc6f01_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a622734e81b6fc1a89480d47fc4dc6f01_icgraph">
-</map>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a9901bb437bd3a1c196eb2f7b0d5bfa44"></a>
@@ -2952,17 +2272,6 @@ Graphics Paths</h2></td></tr>
 </div><div class="memdoc">
 
 <p>set the current line width </p>
-
-<p><div id="dynsection-51" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-51-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-51-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-51-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="class_v_s_t_g_u_i_1_1_c_draw_context_a9901bb437bd3a1c196eb2f7b0d5bfa44_icgraph.png" border="0" usemap="#class_v_s_t_g_u_i_1_1_c_draw_context_a9901bb437bd3a1c196eb2f7b0d5bfa44_icgraph" alt=""/></div>
-<map name="class_v_s_t_g_u_i_1_1_c_draw_context_a9901bb437bd3a1c196eb2f7b0d5bfa44_icgraph" id="class_v_s_t_g_u_i_1_1_c_draw_context_a9901bb437bd3a1c196eb2f7b0d5bfa44_icgraph">
-</map>
-</div>
-</p>
 
 </div>
 </div>
@@ -3037,7 +2346,7 @@ Graphics Paths</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_v_s_t_g_u_i.html">VSTGUI</a></li><li class="navelem"><a class="el" href="class_v_s_t_g_u_i_1_1_c_draw_context.html">CDrawContext</a></li>
-    <li class="footer">Generated on Mon Jun 27 2016 16:32:14 for VSTGUI by
+    <li class="footer">Generated on Fri Mar 3 2017 10:55:27 for VSTGUI by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

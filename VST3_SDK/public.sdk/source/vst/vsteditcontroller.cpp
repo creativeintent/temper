@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vsteditcontroller.cpp
@@ -9,26 +8,29 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+// 
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
@@ -348,16 +350,20 @@ EditControllerEx1::EditControllerEx1 () : selectedUnit (kRootUnitId) { UpdateHan
 //------------------------------------------------------------------------
 EditControllerEx1::~EditControllerEx1 ()
 {
-	for (int32 i = 0; i < programLists.total (); i++)
+	for (ProgramListVector::const_iterator it = programLists.begin (), end = programLists.end ();
+	     it != end; ++it)
 	{
-		ProgramList* programList = programLists.at (i).object ();
-		if (programList)
-			programList->removeDependent (this);
+		if (*it)
+			(*it)->removeDependent (this);
 	}
 }
 
 //------------------------------------------------------------------------
-bool EditControllerEx1::addUnit (Unit* unit) { return units.add (IPtr<Unit> (unit, false)); }
+bool EditControllerEx1::addUnit (Unit* unit)
+{
+	units.push_back (IPtr<Unit> (unit, false));
+	return true;
+}
 
 //------------------------------------------------------------------------
 tresult PLUGIN_API EditControllerEx1::getUnitInfo (int32 unitIndex, UnitInfo& info /*out*/)
@@ -384,18 +390,17 @@ tresult EditControllerEx1::notifyUnitSelection ()
 //------------------------------------------------------------------------
 bool EditControllerEx1::addProgramList (ProgramList* list)
 {
-	if (programLists.addKeyAndObject (list->getID (), IPtr<ProgramList> (list, false)))
-	{
-		list->addDependent (this);
-		return true;
-	}
-	return false;
+	programIndexMap[list->getID ()] = programLists.size ();
+	programLists.push_back (IPtr<ProgramList> (list, false));
+	list->addDependent (this);
+	return true;
 }
 
 //------------------------------------------------------------------------
 ProgramList* EditControllerEx1::getProgramList (ProgramListID listId) const
 {
-	return programLists.lookupObject (listId);
+	ProgramIndexMap::const_iterator it = programIndexMap.find (listId);
+	return it == programIndexMap.end () ? 0 : programLists[it->second];
 }
 
 //------------------------------------------------------------------------
@@ -409,29 +414,29 @@ tresult EditControllerEx1::notifyProgramListChange (ProgramListID listId, int32 
 }
 
 //------------------------------------------------------------------------
-int32 PLUGIN_API EditControllerEx1::getProgramListCount () { return programLists.total (); }
+int32 PLUGIN_API EditControllerEx1::getProgramListCount ()
+{
+	return static_cast<int32> (programLists.size ());
+}
 
 //------------------------------------------------------------------------
 tresult PLUGIN_API EditControllerEx1::getProgramListInfo (int32 listIndex,
                                                           ProgramListInfo& info /*out*/)
 {
-	TAssociation<ProgramListID, IPtr<ProgramList>> assoc = programLists.at (listIndex);
-	if (assoc.object ())
-	{
-		info = assoc.object ()->getInfo ();
-		return kResultTrue;
-	}
-	return kResultFalse;
+	if (listIndex < 0 || listIndex >= static_cast<int32> (programLists.size ()))
+		return kResultFalse;
+	info = programLists[listIndex]->getInfo ();
+	return kResultTrue;
 }
 
 //------------------------------------------------------------------------
 tresult PLUGIN_API EditControllerEx1::getProgramName (ProgramListID listId, int32 programIndex,
                                                       String128 name /*out*/)
 {
-	ProgramList* list = programLists.lookupObject (listId);
-	if (list)
+	ProgramIndexMap::const_iterator it = programIndexMap.find (listId);
+	if (it != programIndexMap.end ())
 	{
-		return list->getProgramName (programIndex, name);
+		return programLists[it->second]->getProgramName (programIndex, name);
 	}
 	return kResultFalse;
 }
@@ -440,10 +445,10 @@ tresult PLUGIN_API EditControllerEx1::getProgramName (ProgramListID listId, int3
 tresult EditControllerEx1::setProgramName (ProgramListID listId, int32 programIndex,
                                            const String128 name /*in*/)
 {
-	ProgramList* list = programLists.lookupObject (listId);
-	if (list)
+	ProgramIndexMap::const_iterator it = programIndexMap.find (listId);
+	if (it != programIndexMap.end ())
 	{
-		return list->setProgramName (programIndex, name);
+		return programLists[it->second]->setProgramName (programIndex, name);
 	}
 	return kResultFalse;
 }
@@ -453,10 +458,10 @@ tresult PLUGIN_API EditControllerEx1::getProgramInfo (ProgramListID listId, int3
                                                       CString attributeId /*in*/,
                                                       String128 attributeValue /*out*/)
 {
-	ProgramList* list = programLists.lookupObject (listId);
-	if (list)
+	ProgramIndexMap::const_iterator it = programIndexMap.find (listId);
+	if (it != programIndexMap.end ())
 	{
-		return list->getProgramInfo (programIndex, attributeId, attributeValue);
+		return programLists[it->second]->getProgramInfo (programIndex, attributeId, attributeValue);
 	}
 	return kResultFalse;
 }
@@ -465,10 +470,10 @@ tresult PLUGIN_API EditControllerEx1::getProgramInfo (ProgramListID listId, int3
 tresult PLUGIN_API EditControllerEx1::hasProgramPitchNames (ProgramListID listId,
                                                             int32 programIndex)
 {
-	ProgramList* list = programLists.lookupObject (listId);
-	if (list)
+	ProgramIndexMap::const_iterator it = programIndexMap.find (listId);
+	if (it != programIndexMap.end ())
 	{
-		return list->hasPitchNames (programIndex);
+		return programLists[it->second]->hasPitchNames (programIndex);
 	}
 	return kResultFalse;
 }
@@ -477,10 +482,10 @@ tresult PLUGIN_API EditControllerEx1::hasProgramPitchNames (ProgramListID listId
 tresult PLUGIN_API EditControllerEx1::getProgramPitchName (ProgramListID listId, int32 programIndex,
                                                            int16 midiPitch, String128 name /*out*/)
 {
-	ProgramList* list = programLists.lookupObject (listId);
-	if (list)
+	ProgramIndexMap::const_iterator it = programIndexMap.find (listId);
+	if (it != programIndexMap.end ())
 	{
-		return list->getPitchName (programIndex, midiPitch, name);
+		return programLists[it->second]->getPitchName (programIndex, midiPitch, name);
 	}
 	return kResultFalse;
 }
@@ -549,21 +554,18 @@ ProgramList::ProgramList (const ProgramList& programList)
 //------------------------------------------------------------------------
 int32 ProgramList::addProgram (const String128 name)
 {
-	info.programCount++;
-	if (programNames.add (name))
-	{
-		programInfos.add (TDictionary<String, String> ());
-		return programNames.total () - 1;
-	}
-	return -1;
+	++info.programCount;
+	programNames.push_back (name);
+	programInfos.push_back (ProgramInfoVector::value_type ());
+	return static_cast<int32> (programNames.size ()) - 1;
 }
 
 //------------------------------------------------------------------------
 bool ProgramList::setProgramInfo (int32 programIndex, CString attributeId, const String128 value)
 {
-	if (programIndex < programNames.total ())
+	if (programIndex >= 0 && programIndex < static_cast<int32>(programNames.size ()))
 	{
-		programInfos.at (programIndex).addKeyAndObject (attributeId, value);
+		programInfos.at (programIndex).insert (std::make_pair (attributeId, value));
 		return true;
 	}
 	return false;
@@ -573,13 +575,16 @@ bool ProgramList::setProgramInfo (int32 programIndex, CString attributeId, const
 tresult ProgramList::getProgramInfo (int32 programIndex, CString attributeId,
                                      String128 value /*out*/)
 {
-	if (programIndex < programNames.total ())
+	if (programIndex >= 0 && programIndex < static_cast<int32>(programNames.size ()))
 	{
-		const String& attValue = programInfos.at (programIndex).lookupObject (attributeId);
-		if (!attValue.isEmpty ())
+		StringMap::const_iterator it = programInfos[programIndex].find (attributeId);
+		if (it != programInfos[programIndex].end ())
 		{
-			attValue.copyTo16 (value, 0, 128);
-			return kResultTrue;
+			if (!it->second.isEmpty ())
+			{
+				it->second.copyTo16 (value, 0, 128);
+				return kResultTrue;
+			}
 		}
 	}
 	return kResultFalse;
@@ -588,7 +593,7 @@ tresult ProgramList::getProgramInfo (int32 programIndex, CString attributeId,
 //------------------------------------------------------------------------
 tresult ProgramList::getProgramName (int32 programIndex, String128 name /*out*/)
 {
-	if (programIndex < programNames.total ())
+	if (programIndex >= 0 && programIndex < static_cast<int32>(programNames.size ()))
 	{
 		programNames.at (programIndex).copyTo16 (name, 0, 128);
 		return kResultTrue;
@@ -599,7 +604,7 @@ tresult ProgramList::getProgramName (int32 programIndex, String128 name /*out*/)
 //------------------------------------------------------------------------
 tresult ProgramList::setProgramName (int32 programIndex, const String128 name /*in*/)
 {
-	if (programIndex < programNames.total ())
+	if (programIndex >= 0 && programIndex < static_cast<int32>(programNames.size ()))
 	{
 		programNames.at (programIndex) = name;
 		if (parameter)
@@ -620,9 +625,11 @@ Parameter* ProgramList::getParameter ()
 		    info.name, info.id, 0,
 		    ParameterInfo::kCanAutomate | ParameterInfo::kIsList | ParameterInfo::kIsProgramChange,
 		    unitId);
-		FOREACH_T (String, name, programNames)
-			listParameter->appendString (name);
-		ENDFOR
+		for (StringVector::const_iterator it = programNames.begin (), end = programNames.end ();
+		     it != end; ++it)
+		{
+			listParameter->appendString (*it);
+		}
 		parameter = listParameter;
 	}
 	return parameter;
@@ -642,7 +649,7 @@ int32 ProgramListWithPitchNames::addProgram (const String128 name)
 {
 	int32 index = ProgramList::addProgram (name);
 	if (index >= 0)
-		pitchNames.add (TDictionary<int16, String> ());
+		pitchNames.push_back (PitchNamesVector::value_type ());
 	return index;
 }
 
@@ -650,26 +657,32 @@ int32 ProgramListWithPitchNames::addProgram (const String128 name)
 bool ProgramListWithPitchNames::setPitchName (int32 programIndex, int16 pitch,
                                               const String128 pitchName)
 {
-	bool result = false;
-	if (programIndex < getCount ())
+	if (programIndex < 0 || programIndex >= getCount ())
+		return false;
+	
+	bool nameChanged = true;
+	std::pair<PitchNameMap::iterator, bool> res =
+		pitchNames[programIndex].insert (std::make_pair (pitch, pitchName));
+	if (!res.second)
 	{
-		if (pitchNames.at (programIndex).containsKey (pitch))
-			result = pitchNames.at (programIndex).replace (pitch, pitchName);
+		if (res.first->second == pitchName)
+			nameChanged = false;
 		else
-			result = pitchNames.at (programIndex).addKeyAndObject (pitch, pitchName);
+			res.first->second = pitchName;
 	}
-	if (result)
+	
+	if (nameChanged)
 		changed ();
-	return result;
+	return true;
 }
 
 //-----------------------------------------------------------------------------
 bool ProgramListWithPitchNames::removePitchName (int32 programIndex, int16 pitch)
 {
 	bool result = false;
-	if (programIndex < getCount ())
+	if (programIndex >= 0 && programIndex < getCount ())
 	{
-		result = pitchNames.at (programIndex).removeKey (pitch);
+		result = pitchNames.at (programIndex).erase (pitch) != 0;
 	}
 	if (result)
 		changed ();
@@ -679,8 +692,8 @@ bool ProgramListWithPitchNames::removePitchName (int32 programIndex, int16 pitch
 //-----------------------------------------------------------------------------
 tresult ProgramListWithPitchNames::hasPitchNames (int32 programIndex)
 {
-	if (programIndex < getCount ())
-		return pitchNames.at (programIndex).total () > 0 ? kResultTrue : kResultFalse;
+	if (programIndex >= 0 && programIndex < getCount ())
+		return pitchNames.at (programIndex).empty () ? kResultFalse : kResultTrue;
 	return kResultFalse;
 }
 
@@ -688,12 +701,12 @@ tresult ProgramListWithPitchNames::hasPitchNames (int32 programIndex)
 tresult ProgramListWithPitchNames::getPitchName (int32 programIndex, int16 midiPitch,
                                                  String128 name /*out*/)
 {
-	if (programIndex < getCount ())
+	if (programIndex >= 0 && programIndex < getCount ())
 	{
-		const String& str = pitchNames.at (programIndex).lookupObject (midiPitch);
-		if (!str.isEmpty ())
+		PitchNameMap::const_iterator it = pitchNames[programIndex].find (midiPitch);
+		if (it != pitchNames[programIndex].end ())
 		{
-			str.copyTo16 (name, 0, 128);
+			it->second.copyTo16 (name, 0, 128);
 			return kResultTrue;
 		}
 	}

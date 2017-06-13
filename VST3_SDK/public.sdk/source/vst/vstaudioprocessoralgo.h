@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vstaudioprocessoralgo.h
@@ -9,40 +8,38 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+// 
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 #pragma once
-
-#define USE_XMM_INTRIN 1
 
 #include "pluginterfaces/vst/ivstaudioprocessor.h"
 #include "pluginterfaces/vst/ivstparameterchanges.h"
 #include <algorithm>
-
-#if USE_XMM_INTRIN
-#include <xmmintrin.h>
-#endif
+#include <cmath>
 
 namespace Steinberg {
 namespace Vst {
@@ -173,27 +170,8 @@ inline void clear64 (AudioBusBuffers* audioBusBuffers, int32 sampleCount, int32 
 inline void mix32 (AudioBusBuffers& src, AudioBusBuffers& dest, int32 sampleCount)
 {
 	foreach32 (src, dest, [&] (Sample32* srcBuffer, Sample32* destBuffer, int32 /*channelIndex*/) {
-#if USE_XMM_INTRIN
-		// TODO check alignment!!!
-
-		static const int32 kVectorSize = 4;
-		if ((sampleCount & (kVectorSize - 1)) == 0) 
-		{
-			for (int32 sampleIdx = 0; sampleIdx < sampleCount; sampleIdx += kVectorSize)
-			{
-				_mm_store_ps (destBuffer,
-				              _mm_add_ps (_mm_load_ps (destBuffer), _mm_load_ps (srcBuffer)));
-
-				srcBuffer += kVectorSize;
-				destBuffer += kVectorSize;
-			}
-		}
-		else
-#endif
-		{
-			for (int32 sampleIndex = 0; sampleIndex < sampleCount; ++sampleIndex)
-				destBuffer[sampleIndex] += srcBuffer[sampleIndex];
-		}
+		for (int32 sampleIndex = 0; sampleIndex < sampleCount; ++sampleIndex)
+			destBuffer[sampleIndex] += srcBuffer[sampleIndex];
 	});
 }
 
@@ -209,8 +187,7 @@ inline void mix64 (AudioBusBuffers& src, AudioBusBuffers& dest, int32 sampleCoun
 //------------------------------------------------------------------------
 inline bool isSilent32 (AudioBusBuffers& audioBuffer, int32 sampleCount, int32 startIndex = 0)
 {
-	// TODO 64
-	static const float epsilon = 1e-10f; // under -200dB...
+	const float epsilon = 1e-10f; // under -200dB...
 
 	sampleCount += startIndex;
 	for (int32 channelIndex = 0; channelIndex < audioBuffer.numChannels; ++channelIndex)
@@ -221,7 +198,29 @@ inline bool isSilent32 (AudioBusBuffers& audioBuffer, int32 sampleCount, int32 s
 		for (int32 sampleIndex = startIndex; sampleIndex < sampleCount; ++sampleIndex)
 		{
 			float val = audioBuffer.channelBuffers32[channelIndex][sampleIndex];
-			if (fabsf (val) > epsilon)
+			if (std::abs (val) > epsilon)
+				return false;
+		}
+	}
+
+	return true;
+}
+
+//------------------------------------------------------------------------
+inline bool isSilent64 (AudioBusBuffers& audioBuffer, int32 sampleCount, int32 startIndex = 0)
+{
+	const double epsilon = 1e-10f; // under -200dB...
+
+	sampleCount += startIndex;
+	for (int32 channelIndex = 0; channelIndex < audioBuffer.numChannels; ++channelIndex)
+	{
+		if (!audioBuffer.channelBuffers64[channelIndex])
+			return true;
+
+		for (int32 sampleIndex = startIndex; sampleIndex < sampleCount; ++sampleIndex)
+		{
+			double val = audioBuffer.channelBuffers64[channelIndex][sampleIndex];
+			if (std::abs (val) > epsilon)
 				return false;
 		}
 	}

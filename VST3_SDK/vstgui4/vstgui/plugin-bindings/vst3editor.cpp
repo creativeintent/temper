@@ -33,20 +33,20 @@
 //-----------------------------------------------------------------------------
 
 #include "vst3editor.h"
+#include "../lib/cvstguitimer.h"
 #include "../lib/vstkeycode.h"
+#include "../uidescription/detail/uiviewcreatorattributes.h"
 #include "../uidescription/editing/uieditcontroller.h"
 #include "../uidescription/editing/uieditmenucontroller.h"
-#include "../uidescription/uiviewfactory.h"
 #include "../uidescription/uiattributes.h"
-#include "../uidescription/detail/uiviewcreatorattributes.h"
-#include "base/source/updatehandler.h"
+#include "../uidescription/uiviewfactory.h"
 #include "base/source/fstring.h"
-#include "base/source/timer.h"
+#include "base/source/updatehandler.h"
 #include "pluginterfaces/base/keycodes.h"
+#include <algorithm>
+#include <cassert>
 #include <list>
 #include <sstream>
-#include <cassert>
-#include <algorithm>
 
 #if defined (kVstVersionMajor) && defined (kVstVersionMinor)
 #define VST3_SUPPORTS_CONTEXTMENU (kVstVersionMajor > 3 || (kVstVersionMajor == 3 && kVstVersionMinor > 1))
@@ -60,38 +60,41 @@
 /// @cond ignore
 namespace Steinberg {
 
+#ifdef VST3_CONTENT_SCALE_SUPPORT
+DEF_CLASS_IID (IPlugViewContentScaleSupport)
+#endif
+
 //-----------------------------------------------------------------------------
 class UpdateHandlerInit
 {
 public:
-	UpdateHandlerInit ()
-	{
-		get ();
-	}
+	UpdateHandlerInit () { get (); }
+
 	UpdateHandler* get () { return UpdateHandler::instance (); }
 };
 
 static UpdateHandlerInit gUpdateHandlerInit;
 
 //-----------------------------------------------------------------------------
-class IdleUpdateHandler : public FObject, public ITimerCallback
+class IdleUpdateHandler : public FObject, public IPlatformTimerCallback
 {
 public:
 	OBJ_METHODS (IdleUpdateHandler, FObject)
 	SINGLETON (IdleUpdateHandler)
 protected:
-	IdleUpdateHandler () 
+	IdleUpdateHandler ()
 	{
-		timer = Timer::create (this, 1000/30); // 30 Hz timer
-		VSTGUI::CView::kDirtyCallAlwaysOnMainThread = true; // we will always call CView::setDirty() on the main thread
+		timer = IPlatformTimer::create (this);
+		timer->start (1000 / 30); // 30 Hz timer
+		
+		// we will always call CView::setDirty() on the main thread
+		VSTGUI::CView::kDirtyCallAlwaysOnMainThread = true;
 	}
-	~IdleUpdateHandler () { timer->release (); }
-	void onTimer (Timer* timer)
-	{
-		gUpdateHandlerInit.get ()->triggerDeferedUpdates ();
-	}
+	~IdleUpdateHandler () { timer->stop (); }
 
-	Steinberg::Timer* timer;
+	void fire () VSTGUI_OVERRIDE_VMETHOD { gUpdateHandlerInit.get ()->triggerDeferedUpdates (); }
+
+	IPlatformTimer* timer;
 };
 
 } // namespace Steinberg
@@ -424,6 +427,9 @@ VST3Editor::~VST3Editor ()
 //-----------------------------------------------------------------------------
 Steinberg::tresult PLUGIN_API VST3Editor::queryInterface (const Steinberg::TUID iid, void** obj)
 {
+#ifdef VST3_CONTENT_SCALE_SUPPORT
+	QUERY_INTERFACE(iid, obj, Steinberg::IPlugViewContentScaleSupport::iid, Steinberg::IPlugViewContentScaleSupport)
+#endif
 	QUERY_INTERFACE(iid, obj, Steinberg::Vst::IParameterFinder::iid, Steinberg::Vst::IParameterFinder)
 	return VSTGUIEditor::queryInterface (iid, obj);
 }
@@ -432,7 +438,7 @@ Steinberg::tresult PLUGIN_API VST3Editor::queryInterface (const Steinberg::TUID 
 void VST3Editor::init ()
 {
 	Steinberg::IdleUpdateHandler::instance ();
-	zoomFactor = 1.;
+	zoomFactor = contentScaleFactor = 1.;
 	setIdleRate (300);
 	if (description->parse ())
 	{
@@ -523,14 +529,15 @@ bool VST3Editor::setEditorSizeConstrains (const CPoint& newMinimumSize, const CP
 			newSize = currentSize;
 			CCoord width = currentSize.getWidth ();
 			CCoord height = currentSize.getHeight ();
-			if (width > maxSize.x * zoomFactor)
-				currentSize.setWidth (maxSize.x * zoomFactor);
-			else if (width < minSize.x * zoomFactor)
-				currentSize.setWidth (minSize.x * zoomFactor);
-			if (height > maxSize.y * zoomFactor)
-				currentSize.setHeight (maxSize.y * zoomFactor);
-			else if (height < minSize.y * zoomFactor)
-				currentSize.setHeight (minSize.y * zoomFactor);
+			double scaleFactor = getAbsScaleFactor ();
+			if (width > maxSize.x * scaleFactor)
+				currentSize.setWidth (maxSize.x * scaleFactor);
+			else if (width < minSize.x * scaleFactor)
+				currentSize.setWidth (minSize.x * scaleFactor);
+			if (height > maxSize.y * scaleFactor)
+				currentSize.setHeight (maxSize.y * scaleFactor);
+			else if (height < minSize.y * scaleFactor)
+				currentSize.setHeight (minSize.y * scaleFactor);
 			if (newSize != currentSize)
 				requestResize (CPoint (newSize.getWidth (), newSize.getHeight ()));
 		}
@@ -539,6 +546,25 @@ bool VST3Editor::setEditorSizeConstrains (const CPoint& newMinimumSize, const CP
 	}
 	return false;
 }
+
+//-----------------------------------------------------------------------------
+double VST3Editor::getAbsScaleFactor () const
+{
+	return zoomFactor * contentScaleFactor;
+}
+
+#ifdef VST3_CONTENT_SCALE_SUPPORT
+//-----------------------------------------------------------------------------
+Steinberg::tresult PLUGIN_API VST3Editor::setContentScaleFactor (ScaleFactor factor)
+{
+	contentScaleFactor = factor;
+	if (getFrame ())
+	{
+		getFrame ()->setZoom (getAbsScaleFactor ());
+	}
+	return Steinberg::kResultOk;
+}
+#endif
 
 //-----------------------------------------------------------------------------
 void VST3Editor::setZoomFactor (double factor)
@@ -551,7 +577,7 @@ void VST3Editor::setZoomFactor (double factor)
 	if (getFrame () == 0)
 		return;
 
-	getFrame ()->setZoom (factor);
+	getFrame ()->setZoom (getAbsScaleFactor ());
 }
 
 //-----------------------------------------------------------------------------
@@ -572,7 +598,8 @@ bool VST3Editor::requestResize (const CPoint& newSize)
 		return false;
 	CCoord width = newSize.x;
 	CCoord height = newSize.y;
-	if (editingEnabled || (width >= minSize.x * zoomFactor && width <= maxSize.x * zoomFactor && height >= minSize.y * zoomFactor && height <= maxSize.y * zoomFactor))
+	double scaleFactor = getAbsScaleFactor ();
+	if (editingEnabled || (width >= minSize.x * scaleFactor && width <= maxSize.x * scaleFactor && height >= minSize.y * scaleFactor && height <= maxSize.y * scaleFactor))
 	{
 		Steinberg::ViewRect vr;
 		vr.right = static_cast<Steinberg::int32> (width);
@@ -757,7 +784,7 @@ public:
 		item->forget ();
 	}
 
-	Steinberg::tresult PLUGIN_API executeMenuItem (Steinberg::int32 tag)
+	Steinberg::tresult PLUGIN_API executeMenuItem (Steinberg::int32 tag) VSTGUI_OVERRIDE_VMETHOD
 	{
 		item->execute ();
 		return Steinberg::kResultTrue;
@@ -1086,16 +1113,17 @@ Steinberg::tresult PLUGIN_API VST3Editor::checkSizeConstraint (Steinberg::ViewRe
 	if (editingEnabled)
 		return Steinberg::kResultTrue;
 #endif
+	double scaleFactor = getAbsScaleFactor ();
 	CCoord width = rect->right - rect->left;
 	CCoord height = rect->bottom - rect->top;
-	if (width < minSize.x * zoomFactor)
-		width = minSize.x * zoomFactor;
-	else if (width > maxSize.x * zoomFactor)
-		width = maxSize.x * zoomFactor;
-	if (height < minSize.y * zoomFactor)
-		height = minSize.y * zoomFactor;
-	else if (height > maxSize.y * zoomFactor)
-		height = maxSize.y * zoomFactor;
+	if (width < minSize.x * scaleFactor)
+		width = minSize.x * scaleFactor;
+	else if (width > maxSize.x * scaleFactor)
+		width = maxSize.x * scaleFactor;
+	if (height < minSize.y * scaleFactor)
+		height = minSize.y * scaleFactor;
+	else if (height > maxSize.y * scaleFactor)
+		height = maxSize.y * scaleFactor;
 	if (width != rect->right - rect->left || height != rect->bottom - rect->top)
 	{
 		rect->right = (Steinberg::int32)width + rect->left;
@@ -1261,7 +1289,8 @@ void VST3Editor::save (bool saveAs)
 	}
 	if (savePath.empty ())
 		return;
-	description->save (savePath.c_str (), VST3EditorInternal::getUIDescriptionSaveOptions (frame));
+	if (description->save (savePath.c_str (), VST3EditorInternal::getUIDescriptionSaveOptions (frame)))
+		description->setFilePath (savePath.c_str ());
 }
 
 //------------------------------------------------------------------------
@@ -1349,6 +1378,22 @@ bool VST3Editor::enableEditing (bool state)
 	#if VSTGUI_LIVE_EDITING
 		if (state)
 		{
+			// update uiDesc file path to absolute if possible
+			if (UIAttributes* attributes = description->getCustomAttributes ("VST3Editor", true))
+			{
+				const std::string* filePath = attributes->getAttributeValue ("Path");
+				if (filePath)
+				{
+					CFileStream s;
+					if (!s.open (filePath->c_str (), CFileStream::kReadMode))
+					{
+						attributes->removeAttribute ("Path");
+					}
+					else
+						description->setFilePath (filePath->c_str ());
+				}
+			}
+			
 			getFrame ()->setTransform (CGraphicsTransform ());
 			nonEditRect = getFrame ()->getViewSize ();
 			description->setController (this);
@@ -1357,11 +1402,12 @@ bool VST3Editor::enableEditing (bool state)
 			if (view)
 			{
 				editingEnabled = true;
+				CCoord width = view->getWidth ();
+				CCoord height = view->getHeight ();
+
+				getFrame ()->setSize (width, height);
 				getFrame ()->addView (view);
-				int32_t autosizeFlags = view->getAutosizeFlags ();
-				view->setAutosizeFlags (0);
-				getFrame ()->setSize (view->getWidth (), view->getHeight ());
-				view->setAutosizeFlags (autosizeFlags);
+				getFrame()->setZoom (contentScaleFactor);
 
 				getFrame ()->enableTooltips (true);
 				CColor focusColor = kBlueCColor;
@@ -1397,11 +1443,12 @@ bool VST3Editor::enableEditing (bool state)
 			CView* view = description->createView (viewName.c_str (), this);
 			if (view)
 			{
-				CCoord width = view->getWidth () * zoomFactor;
-				CCoord height = view->getHeight () * zoomFactor;
+				double scaleFactor = getAbsScaleFactor ();
+				CCoord width = view->getWidth () * scaleFactor;
+				CCoord height = view->getHeight () * scaleFactor;
 				getFrame ()->setSize (width, height);
 				getFrame ()->addView (view);
-				getFrame ()->setTransform (CGraphicsTransform ().scale (zoomFactor, zoomFactor));
+				getFrame ()->setTransform (CGraphicsTransform ().scale (scaleFactor, scaleFactor));
 				getFrame ()->invalid ();
 				if (nonEditRect.isEmpty () == false)
 				{

@@ -1,11 +1,12 @@
 var searchData=
 [
-  ['tbool',['TBool',['../../base/namespaceSteinberg.html#a1ea8addd740f35d207a1569dd38ef895',1,'Steinberg']]],
-  ['tchar',['TChar',['../../vstinterfaces/group__vst3typedef.html#ga9cc7040d53a88b14ecab90ffb052276d',1,'Steinberg::Vst::TChar()'],['../../vstinterfaces/group__vst3typedef.html#ga9cc7040d53a88b14ecab90ffb052276d',1,'TChar()(Global Namespace)']]],
-  ['tptrint',['TPtrInt',['../../base/namespaceSteinberg.html#a1c25ab481e482aafa3e751e3d2ada928',1,'Steinberg']]],
-  ['tquarternotes',['TQuarterNotes',['../../vstinterfaces/group__vst3typedef.html#gabf70aac64179b2b47bd877600a2e8c28',1,'Steinberg::Vst::TQuarterNotes()'],['../../vstinterfaces/group__vst3typedef.html#gabf70aac64179b2b47bd877600a2e8c28',1,'TQuarterNotes()(Global Namespace)']]],
-  ['tresult',['tresult',['../../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957',1,'Steinberg']]],
-  ['tsamples',['TSamples',['../../vstinterfaces/group__vst3typedef.html#gad2e841097395dbff119029f4684dad8f',1,'Steinberg::Vst::TSamples()'],['../../vstinterfaces/group__vst3typedef.html#gad2e841097395dbff119029f4684dad8f',1,'TSamples()(Global Namespace)']]],
-  ['tsize',['TSize',['../../base/namespaceSteinberg.html#abc5a03f91bd781b5062f4fccaa7851f0',1,'Steinberg']]],
-  ['tuid',['TUID',['../../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c',1,'Steinberg']]]
+  ['sample32',['Sample32',['../../vstinterfaces/group__vst3typedef.html#ga353ad4086d31e4b7c57c9124965379a6',1,'Steinberg::Vst::Sample32()'],['../../vstinterfaces/group__vst3typedef.html#ga353ad4086d31e4b7c57c9124965379a6',1,'Sample32()(Global Namespace)']]],
+  ['sample64',['Sample64',['../../vstinterfaces/group__vst3typedef.html#ga8887669e1feb9270b120bcd725d0d4c1',1,'Steinberg::Vst::Sample64()'],['../../vstinterfaces/group__vst3typedef.html#ga8887669e1feb9270b120bcd725d0d4c1',1,'Sample64()(Global Namespace)']]],
+  ['samplerate',['SampleRate',['../../vstinterfaces/group__vst3typedef.html#ga11249ca544d179e7fa61b2200a092407',1,'Steinberg::Vst::SampleRate()'],['../../vstinterfaces/group__vst3typedef.html#ga11249ca544d179e7fa61b2200a092407',1,'SampleRate()(Global Namespace)']]],
+  ['speaker',['Speaker',['../../vstinterfaces/group__speakerArrangements.html#ga7a9fc6561fe897989fa3cea09ebb3250',1,'Steinberg::Vst::Speaker()'],['../../vstinterfaces/group__speakerArrangements.html#ga7a9fc6561fe897989fa3cea09ebb3250',1,'Speaker()(Global Namespace)']]],
+  ['speakerarrangement',['SpeakerArrangement',['../../vstinterfaces/group__speakerArrangements.html#ga54884a26d0b6dfa18eb919ea004775ac',1,'Steinberg::Vst::SpeakerArrangement()'],['../../vstinterfaces/group__speakerArrangements.html#ga54884a26d0b6dfa18eb919ea004775ac',1,'SpeakerArrangement()(Global Namespace)']]],
+  ['speakertype',['SpeakerType',['../classSteinberg_1_1Vst_1_1SpeakerArray.html#ac29b5ae06a98cb03a0f046667a1075e6',1,'Steinberg::Vst::SpeakerArray']]],
+  ['string',['String',['../../base/classSteinberg_1_1FUID.html#a0f2fc16d77666544de6fbd65e184ced8',1,'Steinberg::FUID']]],
+  ['string128',['String128',['../../vstinterfaces/group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47',1,'Steinberg::Vst::String128()'],['../../vstinterfaces/group__vst3typedef.html#ga4b750afeaca8056101ac7952543dfd47',1,'String128()(Global Namespace)']]],
+  ['subcategories',['SubCategories',['../classVST3_1_1Hosting_1_1ClassInfo.html#aa489b07acb4219dd706f6dd8db7a6e11',1,'VST3::Hosting::ClassInfo']]]
 ];

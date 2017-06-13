@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vsteditcontroller.h
@@ -9,26 +8,29 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+// 
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
@@ -37,12 +39,13 @@
 #include "public.sdk/source/vst/vstcomponentbase.h"
 #include "public.sdk/source/vst/vstparameters.h"
 #include "public.sdk/source/common/pluginview.h"
-#include "base/source/fcontainer.h"
-#include "base/source/tdictionary.h"
 #include "base/source/fstring.h"
 
 #include "pluginterfaces/vst/ivsteditcontroller.h"
 #include "pluginterfaces/vst/ivstunits.h"
+
+#include <vector>
+#include <map>
 
 //------------------------------------------------------------------------
 namespace Steinberg {
@@ -64,28 +67,28 @@ public:
 	EditController ();
 
 	//---from IEditController-------
-	virtual tresult PLUGIN_API setComponentState (IBStream* state);
-	virtual tresult PLUGIN_API setState (IBStream* state);
-	virtual tresult PLUGIN_API getState (IBStream* state);
-	virtual int32 PLUGIN_API getParameterCount ();
-	virtual tresult PLUGIN_API getParameterInfo (int32 paramIndex, ParameterInfo& info);
-	virtual tresult PLUGIN_API getParamStringByValue (ParamID tag, ParamValue valueNormalized, String128 string);
-	virtual tresult PLUGIN_API getParamValueByString (ParamID tag, TChar* string, ParamValue& valueNormalized);
-	virtual ParamValue PLUGIN_API normalizedParamToPlain (ParamID tag, ParamValue valueNormalized);
-	virtual ParamValue PLUGIN_API plainParamToNormalized (ParamID tag, ParamValue plainValue);
-	virtual ParamValue PLUGIN_API getParamNormalized (ParamID tag);
-	virtual tresult PLUGIN_API setParamNormalized (ParamID tag, ParamValue value);
-	virtual tresult PLUGIN_API setComponentHandler (IComponentHandler* handler);
-	virtual IPlugView* PLUGIN_API createView (FIDString /*name*/) {return 0;}
+	virtual tresult PLUGIN_API setComponentState (IBStream* state) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API setState (IBStream* state) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getState (IBStream* state) SMTG_OVERRIDE;
+	virtual int32 PLUGIN_API getParameterCount () SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getParameterInfo (int32 paramIndex, ParameterInfo& info) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getParamStringByValue (ParamID tag, ParamValue valueNormalized, String128 string) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getParamValueByString (ParamID tag, TChar* string, ParamValue& valueNormalized) SMTG_OVERRIDE;
+	virtual ParamValue PLUGIN_API normalizedParamToPlain (ParamID tag, ParamValue valueNormalized) SMTG_OVERRIDE;
+	virtual ParamValue PLUGIN_API plainParamToNormalized (ParamID tag, ParamValue plainValue) SMTG_OVERRIDE;
+	virtual ParamValue PLUGIN_API getParamNormalized (ParamID tag) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API setParamNormalized (ParamID tag, ParamValue value) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API setComponentHandler (IComponentHandler* handler) SMTG_OVERRIDE;
+	virtual IPlugView* PLUGIN_API createView (FIDString /*name*/) SMTG_OVERRIDE {return 0;}
 
 	//---from IEditController2-------
-	virtual tresult PLUGIN_API setKnobMode (KnobMode mode) { hostKnobMode = mode; return kResultTrue; }
-	virtual tresult PLUGIN_API openHelp (TBool /*onlyCheck*/) {return kResultFalse;}
-	virtual tresult PLUGIN_API openAboutBox (TBool /*onlyCheck*/) {return kResultFalse;}
+	virtual tresult PLUGIN_API setKnobMode (KnobMode mode) SMTG_OVERRIDE { hostKnobMode = mode; return kResultTrue; }
+	virtual tresult PLUGIN_API openHelp (TBool /*onlyCheck*/) SMTG_OVERRIDE {return kResultFalse;}
+	virtual tresult PLUGIN_API openAboutBox (TBool /*onlyCheck*/) SMTG_OVERRIDE {return kResultFalse;}
 
 	//---from ComponentBase---------
-	virtual tresult PLUGIN_API initialize (FUnknown* context);
-	virtual tresult PLUGIN_API terminate  ();
+	virtual tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API terminate  () SMTG_OVERRIDE;
 
 	//---Internal Methods-------
 	virtual tresult beginEdit (ParamID tag);	///< to be called before a serie of performEdit
@@ -148,8 +151,8 @@ public:
 	EditController* getController () { return controller; }
 
 	//---from CPluginView-------------
-	virtual void attachedToParent ();
-	virtual void removedFromParent ();
+	virtual void attachedToParent () SMTG_OVERRIDE;
+	virtual void removedFromParent () SMTG_OVERRIDE;
 
 //------------------------------------------------------------------------
 protected:
@@ -230,10 +233,13 @@ public:
 	OBJ_METHODS (ProgramList, FObject)
 //------------------------------------------------------------------------
 protected:
+	typedef std::map<String, String> StringMap;
+	typedef std::vector<String> StringVector;
+	typedef std::vector<StringMap> ProgramInfoVector;
 	ProgramListInfo info;
 	UnitID unitId;
-	TArray<String> programNames;
-	TArray<TDictionary<String, String> > programInfos;
+	StringVector programNames;
+	ProgramInfoVector programInfos;
 	Parameter* parameter;
 };
 
@@ -253,13 +259,15 @@ public:
 	bool removePitchName (int32 programIndex, int16 pitch);
 
 	//---from ProgramList---------
-	int32 addProgram (const String128 name);
-	tresult hasPitchNames (int32 programIndex);
-	tresult getPitchName (int32 programIndex, int16 midiPitch, String128 name /*out*/);
+	int32 addProgram (const String128 name) SMTG_OVERRIDE;
+	tresult hasPitchNames (int32 programIndex) SMTG_OVERRIDE;
+	tresult getPitchName (int32 programIndex, int16 midiPitch, String128 name /*out*/) SMTG_OVERRIDE;
 
 	OBJ_METHODS (ProgramListWithPitchNames, ProgramList)
 protected:
-	TArray<TDictionary<int16, String> > pitchNames;
+	typedef std::map<int16, String> PitchNameMap;
+	typedef std::vector<PitchNameMap> PitchNamesVector;
+	PitchNamesVector pitchNames;
 };
 
 
@@ -288,32 +296,32 @@ public:
 	tresult notifyProgramListChange (ProgramListID listId, int32 programIndex = kAllProgramInvalid);
 
 	//---from IUnitInfo------------------
-	virtual int32 PLUGIN_API getUnitCount () { return units.total (); }
-	virtual tresult PLUGIN_API getUnitInfo (int32 unitIndex, UnitInfo& info /*out*/);
+	virtual int32 PLUGIN_API getUnitCount () SMTG_OVERRIDE { return static_cast<int32> (units.size ()); }
+	virtual tresult PLUGIN_API getUnitInfo (int32 unitIndex, UnitInfo& info /*out*/) SMTG_OVERRIDE;
 
-	virtual int32 PLUGIN_API getProgramListCount ();
-	virtual tresult PLUGIN_API getProgramListInfo (int32 listIndex, ProgramListInfo& info /*out*/);
-	virtual tresult PLUGIN_API getProgramName (ProgramListID listId, int32 programIndex, String128 name /*out*/);
-	virtual tresult PLUGIN_API getProgramInfo (ProgramListID listId, int32 programIndex, CString attributeId /*in*/, String128 attributeValue /*out*/);
+	virtual int32 PLUGIN_API getProgramListCount () SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getProgramListInfo (int32 listIndex, ProgramListInfo& info /*out*/) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getProgramName (ProgramListID listId, int32 programIndex, String128 name /*out*/) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getProgramInfo (ProgramListID listId, int32 programIndex, CString attributeId /*in*/, String128 attributeValue /*out*/) SMTG_OVERRIDE;
 
-	virtual tresult PLUGIN_API hasProgramPitchNames (ProgramListID listId, int32 programIndex);
-	virtual tresult PLUGIN_API getProgramPitchName (ProgramListID listId, int32 programIndex, int16 midiPitch, String128 name /*out*/);
+	virtual tresult PLUGIN_API hasProgramPitchNames (ProgramListID listId, int32 programIndex) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getProgramPitchName (ProgramListID listId, int32 programIndex, int16 midiPitch, String128 name /*out*/) SMTG_OVERRIDE;
 
 	virtual tresult setProgramName (ProgramListID listId, int32 programIndex, const String128 name /*in*/);
 
 	// units selection --------------------
-	virtual UnitID PLUGIN_API getSelectedUnit () {return selectedUnit;}
-	virtual tresult PLUGIN_API selectUnit (UnitID unitId) {selectedUnit = unitId; return kResultTrue;}
+	virtual UnitID PLUGIN_API getSelectedUnit () SMTG_OVERRIDE {return selectedUnit;}
+	virtual tresult PLUGIN_API selectUnit (UnitID unitId) SMTG_OVERRIDE {selectedUnit = unitId; return kResultTrue;}
 
 	virtual tresult PLUGIN_API getUnitByBus (MediaType /*type*/, BusDirection /*dir*/, int32 /*busIndex*/,
-		int32 /*channel*/, UnitID& /*unitId*/ /*out*/) {return kResultFalse;}
-	virtual tresult PLUGIN_API setUnitProgramData (int32 /*listOrUnitId*/, int32 /*programIndex*/, IBStream* /*data*/) {return kResultFalse;}
+		int32 /*channel*/, UnitID& /*unitId*/ /*out*/) SMTG_OVERRIDE {return kResultFalse;}
+	virtual tresult PLUGIN_API setUnitProgramData (int32 /*listOrUnitId*/, int32 /*programIndex*/, IBStream* /*data*/) SMTG_OVERRIDE {return kResultFalse;}
 
 	/** Notifies the host about the selected Unit. */
 	virtual tresult notifyUnitSelection ();
 
 	//---from IDependent------------------
-	virtual void PLUGIN_API update (FUnknown* changedUnknown, int32 message);
+	virtual void PLUGIN_API update (FUnknown* changedUnknown, int32 message) SMTG_OVERRIDE;
 
 	//---Interface---------
 	OBJ_METHODS (EditControllerEx1, EditController)
@@ -323,8 +331,12 @@ public:
 	REFCOUNT_METHODS(EditController)
 
 protected:
-	TArray<IPtr<Unit> > units;
-	TDictionary<ProgramListID, IPtr<ProgramList> > programLists;
+	typedef std::vector<IPtr<ProgramList> > ProgramListVector;
+	typedef std::map<ProgramListID, ProgramListVector::size_type> ProgramIndexMap;
+	typedef std::vector<IPtr<Unit> > UnitVector;
+	UnitVector units;
+	ProgramListVector programLists;
+	ProgramIndexMap programIndexMap;
 	UnitID selectedUnit;
 };
 

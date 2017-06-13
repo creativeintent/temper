@@ -17,7 +17,8 @@
 #include "mdaBeatBoxProcessor.h"
 #include "mdaBeatBoxController.h"
 
-#include <math.h>
+#include <cmath>
+#include <cstdlib>
 
 namespace Steinberg {
 namespace Vst {

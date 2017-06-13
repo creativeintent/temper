@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/hostchecker/source/hostchecker.cpp
@@ -41,6 +40,7 @@
 #include "pluginterfaces/base/ustring.h"
 #include "pluginterfaces/base/ibstream.h"
 #include "pluginterfaces/vst/ivstcontextmenu.h"
+#include "pluginterfaces/vst/ivstmidicontrollers.h"
 #include "public.sdk/source/vst/vstcomponentbase.h"
 #include "public.sdk/source/vst/vstrepresentation.h"
 
@@ -55,8 +55,6 @@ namespace Vst {
 //-----------------------------------------------------------------------------
 FUID HostCheckerController::cid (0x35AC5652, 0xC7D24CB1, 0xB1427D38, 0xEB690DAF);
 
-static ProgramListID kProgramListID = 0;
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -65,9 +63,19 @@ tresult PLUGIN_API HostCheckerController::initialize (FUnknown* context)
 	tresult result = EditControllerEx1::initialize (context);
 	if (result == kResultOk)
 	{
+		// create a unit Latency parameter
+		UnitInfo unitInfo;
+		unitInfo.id = 1234;
+		unitInfo.parentUnitId = kRootUnitId;	// attached to the root unit
+		Steinberg::UString (unitInfo.name, USTRINGSIZE (unitInfo.name)).assign (USTRING ("Setup"));
+		unitInfo.programListId = kNoProgramListId;
+
+		Unit* unit = new Unit (unitInfo);
+		addUnit (unit);
+		
 		parameters.addParameter (STR16 ("Param1"), STR16 (""), 1, 0, ParameterInfo::kCanAutomate, kParam1Tag);
 		parameters.addParameter (STR16 ("Param2"), STR16 (""), 0, 0, 0, kParam2Tag);
-		parameters.addParameter (STR16 ("Latency"), STR16 (""), 0, 0, 0, kLatencyTag);
+		parameters.addParameter (STR16 ("Latency"), STR16 (""), 0, 0, 0, kLatencyTag, 1234);
 
 		parameters.addParameter (STR16 ("Bypass"), STR16 (""), 1, 0,
 								 ParameterInfo::kCanAutomate | ParameterInfo::kIsBypass, kBypassTag);
@@ -250,7 +258,7 @@ tresult PLUGIN_API HostCheckerController::connect (IConnectionPoint* other)
 			Steinberg::Vst::ParameterInfo paramInfo = {0};
 			if (getParameterInfo (paramIdx, paramInfo) == Steinberg::kResultOk)
 			{
-				IMessage* newMsg = allocateMessage ();
+				IPtr<IMessage> newMsg = owned (allocateMessage ());
 				if (newMsg)
 				{
 					newMsg->setMessageID ("Parameter");
@@ -268,7 +276,7 @@ tresult PLUGIN_API HostCheckerController::connect (IConnectionPoint* other)
 		FUnknownPtr<IAudioProcessor> proc (other);
 		if (proc)
 		{
-			OPtr<IMessage> newMsg = allocateMessage ();
+			IPtr<IMessage> newMsg = owned (allocateMessage ());
 			if (newMsg)
 			{
 				newMsg->setMessageID ("LogEvent");
@@ -441,13 +449,11 @@ tresult PLUGIN_API HostCheckerController::getMidiControllerAssignment (
 
 	switch (midiControllerNumber)
 	{
-		case 10: id = 0; break;
-
-		case 11: id = 2; break;
-
-		case 12: id = 3; break;
+		case ControllerNumbers::kCtrlPan: id = kParam1Tag; return kResultOk;
+		case ControllerNumbers::kCtrlExpression: id = kParam2Tag; return kResultOk;
+		case ControllerNumbers::kCtrlEffect1: id = kBypassTag; return kResultOk;
 	}
-	return kResultOk;
+	return kResultFalse;
 }
 
 //-----------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/XX/source/plugcontroller.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,7 +34,6 @@
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-
 #pragma once
 
 #include "public.sdk/source/vst/vsteditcontroller.h"
@@ -59,10 +57,11 @@ public:
 	}
 
 	//---from IPluginBase--------
-	tresult PLUGIN_API initialize (FUnknown* context);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
 	
 	//---from EditController-----
-	tresult PLUGIN_API setComponentState (IBStream* state);
+	tresult PLUGIN_API setParamNormalized (ParamID tag, ParamValue value) SMTG_OVERRIDE;
+	tresult PLUGIN_API setComponentState (IBStream* state) SMTG_OVERRIDE;
 
 	DELEGATE_REFCOUNT (EditControllerEx1)
 

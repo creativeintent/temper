@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
+// Version     : 3.6.7
 //
 // Category    : Interfaces
 // Filename    : pluginterfaces/vst/ivstcomponent.h
@@ -8,28 +8,11 @@
 // Description : Basic VST Interfaces
 //
 //-----------------------------------------------------------------------------
-// LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
-//-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-// OF THE POSSIBILITY OF SUCH DAMAGE.
+// This file is part of a Steinberg SDK. It is subject to the license terms
+// in the LICENSE file found in the top-level directory of this distribution
+// and at www.steinberg.net/sdklicenses. 
+// No part of the SDK, including this file, may be copied, modified, propagated,
+// or distributed except according to the terms contained in the LICENSE file.
 //-----------------------------------------------------------------------------
 
 #pragma once
@@ -90,19 +73,20 @@ enum BusTypes
 {
 //------------------------------------------------------------------------
 	kMain = 0,		///< main bus
-	kAux			///< auxilliary bus (sidechain)
+	kAux			///< auxiliary bus (sidechain)
 //------------------------------------------------------------------------
 };
 
 //------------------------------------------------------------------------
-/** Bus Description.
-A bus can be understood as a 'collection of data channels' belonging together.
-It describes a data input or a data output of the Plug-in.
-A VST component can define any desired number of buses, but this number must \b never change.
-Dynamic usage of buses is handled in the host by activating and deactivating
-buses. The component has to define the maximum number of supported buses and it has
-to define which of them are active by default. A host that can handle multiple
-buses, allows the user to activate buses that were initially inactive.
+/** Bus Description
+
+    A bus can be understood as a 'collection of data channels' belonging together.
+    It describes a data input or a data output of the Plug-in.
+    A VST component can define any desired number of buses, but this number must \b never change.
+    Dynamic usage of buses is handled in the host by activating and deactivating buses. 
+	The component has to define the maximum number of supported buses and it has to 
+	define which of them are active by default. A host that can handle multiple buses,
+	allows the user to activate buses that were initially inactive.
 
 See also: IComponent::getBusInfo , IComponent::activateBus
 */
@@ -110,15 +94,18 @@ See also: IComponent::getBusInfo , IComponent::activateBus
 struct BusInfo
 {
 //------------------------------------------------------------------------
-	MediaType mediaType;		///< Media type - has to be a value of \ref MediaTypes
-	BusDirection direction;		///< input or output \ref BusDirections
-	int32 channelCount;			///< number of channels (if used then need to be recheck after \ref IAudioProcessor::setBusArrangements is called)
-	String128 name;				///< name of the bus
-	BusType busType;			///< main or aux - has to be a value of \ref BusTypes
-	uint32 flags;				///< flags - a combination of \ref BusFlags
+	MediaType mediaType;	///< Media type - has to be a value of \ref MediaTypes
+	BusDirection direction; ///< input or output \ref BusDirections
+	int32 channelCount;		///< number of channels (if used then need to be recheck after \ref
+							/// IAudioProcessor::setBusArrangements is called).
+							/// For a bus of type MediaTypes::kEvent the channelCount corresponds
+							/// to the number of supported MIDI channels by this bus
+	String128 name;			///< name of the bus
+	BusType busType;		///< main or aux - has to be a value of \ref BusTypes
+	uint32 flags;			///< flags - a combination of \ref BusFlags
 	enum BusFlags
 	{
-		kDefaultActive = 1 << 0	///< bus active per default
+		kDefaultActive = 1 << 0 ///< bus active per default
 	};
 //------------------------------------------------------------------------
 };
@@ -152,7 +139,7 @@ struct RoutingInfo
 //------------------------------------------------------------------------
 // IComponent Interface
 //------------------------------------------------------------------------
-/**  Component Base Interface.
+/** Component Base Interface
 \ingroup vstIPlug vst300
 - [plug imp]
 - [released: 3.0.0]

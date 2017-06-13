@@ -7,29 +7,12 @@
 // Description : UTF-16 String class
 //
 //-----------------------------------------------------------------------------
-// LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// This file is part of a Steinberg SDK. It is subject to the license terms
+// in the LICENSE file found in the top-level directory of this distribution
+// and at www.steinberg.net/sdklicenses. 
+// No part of the SDK, including this file, may be copied, modified, propagated,
+// or distributed except according to the terms contained in the LICENSE file.
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-// OF THE POSSIBILITY OF SUCH DAMAGE.
-//------------------------------------------------------------------------------
 
 #include "ustring.h"
 
@@ -40,10 +23,41 @@
 #elif MAC
 #include <CoreFoundation/CoreFoundation.h>
 
+#elif LINUX
+#include <cstring>
+#include <string>
+#include <codecvt>
+#include <sstream>
+#include <locale>
+
+#include <wctype.h>
+#include <wchar.h>
+
 #endif
 
 //------------------------------------------------------------------------
 namespace Steinberg {
+
+//------------------------------------------------------------------------
+#if LINUX
+
+//------------------------------------------------------------------------
+namespace {
+
+using Converter = std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>;
+
+//------------------------------------------------------------------------
+Converter& converter ()
+{
+	static Converter instance;
+	return instance;
+}
+
+//------------------------------------------------------------------------
+} // anonymous
+
+//------------------------------------------------------------------------
+#endif // LINUX
 
 //------------------------------------------------------------------------
 /** Copy strings of different character width. */
@@ -129,7 +143,7 @@ const UString& UString::toAscii (char* dst, int32 dstSize) const
 bool UString::scanFloat (double& value) const
 {
 #if WINDOWS
-	return swscanf ((const wchar_t*)thisBuffer, L"%lf", &value) == 1;
+	return swscanf ((const wchar_t*)thisBuffer, L"%lf", &value) != -1;
 
 #elif TARGET_API_MAC_CARBON
 	CFStringRef cfStr = CFStringCreateWithBytes (0, (const UInt8 *)thisBuffer, getLength () * 2, kCFStringEncodingUTF16, false);
@@ -141,7 +155,12 @@ bool UString::scanFloat (double& value) const
 	}
 	return false;
 
+#elif LINUX
+	auto str = converter ().to_bytes (thisBuffer);
+	return sscanf (str.data (), "%lf", &value) == 1;
+
 #else
+#warning Implement me
 	// implement me!
 	return false;
 #endif
@@ -151,7 +170,7 @@ bool UString::scanFloat (double& value) const
 bool UString::printFloat (double value, int32 precision)
 {
 #if WINDOWS
-	return swprintf ((wchar_t*)thisBuffer, L"%.*lf", precision, value) == 1;
+	return swprintf ((wchar_t*)thisBuffer, L"%.*lf", precision, value) != -1;
 #elif MAC
 	bool result = false;
 	CFStringRef cfStr = CFStringCreateWithFormat (0, 0, CFSTR("%.*lf"), precision, value);
@@ -161,9 +180,25 @@ bool UString::printFloat (double value, int32 precision)
 		CFRange range = {0, CFStringGetLength (cfStr)};
 		CFStringGetBytes (cfStr, range, kCFStringEncodingUTF16, 0, false, (UInt8*)thisBuffer, thisSize, 0);
 		CFRelease (cfStr);
+		return true;
 	}
 	return result;
+#elif LINUX
+	auto utf8Buffer = reinterpret_cast<char*> (thisBuffer);
+	auto len = snprintf (utf8Buffer, thisSize, "%.*lf", precision, value);
+	if (len > 0)
+	{
+		auto utf16Buffer = reinterpret_cast<char16*> (thisBuffer);
+		utf16Buffer[len] = 0;
+		while (--len >= 0)
+		{
+			utf16Buffer[len] = utf8Buffer[len];
+		}
+		return true;
+	}
+	return false;
 #else
+#warning Implement me
 	// implement me!
 	return false;
 #endif
@@ -173,7 +208,7 @@ bool UString::printFloat (double value, int32 precision)
 bool UString::scanInt (int64& value) const
 {
 #if WINDOWS
-	return swscanf ((const wchar_t*)thisBuffer, L"%I64d", &value) == 1;
+	return swscanf ((const wchar_t*)thisBuffer, L"%I64d", &value) != -1;
 
 #elif MAC
 	CFStringRef cfStr = CFStringCreateWithBytes (0, (const UInt8 *)thisBuffer, getLength () * 2, kCFStringEncodingUTF16, false);
@@ -185,7 +220,12 @@ bool UString::scanInt (int64& value) const
 	}
 	return false;
 
+#elif LINUX
+	auto str = converter ().to_bytes (thisBuffer);
+	return sscanf (str.data (), "%lld", &value) == 1;
+
 #else
+#warning Implement me
 	// implement me!
 	return false;
 #endif
@@ -195,7 +235,7 @@ bool UString::scanInt (int64& value) const
 bool UString::printInt (int64 value)
 {
 #if WINDOWS
-	return swprintf ((wchar_t*)thisBuffer, L"%I64d", value) == 1;
+	return swprintf ((wchar_t*)thisBuffer, L"%I64d", value) != -1;
 
 #elif MAC
 	CFStringRef cfStr = CFStringCreateWithFormat (0, 0, CFSTR("%lld"), value);
@@ -208,7 +248,23 @@ bool UString::printInt (int64 value)
 		return true;
 	}
 	return false;
+#elif LINUX
+	auto utf8Buffer = reinterpret_cast<char*> (thisBuffer);
+	auto len = snprintf (utf8Buffer, thisSize, "%lld", value);
+	if (len > 0)
+	{
+		auto utf16Buffer = reinterpret_cast<char16*> (thisBuffer);
+		utf16Buffer[len] = 0;
+		while (--len >= 0)
+		{
+			utf16Buffer[len] = utf8Buffer[len];
+		}
+		return true;
+	}
+	return false;
+
 #else
+#warning Implement me
 	// implement me!
 	return false;
 #endif

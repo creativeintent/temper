@@ -9,26 +9,29 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
@@ -227,6 +230,91 @@ static bool fromCFStringRef (Steinberg::char8* dest, Steinberg::int32 destSize, 
 #define wtol _wtol
 #define wtof _wtof
 
+#elif LINUX
+#include <codecvt>
+#include <locale>
+#include <cstring>
+#include <string>
+#include <limits>
+#include <cassert>
+#include <wchar.h>
+
+using ConverterFacet = std::codecvt_utf8_utf16<char16_t>;
+using Converter = std::wstring_convert<ConverterFacet, char16_t>;
+
+//------------------------------------------------------------------------
+static ConverterFacet& converterFacet ()
+{
+	static ConverterFacet gFacet;
+	return gFacet;
+}
+
+//------------------------------------------------------------------------
+static Converter& converter ()
+{
+	static Converter gConverter;
+	return gConverter;
+}
+
+//-----------------------------------------------------------------------------
+static inline int stricasecmp (const Steinberg::char8* s1, const Steinberg::char8* s2)
+{
+	return ::strcasecmp (s1, s2);
+}
+
+//-----------------------------------------------------------------------------
+static inline int strnicasecmp (const Steinberg::char8* s1, const Steinberg::char8* s2, size_t n)
+{
+	return ::strncasecmp (s1, s2, n);
+}
+
+//-----------------------------------------------------------------------------
+static inline int stricmp16 (const Steinberg::char16* s1, const Steinberg::char16* s2)
+{
+	auto str1 = converter ().to_bytes (s1);
+	auto str2 = converter ().to_bytes (s2);
+	return stricasecmp (str1.data (), str2.data ());
+}
+
+//-----------------------------------------------------------------------------
+static inline int strnicmp16 (const Steinberg::char16* s1, const Steinberg::char16* s2, int n)
+{
+	auto str1 = converter ().to_bytes (s1);
+	auto str2 = converter ().to_bytes (s2);
+	return strnicasecmp (str1.data (), str2.data (), n);
+}
+
+//-----------------------------------------------------------------------------
+static inline int sprintf16 (Steinberg::char16* wcs, const Steinberg::char16* format, ...)
+{
+#warning DEPRECATED No Linux implementation
+    assert(false && "DEPRECATED No Linux implementation");
+	return 0;
+}
+
+//-----------------------------------------------------------------------------
+static inline int vsnwprintf (Steinberg::char16* wcs, size_t maxlen,
+							  const Steinberg::char16* format, va_list args)
+{
+	Steinberg::char8 str8[kPrintfBufferSize];
+	auto format_utf8 = converter ().to_bytes(format);
+	auto len = vsnprintf (str8, kPrintfBufferSize, format_utf8.data (), args);
+
+	auto tmp_str = converter ().from_bytes (str8, str8 + len);
+	auto target_len = std::min (tmp_str.size (), maxlen - 1);
+	tmp_str.copy (wcs, target_len);
+	wcs[target_len] = '\0';
+
+	return tmp_str.size ();
+}
+
+//-----------------------------------------------------------------------------
+static inline Steinberg::char16* strrchr16 (const Steinberg::char16* str, Steinberg::char16 c)
+{
+#warning DEPRECATED No Linux implementation
+    assert(false && "DEPRECATED No Linux implementation");
+	return nullptr;
+}
 
 #elif MAC
 #define tstrtoi64 strtoll
@@ -351,24 +439,24 @@ static inline bool isCaseSensitive (ConstString::CompareMode mode)
 //-----------------------------------------------------------------------------
 ConstString::ConstString (const char8* str, int32 length)
 : buffer8 ((char8*)str)
-, isWide (0)
 , len (length < 0 ? (str ? static_cast<uint32> (strlen (str)) : 0) : length)
+, isWide (0) 
 {
 }
 
 //-----------------------------------------------------------------------------
 ConstString::ConstString (const char16* str, int32 length)
 : buffer16 ((char16*)str)
-, isWide (1)
 , len (length < 0 ? (str ? strlen16 (str) : 0) : length)
+, isWide (1) 
 {
 }
 
 //-----------------------------------------------------------------------------
 ConstString::ConstString (const ConstString& str, int32 offset, int32 length)
 : buffer (str.buffer)
-, isWide (str.isWide)
 , len (length < 0 ? (str.len - (offset > 0 ? offset : 0)) : length)
+, isWide (str.isWide)
 {
 	if (offset > 0)
 	{
@@ -382,8 +470,8 @@ ConstString::ConstString (const ConstString& str, int32 offset, int32 length)
 //-----------------------------------------------------------------------------
 ConstString::ConstString (const FVariant& var)
 : buffer (0)
-, isWide (0)
 , len (0)
+, isWide (0) 
 {
 	switch (var.getType ())
 	{
@@ -404,8 +492,8 @@ ConstString::ConstString (const FVariant& var)
 //-----------------------------------------------------------------------------
 ConstString::ConstString ()
 : buffer (0)
-, isWide (0)
 , len (0)
+, isWide (0) 
 {
 }
 
@@ -1507,6 +1595,10 @@ char16 ConstString::toLower (char16 c)
 				return characters[0];
 		}
 		return c;
+	#elif LINUX
+	#warning DEPRECATED No Linux implementation
+	assert(false && "DEPRECATED No Linux implementation");
+		return c;
 	#else
 		return towlower (c);
 	#endif
@@ -1531,6 +1623,10 @@ char16 ConstString::toUpper (char16 c)
 			if (characters[1] == 0)
 				return characters[0];
 		}
+		return c;
+	#elif LINUX
+	#warning DEPRECATED No Linux implementation
+	assert(false && "DEPRECATED No Linux implementation");
 		return c;
 	#else
 		return towupper (c);
@@ -1803,6 +1899,35 @@ int32 ConstString::multiByteToWideString (char16* dest, const char8* source, int
 		CFRelease (cfStr);
 	}
 #endif
+
+#if LINUX
+	if (sourceCodePage == kCP_ANSI || sourceCodePage == kCP_Utf8)
+	{
+		if (dest == nullptr)
+		{
+			auto state = std::mbstate_t ();
+			auto maxChars = charCount ? charCount : std::numeric_limits<int32>::max () - 1;
+			result = converterFacet ().length (state, source, source + strlen (source), maxChars);
+		}
+		else
+		{
+			auto utf16Str = converter ().from_bytes (source);
+			if (!utf16Str.empty ())
+			{
+				result = std::min<int32> (charCount, utf16Str.size ());
+				memcpy (dest, utf16Str.data (), result * sizeof (char16));
+				dest[result] = 0;
+			}
+		}
+	}
+	else
+	{
+#warning DEPRECATED No Linux implementation
+		assert(false && "DEPRECATED No Linux implementation");
+	}
+
+#endif
+
 	ASSERT (result > 0)
 	return result;
 }
@@ -1812,9 +1937,8 @@ int32 ConstString::wideStringToMultiByte (char8* dest, const char16* wideString,
 {
 #if WINDOWS
 	return WideCharToMultiByte (destCodePage, 0, wideString, -1, dest, charCount, 0, 0);
-#endif
 
-#if MAC
+#elif MAC
 	int32 result = 0;
 	if (wideString != 0)
 	{
@@ -1834,7 +1958,62 @@ int32 ConstString::wideStringToMultiByte (char8* dest, const char16* wideString,
 		}
 	}
 	return result;
+
+#elif LINUX
+	int32 result = 0;
+	if (destCodePage == kCP_Utf8)
+	{
+		if (dest == nullptr)
+		{
+			auto maxChars = charCount ? charCount : tstrlen (wideString);
+			result = converterFacet ().max_length () * maxChars;
+		}
+		else
+		{
+			auto utf8Str = converter ().to_bytes (wideString);
+			if (!utf8Str.empty ())
+			{
+				result = std::min<int32> (charCount, utf8Str.size ());
+				memcpy (dest, utf8Str.data (), result * sizeof (char8));
+				dest[result] = 0;
+			}
+		}
+	}
+	else if (destCodePage == kCP_ANSI)
+	{
+		if (dest == nullptr)
+		{
+			result = strlen16 (wideString) + 1;
+		}
+		else
+		{
+			int32 i = 0;
+			for (; i < charCount; ++i)
+			{
+				if (wideString[i] == 0)
+					break;
+				if (wideString[i] <= 0x007F)
+					dest[i] = wideString[i];
+				else
+					dest[i] = '_';
+			}
+			dest[i] = 0;
+			result = i;
+		}
+	}
+	else
+	{
+#warning DEPRECATED No Linux implementation
+		assert(false && "DEPRECATED No Linux implementation");
+	}
+	return result;
+
+#else
+#warning DEPRECATED No Linux implementation
+	assert(false && "DEPRECATED No Linux implementation");
+	return 0;
 #endif
+
 }
 
 //-----------------------------------------------------------------------------
@@ -2000,6 +2179,58 @@ bool String::toWideString (uint32 sourceCodePage)
 		isWide = true;
 	}
 	return true;
+}
+
+#define SMTG_STRING_CHECK_CONVERSION 1
+#define SMTG_STRING_CHECK_CONVERSION_NO_BREAK 0
+
+#if SMTG_STRING_CHECK_CONVERSION_NO_BREAK
+	#define SMTG_STRING_CHECK_MSG FDebugPrint
+#else
+	#define SMTG_STRING_CHECK_MSG FDebugBreak
+#endif
+//-----------------------------------------------------------------------------
+bool String::checkToMultiByte (uint32 destCodePage) const
+{
+	if (!isWide || isEmpty ())
+		return true;
+
+#if DEVELOPMENT && SMTG_STRING_CHECK_CONVERSION
+	int debugLen = length ();
+	int debugNonASCII = 0;
+	for (int32 i = 0; i < length (); i++)
+	{
+		if (buffer16[i] > 127)
+			++debugNonASCII;
+	}
+	
+	String* backUp = nullptr;
+	if (debugNonASCII > 0)
+		backUp = NEW String (*this);
+#endif
+
+	// this should be avoided, since it can lead to information loss
+	bool result = const_cast <String&> (*this).toMultiByte (destCodePage);
+
+#if DEVELOPMENT && SMTG_STRING_CHECK_CONVERSION
+	if (backUp)
+	{
+		String temp (*this);
+		temp.toWideString (destCodePage);
+		
+		if (temp != *backUp)
+		{
+			backUp->toMultiByte (kCP_Utf8);
+			SMTG_STRING_CHECK_MSG ("Indirect string conversion information loss !   %d/%d non ASCII chars:   \"%s\"   ->    \"%s\"\n", debugNonASCII, debugLen, backUp->buffer8, buffer8);
+		}
+		else
+			SMTG_STRING_CHECK_MSG ("Indirect string potential conversion information loss !   %d/%d non ASCII chars   result: \"%s\"\n", debugNonASCII, debugLen, buffer8);
+
+		delete backUp;
+	}
+#endif
+
+	return result;
 }
 
 //-----------------------------------------------------------------------------
@@ -2287,7 +2518,7 @@ String& String::assign (const ConstString& str, int32 n)
 //-----------------------------------------------------------------------------
 String& String::assign (const char8* str, int32 n, bool isTerminated)
 {
-	if (!str || str == buffer8)
+	if (str == buffer8)
 		return *this;
 
 	if (isTerminated)
@@ -2314,7 +2545,7 @@ String& String::assign (const char8* str, int32 n, bool isTerminated)
 //-----------------------------------------------------------------------------
 String& String::assign (const char16* str, int32 n, bool isTerminated)
 {
-	if (!str || str == buffer16)
+	if (str == buffer16)
 		return *this;
 
 	if (isTerminated)
@@ -2621,6 +2852,8 @@ String& String::replace (uint32 idx, int32 n1, const char8* str, int32 n2)
 		String tmp (str);
 		if (tmp.toWideString () == false)
 			return *this;
+		if (tmp.length () == 0 || n2 == 0)
+			return remove (idx, n1);
 		return replace (idx, n1, tmp.buffer16, n2);
 	}
 
@@ -3764,4 +3997,5 @@ bool PLUGIN_API StringObject::isWideString () const
 	return String::isWideString ();
 }
 
+//------------------------------------------------------------------------
 } // namespace Steinberg

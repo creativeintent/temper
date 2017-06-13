@@ -9,26 +9,29 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
@@ -36,13 +39,11 @@
 /** @file base/source/fobject.h
 	Basic Object implementing FUnknown. */
 //------------------------------------------------------------------------
-
-#ifndef __fobject__
-#define __fobject__
+#pragma once
 
 #include "pluginterfaces/base/funknown.h"
 #include "pluginterfaces/base/iupdatehandler.h"
-#include "base/source/basefwd.h"
+//#include "base/source/basefwd.h"
 #include "base/source/fdebug.h" // NEW
 
 
@@ -98,12 +99,12 @@ public:
 	FUnknown* unknownCast () {return this;}									///< get FUnknown interface from object
 
 	// FUnknown
-	virtual tresult PLUGIN_API queryInterface (const TUID _iid, void** obj); ///< please refer to FUnknown::queryInterface ()
-	virtual uint32 PLUGIN_API addRef ();									///< please refer to FUnknown::addref ()
-	virtual uint32 PLUGIN_API release ();									///< please refer to FUnknown::release ()
+	virtual tresult PLUGIN_API queryInterface (const TUID _iid, void** obj) SMTG_OVERRIDE; ///< please refer to FUnknown::queryInterface ()
+	virtual uint32 PLUGIN_API addRef () SMTG_OVERRIDE;									///< please refer to FUnknown::addref ()
+	virtual uint32 PLUGIN_API release () SMTG_OVERRIDE;									///< please refer to FUnknown::release ()
 
 	// IDependent
-	virtual void PLUGIN_API update (FUnknown* /*changedUnknown*/, int32 /*message*/) {}
+	virtual void PLUGIN_API update (FUnknown* /*changedUnknown*/, int32 /*message*/) SMTG_OVERRIDE {}
 																			///< empty virtual method that should be overridden by derived classes for data updates upon changes	
 	// IDependency
 	virtual void addDependent (IDependent* dep);							///< adds dependency to the object
@@ -315,6 +316,7 @@ namespace Singleton {
 	void unlockRegister ();
 }
 
+//------------------------------------------------------------------------
 } // namespace Steinberg
 
 //-----------------------------------------------------------------------
@@ -338,9 +340,9 @@ namespace Singleton {
 //-----------------------------------------------------------------------
 #define OBJ_METHODS(className, baseClass)								\
 	static inline Steinberg::FClassID getFClassID () {return (#className);}		\
-	virtual Steinberg::FClassID isA () const {return className::getFClassID ();}	\
-	virtual bool isA (Steinberg::FClassID s) const {return isTypeOf (s, false);}	\
-	virtual bool isTypeOf (Steinberg::FClassID s, bool askBaseClass = true) const	\
+	virtual Steinberg::FClassID isA () const SMTG_OVERRIDE {return className::getFClassID ();}	\
+	virtual bool isA (Steinberg::FClassID s) const SMTG_OVERRIDE {return isTypeOf (s, false);}	\
+	virtual bool isTypeOf (Steinberg::FClassID s, bool askBaseClass = true) const SMTG_OVERRIDE	\
     {  return (classIDsEqual (s, #className) ? true : (askBaseClass ? baseClass::isTypeOf (s, true) : false)); } 
 
 //------------------------------------------------------------------------
@@ -349,8 +351,8 @@ namespace Singleton {
 */
 //------------------------------------------------------------------------
 #define REFCOUNT_METHODS(BaseClass) \
-virtual Steinberg::uint32 PLUGIN_API addRef (){ return BaseClass::addRef (); } \
-virtual Steinberg::uint32 PLUGIN_API release (){ return BaseClass::release (); }
+virtual Steinberg::uint32 PLUGIN_API addRef ()SMTG_OVERRIDE{ return BaseClass::addRef (); } \
+virtual Steinberg::uint32 PLUGIN_API release ()SMTG_OVERRIDE{ return BaseClass::release (); }
 
 //------------------------------------------------------------------------
 /** @name Macros to implement FUnknown::queryInterface ().
@@ -376,7 +378,7 @@ virtual Steinberg::uint32 PLUGIN_API release (){ return BaseClass::release (); }
 /** Start defining interfaces. */
 //------------------------------------------------------------------------
 #define DEFINE_INTERFACES \
-Steinberg::tresult PLUGIN_API queryInterface (const Steinberg::TUID iid, void** obj) \
+Steinberg::tresult PLUGIN_API queryInterface (const Steinberg::TUID iid, void** obj) SMTG_OVERRIDE \
 {
 
 //------------------------------------------------------------------------
@@ -514,6 +516,3 @@ IUNKNOWN_REFCOUNT_METHODS(BaseClass)
 ///@}
 
 #endif // COM_COMPATIBLE
-
-
-#endif	// __fobject__

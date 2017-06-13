@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/channelcontext/source/plugcontroller.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -56,13 +55,13 @@ public:
 	static FUnknown* createInstance (void* context) { return (IEditController*)new PlugController; }
 
 	//---from IPluginBase--------
-	tresult PLUGIN_API initialize (FUnknown* context) override;
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
 
 	//---from EditController-----
-	tresult PLUGIN_API setComponentState (IBStream* state) override;
+	tresult PLUGIN_API setComponentState (IBStream* state) SMTG_OVERRIDE;
 
 	//---from ChannelContext::IInfoListener-----
-	tresult PLUGIN_API setChannelContextInfos (IAttributeList* list) override;
+	tresult PLUGIN_API setChannelContextInfos (IAttributeList* list) SMTG_OVERRIDE;
 
 	//---Interface---------
 	OBJ_METHODS (PlugController, EditControllerEx1)

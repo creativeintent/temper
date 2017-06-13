@@ -7,33 +7,16 @@
 // Description : Basic Interface
 //
 //-----------------------------------------------------------------------------
-// LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// This file is part of a Steinberg SDK. It is subject to the license terms
+// in the LICENSE file found in the top-level directory of this distribution
+// and at www.steinberg.net/sdklicenses. 
+// No part of the SDK, including this file, may be copied, modified, propagated,
+// or distributed except according to the terms contained in the LICENSE file.
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-// OF THE POSSIBILITY OF SUCH DAMAGE.
-//------------------------------------------------------------------------------
 
-#ifndef __funknown__
-#define __funknown__
+#pragma once
 
+#include "pluginterfaces/base/fplatform.h"
 #include "pluginterfaces/base/ftypes.h"
 #include "pluginterfaces/base/smartpointer.h"
 #include <string.h>
@@ -100,9 +83,9 @@ const ::Steinberg::FUID ClassName::iid (ClassName##_iid);
 
 #define DECLARE_FUNKNOWN_METHODS                                                                      \
 public:	                                                                                              \
-	virtual ::Steinberg::tresult PLUGIN_API queryInterface (const ::Steinberg::TUID _iid, void** obj); \
-	virtual ::Steinberg::uint32 PLUGIN_API addRef ();                                                 \
-	virtual ::Steinberg::uint32 PLUGIN_API release ();                                                \
+	virtual ::Steinberg::tresult PLUGIN_API queryInterface (const ::Steinberg::TUID _iid, void** obj) SMTG_OVERRIDE; \
+	virtual ::Steinberg::uint32 PLUGIN_API addRef () SMTG_OVERRIDE;                                                 \
+	virtual ::Steinberg::uint32 PLUGIN_API release () SMTG_OVERRIDE;                                                \
 protected :                                                                                           \
 	::Steinberg::int32 __funknownRefCount;                                                            \
 public:
@@ -111,8 +94,8 @@ public:
 
 #define DELEGATE_REFCOUNT(ClassName)											        \
 public:																			        \
-	virtual ::Steinberg::uint32 PLUGIN_API addRef ()  { return ClassName::addRef ();  }	\
-	virtual ::Steinberg::uint32 PLUGIN_API release () { return ClassName::release (); }
+	virtual ::Steinberg::uint32 PLUGIN_API addRef () SMTG_OVERRIDE { return ClassName::addRef ();  }	\
+	virtual ::Steinberg::uint32 PLUGIN_API release () SMTG_OVERRIDE { return ClassName::release (); }
 
 //------------------------------------------------------------------------
 #define IMPLEMENT_REFCOUNT(ClassName)                                          \
@@ -246,6 +229,12 @@ public:
 	FUID (uint32 l1, uint32 l2, uint32 l3, uint32 l4);
 	FUID (const FUID&);
 	virtual ~FUID () {}
+	
+#if SMTG_CPP11_STDLIBSUPPORT
+	FUID (FUID&& other);
+	FUID& operator= (FUID&& other);
+#endif
+
 
 	/** Generates a new Unique Identifier (UID).
 	    Will return true for success. If the return value is false, either no
@@ -295,11 +284,11 @@ public:
 		the ASCII-encoded hexadecimal value of the corresponding data byte. */
 	bool fromString (const char8* string);
 
-	/** Converts UID to a string in Microsoft® OLE format.
+	/** Converts UID to a string in MicrosoftÂ® OLE format.
 	(e.g. "{c200e360-38c5-11ce-ae62-08002b2b79ef}") */
 	void toRegistryString (char8* string) const;
 
-	/** Sets the UID data from a string in Microsoft® OLE format. */
+	/** Sets the UID data from a string in MicrosoftÂ® OLE format. */
 	bool fromRegistryString (const char8* string);
 
 	enum UIDPrintStyle
@@ -348,7 +337,7 @@ inline FUID::FUID (const TUID uid)
 Interfaces are identified by 16 byte Globally Unique Identifiers.
 The SDK provides a class called FUID for this purpose.
 
-\sa \ref howtoClass */
+\ref howtoClass */
 //------------------------------------------------------------------------
 class FUnknown
 {
@@ -463,6 +452,5 @@ struct FReleaser
 	FUnknown* u;
 };
 
-}
-
-#endif
+//------------------------------------------------------------------------
+} // namespace Steinberg

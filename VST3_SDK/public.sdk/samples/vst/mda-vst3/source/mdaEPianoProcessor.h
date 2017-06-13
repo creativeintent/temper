@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaEPianoProcessor__
-#define __mdaEPianoProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,11 +29,16 @@ public:
 	EPianoProcessor ();
 	~EPianoProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
+
+	virtual bool hasProgram () const SMTG_OVERRIDE { return true; }
+	virtual Steinberg::uint32 getCurrentProgram () const SMTG_OVERRIDE { return currentProgram; }
+	virtual void setCurrentProgram (Steinberg::uint32 val) SMTG_OVERRIDE;
+	virtual void setCurrentProgramNormalized (ParamValue val) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new EPianoProcessor; }
@@ -82,10 +86,10 @@ public:
 	};
 
 protected:
-	void setParameter (ParamID index, ParamValue newValue, int32 sampleOffset);
-	void processEvents (IEventList* events);
+	void setParameter (ParamID index, ParamValue newValue, int32 sampleOffset) SMTG_OVERRIDE;
+	void processEvents (IEventList* events) SMTG_OVERRIDE;
 	void noteOn(int32 note, int32 velocity);
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float Fs, iFs;
 
@@ -102,8 +106,8 @@ protected:
 	float treb, tfrq, tl, tr;
 	float tune, fine, random, stretch, overdrive;
 	float muff, muffvel, sizevel, velsens, volume, modwhl;
+
+	Steinberg::uint32 currentProgram;
 };
 
 }}} // namespaces
-
-#endif

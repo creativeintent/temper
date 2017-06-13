@@ -40,7 +40,10 @@ tresult PLUGIN_API JX10Controller::initialize (FUnknown* context)
 	tresult res = BaseController::initialize (context);
 	if (res == kResultTrue)
 	{
-		IndexedParameter* presetParam = new IndexedParameter (USTRING("Factory Presets"), USTRING("%"), JX10Processor::kNumPrograms-1, 0, ParameterInfo::kIsProgramChange | ParameterInfo::kCanAutomate | ParameterInfo::kIsList, kPresetParam);
+		IndexedParameter* presetParam = new IndexedParameter (
+		    USTRING ("Factory Presets"), USTRING ("%"), JX10Processor::kNumPrograms - 1, 0,
+		    ParameterInfo::kIsProgramChange | ParameterInfo::kCanAutomate | ParameterInfo::kIsList,
+		    kPresetParam);
 		parameters.addParameter (presetParam);
 
 		ParamID pid = 0;
@@ -81,16 +84,16 @@ tresult PLUGIN_API JX10Controller::initialize (FUnknown* context)
 		midiCCParamID[kCtrlModWheel] = kModWheelParam;
 		parameters.addParameter (USTRING("Mod Wheel"), USTRING(""), 0, 0, 0, kModWheelParam);
 		midiCCParamID[kPitchBend] = kPitchBendParam;
-		parameters.addParameter (USTRING("Pitch Bend"), USTRING(""), 0, 0, 0.5, kPitchBendParam);
+		parameters.addParameter (USTRING("Pitch Bend"), USTRING(""), 0, 0.5, 0, kPitchBendParam);
 		midiCCParamID[kCtrlBreath] = kBreathParam;
 		midiCCParamID[kCtrlFilterResonance] = kBreathParam;
-		parameters.addParameter (USTRING("Filter Mod+"), USTRING(""), 0, 0, 0.5, kBreathParam);
+		parameters.addParameter (USTRING("Filter Mod+"), USTRING(""), 0, 0.5, 0, kBreathParam);
 		midiCCParamID[3] = kCtrler3Param;
-		parameters.addParameter (USTRING("Filter Mod-"), USTRING(""), 0, 0, 0.5, kCtrler3Param);
+		parameters.addParameter (USTRING("Filter Mod-"), USTRING(""), 0, 0.5, 0, kCtrler3Param);
 		midiCCParamID[kCtrlExpression] = kCtrler3Param;
-		parameters.addParameter (USTRING("Filter Resonance"), USTRING(""), 0, 0, 0.5, kExpressionParam);
+		parameters.addParameter (USTRING("Filter Resonance"), USTRING(""), 0, 0.5, 0, kExpressionParam);
 		midiCCParamID[kAfterTouch] = kAftertouchParam;
-		parameters.addParameter (USTRING("Aftertouch"), USTRING(""), 0, 0, 0.5, kAftertouchParam);
+		parameters.addParameter (USTRING("Aftertouch"), USTRING(""), 0, 0.5, 0, kAftertouchParam);
 	
 
 		int32 i = 0;

@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 SDK
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -110,10 +110,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae67de693e76ab42b280f4ac1dcf9d45b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7440bcb5dab56eedbaa3fb9868e8488c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1InterAppAudio_1_1MidiIO.html#a7440bcb5dab56eedbaa3fb9868e8488c">isMidiNetworkEnabled</a> () const </td></tr>
 <tr class="separator:a7440bcb5dab56eedbaa3fb9868e8488c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa65d5fb70af8fb88787b7c8e79c6087d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1InterAppAudio_1_1MidiIO.html#aa65d5fb70af8fb88787b7c8e79c6087d">setMidiNetworkPolicy</a> (NSUInteger policy)</td></tr>
-<tr class="separator:aa65d5fb70af8fb88787b7c8e79c6087d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9f66127649b71b7f8a89c79eea260f0"><td class="memItemLeft" align="right" valign="top">NSUInteger&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1InterAppAudio_1_1MidiIO.html#aa9f66127649b71b7f8a89c79eea260f0">getMidiNetworkPolicy</a> () const </td></tr>
-<tr class="separator:aa9f66127649b71b7f8a89c79eea260f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea92b1ae4af18860cc30b92c675c5067"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1InterAppAudio_1_1MidiIO.html#aea92b1ae4af18860cc30b92c675c5067">setMidiNetworkPolicy</a> (MIDINetworkConnectionPolicy policy)</td></tr>
+<tr class="separator:aea92b1ae4af18860cc30b92c675c5067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b55f610a1d27c9ff0517e52c53f9b85"><td class="memItemLeft" align="right" valign="top">MIDINetworkConnectionPolicy&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1InterAppAudio_1_1MidiIO.html#a0b55f610a1d27c9ff0517e52c53f9b85">getMidiNetworkPolicy</a> () const </td></tr>
+<tr class="separator:a0b55f610a1d27c9ff0517e52c53f9b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35c0a5fa5367c71ed35c53737b88880c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1InterAppAudio_1_1MidiIO.html#a35c0a5fa5367c71ed35c53737b88880c">addProcessor</a> (IMidiProcessor *processor)</td></tr>
 <tr class="separator:a35c0a5fa5367c71ed35c53737b88880c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaed8e75e39472215acbbb9ad2764ea4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1Vst_1_1InterAppAudio_1_1MidiIO.html#abaed8e75e39472215acbbb9ad2764ea4">removeProcessor</a> (IMidiProcessor *processor)</td></tr>
@@ -210,14 +210,14 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa65d5fb70af8fb88787b7c8e79c6087d"></a>
+<a class="anchor" id="aea92b1ae4af18860cc30b92c675c5067"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void setMidiNetworkPolicy </td>
           <td>(</td>
-          <td class="paramtype">NSUInteger&#160;</td>
+          <td class="paramtype">MIDINetworkConnectionPolicy&#160;</td>
           <td class="paramname"><em>policy</em></td><td>)</td>
           <td></td>
         </tr>
@@ -226,12 +226,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa9f66127649b71b7f8a89c79eea260f0"></a>
+<a class="anchor" id="a0b55f610a1d27c9ff0517e52c53f9b85"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">NSUInteger getMidiNetworkPolicy </td>
+          <td class="memname">MIDINetworkConnectionPolicy getMidiNetworkPolicy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -275,17 +275,17 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

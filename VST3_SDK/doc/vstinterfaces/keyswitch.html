@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Interfaces
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -90,7 +90,7 @@ A typical example is a sample-based-Player Plug-in with a violin sound which cou
 <br />
 With VST Expression Map (feature of Cubase since 4.0), these Key switches could be used in score editor to associated a symbol (articulation) to a note and each time this note will be played the corresponding Key switch will be used (send to the Plug-in as noteOn event). <br />
 <br />
-In order to help the creation of such Map, VST 3.5 defines a new interface <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html" title="Extended IEditController interface for key switches support. ">Steinberg::Vst::IKeyswitchController</a>. When a (instrument) Plug-in supports such interface, the host could get from the Plug-in the current set of used Key switches (megatrigg / articulation: <a class="el" href="structSteinberg_1_1Vst_1_1KeyswitchInfo.html" title="KeyswitchInfo is the structure describing a key switch This structure is used by the method IKeyswitc...">Steinberg::Vst::KeyswitchInfo</a>) for a given channel of a Event Bus and then automatically use them (like in <b>Cubase 6</b>) to create VST Expression Map. <br />
+In order to help the creation of such Map, VST 3.5 defines a new interface <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html" title="Extended Plug-in interface IEditController for key switches support. ">Steinberg::Vst::IKeyswitchController</a>. When a (instrument) Plug-in supports such interface, the host could get from the Plug-in the current set of used Key switches (megatrigg / articulation: <a class="el" href="structSteinberg_1_1Vst_1_1KeyswitchInfo.html" title="KeyswitchInfo is the structure describing a key switch This structure is used by the method IKeyswitc...">Steinberg::Vst::KeyswitchInfo</a>) for a given channel of a Event Bus and then automatically use them (like in <b>Cubase 6</b>) to create VST Expression Map. <br />
 <br />
  </p>
 <h1><a class="anchor" id="kshowitwork"></a>
@@ -100,10 +100,10 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 </p><ol type="1">
 <li>The instrument Plug-in should have one input event bus (could be more). <br />
 <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleProcessor::initialize (FUnknown* context)</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleProcessor::initialize (FUnknown* context)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">//---always initialize the parent-------</span></div>
-<div class="line">    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> result = AudioEffect::initialize (context);</div>
+<div class="line">    <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> result = AudioEffect::initialize (context);</div>
 <div class="line">    <span class="keywordflow">if</span> (result == kResultTrue)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// we want a Stereo Output</span></div>
@@ -117,15 +117,15 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 <div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
 </div><!-- fragment --> <br />
 </li>
-<li>The controller should have the interface <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html" title="Extended IEditController interface for key switches support. ">Steinberg::Vst::IKeyswitchController</a>, here in the class declaration: <br />
+<li>The controller should have the interface <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html" title="Extended Plug-in interface IEditController for key switches support. ">Steinberg::Vst::IKeyswitchController</a>, here in the class declaration: <br />
  <div class="fragment"><div class="line"><span class="comment">//-----------------------------------------------------------------------------</span></div>
 <div class="line"><span class="keyword">class </span>MyExampleController: <span class="keyword">public</span> EditController, <span class="keyword">public</span> IKeyswitchController</div>
 <div class="line">{</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    ...</div>
 <div class="line">    <span class="comment">//---from IKeyswitchController</span></div>
-<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> PLUGIN_API getKeyswitchCount (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel);</div>
-<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API getKeyswitchInfo (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> keySwitchIndex, KeyswitchInfo&amp; info);</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> PLUGIN_API getKeyswitchCount (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel);</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API getKeyswitchInfo (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> keySwitchIndex, KeyswitchInfo&amp; info);</div>
 <div class="line">    ...</div>
 <div class="line"></div>
 <div class="line">    OBJ_METHODS (MyExampleController, EditController)</div>
@@ -141,9 +141,9 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 </ol>
 <p><br />
 </p><ol type="1">
-<li>Now we have to implement the interface <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html" title="Extended IEditController interface for key switches support. ">Steinberg::Vst::IKeyswitchController</a> (only 2 functions), in our example <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html#aa98a707edb1b58d05da0c50e38983a4e" title="Returns number of supported key switches for event bus index and channel. ">Steinberg::Vst::IKeyswitchController::getKeyswitchCount</a> should return 2 (2 keyswitches): <br />
+<li>Now we have to implement the interface <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html" title="Extended Plug-in interface IEditController for key switches support. ">Steinberg::Vst::IKeyswitchController</a> (only 2 functions), in our example <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html#aa98a707edb1b58d05da0c50e38983a4e" title="Returns number of supported key switches for event bus index and channel. ">Steinberg::Vst::IKeyswitchController::getKeyswitchCount</a> should return 2 (2 keyswitches): <br />
  <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> MyExampleController::getKeyswitchCount (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel)</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> MyExampleController::getKeyswitchCount (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// we accept only the first bus and 1 channel</span></div>
 <div class="line">    <span class="keywordflow">if</span> (busIndex == 0 &amp;&amp; channel == 0)</div>
@@ -157,7 +157,7 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 </p><ol type="1">
 <li>Then we have to implement <a class="el" href="classSteinberg_1_1Vst_1_1IKeyswitchController.html#a8193190849039a70d08b084241d29e38" title="Returns key switch info. ">Steinberg::Vst::IKeyswitchController::getKeyswitchInfo</a> which allows to inform the host about what the Plug-in supports: <br />
  <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleController::getKeyswitchInfo (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> keySwitchIndex, KeyswitchInfo&amp; info)</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API MyExampleController::getKeyswitchInfo (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> busIndex, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4355d16fcf9f644c9ac84293f0b1801f">int16</a> channel, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> keySwitchIndex, KeyswitchInfo&amp; info)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// we accept only the first bus and 1 channel and only 2 keyswitches</span></div>
 <div class="line">    <span class="keywordflow">if</span> (busIndex == 0 &amp;&amp; channel == 0 &amp;&amp; (keySwitchIndex == 0 || keySwitchIndex == 1)</div>
@@ -170,8 +170,8 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 <div class="line"></div>
 <div class="line">        <span class="keywordflow">if</span> (keySwitchIndex == 0)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Accentuation&quot;</span>).copyTo (info.title, 128);</div>
-<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Acc&quot;</span>).copyTo (info.shortTitle, 128);</div>
+<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Accentuation&quot;</span>).copyTo (info.title, 128);</div>
+<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Acc&quot;</span>).copyTo (info.shortTitle, 128);</div>
 <div class="line"></div>
 <div class="line">            <span class="comment">// if the user keeps pressed C-1 or C#-1 or C-0 then the Accentuation sound should be played</span></div>
 <div class="line">            info.keyswitchMin = 12; <span class="comment">// C-1</span></div>
@@ -180,8 +180,8 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Softly&quot;</span>).copyTo (info.title, 128);</div>
-<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Soft&quot;</span>).copyTo (info.shortTitle, 128);</div>
+<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Softly&quot;</span>).copyTo (info.title, 128);</div>
+<div class="line">            <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/ustring_8h.html#ac5f8dfe73b55c4ec26f12c071d67bffb">USTRING</a> (<span class="stringliteral">&quot;Soft&quot;</span>).copyTo (info.shortTitle, 128);</div>
 <div class="line">        </div>
 <div class="line">            <span class="comment">// if the user keeps pressed D-1 or D#-1 or D-0 then the Softly sound should be played</span></div>
 <div class="line">            info.keyswitchMin = 14; <span class="comment">// D-1</span></div>
@@ -192,10 +192,10 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 <div class="line">        info.unitID = -1; <span class="comment">// not used</span></div>
 <div class="line">        info.flags = 0;  <span class="comment">// not used</span></div>
 <div class="line">    </div>
-<div class="line">        <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55bab954d2583eb15d3a762c5df29270f483">kResultFalse</a>;</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55bab954d2583eb15d3a762c5df29270f483">kResultFalse</a>;</div>
 <div class="line">}</div>
 <div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
 </div><!-- fragment --></li>
@@ -204,7 +204,7 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 </p><ol type="1">
 <li>Last step, in the processor component we have to adapt the process call to switch to the wanted articulation: <br />
  <div class="fragment"><div class="line"><span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> MyExampleProcessor::process (ProcessData&amp; data)</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> MyExampleProcessor::process (ProcessData&amp; data)</div>
 <div class="line">{</div>
 <div class="line">    ....</div>
 <div class="line"></div>
@@ -213,12 +213,12 @@ We want a Plug-in with 1 event bus and mono-timbral (1 channel) which supports 2
 <div class="line">    <span class="keywordflow">if</span> (inputEvents)</div>
 <div class="line">    {</div>
 <div class="line">        Event e;</div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> numEvents = inputEvents-&gt;getEventCount ();</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> numEvents = inputEvents-&gt;getEventCount ();</div>
 <div class="line"></div>
 <div class="line">        <span class="comment">// for each events check it..</span></div>
-<div class="line">        <span class="keywordflow">for</span> (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> i = 0; i &lt; numEvents; i++)</div>
+<div class="line">        <span class="keywordflow">for</span> (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> i = 0; i &lt; numEvents; i++)</div>
 <div class="line">        {</div>
-<div class="line">            <span class="keywordflow">if</span> (inputEvents-&gt;getEvent (i, e) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">            <span class="keywordflow">if</span> (inputEvents-&gt;getEvent (i, e) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">            {</div>
 <div class="line">                <span class="keywordflow">switch</span> (e.type)</div>
 <div class="line">                {</div>
@@ -287,17 +287,17 @@ Back to <b><a class="el" href="index.html#vst3Contents">Contents</a></b> <br />
 </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fidstring',['FIDString',['../../base/namespaceSteinberg.html#ad4c02134d1ee42389f3d94717935a1d5',1,'Steinberg']]]
+  ['exitmodulefunc',['ExitModuleFunc',['../module__win32_8cpp.html#aa4b58c536332406d52d24e2c922249fa',1,'module_win32.cpp']]]
 ];

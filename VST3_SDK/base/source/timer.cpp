@@ -9,40 +9,45 @@
 // 
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 #include "base/source/timer.h"
 
 namespace Steinberg {
 static bool timersEnabled = true;
 
+//------------------------------------------------------------------------
 DisableDispatchingTimers::DisableDispatchingTimers ()
 {
 	oldState = timersEnabled;
 	timersEnabled = false;
 }
 
+//------------------------------------------------------------------------
 DisableDispatchingTimers::~DisableDispatchingTimers ()
 {
 	timersEnabled = oldState;
@@ -55,7 +60,7 @@ namespace SystemTime {
 struct ZeroStartTicks
 {
 	static const uint64 startTicks;
-	
+
 	static int32 getTicks32 ()
 	{
 		return static_cast<int32> (SystemTime::getTicks64 () - startTicks);
@@ -70,9 +75,9 @@ int32 getTicks ()
 }
 
 //------------------------------------------------------------------------
-} // SystemTime
+} // namespace SystemTime
+} // namespace Steinberg
 
-} // namespace
 
 #if MAC
 #include <CoreFoundation/CoreFoundation.h>
@@ -134,8 +139,8 @@ protected:
 
 //------------------------------------------------------------------------
 MacPlatformTimer::MacPlatformTimer (ITimerCallback* callback, uint32 milliseconds)
-: callback (callback)
-, platformTimer (0)
+: platformTimer (0)
+, callback (callback)
 {
 	if (callback)
 	{
@@ -146,7 +151,6 @@ MacPlatformTimer::MacPlatformTimer (ITimerCallback* callback, uint32 millisecond
 			CFRunLoopAddTimer (CFRunLoopGetMain (), platformTimer, kCFRunLoopCommonModes);
 	}
 }
-
 
 //------------------------------------------------------------------------
 MacPlatformTimer::~MacPlatformTimer ()
@@ -192,22 +196,23 @@ Timer* Timer::create (ITimerCallback* callback, uint32 milliseconds)
 
 #elif WINDOWS
 
-#include "base/source/tarray.h"
-
 #include <windows.h>
+#include <list>
+#include <algorithm>
 
 namespace Steinberg {
-
 namespace SystemTime {
-	/*
-		@return the current system time in milliseconds
-	*/
-	uint64 getTicks64 ()
-	{
-		return GetTickCount64 ();
-	}
-
+/*
+    @return the current system time in milliseconds
+*/
+uint64 getTicks64 ()
+{
+	return GetTickCount64 ();
 }
+}
+
+class WinPlatformTimer;
+typedef std::list<WinPlatformTimer*> WinPlatformTimerList;
 
 //------------------------------------------------------------------------
 // WinPlatformTimer
@@ -231,11 +236,11 @@ private:
 	static void removeTimer (WinPlatformTimer* t);
 
 	static void CALLBACK TimerProc (HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime);
-	static TArray<WinPlatformTimer*>* timers;
+	static WinPlatformTimerList* timers;
 };
 
 //------------------------------------------------------------------------
-TArray<WinPlatformTimer*>* WinPlatformTimer::timers = 0;
+WinPlatformTimerList* WinPlatformTimer::timers = 0;
 
 //------------------------------------------------------------------------
 WinPlatformTimer::WinPlatformTimer (ITimerCallback* callback, uint32 milliseconds)
@@ -256,33 +261,35 @@ WinPlatformTimer::~WinPlatformTimer ()
 void WinPlatformTimer::addTimer (WinPlatformTimer* t)
 {
 	if (timers == 0)
-		timers = NEW TArray<WinPlatformTimer*>;
-	timers->add (t);
+		timers = NEW WinPlatformTimerList;
+	timers->push_back (t);
 }
 
 //------------------------------------------------------------------------
 void WinPlatformTimer::removeTimer (WinPlatformTimer* t)
 {
-	if (timers)
+	if (!timers)
+		return;
+
+	WinPlatformTimerList::iterator it = std::find (timers->begin (), timers->end (), t);
+	if (it != timers->end ())
+		timers->erase (it);
+	if (timers->empty ())
 	{
-		timers->remove (t);
-		if (timers->total () == 0)
-		{
-			delete timers;
-			timers = 0;
-		}
+		delete timers;
+		timers = 0;
 	}
 }
 
 //------------------------------------------------------------------------
 void WinPlatformTimer::stop ()
 {
-	if (id)
-	{
-		KillTimer (0, id);
-		removeTimer (this);
-		id = 0;
-	}
+	if (!id)
+		return;
+
+	KillTimer (0, id);
+	removeTimer (this);
+	id = 0;
 }
 
 //------------------------------------------------------------------------
@@ -290,9 +297,10 @@ void CALLBACK WinPlatformTimer::TimerProc (HWND hwnd, UINT uMsg, UINT_PTR idEven
 {
 	if (timersEnabled && timers)
 	{
-		for (int32 i = 0; i < timers->total (); i++)
+		WinPlatformTimerList::const_iterator it = timers->cbegin ();
+		while (it != timers->cend ())
 		{	
-			WinPlatformTimer* timer = (WinPlatformTimer*)timers->at (i);
+			WinPlatformTimer* timer = *it;
 			if (timer->id == idEvent)
 			{
 				if (timer->callback)
@@ -313,6 +321,9 @@ Timer* Timer::create (ITimerCallback* callback, uint32 milliseconds)
 	return 0;
 }
 
+//------------------------------------------------------------------------
 } // namespace Steinberg
 
+#elif LINUX
+#warning DEPRECATED No Linux implementation
 #endif

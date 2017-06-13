@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/note_expression_synth/source/note_expression_synth_ui.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -51,9 +50,9 @@ class ControllerWithUI : public Controller, public VST3EditorDelegate
 {
 public:
 	
-	virtual IPlugView* PLUGIN_API createView (FIDString name);
+	virtual IPlugView* PLUGIN_API createView (FIDString name) SMTG_OVERRIDE;
 	// VST3EditorDelegate
-	IController* createSubController (UTF8StringPtr name, const IUIDescription* description, VST3Editor* editor) VSTGUI_OVERRIDE_VMETHOD;
+	IController* createSubController (UTF8StringPtr name, const IUIDescription* description, VST3Editor* editor)  SMTG_OVERRIDE;
 	
 	static FUnknown* createInstance (void*) { return (IEditController*)new ControllerWithUI (); }
 

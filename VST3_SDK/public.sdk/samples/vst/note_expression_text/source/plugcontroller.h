@@ -1,15 +1,14 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
-// Filename    : public.sdk/samples/vst/again/source/againcontroller.h
+// Filename    : public.sdk/samples/vst/again/source/plugcontroller.h
 // Created by  : Steinberg, 04/2005
-// Description : AGain Editor Example for VST 3
+// Description : Note Expression Editor Example for VST 3
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -60,25 +59,25 @@ public:
 	}
 
 	//---from IPluginBase--------
-	tresult PLUGIN_API initialize (FUnknown* context);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
 	
 	//---from EditController-----
-	tresult PLUGIN_API setComponentState (IBStream* state);
+	tresult PLUGIN_API setComponentState (IBStream* state) SMTG_OVERRIDE;
 
-	IPlugView* PLUGIN_API createView (const char* name);
+	IPlugView* PLUGIN_API createView (const char* name) SMTG_OVERRIDE;
 
 	//---from VST3EditorDelegate----
-	CView* createCustomView (UTF8StringPtr name, const UIAttributes& attributes, IUIDescription* description, VST3Editor* editor);
-	virtual void willClose (VST3Editor* editor);
+	CView* createCustomView (UTF8StringPtr name, const UIAttributes& attributes, const IUIDescription* description, VST3Editor* editor) SMTG_OVERRIDE;
+	virtual void willClose (VST3Editor* editor) SMTG_OVERRIDE;
 
-	tresult PLUGIN_API PlugController::notify (IMessage* message);
-	tresult receiveText (const char8* text);
+	tresult PLUGIN_API notify (IMessage* message) SMTG_OVERRIDE;
+	tresult receiveText (const char8* text) SMTG_OVERRIDE;
 
 	//---from INoteExpressionController--------
-	virtual int32 PLUGIN_API getNoteExpressionCount (int32 busIndex, int16 channel);
-	virtual tresult PLUGIN_API getNoteExpressionInfo (int32 busIndex, int16 channel, int32 noteExpressionIndex, NoteExpressionTypeInfo& info /*out*/);
-	virtual tresult PLUGIN_API getNoteExpressionStringByValue (int32 busIndex, int16 channel, NoteExpressionTypeID id, NoteExpressionValue valueNormalized /*in*/, String128 string /*out*/);
-	virtual tresult PLUGIN_API getNoteExpressionValueByString (int32 busIndex, int16 channel, NoteExpressionTypeID id, const TChar* string /*in*/, NoteExpressionValue& valueNormalized /*out*/);
+	virtual int32 PLUGIN_API getNoteExpressionCount (int32 busIndex, int16 channel) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getNoteExpressionInfo (int32 busIndex, int16 channel, int32 noteExpressionIndex, NoteExpressionTypeInfo& info /*out*/) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getNoteExpressionStringByValue (int32 busIndex, int16 channel, NoteExpressionTypeID id, NoteExpressionValue valueNormalized /*in*/, String128 string /*out*/) SMTG_OVERRIDE;
+	virtual tresult PLUGIN_API getNoteExpressionValueByString (int32 busIndex, int16 channel, NoteExpressionTypeID id, const TChar* string /*in*/, NoteExpressionValue& valueNormalized /*out*/) SMTG_OVERRIDE;
 
 	//---Interface---------
 	OBJ_METHODS (PlugController, EditControllerEx1)

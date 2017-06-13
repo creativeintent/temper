@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.0
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/adelay/source/interappaudio/iosEditor.mm

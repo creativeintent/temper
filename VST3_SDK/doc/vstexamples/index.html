@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Examples
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">VST 3 Examples </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The SDK includes some Plug-ins examples: the Legendaries <a class="el" href="index.html#again">AGain</a> and <a class="el" href="index.html#adelay">ADelay Plug-in</a> ADelay, thanks Paul Kellet the OpenSource mda Plug-ins, a basic <a class="el" href="index.html#NoteExpressionSynth">Note Expression Synth Plug-in</a> supporting "Note Expression Event" and an example of pitchnames support Plug-in (<a class="el" href="index.html#PitchNames">PitchNames Plug-in</a>) and...: <br />
+<div class="textblock"><p>The SDK includes some Plug-ins and Host implementation examples: the Legendaries <a class="el" href="index.html#again">AGain</a> and <a class="el" href="index.html#adelay">ADelay Plug-in</a> ADelay, thanks Paul Kellet the OpenSource mda Plug-ins, a basic <a class="el" href="index.html#NoteExpressionSynth">Note Expression Synth Plug-in</a> supporting "Note Expression Event" and an example of pitchnames support Plug-in (<a class="el" href="index.html#PitchNames">PitchNames Plug-in</a>) and...: <br />
 </p><ul>
 <li><a class="el" href="index.html#adelay">ADelay Plug-in</a></li>
 <li><a class="el" href="index.html#again">AGain Plug-in</a></li>
@@ -91,10 +91,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li><a class="el" href="index.html#HostChecker">HostChecker Plug-in</a></li>
 <li><a class="el" href="index.html#channelcontext">TestChannelContext Plug-in</a></li>
 <li><a class="el" href="index.html#prefetchablesupport">TestPrefetchableSupport Plug-in</a></li>
-<li><a class="el" href="index.html#programchange">TestProgramChange Plug-in</a> <br />
-<br />
- </li>
+<li><a class="el" href="index.html#programchange">TestProgramChange Plug-in</a></li>
 </ul>
+<p><br />
+<br />
+ </p>
 <h1><a class="anchor" id="adelay"></a>
 ADelay Plug-in</h1>
 <p>Very simple delay Plug-in:</p><ul>
@@ -115,7 +116,7 @@ AGain Plug-in</h1>
 <li>has an automated gain parameter,</li>
 <li>has an Event input bus (allowing to use noteOn velocity to control the gain factor),</li>
 <li>has a VU peak meter,</li>
-<li>uses the <a class="el" href="namespaceVSTGUI.html">VSTGUI</a> library</li>
+<li>uses the VSTGUI4 library</li>
 <li>a version of this Plug-in with side-chaining is available (showing a Plug-in using the same controller and different components)</li>
 </ul>
 <div class="image">
@@ -125,8 +126,7 @@ AGain Plug-in</h1>
 <p>Classes:</p><ul>
 <li><a class="el" href="classSteinberg_1_1Vst_1_1AGain.html">AGain</a></li>
 <li><a class="el" href="classSteinberg_1_1Vst_1_1AGainWithSideChain.html">AGainWithSideChain</a> (used for side-chain version)</li>
-<li><a class="el" href="classSteinberg_1_1Vst_1_1AGainController.html">AGainController</a></li>
-<li><a class="el" href="classSteinberg_1_1Vst_1_1AGainEditorView.html">AGainEditorView</a> <br />
+<li><a class="el" href="classSteinberg_1_1Vst_1_1AGainController.html">AGainController</a> <br />
 <br />
  </li>
 </ul>
@@ -228,7 +228,7 @@ HostChecker Plug-in</h1>
 <h1><a class="anchor" id="channelcontext"></a>
 TestChannelContext Plug-in</h1>
 <p>Very simple Plug-in:</p><ul>
-<li>showing how to use the <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/classSteinberg_1_1Vst_1_1ChannelContext_1_1IInfoListener.html">Steinberg::Vst::ChannelContext::IInfoListener</a> interface</li>
+<li>showing how to use the <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/classSteinberg_1_1Vst_1_1ChannelContext_1_1IInfoListener.html">Steinberg::Vst::ChannelContext::IInfoListener</a> interface</li>
 <li>using a generic UI</li>
 </ul>
 <div class="image">
@@ -241,7 +241,7 @@ TestChannelContext Plug-in</h1>
 <h1><a class="anchor" id="prefetchablesupport"></a>
 TestPrefetchableSupport Plug-in</h1>
 <p>Very simple Plug-in:</p><ul>
-<li>showing how to use the <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/classSteinberg_1_1Vst_1_1IPrefetchableSupport.html">Steinberg::Vst::IPrefetchableSupport</a> interface</li>
+<li>showing how to use the <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstinterfaces/vstinterfaces.tag:../vstinterfaces/" href="../vstinterfaces/classSteinberg_1_1Vst_1_1IPrefetchableSupport.html">Steinberg::Vst::IPrefetchableSupport</a> interface</li>
 <li>using a generic UI</li>
 </ul>
 <div class="image">
@@ -264,17 +264,17 @@ TestProgramChange Plug-in</h1>
 </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

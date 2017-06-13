@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaLimiterProcessor__
-#define __mdaLimiterProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,23 +29,21 @@ public:
 	LimiterProcessor ();
 	~LimiterProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
-	void checkSilence (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
+	void checkSilence (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new LimiterProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float thresh, gain, att, rel, trim;
 };
 
 }}} // namespaces
-
-#endif

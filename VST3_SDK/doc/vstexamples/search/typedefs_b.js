@@ -7,5 +7,5 @@ var searchData=
   ['tresult',['tresult',['../../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957',1,'Steinberg']]],
   ['tsamples',['TSamples',['../../vstinterfaces/group__vst3typedef.html#gad2e841097395dbff119029f4684dad8f',1,'Steinberg::Vst::TSamples()'],['../../vstinterfaces/group__vst3typedef.html#gad2e841097395dbff119029f4684dad8f',1,'TSamples()(Global Namespace)']]],
   ['tsize',['TSize',['../../base/namespaceSteinberg.html#abc5a03f91bd781b5062f4fccaa7851f0',1,'Steinberg']]],
-  ['tuid',['TUID',['../../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c',1,'Steinberg']]]
+  ['tuid',['TUID',['../../vstsdk/structVST3_1_1UID.html#aa87b025f78fcc7af3b438559a4de73c1',1,'VST3::UID::TUID()'],['../../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c',1,'Steinberg::TUID()']]]
 ];

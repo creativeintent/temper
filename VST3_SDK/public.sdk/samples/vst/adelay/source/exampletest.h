@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.0
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/adelay/source/exampletest.h
@@ -52,10 +51,10 @@ public:
 	ADelayTest (IPlugProvider* plugProvider);
 
 	//--ITest
-	virtual bool PLUGIN_API setup ();
-	virtual bool PLUGIN_API run (ITestResult* testResult);
-	virtual bool PLUGIN_API teardown ();
-	virtual const tchar* PLUGIN_API getDescription ();
+	virtual bool PLUGIN_API setup () SMTG_OVERRIDE;
+	virtual bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
+	virtual bool PLUGIN_API teardown () SMTG_OVERRIDE;
+	virtual const tchar* PLUGIN_API getDescription () SMTG_OVERRIDE;
 
 	OBJ_METHODS(ADelayTest, FObject)
 	DEF_INTERFACES_1(ITest, FObject)
@@ -69,7 +68,7 @@ class ADelayTestFactory : public ITestFactory, public FObject
 {
 public:
 	//--ITestFactory
-	tresult PLUGIN_API createTests (FUnknown* context, ITestSuite* parentSuite);
+	tresult PLUGIN_API createTests (FUnknown* context, ITestSuite* parentSuite) SMTG_OVERRIDE;
 
 	static FUnknown* createInstance (void*) { return (ITestFactory*)new ADelayTestFactory (); }
 

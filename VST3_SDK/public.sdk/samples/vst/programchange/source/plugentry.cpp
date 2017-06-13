@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/XX/source/plugentry.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,16 +34,14 @@
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-
 #include "plug.h"
 #include "plugcontroller.h"
-#include "plugcids.h"	// for class ids
-#include "version.h"	// for versioning
+#include "plugcids.h" // for class ids
+#include "version.h" // for versioning
 
 #include "public.sdk/source/main/pluginfactoryvst3.h"
 
 #define stringPluginName "Test Program Change"
-
 
 //------------------------------------------------------------------------
 //  Module init/exit
@@ -52,16 +49,16 @@
 
 //------------------------------------------------------------------------
 // called after library was loaded
-bool InitModule ()   
+bool InitModule ()
 {
-	return true; 
+	return true;
 }
 
 //------------------------------------------------------------------------
 // called after library is unloaded
 bool DeinitModule ()
 {
-	return true; 
+	return true;
 }
 
 using namespace Steinberg;

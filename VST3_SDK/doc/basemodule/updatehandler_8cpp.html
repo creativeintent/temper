@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Base Module
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -96,9 +96,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="updatehandler_8h.html">base/source/updatehandler.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="classfactory_8h.html">base/source/classfactory.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="tarray_8h.html">base/source/tarray.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="tlist_8h.html">base/source/tlist.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="classfactoryhelpers_8h.html">base/source/classfactoryhelpers.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="fstring_8h.html">base/source/fstring.h</a>&quot;</code><br />
+<code>#include &lt;list&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -107,37 +109,37 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a1f82933a3a3097c5b19b3c7515e987ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="updatehandler_8cpp.html#a1f82933a3a3097c5b19b3c7515e987ce">NON_EXISTING_DEPENEDENCY_CHECK</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a1f82933a3a3097c5b19b3c7515e987ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7063984dea5f4c2eaef23d22f1aa945e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="updatehandler_8cpp.html#a7063984dea5f4c2eaef23d22f1aa945e">DYNAMIC_DEPENDENTS_MAPSIZE</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a7063984dea5f4c2eaef23d22f1aa945e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71de32ab81686f17de125be381adefd7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="updatehandler_8cpp.html#a71de32ab81686f17de125be381adefd7">NON_EXISTING_DEPENDENCY_CHECK</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a71de32ab81686f17de125be381adefd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a748343c42faddaaa8b263d379c45a1a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="updatehandler_8cpp.html#a748343c42faddaaa8b263d379c45a1a6">CLASS_NAME_TRACKED</a>&#160;&#160;&#160;DEVELOPMENT</td></tr>
+<tr class="separator:a748343c42faddaaa8b263d379c45a1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a03374ef5cb2e4ca5d36313f4c3dd85e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSteinberg.html#a03374ef5cb2e4ca5d36313f4c3dd85e2">DEF_CLASS_IID</a> (IUpdateManager) namespace Update</td></tr>
 <tr class="separator:a03374ef5cb2e4ca5d36313f4c3dd85e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae19f01c72cdd0963b07bb25289a264f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSteinberg.html#ae19f01c72cdd0963b07bb25289a264f1">SINGLE_CREATE_FUNC</a> (UpdateHandler) UpdateHandler</td></tr>
-<tr class="separator:ae19f01c72cdd0963b07bb25289a264f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ee8284939137d61a597836f314c71d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceSteinberg.html#a3ee8284939137d61a597836f314c71d8">SINGLE_CREATE_FUNC</a> (UpdateHandler) static int32 countEntries(Update</td></tr>
+<tr class="separator:a3ee8284939137d61a597836f314c71d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a1f82933a3a3097c5b19b3c7515e987ce"></a>
+<a class="anchor" id="a71de32ab81686f17de125be381adefd7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NON_EXISTING_DEPENEDENCY_CHECK&#160;&#160;&#160;0</td>
+          <td class="memname">#define NON_EXISTING_DEPENDENCY_CHECK&#160;&#160;&#160;0</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7063984dea5f4c2eaef23d22f1aa945e"></a>
+<a class="anchor" id="a748343c42faddaaa8b263d379c45a1a6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DYNAMIC_DEPENDENTS_MAPSIZE&#160;&#160;&#160;1</td>
+          <td class="memname">#define CLASS_NAME_TRACKED&#160;&#160;&#160;DEVELOPMENT</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -146,17 +148,17 @@ Functions</h2></td></tr>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

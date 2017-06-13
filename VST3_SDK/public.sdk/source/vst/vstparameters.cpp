@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vstparameters.cpp
@@ -9,33 +8,36 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+// 
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
 #include "vstparameters.h"
 #include "pluginterfaces/base/futils.h"
 #include "pluginterfaces/base/ustring.h"
-#include "base/source/fstring.h"
+#include <cstdlib>
 
 namespace Steinberg {
 namespace Vst {
@@ -102,7 +104,7 @@ bool Parameter::setNormalized (ParamValue normValue)
 //------------------------------------------------------------------------
 void Parameter::toString (ParamValue normValue, String128 string) const
 {
-	UString128 wrapper;
+	UString wrapper (string, str16BufferSize (String128));
 	if (info.stepCount == 1)
 	{
 		if (normValue > 0.5)
@@ -116,15 +118,15 @@ void Parameter::toString (ParamValue normValue, String128 string) const
 	}
 	else
 	{
-		wrapper.printFloat (normValue, precision);
+		if (!wrapper.printFloat (normValue, precision))
+			string[0] = 0;
 	}
-	wrapper.copyTo (string, 128);
 }
 
 //------------------------------------------------------------------------
 bool Parameter::fromString (const TChar* string, ParamValue& normValue) const
 {
-	String wrapper ((TChar*)string);
+	UString wrapper (const_cast<TChar*> (string), tstrlen (string));
 	return wrapper.scanFloat (normValue);
 }
 
@@ -185,9 +187,10 @@ void RangeParameter::toString (ParamValue _valueNormalized, String128 string) co
 {
 	if (info.stepCount > 1)
 	{
-		String wrapper;
-		wrapper.printf (STR("%d"), (int32)toPlain (_valueNormalized));
-		wrapper.copyTo16 (string, 0, str16BufferSize (String128) - 1);
+		UString wrapper (string, str16BufferSize (String128));
+		int64 plain = static_cast<int64> (toPlain (_valueNormalized));
+		if (!wrapper.printInt (plain))
+			string[0] = 0;
 	}
 	else
 	{
@@ -198,11 +201,11 @@ void RangeParameter::toString (ParamValue _valueNormalized, String128 string) co
 //------------------------------------------------------------------------
 bool RangeParameter::fromString (const TChar* string, ParamValue& _valueNormalized) const
 {
-	String wrapper ((TChar*)string);
+	UString wrapper (const_cast<TChar*> (string), tstrlen (string));
 	if (info.stepCount > 1)
 	{
 		int64 plainValue;
-		if (wrapper.scanInt64 (plainValue))
+		if (wrapper.scanInt (plainValue))
 		{
 			_valueNormalized = toNormalized ((ParamValue)plainValue);
 			return true;
@@ -244,15 +247,12 @@ ParamValue RangeParameter::toNormalized (ParamValue plainValue) const
 StringListParameter::StringListParameter (const ParameterInfo& paramInfo)
 : Parameter (paramInfo)
 {
-	strings.error () = 0;
 }
 
 //------------------------------------------------------------------------
 StringListParameter::StringListParameter (const TChar* title, ParamID tag, const TChar* units,
 										  int32 flags, UnitID unitID)
 {
-	strings.error () = 0;
-
 	UString (info.title, str16BufferSize (String128)).assign (title);
 
 	UString uUnits (info.units, str16BufferSize (String128));
@@ -271,21 +271,20 @@ StringListParameter::StringListParameter (const TChar* title, ParamID tag, const
 //------------------------------------------------------------------------
 StringListParameter::~StringListParameter ()
 {
-	FOREACH_T(TChar*, str, strings)
-		free (str);
-	ENDFOR
+	for (StringVector::iterator it = strings.begin (), end = strings.end (); it != end; ++it)
+		std::free (*it);
 }
 
 //------------------------------------------------------------------------
 void StringListParameter::appendString (const String128 string)
 {
 	int32 length = strlen16 (string);
-	TChar* buffer = (TChar*)malloc ((length + 1) * sizeof (TChar));
+	TChar* buffer = (TChar*)std::malloc ((length + 1) * sizeof (TChar));
 	if (!buffer)
 		return;
 	memcpy (buffer, string, length * sizeof (TChar));
 	buffer[length] = 0;
-	strings.add (buffer);
+	strings.push_back (buffer);
 	info.stepCount++;
 }
 
@@ -303,8 +302,8 @@ bool StringListParameter::replaceString (int32 index, const String128 string)
 
 	memcpy (buffer, string, length * sizeof (TChar));
 	buffer[length] = 0;
-	strings.replaceAt (index, buffer);
-	free (str);
+	strings[index] = buffer;
+	std::free (str);
 	return true;
 }
 
@@ -325,14 +324,14 @@ void StringListParameter::toString (ParamValue _valueNormalized, String128 strin
 bool StringListParameter::fromString (const TChar* string, ParamValue& _valueNormalized) const
 {
 	int32 index = 0;
-	FOREACH_T(TChar*, str, strings)
-		if (strcmp16 (str, string) == 0)
+	for (StringVector::const_iterator it = strings.begin (), end = strings.end (); it != end; ++it, ++index)
+	{
+		if (strcmp16 (*it, string) == 0)
 		{
 			_valueNormalized = toNormalized ((ParamValue)index);
 			return true;
 		}
-		index++;
-	ENDFOR
+	}
 	return false;
 }
 
@@ -353,19 +352,11 @@ ParamValue StringListParameter::toNormalized (ParamValue plainValue) const
 }
 
 //------------------------------------------------------------------------
-static uint32 HashFunc (const TAssociation<ParamID, int32>& a, uint32 size)
-{
-	return a.key () % size;
-}
-
-//------------------------------------------------------------------------
 // ParameterContainer Implementation
 //------------------------------------------------------------------------
 ParameterContainer::ParameterContainer ()
 : params (0)
-, id2index (THashDictionary<ParamID, int32>(HashFunc))
 {
-	id2index.error () = TAssociation<ParamID, int32> (0, -1);
 }
 
 //------------------------------------------------------------------------
@@ -379,7 +370,11 @@ ParameterContainer::~ParameterContainer ()
 void ParameterContainer::init (int32 initialSize, int32 resizeDelta)
 {
 	if (!params)
-		params = new TArray<IPtr<Parameter> > (initialSize, resizeDelta);
+	{
+		params = new ParameterPtrVector;
+		if (initialSize > 0)
+			params->reserve (initialSize);
+	}
 }
 
 //------------------------------------------------------------------------
@@ -387,10 +382,9 @@ Parameter* ParameterContainer::addParameter (Parameter* p)
 {
 	if (!params)
 		init ();
-	id2index.addKeyAndObject (p->getInfo ().id, params->total ());
-	if (params->add (IPtr<Parameter> (p, false)))
-		return p;
-	return 0;
+	id2index[p->getInfo ().id] = params->size ();
+	params->push_back (IPtr<Parameter> (p, false));
+	return p;
 }
 
 //------------------------------------------------------------------------
@@ -410,9 +404,9 @@ Parameter* ParameterContainer::getParameter (ParamID tag)
 {
 	if (params)
 	{
-		int32 index = id2index.lookupObject (tag);
-		if (index != id2index.error ().object ())
-			return params->at (index);
+		IndexMap::const_iterator it = id2index.find (tag);
+		if (it != id2index.end ())
+			return params->at (it->second);
 	}
 	return 0;
 }

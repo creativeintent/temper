@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaBandistoProcessor__
-#define __mdaBandistoProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -29,16 +28,16 @@ class BandistoProcessor : BaseProcessor
 public:
 	BandistoProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new BandistoProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float gain1, driv1, trim1;
 	float gain2, driv2, trim2;
@@ -48,5 +47,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

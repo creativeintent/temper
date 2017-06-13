@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/note_expression_synth/source/note_expression_synth_voice.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -153,13 +152,13 @@ public:
 	Voice ();
 	~Voice ();
 
-	void setSampleRate (ParamValue sampleRate);
-	void noteOn (int32 pitch, ParamValue velocity, float tuning, int32 sampleOffset, int32 nId);
-	void noteOff (ParamValue velocity, int32 sampleOffset);
+	void setSampleRate (ParamValue sampleRate) SMTG_OVERRIDE;
+	void noteOn (int32 pitch, ParamValue velocity, float tuning, int32 sampleOffset, int32 nId) SMTG_OVERRIDE;
+	void noteOff (ParamValue velocity, int32 sampleOffset) SMTG_OVERRIDE;
 	bool process (SamplePrecision* outputBuffers[2], int32 numSamples);
-	void reset ();
+	void reset () SMTG_OVERRIDE;
 
-	void setNoteExpressionValue (int32 index, ParamValue value);
+	void setNoteExpressionValue (int32 index, ParamValue value) SMTG_OVERRIDE;
 
 protected:
 	uint32 n;

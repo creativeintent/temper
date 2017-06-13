@@ -5,6 +5,7 @@ var searchData=
   ['version',['version',['../structSteinberg_1_1PClassInfo2.html#a10a16351d8da082eba2e5cbd16e6aed1',1,'Steinberg::PClassInfo2::version()'],['../structSteinberg_1_1PClassInfoW.html#a5361068d8071d34e2142025ab72bcc6b',1,'Steinberg::PClassInfoW::version()']]],
   ['viewrect',['ViewRect',['../structSteinberg_1_1ViewRect.html#afcdde0147792d1103d06537c37e59ef0',1,'Steinberg::ViewRect']]],
   ['viewrect',['ViewRect',['../structSteinberg_1_1ViewRect.html',1,'Steinberg']]],
+  ['virt',['virt',['../structSteinberg_1_1KeyCode.html#a710c5cefa06d25fe01febb579ab09a7d',1,'Steinberg::KeyCode']]],
   ['virtualkeycodes',['VirtualKeyCodes',['../namespaceSteinberg.html#a9380117707cebcb5a3cd9fa8b960e22b',1,'Steinberg']]],
   ['virtualkeycodetochar',['VirtualKeyCodeToChar',['../namespaceSteinberg.html#aac1c8cc4f206d2342fdd10c5c3d2fc6f',1,'Steinberg']]],
   ['vkey_5ffirst_5fascii',['VKEY_FIRST_ASCII',['../namespaceSteinberg.html#a9380117707cebcb5a3cd9fa8b960e22ba39f030dbc1bfdb4a14a310acc744178f',1,'Steinberg']]],

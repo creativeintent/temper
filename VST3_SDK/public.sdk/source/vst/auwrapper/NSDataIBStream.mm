@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/auwrapper/NSDataIBStream.mm
@@ -9,28 +8,31 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 /// \cond ignore
 
@@ -49,9 +51,9 @@
 namespace Steinberg {
 namespace Vst {
 
-DEF_CLASS_IID(IStreamAttributes)
+DEF_CLASS_IID(IStreamAttributes);
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 NSDataIBStream::NSDataIBStream (NSData* data, bool hideAttributes)
 : data (data)
 , currentPos (0)
@@ -63,7 +65,7 @@ NSDataIBStream::NSDataIBStream (NSData* data, bool hideAttributes)
 #endif
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 NSDataIBStream::~NSDataIBStream ()
 {
 #if !ARC_ENABLED
@@ -72,10 +74,10 @@ NSDataIBStream::~NSDataIBStream ()
 	FUNKNOWN_DTOR
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 IMPLEMENT_REFCOUNT (NSDataIBStream)
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 tresult PLUGIN_API NSDataIBStream::queryInterface (const TUID iid, void** obj)
 {
 	QUERY_INTERFACE (iid, obj, FUnknown::iid, IBStream)
@@ -86,7 +88,7 @@ tresult PLUGIN_API NSDataIBStream::queryInterface (const TUID iid, void** obj)
 	return kNoInterface;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 tresult PLUGIN_API NSDataIBStream::read (void* buffer, int32 numBytes, int32* numBytesRead)
 {
 	int32 useBytes = std::min (numBytes, (int32)([data length] - currentPos));
@@ -101,13 +103,13 @@ tresult PLUGIN_API NSDataIBStream::read (void* buffer, int32 numBytes, int32* nu
 	return kResultFalse;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 tresult PLUGIN_API NSDataIBStream::write (void* buffer, int32 numBytes, int32* numBytesWritten)
 {
 	return kResultFalse;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 tresult PLUGIN_API NSDataIBStream::seek (int64 pos, int32 mode, int64* result)
 {
 	switch (mode)
@@ -149,7 +151,7 @@ tresult PLUGIN_API NSDataIBStream::seek (int64 pos, int32 mode, int64* result)
 	return kResultFalse;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 tresult PLUGIN_API NSDataIBStream::tell (int64* pos)
 {
 	if (pos)
@@ -160,34 +162,34 @@ tresult PLUGIN_API NSDataIBStream::tell (int64* pos)
 	return kResultFalse;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 tresult PLUGIN_API NSDataIBStream::getFileName (String128 name)
 {
 	return kNotImplemented;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 IAttributeList* PLUGIN_API NSDataIBStream::getAttributes ()
 {
 	return hideAttributes ? 0 : &attrList;
 }
 
-//--------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
 NSMutableDataIBStream::NSMutableDataIBStream (NSMutableData* data)
 : NSDataIBStream (data, true)
 , mdata (data)
 {
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 NSMutableDataIBStream::~NSMutableDataIBStream ()
 {
 	[mdata setLength:currentPos];
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 tresult PLUGIN_API NSMutableDataIBStream::write (void* buffer, int32 numBytes, int32* numBytesWritten)
 {
 	[mdata replaceBytesInRange:NSMakeRange (currentPos, numBytes) withBytes:buffer];

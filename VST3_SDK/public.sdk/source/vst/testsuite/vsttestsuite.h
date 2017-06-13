@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Validator
 // Filename    : public.sdk/source/vst/vsttestsuite.h
@@ -9,28 +8,31 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 #pragma once
 
@@ -51,7 +53,7 @@ typedef int32 ProcessSampleSize;
 
 //------------------------------------------------------------------------
 #define DECLARE_VSTTEST(name) \
-virtual const tchar* getName () const { return name; }
+virtual const char* getName () const SMTG_OVERRIDE { return name; }
 
 /** Set from outside the plug-in context (simulating a host context) */
 extern void setStandardPluginContext (FUnknown* context);
@@ -108,11 +110,11 @@ private:
 class ParamChanges : public IParamValueQueue
 {
 public:
-	ParamChanges () : id (-1), numPoints (0), points (0), numUsedPoints (0), processedFrames (0)
+	ParamChanges () : id (-1), numPoints (0), numUsedPoints (0), processedFrames (0), points (nullptr)
 	{
 		FUNKNOWN_CTOR
 	}
-	~ParamChanges ()
+	virtual ~ParamChanges ()
 	{
 		if (points)
 			delete[] points;
@@ -166,9 +168,9 @@ public:
 	}
 
 	//---for IParamValueQueue-------------------------
-	ParamID PLUGIN_API getParameterId () { return id; }
-	int32 PLUGIN_API getPointCount () { return numUsedPoints; }
-	tresult PLUGIN_API getPoint (int32 index, int32& offsetSamples, double& value)
+	ParamID PLUGIN_API getParameterId () SMTG_OVERRIDE { return id; }
+	int32 PLUGIN_API getPointCount () SMTG_OVERRIDE { return numUsedPoints; }
+	tresult PLUGIN_API getPoint (int32 index, int32& offsetSamples, double& value) SMTG_OVERRIDE
 	{
 		if (points && (index < numUsedPoints) && (index >= 0))
 		{
@@ -177,7 +179,7 @@ public:
 		}
 		return kResultFalse;
 	}
-	tresult PLUGIN_API addPoint (int32 offsetSamples, double value, int32& index)
+	tresult PLUGIN_API addPoint (int32 offsetSamples, double value, int32& index) SMTG_OVERRIDE
 	{
 		return kResultFalse;
 	}
@@ -187,8 +189,8 @@ private:
 	ParamID id;
 	int32 numPoints;
 	int32 numUsedPoints;
-	ParamPoint* points;
 	int32 processedFrames;
+	ParamPoint* points;
 };
 
 //------------------------------------------------------------------------
@@ -202,12 +204,12 @@ public:
 	VstTestBase (IPlugProvider* plugProvider);
 	virtual ~VstTestBase ();
 	
-	DECLARE_VSTTEST (STR ("VST Test Base"))
+	virtual const char* getName () const = 0;
 	DECLARE_FUNKNOWN_METHODS
 
-	bool PLUGIN_API setup ();
-	bool PLUGIN_API run (ITestResult* testResult) {return false;}	// implement me
-	bool PLUGIN_API teardown ();
+	bool PLUGIN_API setup () SMTG_OVERRIDE;
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE {return false;}	// implement me
+	bool PLUGIN_API teardown () SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 protected:
 	IPlugProvider* plugProvider;
@@ -236,8 +238,8 @@ public:
 		kSampleRate = 44100,
 	};
 
-	bool PLUGIN_API setup ();
-	bool PLUGIN_API teardown ();
+	bool PLUGIN_API setup () SMTG_OVERRIDE;
+	bool PLUGIN_API teardown () SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 protected:
 	// interfaces
@@ -256,9 +258,9 @@ public:
 //------------------------------------------------------------------------
 	VstSuspendResumeTest (IPlugProvider* plugProvider, ProcessSampleSize sampl);
 
-	DECLARE_VSTTEST (STR ("Suspend/Resume"))
+	DECLARE_VSTTEST ("Suspend/Resume")
 	
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -273,9 +275,9 @@ public:
 //------------------------------------------------------------------------
 	VstTerminateInitializeTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Terminate/Initialize"))
+	DECLARE_VSTTEST ("Terminate/Initialize")
 
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -289,9 +291,9 @@ public:
 //------------------------------------------------------------------------
 	VstScanBussesTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Scan Buses"))
+	DECLARE_VSTTEST ("Scan Buses")
 	
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -305,9 +307,9 @@ public:
 //------------------------------------------------------------------------
 	VstScanParametersTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Scan Parameters"))
+	DECLARE_VSTTEST ("Scan Parameters")
 	
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -321,9 +323,9 @@ public:
 //------------------------------------------------------------------------
 	VstMidiMappingTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("MIDI Mapping"))
+	DECLARE_VSTTEST ("MIDI Mapping")
 	
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -339,9 +341,9 @@ public:
 	//------------------------------------------------------------------------
 	VstNoteExpressionTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Note Expression"))
+	DECLARE_VSTTEST ("Note Expression")
 
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 	//------------------------------------------------------------------------
 };
 
@@ -355,9 +357,9 @@ public:
 	//------------------------------------------------------------------------
 	VstKeyswitchTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Keyswitch"))
+	DECLARE_VSTTEST ("Keyswitch")
 
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 	//------------------------------------------------------------------------
 };
 
@@ -371,9 +373,9 @@ public:
 //------------------------------------------------------------------------
 	VstEditorClassesTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Scan Editor Classes"))
+	DECLARE_VSTTEST ("Scan Editor Classes")
 	
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -387,9 +389,9 @@ public:
 //------------------------------------------------------------------------
 	VstUnitInfoTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Scan Units"))
+	DECLARE_VSTTEST ("Scan Units")
 	
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -403,9 +405,9 @@ public:
 //------------------------------------------------------------------------
 	VstProgramInfoTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Scan Programs"))
+	DECLARE_VSTTEST ("Scan Programs")
 
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -419,9 +421,9 @@ public:
 //------------------------------------------------------------------------
 	VstUnitStructureTest (IPlugProvider* plugProvider);
 
-	DECLARE_VSTTEST (STR ("Check Unit Structure"))
+	DECLARE_VSTTEST ("Check Unit Structure")
 
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 //------------------------------------------------------------------------
 };
 
@@ -435,12 +437,12 @@ public:
 //------------------------------------------------------------------------
 	VstProcessTest (IPlugProvider* plugProvider, ProcessSampleSize sampl);
 
-	DECLARE_VSTTEST (STR ("Process Test"))
+	DECLARE_VSTTEST ("Process Test")
 	
 	// ITest
-	bool PLUGIN_API setup ();
-	bool PLUGIN_API run (ITestResult* testResult);
-	bool PLUGIN_API teardown ();
+	bool PLUGIN_API setup () SMTG_OVERRIDE;
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
+	bool PLUGIN_API teardown () SMTG_OVERRIDE;
 
 //------------------------------------------------------------------------
 protected:
@@ -467,15 +469,15 @@ public:
 //------------------------------------------------------------------------
 	VstSpeakerArrangementTest (IPlugProvider* plugProvider, ProcessSampleSize sampl, SpeakerArrangement inSpArr, SpeakerArrangement outSpArr);
 
-	const tchar* getName () const;
-	static const tchar* getSpeakerArrangementName (SpeakerArrangement spArr);
+	const char* getName () const SMTG_OVERRIDE;
+	static const char* getSpeakerArrangementName (SpeakerArrangement spArr);
 	
 	// ITest
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
 //------------------------------------------------------------------------
 protected:
-	bool prepareProcessing ();
+	bool prepareProcessing () SMTG_OVERRIDE;
 	bool verifySA (int32 numBusses, AudioBusBuffers* buses, SpeakerArrangement spArr, ITestResult* testResult);
 private:
 	SpeakerArrangement inSpArr;
@@ -496,21 +498,21 @@ public:
 	virtual ~VstAutomationTest ();
 
 	DECLARE_FUNKNOWN_METHODS
-	const tchar* getName () const;
+	const char* getName () const SMTG_OVERRIDE;
 	// ITest
-	bool PLUGIN_API setup ();
-	bool PLUGIN_API run (ITestResult* testResult);
-	bool PLUGIN_API teardown ();
+	bool PLUGIN_API setup () SMTG_OVERRIDE;
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
+	bool PLUGIN_API teardown () SMTG_OVERRIDE;
 
 	// IParameterChanges
-	int32 PLUGIN_API getParameterCount ();
-	IParamValueQueue* PLUGIN_API getParameterData (int32 index);
-	IParamValueQueue* PLUGIN_API addParameterData (const ParamID& id, int32& index);
+	int32 PLUGIN_API getParameterCount () SMTG_OVERRIDE;
+	IParamValueQueue* PLUGIN_API getParameterData (int32 index) SMTG_OVERRIDE;
+	IParamValueQueue* PLUGIN_API addParameterData (const ParamID& id, int32& index) SMTG_OVERRIDE;
 
 //------------------------------------------------------------------------
 protected:
-	bool preProcess (ITestResult* testResult);
-	bool postProcess (ITestResult* testResult);
+	bool preProcess (ITestResult* testResult) SMTG_OVERRIDE;
+	bool postProcess (ITestResult* testResult) SMTG_OVERRIDE;
 	ParamID bypassId;
 
 	ParamChanges* paramChanges;
@@ -529,9 +531,9 @@ class VstValidStateTransitionTest : public VstTestBase
 {
 public:
 	VstValidStateTransitionTest (IPlugProvider* plugProvider);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Valid State Transition"))
+	DECLARE_VSTTEST ("Valid State Transition")
 };
 
 //------------------------------------------------------------------------
@@ -542,9 +544,9 @@ class VstInvalidStateTransitionTest : public VstTestBase
 {
 public:
 	VstInvalidStateTransitionTest (IPlugProvider* plugProvider);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Invalid State Transition"))
+	DECLARE_VSTTEST ("Invalid State Transition")
 };
 
 //------------------------------------------------------------------------
@@ -555,9 +557,9 @@ class VstRepeatIdenticalStateTransitionTest : public VstTestBase
 {
 public:
 	VstRepeatIdenticalStateTransitionTest (IPlugProvider* plugProvider);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Repeat Identical State Transition"))
+	DECLARE_VSTTEST ("Repeat Identical State Transition")
 };
 
 //------------------------------------------------------------------------
@@ -568,9 +570,9 @@ class VstBusConsistencyTest : public VstTestBase
 {
 public:
 	VstBusConsistencyTest (IPlugProvider* plugProvider);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Bus Consistency"))
+	DECLARE_VSTTEST ("Bus Consistency")
 };
 
 //------------------------------------------------------------------------
@@ -581,9 +583,9 @@ class VstBusInvalidIndexTest : public VstTestBase
 {
 public:
 	VstBusInvalidIndexTest (IPlugProvider* plugProvider);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Bus Invalid Index"))
+	DECLARE_VSTTEST ("Bus Invalid Index")
 };
 
 //------------------------------------------------------------------------
@@ -594,9 +596,9 @@ class VstSilenceFlagsTest : public VstProcessTest
 {
 public:
 	VstSilenceFlagsTest (IPlugProvider* plugProvider, ProcessSampleSize sampl);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Silence Flags"))
+	DECLARE_VSTTEST ("Silence Flags")
 };
 
 //------------------------------------------------------------------------
@@ -607,9 +609,9 @@ class VstSilenceProcessingTest : public VstProcessTest
 {
 public:
 	VstSilenceProcessingTest (IPlugProvider* plugProvider, ProcessSampleSize sampl);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Silence Processing"))
+	DECLARE_VSTTEST ("Silence Processing")
 protected:
 	bool isBufferSilent (void* buffer, int32 numSamples, ProcessSampleSize sampl);
 };
@@ -622,9 +624,9 @@ class VstFlushParamTest : public VstAutomationTest
 {
 public:
 	VstFlushParamTest (IPlugProvider* plugProvider, ProcessSampleSize sampl);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Parameters Flush (no Buffer)"))
+	DECLARE_VSTTEST ("Parameters Flush (no Buffer)")
 };
 
 //------------------------------------------------------------------------
@@ -635,9 +637,9 @@ class VstBusActivationTest : public VstTestBase
 {
 public:
 	VstBusActivationTest (IPlugProvider* plugProvider);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Bus Activation"))
+	DECLARE_VSTTEST ("Bus Activation")
 };
 
 //------------------------------------------------------------------------
@@ -648,9 +650,9 @@ class VstVariableBlockSizeTest : public VstProcessTest
 {
 public:
 	VstVariableBlockSizeTest (IPlugProvider* plugProvider, ProcessSampleSize sampl);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Variable Block Size"))
+	DECLARE_VSTTEST ("Variable Block Size")
 };
 
 //------------------------------------------------------------------------
@@ -661,9 +663,9 @@ class VstProcessFormatTest : public VstProcessTest
 {
 public:
 	VstProcessFormatTest (IPlugProvider* plugProvider, ProcessSampleSize sampl);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Process Format"))
+	DECLARE_VSTTEST ("Process Format")
 };
 
 //------------------------------------------------------------------------
@@ -674,9 +676,9 @@ class VstCheckAudioBusArrangementTest : public VstTestBase
 {
 public:
 	VstCheckAudioBusArrangementTest (IPlugProvider* plugProvider);
-	bool PLUGIN_API run (ITestResult* testResult);
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
 
-	DECLARE_VSTTEST (STR ("Check Audio Bus Arrangement"))
+	DECLARE_VSTTEST ("Check Audio Bus Arrangement")
 };
 
 
@@ -691,13 +693,13 @@ public:
 	VstProcessTailTest (IPlugProvider* plugProvider, ProcessSampleSize sampl);
 	virtual ~VstProcessTailTest ();
 
-	DECLARE_VSTTEST (STR ("Check Tail processing"))
+	DECLARE_VSTTEST ("Check Tail processing")
 
 	// ITest
-	bool PLUGIN_API setup ();
-	bool PLUGIN_API run (ITestResult* testResult);
-	bool preProcess (ITestResult* testResult);
-	bool postProcess (ITestResult* testResult);
+	bool PLUGIN_API setup () SMTG_OVERRIDE;
+	bool PLUGIN_API run (ITestResult* testResult) SMTG_OVERRIDE;
+	bool preProcess (ITestResult* testResult) SMTG_OVERRIDE;
+	bool postProcess (ITestResult* testResult) SMTG_OVERRIDE;
 	
 	//------------------------------------------------------------------------
 protected:

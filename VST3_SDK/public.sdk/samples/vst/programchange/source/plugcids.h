@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/XX/source/plugcids.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,11 +34,11 @@
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-
 #pragma once
 
 namespace Steinberg {
 namespace Vst {
-	static const FUID PlugProcessorUID (0xC09CDA28, 0x346B4318, 0x9906B54E, 0x8A7023E2);
-	static const FUID PlugControllerUID (0x86152E37, 0x6F094BDF, 0x9929F219, 0xBA3BBED7);
-}} // namespaces
+static const FUID PlugProcessorUID (0xC09CDA28, 0x346B4318, 0x9906B54E, 0x8A7023E2);
+static const FUID PlugControllerUID (0x86152E37, 0x6F094BDF, 0x9929F219, 0xBA3BBED7);
+}
+} // namespaces

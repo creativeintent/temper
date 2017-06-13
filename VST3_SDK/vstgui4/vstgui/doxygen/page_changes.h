@@ -17,6 +17,11 @@ It's recommended to start new projects with version 4 while old projects should 
 
 @section new_stuff New Stuff
 
+@subsection version4_4 Version 4.4
+
+- preview Linux version
+- support for Windows XP, Mac OS X 10.6 and non c++11 mode will be removed with version 4.5
+
 @subsection version4_3 Version 4.3
 
 - last version to support Windows XP, Mac OS X 10.6 and non c++11 mode
@@ -60,6 +65,10 @@ Note: All current deprecated methods will be removed in the next version. So mak
 
 @section code_changes Changes for existing VSTGUI code
 
+@subsection code_changes_4_3_to_4_4 VSTGUI 4.3 -> VSTGUI 4.4
+ 
+- removed method: CRect& CView::getViewSize (CRect& rect) const -> use const CRect& getViewSize () const
+ 
 @subsection code_changes_4_2_to_4_3 VSTGUI 4.2 -> VSTGUI 4.3
 
 - CControlListener was renamed to IControlListener and moved into the VSTGUI namespace and its own header file. A typedef for CControlListener is available but marked as deprecated.

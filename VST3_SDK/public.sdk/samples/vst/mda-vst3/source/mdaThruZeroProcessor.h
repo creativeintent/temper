@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaThruZeroProcessor__
-#define __mdaThruZeroProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,18 +29,18 @@ public:
 	ThruZeroProcessor ();
 	~ThruZeroProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new ThruZeroProcessor; }
 	static FUID uid;
 //-----------------------------------------------------------------------------
 protected:
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float rat, dep, wet, dry, fb, dem; //rate, depth, wet & dry mix, feedback, mindepth
 	float phi, fb1, fb2, deps;         //lfo & feedback buffers, depth change smoothing 
@@ -50,5 +49,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['noteexpressiontypeid',['NoteExpressionTypeID',['../../vstinterfaces/namespaceSteinberg_1_1Vst.html#a1f6dd3f1f6742382e7301c1db5587a4e',1,'Steinberg::Vst']]],
-  ['noteexpressionvalue',['NoteExpressionValue',['../../vstinterfaces/namespaceSteinberg_1_1Vst.html#a9e134142463a8ca477018e7f2c3220f5',1,'Steinberg::Vst']]]
+  ['mediatype',['MediaType',['../../vstinterfaces/group__vst3typedef.html#ga5f0d28213b308d786ef7a1541d88368f',1,'Steinberg::Vst::MediaType()'],['../../vstinterfaces/group__vst3typedef.html#ga5f0d28213b308d786ef7a1541d88368f',1,'MediaType()(Global Namespace)']]],
+  ['moduleentryfunc',['ModuleEntryFunc',['../module__linux_8cpp.html#a8896b62003cc5e422a639b79c575e670',1,'module_linux.cpp']]],
+  ['moduleexitfunc',['ModuleExitFunc',['../module__linux_8cpp.html#a6a54ca4a38bb52e14b06b693c7973bfd',1,'module_linux.cpp']]]
 ];

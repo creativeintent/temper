@@ -7,6 +7,8 @@ var searchData=
   ['def_5fclass_5fiid',['DEF_CLASS_IID',['../funknown_8h.html#a8999be9dadfd41e1f563866e01e94d1c',1,'funknown.h']]],
   ['deferupdates',['deferUpdates',['../classSteinberg_1_1IUpdateHandler.html#a161a23aead9a302f8b4b2021d8553e29',1,'Steinberg::IUpdateHandler']]],
   ['delegate_5frefcount',['DELEGATE_REFCOUNT',['../funknown_8h.html#a6d9d411a27dcc158df8ff1f5e73510d0',1,'funknown.h']]],
+  ['denormalizealpha',['DenormalizeAlpha',['../namespaceSteinberg.html#acca20a890a507ef361864ea1f2914af1',1,'Steinberg']]],
+  ['denormalizecolorcomponent',['DenormalizeColorComponent',['../namespaceSteinberg.html#a2980404bf67477cd52e41e4c01ac06d0',1,'Steinberg']]],
   ['direction',['Direction',['../namespaceSteinberg.html#a224b9163917ac32fc95a60d8c1eec3aa',1,'Steinberg']]],
   ['disableerrorui',['disableErrorUI',['../classSteinberg_1_1IErrorContext.html#a6984fa8a3247acec65a270803e43bc84',1,'Steinberg::IErrorContext']]],
   ['doc_2eh',['doc.h',['../doc_8h.html',1,'']]]

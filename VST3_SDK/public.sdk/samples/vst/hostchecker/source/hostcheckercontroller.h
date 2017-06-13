@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/hostchecker/source/hostchecker.h
@@ -42,7 +41,6 @@
 #include "eventlogdatabrowsersource.h"
 
 #include "base/source/fstring.h"
-#include "base/source/tdictionary.h"
 #include "vstgui/plugin-bindings/vst3editor.h"
 #include "hostcheck.h"
 #include "logevents.h"
@@ -71,56 +69,56 @@ class HostCheckerController : public EditControllerEx1,
 							  public INoteExpressionController
 {
 public:
-	tresult PLUGIN_API initialize (FUnknown* context) override;
-	tresult PLUGIN_API terminate () override;
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
 	
-	tresult PLUGIN_API setComponentState (IBStream* state) override;
+	tresult PLUGIN_API setComponentState (IBStream* state) SMTG_OVERRIDE;
 	tresult PLUGIN_API getUnitByBus (MediaType type, BusDirection dir, int32 busIndex,
-									 int32 channel, UnitID& unitId /*out*/) override;
-	tresult PLUGIN_API setComponentHandler (IComponentHandler* handler) override;
-	int32 PLUGIN_API getUnitCount () override;
-	tresult PLUGIN_API setParamNormalized (ParamID tag, ParamValue value) override;
+									 int32 channel, UnitID& unitId /*out*/) SMTG_OVERRIDE;
+	tresult PLUGIN_API setComponentHandler (IComponentHandler* handler) SMTG_OVERRIDE;
+	int32 PLUGIN_API getUnitCount () SMTG_OVERRIDE;
+	tresult PLUGIN_API setParamNormalized (ParamID tag, ParamValue value) SMTG_OVERRIDE;
 	
-	tresult beginEdit (ParamID tag) override;
-	tresult endEdit (ParamID tag) override;
+	tresult beginEdit (ParamID tag) SMTG_OVERRIDE;
+	tresult endEdit (ParamID tag) SMTG_OVERRIDE;
 
-	IPlugView* PLUGIN_API createView (FIDString name) override;
-	tresult PLUGIN_API notify (IMessage* message) override;
-	tresult PLUGIN_API connect (IConnectionPoint* other) override;
+	IPlugView* PLUGIN_API createView (FIDString name) SMTG_OVERRIDE;
+	tresult PLUGIN_API notify (IMessage* message) SMTG_OVERRIDE;
+	tresult PLUGIN_API connect (IConnectionPoint* other) SMTG_OVERRIDE;
 
 	VSTGUI::CView* createCustomView (VSTGUI::UTF8StringPtr name,
 									 const VSTGUI::UIAttributes& attributes,
 									 const VSTGUI::IUIDescription* description,
-									 VSTGUI::VST3Editor* editor) override;
+									 VSTGUI::VST3Editor* editor) SMTG_OVERRIDE;
 
 	//---from IEditController2-------
-	tresult PLUGIN_API setKnobMode (KnobMode mode) override;
-	tresult PLUGIN_API openHelp (TBool /*onlyCheck*/) override;
-	tresult PLUGIN_API openAboutBox (TBool /*onlyCheck*/) override;
+	tresult PLUGIN_API setKnobMode (KnobMode mode) SMTG_OVERRIDE;
+	tresult PLUGIN_API openHelp (TBool /*onlyCheck*/) SMTG_OVERRIDE;
+	tresult PLUGIN_API openAboutBox (TBool /*onlyCheck*/) SMTG_OVERRIDE;
 
 	//---ChannelContext::IInfoListener-------
-	tresult PLUGIN_API setChannelContextInfos (IAttributeList* list) override;
+	tresult PLUGIN_API setChannelContextInfos (IAttributeList* list) SMTG_OVERRIDE;
 
 	//---IXmlRepresentationController--------
 	tresult PLUGIN_API getXmlRepresentationStream (RepresentationInfo& info /*in*/,
-														   IBStream* stream /*out*/) override;
+														   IBStream* stream /*out*/) SMTG_OVERRIDE;
 
 	//---IMidiMapping---------------------------
 	tresult PLUGIN_API getMidiControllerAssignment (int32 busIndex, int16 channel,
 															CtrlNumber midiControllerNumber,
-															ParamID& id /*out*/) override;
+															ParamID& id /*out*/) SMTG_OVERRIDE;
 
 	//---INoteExpressionController----------------------
-	int32 PLUGIN_API getNoteExpressionCount (int32 busIndex, int16 channel) override;
+	int32 PLUGIN_API getNoteExpressionCount (int32 busIndex, int16 channel) SMTG_OVERRIDE;
 	tresult PLUGIN_API getNoteExpressionInfo (int32 busIndex, int16 channel,
 													  int32 noteExpressionIndex,
-													  NoteExpressionTypeInfo& info /*out*/) override;
+													  NoteExpressionTypeInfo& info /*out*/) SMTG_OVERRIDE;
 	tresult PLUGIN_API getNoteExpressionStringByValue (
 		int32 busIndex, int16 channel, NoteExpressionTypeID id,
-		NoteExpressionValue valueNormalized /*in*/, String128 string /*out*/) override;
+		NoteExpressionValue valueNormalized /*in*/, String128 string /*out*/) SMTG_OVERRIDE;
 	tresult PLUGIN_API getNoteExpressionValueByString (
 		int32 busIndex, int16 channel, NoteExpressionTypeID id, const TChar* string /*in*/,
-		NoteExpressionValue& valueNormalized /*out*/) override;
+		NoteExpressionValue& valueNormalized /*out*/) SMTG_OVERRIDE;
 
 	DEFINE_INTERFACES
 		DEF_INTERFACE (IMidiMapping)

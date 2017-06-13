@@ -2,6 +2,7 @@ var searchData=
 [
   ['khelpoption',['kHelpOption',['../validator_8cpp.html#a17a1ef8a8f5434d4a35ed46c52222044',1,'validator.cpp']]],
   ['klocalinstanceoption',['kLocalInstanceOption',['../validator_8cpp.html#a2ba84e70ce2abec11627918750fe3a66',1,'validator.cpp']]],
+  ['klookupinstalledplugins',['kLookupInstalledPlugIns',['../validator_8cpp.html#a7f8529ab0bdb3534e701e2575022c151',1,'validator.cpp']]],
   ['kmaxlatency',['kMaxLatency',['../hostcheckerprocessor_8cpp.html#aa767fd1e881202949d052eebf3e751b5',1,'hostcheckerprocessor.cpp']]],
   ['kquietoption',['kQuietOption',['../validator_8cpp.html#a1cea1f2f66a395a6e91f0df45833d15a',1,'validator.cpp']]],
   ['ksilencethreshold',['kSilenceThreshold',['../mdaBaseProcessor_8cpp.html#a6fe41a4a3dfe5045e3cbea2da1acba76',1,'mdaBaseProcessor.cpp']]],

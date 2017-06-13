@@ -78,9 +78,12 @@ tresult PLUGIN_API DX10Controller::initialize (FUnknown* context)
 	tresult res = BaseController::initialize (context);
 	if (res == kResultTrue)
 	{
-		IndexedParameter* presetParam = new IndexedParameter (USTRING("Factory Presets"), 0, DX10Processor::NPROGS, 0, ParameterInfo::kCanAutomate|ParameterInfo::kIsProgramChange | ParameterInfo::kIsList, kPresetParam);
-		for (int32 i = 0; i <= DX10Processor::NPROGS; i++)
-			presetParam->setIndexString (i, UString128(presetNames[i]));
+		IndexedParameter* presetParam = new IndexedParameter (
+		    USTRING ("Factory Presets"), 0, DX10Processor::kNumPrograms - 1, 0,
+		    ParameterInfo::kCanAutomate | ParameterInfo::kIsProgramChange | ParameterInfo::kIsList,
+		    kPresetParam);
+		for (int32 i = 0; i < DX10Processor::kNumPrograms; i++)
+			presetParam->setIndexString (i, UString128 (presetNames[i]));
 		parameters.addParameter (presetParam);
 
 		ParamID pid = 0; 

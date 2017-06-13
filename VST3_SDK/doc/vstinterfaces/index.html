@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Interfaces
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -104,13 +104,13 @@ Contents</h1>
 <li><a class="el" href="vst3Units.html">Units</a></li>
 <li><a class="el" href="vst3Presets.html">Presets &amp; Program Lists</a></li>
 <li><a class="el" href="vst3Multitimbral.html">Complex Plug-in Structures / Multi-timbral Instruments</a></li>
-<li><a class="el" href="vst3loc.html">VST 3 Locations</a></li>
-<li><a class="el" href="workflow.html">Workflow Diagram</a> <br />
-<br />
- </li>
+<li><a class="el" href="vst3loc.html">VST 3 Locations / Format</a></li>
+<li><a class="el" href="workflow.html">VST 3 Workflow Diagram</a></li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>New in VST 3.5</dt><dd><ul>
+<p><br />
+<br />
+ </p><dl class="section user"><dt>New in VST 3.5</dt><dd><ul>
 <li><a class="el" href="noteExpression.html">Note Expression Support</a></li>
 <li><a class="el" href="keyswitch.html">Key Switch Support</a></li>
 <li><a class="el" href="representation.html">Remote Representation of Parameters Support</a></li>
@@ -118,7 +118,7 @@ Contents</h1>
 </ul>
 </dd></dl>
 <dl class="section user"><dt>New in VST 3.6:</dt><dd><ul>
-<li><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag:../vstsdk/" href="../vstsdk/interappaudio.html">iOS Inter-App Audio support</a></li>
+<li><a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstsdk/vstsdk.tag:../vstsdk/" href="../vstsdk/interappaudio.html">iOS Inter-App Audio support</a></li>
 </ul>
 </dd></dl>
 <dl class="section user"><dt>New in VST 3.6.5:</dt><dd><ul>
@@ -142,16 +142,16 @@ Basic Conception</h1>
 <p>The design of VST 3 suggests a complete separation of processor and edit controller by implementing two components. Splitting up an effect into these two parts requires some extra efforts for an implementation of course. <br />
 But this separation enables the host to run each component in a different context. It can even run them on different computers. Another benefit is that parameter changes can be separated when it comes to automation. While for processing these changes need to be transmitted in a sample accurate way, the GUI part can be updated with a much lower frequency and it can be shifted by the amount that results from any delay compensation or other processing offset. <br />
 <br />
-A Plug-in that supports this separation has to set the Steinberg::Vst::kDistributable flag in the class info of the processor component (<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PClassInfo2.html#ab5ab9135185421caad5ad8ae1d758409">Steinberg::PClassInfo2::classFlags</a>). Of course not every Plug-in can support this, for example if it depends deeply on resources that can not be easily moved to another computer. So when this flag is not set, the host must not try to separate the components in any way.<br />
+A Plug-in that supports this separation has to set the Steinberg::Vst::kDistributable flag in the class info of the processor component (<a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PClassInfo2.html#ab5ab9135185421caad5ad8ae1d758409">Steinberg::PClassInfo2::classFlags</a>). Of course not every Plug-in can support this, for example if it depends deeply on resources that can not be easily moved to another computer. So when this flag is not set, the host must not try to separate the components in any way.<br />
 Although it is not recommended, it is possible to implement both, the processing part and the controller part in one component class. The host tries to query the <a class="el" href="classSteinberg_1_1Vst_1_1IEditController.html" title="Edit controller component interface. ">Steinberg::Vst::IEditController</a> interface after creating an <a class="el" href="classSteinberg_1_1Vst_1_1IAudioProcessor.html" title="Audio Processing Interface. ">Steinberg::Vst::IAudioProcessor</a> and on success uses it as controller. <br />
 <br />
 </p><dl class="section note"><dt>Note</dt><dd>A host does not need to instantiate the Controller part of a Plug-in for processing it. The Plug-in should be prepared for processing without having the controller part instantiated. <br />
  </dd></dl>
 <h2><a class="anchor" id="Initialize"></a>
 Initialize</h2>
-<p>Both <a class="el" href="classSteinberg_1_1Vst_1_1IComponent.html" title="Component Base Interface. ">Steinberg::Vst::IComponent</a> and <a class="el" href="classSteinberg_1_1Vst_1_1IEditController.html" title="Edit controller component interface. ">Steinberg::Vst::IEditController</a> derive from <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IPluginBase.html">Steinberg::IPluginBase</a>. The purpose of this basic interface is to initialize the component and to terminate it before it is destroyed. <br />
+<p>Both <a class="el" href="classSteinberg_1_1Vst_1_1IComponent.html" title="Component Base Interface. ">Steinberg::Vst::IComponent</a> and <a class="el" href="classSteinberg_1_1Vst_1_1IEditController.html" title="Edit controller component interface. ">Steinberg::Vst::IEditController</a> derive from <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IPluginBase.html">Steinberg::IPluginBase</a>. The purpose of this basic interface is to initialize the component and to terminate it before it is destroyed. <br />
 <br />
-The context parameter passed to <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IPluginBase.html#a3c81be4ff2e7bbb541d3527264f26eed">Steinberg::IPluginBase::initialize</a> is <a class="el" href="classSteinberg_1_1Vst_1_1IHostApplication.html" title="Basic Host Callback Interface. ">Steinberg::Vst::IHostApplication</a>. Hosts should not call others functions before initialize is called!, except <a class="el" href="classSteinberg_1_1Vst_1_1IComponent.html#a4618e7358890d549f990010bea4a4137" title="Called before &#39;initialize&#39; to set the component usage (optional). ">Steinberg::Vst::IComponent::setIoMode</a> which need to be called before or <a class="el" href="classSteinberg_1_1Vst_1_1IComponent.html#a8aa65685068ad033af57b1497926b689" title="Called before initializing the component to get information about the controller class. ">Steinberg::Vst::IComponent::getControllerClassId</a> which could be called before. <br />
+The context parameter passed to <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IPluginBase.html#a3c81be4ff2e7bbb541d3527264f26eed">Steinberg::IPluginBase::initialize</a> is <a class="el" href="classSteinberg_1_1Vst_1_1IHostApplication.html" title="Basic Host Callback Interface. ">Steinberg::Vst::IHostApplication</a>. Hosts should not call others functions before initialize is called!, except <a class="el" href="classSteinberg_1_1Vst_1_1IComponent.html#a4618e7358890d549f990010bea4a4137" title="Called before &#39;initialize&#39; to set the component usage (optional). ">Steinberg::Vst::IComponent::setIoMode</a> which need to be called before or <a class="el" href="classSteinberg_1_1Vst_1_1IComponent.html#a8aa65685068ad033af57b1497926b689" title="Called before initializing the component to get information about the controller class. ">Steinberg::Vst::IComponent::getControllerClassId</a> which could be called before. <br />
 <br />
  </p>
 <h2><a class="anchor" id="creation"></a>
@@ -166,27 +166,27 @@ Creation and Initialize from Host point of view</h2>
 <div class="line"><span class="comment">// factory already initialized (after the library is loaded, see validator for example)</span></div>
 <div class="line">...</div>
 <div class="line"><span class="comment">// create its component part</span></div>
-<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> result = factory-&gt;createInstance (classID, Vst::IComponent::iid, (<span class="keywordtype">void</span>**)&amp;processorComponent);</div>
+<div class="line"><a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> result = factory-&gt;createInstance (classID, Vst::IComponent::iid, (<span class="keywordtype">void</span>**)&amp;processorComponent);</div>
 <div class="line"><span class="keywordflow">if</span> (processorComponent &amp;&amp; (result == kResultOk))</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// initialize the component with our host context (note: initialize called just after creatInstance)</span></div>
-<div class="line">    res = (processorComponent-&gt;initialize (gStandardPluginContext) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">kResultOk</a>);</div>
+<div class="line">    res = (processorComponent-&gt;initialize (gStandardPluginContext) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">kResultOk</a>);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// try to create the controller part from the component </span></div>
 <div class="line">    <span class="comment">// for Plug-ins which did not succeed to separate component from controller :-(</span></div>
-<div class="line">    <span class="keywordflow">if</span> (processorComponent-&gt;queryInterface (Vst::IEditController::iid, (<span class="keywordtype">void</span>**)&amp;editController) != <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">    <span class="keywordflow">if</span> (processorComponent-&gt;queryInterface (Vst::IEditController::iid, (<span class="keywordtype">void</span>**)&amp;editController) != <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">    {</div>
 <div class="line">        FUID controllerCID;</div>
 <div class="line"></div>
 <div class="line">        <span class="comment">// ask for the associated controller class ID (could be called before processorComponent-&gt;initialize ())</span></div>
-<div class="line">        <span class="keywordflow">if</span> (processorComponent-&gt;getControllerClassId (controllerCID) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a> &amp;&amp; controllerCID.isValid ())</div>
+<div class="line">        <span class="keywordflow">if</span> (processorComponent-&gt;getControllerClassId (controllerCID) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a> &amp;&amp; controllerCID.isValid ())</div>
 <div class="line">        {       </div>
 <div class="line">            <span class="comment">// create its controller part created from the factory</span></div>
 <div class="line">            result = factory-&gt;createInstance (controllerCID, Vst::IEditController::iid, (<span class="keywordtype">void</span>**)&amp;editController);</div>
 <div class="line">            <span class="keywordflow">if</span> (editController &amp;&amp; (result == kResultOk))</div>
 <div class="line">            {</div>
 <div class="line">                <span class="comment">// initialize the component with our context</span></div>
-<div class="line">                res = (editController-&gt;initialize (gStandardPluginContext) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">kResultOk</a>);</div>
+<div class="line">                res = (editController-&gt;initialize (gStandardPluginContext) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba941549edbe23d0f21851403ae03ad4df">kResultOk</a>);</div>
 <div class="line">                </div>
 <div class="line">                <span class="comment">// now processorComponent and editController are initialized... :-)</span></div>
 <div class="line">            }</div>
@@ -227,7 +227,7 @@ Persistence</h2>
  stores and restores any GUI settings that are not related to the processor (like scroll positions etc)</li>
 <li><b>Restore:</b> When the states are restored, the host passes the processor state to both the processor and the controller (<a class="el" href="classSteinberg_1_1Vst_1_1IEditController.html#a4c2e1cafd88143fda2767a9c7ba5d48f" title="Receives the component state. ">Steinberg::Vst::IEditController::setComponentState</a>). A host must always pass that state to the processor first. The controller then has to synchronize its parameters to this state (but must not perform any IComponentHandler callbacks). <br />
  After restoring a state, the host will rescan the parameters (asking the controller) in order to update its intern representation.<br />
- See also <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IBStream.html">Steinberg::IBStream</a> <br />
+ See also <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IBStream.html">Steinberg::IBStream</a> <br />
 <br />
  <dl class="section see"><dt>See also</dt><dd></dd></dl>
 </li>
@@ -252,7 +252,7 @@ Steinberg::Vst::IComponent</h2>
 <li><b>Edit controller association</b>: In order to enable the host to create a corresponding edit controller the processing component has to provide the matching class-ID. The host uses the module's class factory to create the controller component. (<a class="el" href="classSteinberg_1_1Vst_1_1IComponent.html#a8aa65685068ad033af57b1497926b689" title="Called before initializing the component to get information about the controller class. ">Steinberg::Vst::IComponent::getControllerClassId</a>) <br />
  <br />
 </li>
-<li><a class="el" href="structSteinberg_1_1Vst_1_1BusInfo.html" title="Bus Description. ">Steinberg::Vst::BusInfo</a> -A bus can be understood as a 'collection of data channels' belonging together. It describes a data input or a data output of the Plug-in. A VST component can define any desired number of buses, but this number must <b>never</b> change. Dynamic usage of buses is handled in the host by activating and deactivating buses. The component has to define the maximum number of supported buses and it has to define which of them are active by default. A host that can handle multiple buses, allows the user to activate buses that were initially inactive.</li>
+<li><a class="el" href="structSteinberg_1_1Vst_1_1BusInfo.html" title="Bus Description. ">Steinberg::Vst::BusInfo</a> - A bus can be understood as a 'collection of data channels' belonging together. It describes a data input or a data output of the Plug-in. A VST component can define any desired number of buses, but this number must <b>never</b> change. Dynamic usage of buses is handled in the host by activating and deactivating buses. The component has to define the maximum number of supported buses and it has to define which of them are active by default. A host that can handle multiple buses, allows the user to activate buses that were initially inactive.</li>
 </ol>
 <p>See also: IComponent::getBusInfo , IComponent::activateBus <br />
  <br />
@@ -274,7 +274,7 @@ Steinberg::Vst::IAudioProcessor</h2>
 <li><b>Dynamic Speaker Arrangements</b>: The host can try to change the number of channels of an audio bus. By default the speaker arrangement is defined by the Plug-in. In order to adjust the Plug-in to a context where a different speaker arrangement is used, the host can try to change it. (<a class="el" href="classSteinberg_1_1Vst_1_1IAudioProcessor.html#ad3bc7bac3fd3b194122669be2a1ecc42" title="Try to set (from host) a predefined arrangement for inputs and outputs. ">Steinberg::Vst::IAudioProcessor::setBusArrangements</a>)</li>
 </ul>
 <br />
- When the processor has been configured, it has to be activated. The activation call signals that all configurations have been finished. In addition to that, the processor has got a 'processing state'. Before a host actually begins to perform processing calls, it has to signal this by calling IAudioProcessor::setProcessing(true). When the host will perform processing no longer, it must call IAudioProcessor::setProcessing(false) after the last processing call. Please see also: <a class="el" href="workflow.html">Workflow Diagram</a> <br />
+ When the processor has been configured, it has to be activated. The activation call signals that all configurations have been finished. In addition to that, the processor has got a 'processing state'. Before a host actually begins to perform processing calls, it has to signal this by calling IAudioProcessor::setProcessing(true). When the host will perform processing no longer, it must call IAudioProcessor::setProcessing(false) after the last processing call. Please see also: <a class="el" href="workflow.html">VST 3 Workflow Diagram</a> <br />
  <br />
 </li>
 <li><b>Process:</b> <a class="el" href="classSteinberg_1_1Vst_1_1IAudioProcessor.html#a6b98eb31cf38ba96a28b303c13c64e13" title="The Process call, where all information (parameter changes, event, audio buffer) are passed...">Steinberg::Vst::IAudioProcessor::process</a> is the method that implements the actual processing. Any data needed for processing is passed to it as parameter <a class="el" href="structSteinberg_1_1Vst_1_1ProcessData.html" title="Any data needed in audio processing. ">Steinberg::Vst::ProcessData</a>. This is necessary because processing often is performed in a separate thread and this is a simple way to avoid thread synchronization problems. <br />
@@ -311,7 +311,7 @@ The Editing Part</h1>
 <p>The edit controller is responsible for the GUI aspects of the Plug-in. Its standard interface is <a class="el" href="classSteinberg_1_1Vst_1_1IEditController.html" title="Edit controller component interface. ">Steinberg::Vst::IEditController</a>. The host has to provide a callback interface for the edit controller named <a class="el" href="classSteinberg_1_1Vst_1_1IComponentHandler.html" title="Host callback interface for an edit controller. ">Steinberg::Vst::IComponentHandler</a>. The handler is essential for the communication with both the host and the processor.</p>
 <ul>
 <li><b>GUI:</b> The controller optionally can define an editor view. The method <a class="el" href="classSteinberg_1_1Vst_1_1IEditController.html#a1fa4ed10cc0979e5559045104c998b1a" title="Creates the editor view of the Plug-in, currently only &quot;editor&quot; is supported, see ViewType...">Steinberg::Vst::IEditController::createView</a> allows the host to specify the type of the view by passing an id-string. Currently the only type defined is "editor" (<a class="el" href="namespaceSteinberg_1_1Vst_1_1ViewType.html#aaa62c4c32f0270a908eb20c7c7124dfc">Steinberg::Vst::ViewType::kEditor</a>), but there might be variations in future versions (eg. "setup"). <br />
- See also <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IPlugView.html">Steinberg::IPlugView</a> <br />
+ See also <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IPlugView.html">Steinberg::IPlugView</a> <br />
  <br />
 </li>
 <li><b>Parameters:</b> The controller is responsible for the management of parameters. Any change to a parameter that is caused by user interaction in the Plug-in GUI must be properly reported to the <a class="el" href="classSteinberg_1_1Vst_1_1IComponentHandler.html" title="Host callback interface for an edit controller. ">Steinberg::Vst::IComponentHandler</a>. The host is responsible for transmitting the change to the processor. In order to make recording of automation work accordingly it is necessary to call <a class="el" href="classSteinberg_1_1Vst_1_1IComponentHandler.html#a8456ad739430267a12dda11a53fe9223">beginEdit</a>, <a class="el" href="classSteinberg_1_1Vst_1_1IComponentHandler.html#a135d4e76355ef0ba0a4162a0546d5f93">performEdit</a> and <a class="el" href="classSteinberg_1_1Vst_1_1IComponentHandler.html#ae380206486b11f000cad7c0d9b6e877c">endEdit</a> in the expected order! <br />
@@ -389,7 +389,7 @@ Initialization of communication from Host point of view</h2>
 <div class="line">    <span class="comment">// synchronize controller to component by using setComponentState</span></div>
 <div class="line">    MemoryStream stream; <span class="comment">// defined in &quot;public.sdk/source/common/memorystream.h&quot;</span></div>
 <div class="line">    stream.setByteOrder (kLittleEndian);</div>
-<div class="line">    <span class="keywordflow">if</span> (processorComponent-&gt;getState (&amp;stream) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
+<div class="line">    <span class="keywordflow">if</span> (processorComponent-&gt;getState (&amp;stream) == <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>)</div>
 <div class="line">    {</div>
 <div class="line">        stream.rewind ();</div>
 <div class="line">        editController-&gt;setComponentState (&amp;stream);</div>
@@ -404,17 +404,17 @@ Back to <b><a class="el" href="index.html#vst3Contents">Contents</a></b> <br />
 </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

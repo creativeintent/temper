@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['data',['data',['../classSteinberg_1_1FMallocReleaser.html#a735984d41155bc1032e09bece8f8d66d',1,'Steinberg::FMallocReleaser::data()'],['../classSteinberg_1_1TSortable.html#aa3ff051a47d9e18487e7b819852521c5',1,'Steinberg::TSortable::data()']]],
-  ['defaultdelta',['defaultDelta',['../classSteinberg_1_1Buffer.html#a5ddbcd843e127d9a3b72dd34642eccb4',1,'Steinberg::Buffer']]],
-  ['deleter',['deleter',['../namespaceSteinberg_1_1Singleton.html#ad6199b16f89340fdc59b661207d8ae40',1,'Steinberg::Singleton']]],
-  ['delta',['delta',['../classSteinberg_1_1Buffer.html#a51785d72370a4b435e5863a25705f6c7',1,'Steinberg::Buffer']]]
+  ['gfobjectiidinitializer',['gFObjectIidInitializer',['../namespaceSteinberg.html#a716e8faa9615ce0d3a3b357275d14868',1,'Steinberg']]],
+  ['gupdatehandler',['gUpdateHandler',['../classSteinberg_1_1FObject.html#acee1b675f92ac47a457fc7692dfd3a67',1,'Steinberg::FObject']]]
 ];

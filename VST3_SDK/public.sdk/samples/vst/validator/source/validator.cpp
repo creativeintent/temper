@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Validator
 // Filename    : validator.cpp
@@ -9,29 +8,36 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
 // OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
 #include "validator.h"
+#include "public.sdk/source/vst/hosting/plugprovider.h"
+
+#include "public.sdk/source/vst/hosting/stringconvert.h"
 
 #include "pluginterfaces/vst/ivstcomponent.h"
 #include "pluginterfaces/vst/ivstaudioprocessor.h"
@@ -39,33 +45,15 @@
 #include "pluginterfaces/vst/ivsteditcontroller.h"
 #include "pluginterfaces/vst/ivstunits.h"
 
-#include "base/source/fstring.h"
-#include "base/source/fcontainer.h"
-#include "base/source/tarray.h"
-#include "base/source/tdictionary.h"
 #include "base/source/fcommandline.h"
 
 namespace Steinberg {
-FUnknown* gStandardPluginContext = 0;
+FUnknown* gStandardPluginContext = nullptr;
 }
 
 #if WINDOWS
 #include <windows.h>
 #include <conio.h>
-extern "C"
-{
-	typedef bool (PLUGIN_API *InitModuleProc) ();
-	typedef bool (PLUGIN_API *ExitModuleProc) ();
-}
-static const Steinberg::FIDString kInitModuleProcName = "InitDll";
-static const Steinberg::FIDString kExitModuleProcName = "ExitDll";
-
-#elif MAC
-#include <CoreFoundation/CoreFoundation.h>
-#include <curses.h>
-typedef bool (*bundleEntryPtr)(CFBundleRef);
-typedef bool (*bundleExitPtr)(void);
-
 #endif
 
 #include <cstdio>
@@ -81,25 +69,27 @@ class TestSuite : public ITestSuite, public FObject
 {
 public:
 	TestSuite (FIDString _name) : name (_name) {}
-	
-	tresult PLUGIN_API addTest (FIDString name, ITest* test)
+
+	tresult PLUGIN_API addTest (FIDString name, ITest* test) SMTG_OVERRIDE
 	{
-		return tests.add (IPtr<Test> (NEW Test (name, test), false)) ? kResultTrue : kResultFalse;
+		tests.push_back (IPtr<Test> (NEW Test (name, test), false));
+		return kResultTrue;
 	}
-	
-	tresult PLUGIN_API addTestSuite (FIDString name, ITestSuite* testSuite)
+
+	tresult PLUGIN_API addTestSuite (FIDString name, ITestSuite* testSuite) SMTG_OVERRIDE
 	{
-		return testSuites.addKeyAndObject (name, testSuite);
+		testSuites.push_back (std::make_pair (name, testSuite));
+		return kResultTrue;
 	}
-	
-	tresult PLUGIN_API setEnvironment (ITest* environment)
+
+	tresult PLUGIN_API setEnvironment (ITest* environment) SMTG_OVERRIDE
 	{
 		return kNotImplemented;
 	}
 
-	int32 getTestCount () const { return tests.total (); }
+	int32 getTestCount () const { return static_cast<int32> (tests.size ()); }
 
-	tresult getTest (int32 index, ITest*& test, String& name) const
+	tresult getTest (int32 index, ITest*& test, std::string& name) const
 	{
 		Test* _test = tests.at (index);
 		if (_test)
@@ -110,25 +100,29 @@ public:
 		}
 		return kResultFalse;
 	}
-	
-	tresult getTestSuite (int32 index, ITestSuite*& testSuite, String& name) const
+
+	tresult getTestSuite (int32 index, ITestSuite*& testSuite, std::string& name) const
 	{
-		const TAssociation<String, IPtr<ITestSuite> >& assoc = testSuites.at (index);
-		if (assoc.object ())
-		{
-			testSuite = assoc.object ();
-			name = assoc.key ();
-			return kResultTrue;
-		}
-		return kResultFalse;
+		if (index < 0 || index >= testSuites.size ())
+			return kInvalidArgument;
+		const TestSuitePair& ts = testSuites[index];
+		name = ts.first;
+		testSuite = ts.second;
+		return kResultTrue;
 	}
-	
+
 	ITestSuite* getTestSuite (FIDString name) const
 	{
-		return testSuites.lookupObject (name);
+		for (TestSuiteVector::const_iterator it = testSuites.cbegin (), end = testSuites.cend ();
+		     it != end; ++it)
+		{
+			if (it->first == name)
+				return it->second;
+		}
+		return nullptr;
 	}
-	
-	const ConstString& getName () const { return name; }
+
+	const std::string& getName () const { return name; }
 	OBJ_METHODS(TestSuite, FObject)
 	REFCOUNT_METHODS(FObject)
 	DEF_INTERFACES_1(ITestSuite, FObject)
@@ -138,12 +132,15 @@ protected:
 	public:
 		Test (FIDString _name, ITest* _test) : name (_name), test (_test) {}
 		
-		String name;
+		std::string name;
 		IPtr<ITest> test;
 	};
-	String name;
-	TArray<IPtr<Test> > tests;
-	TDictionary<String, IPtr<ITestSuite> > testSuites;
+	std::string name;
+	std::vector<IPtr<Test> > tests;
+
+	typedef std::pair<std::string, IPtr<ITestSuite> > TestSuitePair;
+	typedef std::vector<TestSuitePair> TestSuiteVector;
+	TestSuiteVector testSuites;
 };
 
 //------------------------------------------------------------------------
@@ -151,12 +148,30 @@ static std::ostream* infoStream = &std::cout;
 static std::ostream* errorStream = &std::cout;
 
 //------------------------------------------------------------------------
+void printAllInstalledPlugins ()
+{
+	*infoStream << "Searching installed plug-ins...\n";
+	infoStream->flush ();
+
+	auto paths = VST3::Hosting::Module::getModulePaths ();
+	if (paths.empty ())
+	{
+		*infoStream << "No plug-ins found.\n";
+		return;
+	}
+	for (const auto& path : paths)
+	{
+		*infoStream << path << "\n";
+	}
+}
+
+//------------------------------------------------------------------------
 // Validator
 //------------------------------------------------------------------------
 Validator::Validator (int argc, char* argv[])
 : argc (argc)
 , argv (argv)
-, testSuite (0)
+, testSuite (nullptr)
 , numTestsFailed (0)
 , numTestsPassed (0)
 { 
@@ -169,9 +184,9 @@ Validator::Validator (int argc, char* argv[])
 //------------------------------------------------------------------------
 Validator::~Validator ()
 {
-	testSuite = 0;
-	testModule = 0;
-	module = 0;
+    testSuite = nullptr;
+    testModule = nullptr;
+    module = nullptr;
 }
 
 //------------------------------------------------------------------------
@@ -179,9 +194,8 @@ void PLUGIN_API Validator::addErrorMessage (const tchar* msg)
 {
 	if (errorStream)
 	{
-		String msgStr (msg);
-		msgStr.toMultiByte (kCP_Utf8);
-		*errorStream << "ERROR: " << msgStr.text8 () << "\n";
+		auto str = VST3::StringConvert::convert (msg);
+		*errorStream << "ERROR: " << str << "\n";
 	}
 }
 
@@ -190,18 +204,15 @@ void PLUGIN_API Validator::addMessage (const tchar* msg)
 {
 	if (infoStream)
 	{
-		String msgStr (msg);
-		msgStr.toMultiByte (kCP_Utf8);
-		*infoStream << "Info:  " << msgStr.text8 () << "\n";
+		auto str = VST3::StringConvert::convert (msg);
+		*infoStream << "Info:  " << str << "\n";
 	}
 }
 
 //------------------------------------------------------------------------
 tresult PLUGIN_API Validator::getName (String128 name)
 {
-	static String hostName ("vstvalidator");
-	hostName.toWideString ();
-	hostName.copyTo16 (name, 0, 128);
+	VST3::StringConvert::convert ("vstvalidator", name, 127);
 	return kResultTrue;
 }
 
@@ -220,7 +231,7 @@ tresult PLUGIN_API Validator::createInstance (TUID cid, TUID iid, void** obj)
 		*obj = new HostAttributeList;
 		return kResultTrue;
 	}
-	*obj = 0;
+    *obj = nullptr;
 	return kResultFalse;
 }
 
@@ -231,13 +242,14 @@ tresult PLUGIN_API Validator::createInstance (TUID cid, TUID iid, void** obj)
 #define kSuiteNameOption "suite"
 #define kQuietOption "q"
 #define kTestComponentPath "test-component"
+#define kLookupInstalledPlugIns "list"
 
 //------------------------------------------------------------------------
 int Validator::run ()
 {
 	// defaults
 	bool useGlobalInstance = true;
-	String testSuiteName;
+	std::string testSuiteName;
 
 	// parse command line
 	CommandLine::Descriptions desc;
@@ -251,11 +263,17 @@ int Validator::run ()
 		(kSuiteNameOption, CommandLine::Description::kString, "[name] Only run a special test suite")
 		(kQuietOption, CommandLine::Description::kBool, "Only print errors")
 		(kTestComponentPath, CommandLine::Description::kString, "[path] Path to an additional component which includes custom tests")
+		(kLookupInstalledPlugIns, CommandLine::Description::kBool, "Show all installed Plug-Ins")
 	;
 	CommandLine::parse (argc, argv, desc, valueMap, &files);
 	if (valueMap.count (kVersionOption))
 	{
 		std::cout << VALIDATOR_INFO;
+		return 0;
+	}
+	else if (valueMap.count (kLookupInstalledPlugIns))
+	{
+		printAllInstalledPlugins ();
 		return 0;
 	}
 	else if (valueMap.hasError () || valueMap.count (kHelpOption) || files.size () != 1)
@@ -268,18 +286,20 @@ int Validator::run ()
 	if (valueMap.count (kLocalInstanceOption))
 		useGlobalInstance = false;
 	if (valueMap.count (kQuietOption))
-		infoStream = 0;
+        infoStream = nullptr;
 	if (valueMap.count (kSuiteNameOption))
-		testSuiteName = valueMap[kSuiteNameOption].c_str ();
+		testSuiteName = valueMap[kSuiteNameOption];
 
-	String customTestComponentPath;
+	std::string customTestComponentPath;
 	if (valueMap.count (kTestComponentPath))
-		customTestComponentPath = valueMap[kTestComponentPath].c_str ();
+		customTestComponentPath = valueMap[kTestComponentPath];
 
 	const char* path = files.front ().c_str ();
 
-#if MAC
-	String absPath;
+#if WINDOWS
+	// TODO: Impl
+#else
+	std::string absPath;
 	// if path is not absolute, create one
 	if (path[0] != '/')
 	{
@@ -287,13 +307,13 @@ int Validator::run ()
 		if (realPath)
 		{
 			absPath.assign (realPath);
-			path = absPath.text8 ();
+			path = absPath.data ();
 			free (realPath);
 		}
 	}
-	if (customTestComponentPath.isEmpty () == false && customTestComponentPath[0] != '/')
+	if (customTestComponentPath.empty () == false && customTestComponentPath[0] != '/')
 	{
-		char* realPath = realpath (customTestComponentPath.text8 (), NULL);
+		char* realPath = realpath (customTestComponentPath.data (), NULL);
 		if (realPath)
 		{
 			customTestComponentPath.assign (realPath);
@@ -307,124 +327,109 @@ int Validator::run ()
 	if (infoStream)
 		*infoStream << "* Loading module...\n\n\t" << path << "\n\n";
 
-	module = new VstModule (path);
-	if (!module->isValid ())
+	std::string error;
+	module = Module::create (path, error);
+	if (!module)
 	{
 		*errorStream << "Invalid Module!\n";
+		if (!error.empty())
+			*errorStream << error << "\n";
 		return 0;
 	}
 
-	IPluginFactory* factory = module->getFactory ();
+	auto factory = module->getFactory ();
 
 	//---print classes-------------------
 	if (infoStream)
 	{
 		*infoStream << "* Scanning classes...\n\n";
 
-		PFactoryInfo factoryInfo ;
-		factory->getFactoryInfo (&factoryInfo);
-		*infoStream << "  Factory Info:\n\tvendor = " << factoryInfo.vendor << "\n\turl = " << factoryInfo.url << "\n\temail = " << factoryInfo.email << "\n\n";
+		auto factoryInfo = factory.info ();
+
+		*infoStream << "  Factory Info:\n\tvendor = " << factoryInfo.vendor () << "\n\turl = " << factoryInfo.url () << "\n\temail = " << factoryInfo.email () << "\n\n";
 
 		//---print all included Plug-ins---------------
-		for (int32 i = 0; i < factory->countClasses (); i++)
+		uint32 i = 0;
+		for (auto& classInfo : factory.classInfos ())
 		{
-			PClassInfo classInfo;
-			factory->getClassInfo (i, &classInfo);
-			
-			char8 cidString[50];
-			FUID (classInfo.cid).toRegistryString (cidString);
-			String cidStr (cidString);
-			*infoStream << "  Class Info " << i << ":\n\tname = " << classInfo.name << "\n\tcategory = " << classInfo.category << "\n\tcid = " << cidStr.text8 () << "\n\n";
+			*infoStream << "  Class Info " << i << ":\n\tname = " << classInfo.name () << "\n\tcategory = " << classInfo.category () << "\n\tcid = " << classInfo.ID ().toString() << "\n\n";
+			++i;
 		}
 	}
 
-	TArray<IPtr<PlugProvider> > plugProviders;
-	TDictionary<FIDString, IPtr<ITestFactory> > testFactories;
+	typedef std::map<std::string, IPtr<ITestFactory> > TestFactoryMap;
+	typedef std::vector<IPtr<PlugProvider> > PlugProviderVector;
+	PlugProviderVector plugProviders;
+	TestFactoryMap testFactories;
+
 	//---create tests---------------
 	if (infoStream)
 		*infoStream << "* Creating tests...\n\n";
-	for (int32 i = 0; i < factory->countClasses (); i++)
+	for (auto& classInfo : factory.classInfos ())
 	{
-		PClassInfo2 classInfo;
-		IPluginFactory2* factory2;
-		if (factory->queryInterface (IPluginFactory2::iid, (void**)&factory2) == kResultTrue)
-		{
-			factory2->getClassInfo2 (i, &classInfo);
-			factory2->release ();
-		}
-		if (filterClassCategory (kVstAudioEffectClass, classInfo.category))
+		if (filterClassCategory (kVstAudioEffectClass, classInfo.category ().data ()))
 		{
 			PlugProvider* plugProvider = new PlugProvider (factory, classInfo, useGlobalInstance);
 			if (plugProvider)
 			{
-				createTests (plugProvider, classInfo.name);
-				plugProviders.add (plugProvider);
+				createTests (plugProvider, classInfo.name ().data ());
+				plugProviders.push_back (plugProvider);
 				plugProvider->release ();
 			}
 		}
-		else if (filterClassCategory (kTestClass, classInfo.category))
+		else if (filterClassCategory (kTestClass, classInfo.category ().data ()))
 		{	// gather test factories supplied by the Plug-in
-			ITestFactory* testFactory = 0;
-			if (factory->createInstance (classInfo.cid, ITestFactory::iid, (void**)&testFactory) == kResultTrue)
+			if (auto testFactory = factory.createInstance<ITestFactory>(classInfo.ID ()))
 			{
-				testFactories.addKeyAndObject (classInfo.name, testFactory);
-				testFactory->release ();
+				testFactories.insert (std::make_pair (classInfo.name ().data (), testFactory));
 			}
 		}
 	}
 
 	// now check testModule if supplied
-	if (customTestComponentPath.isEmpty () == false)
+	if (customTestComponentPath.empty () == false)
 	{
-		testModule = new VstModule (customTestComponentPath);
-		if (testModule->isValid ())
+		testModule = Module::create (customTestComponentPath, error);
+		if (testModule)
 		{
-			IPluginFactory* factory = testModule->getFactory ();
-			if (factory)
+			const auto& factory = testModule->getFactory ();
+			for (const auto& classInfo : factory.classInfos ())
 			{
-				for (int32 i = 0; i < factory->countClasses (); i++)
-				{
-					PClassInfo2 classInfo;
-					IPluginFactory2* factory2;
-					if (factory->queryInterface (IPluginFactory2::iid, (void**)&factory2) == kResultTrue)
+				if (filterClassCategory (kTestClass, classInfo.category ().data ()))
+				{	// gather test factories supplied by the Plug-in
+					if (auto testFactory = factory.createInstance<ITestFactory>(classInfo.ID ()))
 					{
-						factory2->getClassInfo2 (i, &classInfo);
-						factory2->release ();
-					}
-					if (filterClassCategory (kTestClass, classInfo.category))
-					{	// gather test factories supplied by the Plug-in
-						ITestFactory* testFactory = 0;
-						if (factory->createInstance (classInfo.cid, ITestFactory::iid, (void**)&testFactory) == kResultTrue)
-						{
-							testFactories.addKeyAndObject (classInfo.name, testFactory);
-							testFactory->release ();
-						}
+						testFactories.insert (std::make_pair (classInfo.name ().data (), testFactory));
 					}
 				}
 			}
 		}
 
 	}
-	if (infoStream && testFactories.total () > 0)
+	if (infoStream && !testFactories.empty ())
 		*infoStream << "* Creating Plug-in supplied tests...\n\n";
 	// create Plug-in supplied tests
-	typedef TAssociation<FIDString, IPtr<ITestFactory> > bla;
-	FOREACH_T(bla, assoc, testFactories)
-		FOREACH_T(IPtr<PlugProvider>, context, plugProviders)
-			OPtr<TestSuite> plugTestSuite = new TestSuite (assoc.key ());
-			if (assoc.object ()->createTests (context->unknownCast (), plugTestSuite) == kResultTrue)
+	for (TestFactoryMap::const_iterator it = testFactories.cbegin (), end = testFactories.cend ();
+	     it != end; ++it)
+	{
+		for (PlugProviderVector::const_iterator it2 = plugProviders.cbegin (),
+		                                        end2 = plugProviders.cend ();
+		     it2 != end2; ++it2)
+		{
+			IPtr<TestSuite> plugTestSuite = owned (new TestSuite (it->first.data ()));
+			if (it->second->createTests ((*it2)->unknownCast (), plugTestSuite) == kResultTrue)
 			{
-				testSuite->addTestSuite (plugTestSuite->getName (), plugTestSuite);
+				testSuite->addTestSuite (plugTestSuite->getName ().data (), plugTestSuite);
 			}
-		ENDFOR
-	ENDFOR
-	testFactories.removeAll ();
+		}
+	}
+	testFactories.clear ();
 
 	//---run tests---------------------------
 	if (infoStream)
 		*infoStream << "* Running tests...\n\n";
 
-	runTestSuite (testSuite, testSuiteName.isEmpty () ? 0 : testSuiteName.text8 ());
+	runTestSuite (testSuite, testSuiteName.empty () ? 0 : testSuiteName.data ());
 
 	if (infoStream)
 	{
@@ -432,7 +437,8 @@ int Validator::run ()
 		*infoStream << "Result: " << numTestsPassed << " tests passed, " << numTestsFailed << " tests failed\n";
 		*infoStream << SEPARATOR;
 
-	#if WINDOWS && _DEBUG
+	#if 0 // WINDOWS && _DEBUG
+		// TODO: running the validator as post build step makes the build hang
 		*infoStream << "Press any key to continue...";
 		getch ();
 	#endif
@@ -447,83 +453,81 @@ bool Validator::filterClassCategory (FIDString category, FIDString classCategory
 }
 
 //------------------------------------------------------------------------
-void Validator::createTests (IPlugProvider* plugProvider, const ConstString& plugName)
+namespace { // anonymous
+
+//------------------------------------------------------------------------
+template <typename T, typename... Args>
+void createTest (ITestSuite* parent, IPlugProvider* plugProvider, Args&&... arguments)
 {
-	OPtr<TestSuite> plugTestSuite = new TestSuite (plugName);
-	
-	OPtr<TestSuite> generalTests = new TestSuite ("General Tests");
-	// todo: add tests here!
-	addTest (generalTests, new VstEditorClassesTest (plugProvider));
-	addTest (generalTests, new VstScanBussesTest (plugProvider));
-	addTest (generalTests, new VstScanParametersTest (plugProvider));
-	addTest (generalTests, new VstMidiMappingTest (plugProvider));
-	addTest (generalTests, new VstUnitInfoTest (plugProvider));
-	addTest (generalTests, new VstProgramInfoTest (plugProvider));
-	addTest (generalTests, new VstTerminateInitializeTest (plugProvider));
-	addTest (generalTests, new VstUnitStructureTest (plugProvider));
-	
-	addTest (generalTests, new VstValidStateTransitionTest (plugProvider));
-//	addTest (generalTests, new VstInvalidStateTransitionTest (plugProvider));
-//	addTest (generalTests, new VstRepeatIdenticalStateTransitionTest (plugProvider));
-	
-	addTest (generalTests, new VstBusConsistencyTest (plugProvider));
-//	addTest (generalTests, new VstBusInvalidIndexTest (plugProvider));
-	addTest (generalTests, new VstBusActivationTest (plugProvider));
-	
-	addTest (generalTests, new VstCheckAudioBusArrangementTest (plugProvider));
+	auto test = owned (new T (plugProvider, std::forward<Args> (arguments)...));
+	parent->addTest (test->getName (), test);
+}
 
-	addTest (generalTests, new VstSuspendResumeTest (plugProvider, kSample32));
-
-	addTest (generalTests, new VstNoteExpressionTest (plugProvider));
-	addTest (generalTests, new VstKeyswitchTest (plugProvider));
-	
-	plugTestSuite->addTestSuite (generalTests->getName (), generalTests);
-
-	OPtr<TestSuite> singlePrecisionTests = new TestSuite ("Single Precision (32 bit) Tests");
-	
-	addTest (singlePrecisionTests, new VstProcessTest (plugProvider, kSample32));
-	addTest (singlePrecisionTests, new VstSilenceFlagsTest (plugProvider, kSample32));
-	addTest (singlePrecisionTests, new VstSilenceProcessingTest (plugProvider, kSample32));
-	addTest (singlePrecisionTests, new VstFlushParamTest (plugProvider, kSample32));
-	addTest (singlePrecisionTests, new VstVariableBlockSizeTest (plugProvider, kSample32));
-	addTest (singlePrecisionTests, new VstProcessFormatTest (plugProvider, kSample32));
+//------------------------------------------------------------------------
+void createPrecisionTests (ITestSuite* parent, IPlugProvider* plugProvider, SymbolicSampleSizes sampleSize)
+{
+	createTest<VstProcessTest> (parent, plugProvider, sampleSize);
+	createTest<VstSilenceFlagsTest> (parent, plugProvider, sampleSize);
+	createTest<VstSilenceProcessingTest> (parent, plugProvider, sampleSize);
+	createTest<VstFlushParamTest> (parent, plugProvider, sampleSize);
+	createTest<VstVariableBlockSizeTest> (parent, plugProvider, sampleSize);
+	createTest<VstProcessFormatTest> (parent, plugProvider, sampleSize);
 
 	SpeakerArrangement inSpArr = SpeakerArr::kStereo;
 	SpeakerArrangement outSpArr = SpeakerArr::kStereo;
-	addTest (singlePrecisionTests, new VstSpeakerArrangementTest (plugProvider, kSample32, inSpArr, outSpArr));
+	createTest<VstSpeakerArrangementTest> (parent, plugProvider, sampleSize, inSpArr, outSpArr);
 
 	inSpArr = SpeakerArr::kMono;
 	outSpArr = SpeakerArr::kMono;
-	addTest (singlePrecisionTests, new VstSpeakerArrangementTest (plugProvider, kSample32, inSpArr, outSpArr));
+	createTest<VstSpeakerArrangementTest> (parent, plugProvider, sampleSize, inSpArr, outSpArr);
 
 	//int32 everyNSamples, int32 numParams, bool sampleAccuracy;
-	addTest (singlePrecisionTests, new VstAutomationTest (plugProvider, kSample32, 100, 1, false));
-	addTest (singlePrecisionTests, new VstAutomationTest (plugProvider, kSample32, 100, 1, true));
+	createTest<VstAutomationTest> (parent, plugProvider, sampleSize, 100, 1, false);
+	createTest<VstAutomationTest> (parent, plugProvider, sampleSize, 100, 1, true);
+}
 
-	plugTestSuite->addTestSuite (singlePrecisionTests->getName (), singlePrecisionTests);
+//------------------------------------------------------------------------
+} // anonymous
 
-	OPtr<TestSuite> doublePrecisionTests = new TestSuite ("Double Precision (64 bit) Tests");
+//------------------------------------------------------------------------
+void Validator::createTests (IPlugProvider* plugProvider, const ConstString& plugName)
+{
+	IPtr<TestSuite> plugTestSuite = owned (new TestSuite (plugName));
+	
+	IPtr<TestSuite> generalTests = owned (new TestSuite ("General Tests"));
+	// todo: add tests here!
+	createTest<VstEditorClassesTest> (generalTests, plugProvider);
+	createTest<VstScanBussesTest> (generalTests, plugProvider);
+	createTest<VstScanParametersTest> (generalTests, plugProvider);
+	createTest<VstMidiMappingTest> (generalTests, plugProvider);
+	createTest<VstUnitInfoTest> (generalTests, plugProvider);
+	createTest<VstProgramInfoTest> (generalTests, plugProvider);
+	createTest<VstTerminateInitializeTest> (generalTests, plugProvider);
+	createTest<VstUnitStructureTest> (generalTests, plugProvider);
+	createTest<VstValidStateTransitionTest> (generalTests, plugProvider);
+//	createTest<VstInvalidStateTransitionTest> (generalTests, plugProvider);
+//	createTest<VstRepeatIdenticalStateTransitionTest> (generalTests, plugProvider);
 
-	addTest (doublePrecisionTests, new VstProcessTest (plugProvider, kSample64));
-	addTest (doublePrecisionTests, new VstSilenceFlagsTest (plugProvider, kSample64));
-	addTest (doublePrecisionTests, new VstSilenceProcessingTest (plugProvider, kSample64));
-	addTest (doublePrecisionTests, new VstFlushParamTest (plugProvider, kSample64));
-	addTest (doublePrecisionTests, new VstVariableBlockSizeTest (plugProvider, kSample64));
-	addTest (doublePrecisionTests, new VstProcessFormatTest (plugProvider, kSample64));
+	createTest<VstBusConsistencyTest> (generalTests, plugProvider);
+//	createTest<VstBusInvalidIndexTest> (generalTests, plugProvider);
+	createTest<VstBusActivationTest> (generalTests, plugProvider);
+	
+	createTest<VstCheckAudioBusArrangementTest> (generalTests, plugProvider);
 
-	inSpArr = SpeakerArr::kStereo;
-	outSpArr = SpeakerArr::kStereo;
-	addTest (doublePrecisionTests, new VstSpeakerArrangementTest (plugProvider, kSample64, inSpArr, outSpArr));
+	createTest<VstSuspendResumeTest> (generalTests, plugProvider, kSample32);
 
-	inSpArr = SpeakerArr::kMono;
-	outSpArr = SpeakerArr::kMono;
-	addTest (doublePrecisionTests, new VstSpeakerArrangementTest (plugProvider, kSample64, inSpArr, outSpArr));
+	createTest<VstNoteExpressionTest> (generalTests, plugProvider);
+	createTest<VstKeyswitchTest> (generalTests, plugProvider);
+	
+	plugTestSuite->addTestSuite (generalTests->getName ().data (), generalTests);
 
-	//int32 everyNSamples, int32 numParams, bool sampleAccuracy;
-	addTest (doublePrecisionTests, new VstAutomationTest (plugProvider, kSample64, 100, 1, false));
-	addTest (doublePrecisionTests, new VstAutomationTest (plugProvider, kSample64, 100, 1, true));
+	IPtr<TestSuite> singlePrecisionTests = owned (new TestSuite ("Single Precision (32 bit) Tests"));
+	createPrecisionTests (singlePrecisionTests, plugProvider, kSample32);
+	plugTestSuite->addTestSuite (singlePrecisionTests->getName ().data (), singlePrecisionTests);
 
-	plugTestSuite->addTestSuite (doublePrecisionTests->getName (), doublePrecisionTests);
+	IPtr<TestSuite> doublePrecisionTests = owned (new TestSuite ("Double Precision (64 bit) Tests"));
+	createPrecisionTests (doublePrecisionTests, plugProvider, kSample64);
+	plugTestSuite->addTestSuite (doublePrecisionTests->getName ().data (), doublePrecisionTests);
 
 	testSuite->addTestSuite (plugName, plugTestSuite);
 }
@@ -531,25 +535,25 @@ void Validator::createTests (IPlugProvider* plugProvider, const ConstString& plu
 //------------------------------------------------------------------------
 void Validator::addTest (ITestSuite* testSuite, VstTestBase* testItem)
 {
-	testSuite->addTest (String (testItem->getName ()).text8 (), testItem);
+	testSuite->addTest (testItem->getName (), testItem);
 	testItem->release ();
 }
 
 //------------------------------------------------------------------------
 void Validator::runTestSuite (TestSuite* suite, FIDString nameFilter)
 {
-	String name;
-	if (nameFilter == 0 || suite->getName () == nameFilter)
+	std::string name;
+    if (nameFilter == nullptr || suite->getName () == nameFilter)
 	{
-		nameFilter = 0; // make sure if suiteName is the namefilter that sub suite will run
-		ITest* testItem = 0;
+        nameFilter = nullptr; // make sure if suiteName is the namefilter that sub suite will run
+        ITest* testItem = nullptr;
 		// first run all tests in the suite
 		for (int32 i = 0; i < suite->getTestCount (); i++)
 		{
 			if (suite->getTest (i, testItem, name) == kResultTrue)
 			{
 				if (infoStream)
-					*infoStream << "[" << name.text8 () << "]\n";
+					*infoStream << "[" << name << "]\n";
 
 				if (testItem->setup ())
 				{
@@ -566,7 +570,7 @@ void Validator::runTestSuite (TestSuite* suite, FIDString nameFilter)
 							*infoStream << "[XXXXXXX Failed]\n";
 						if (errorStream && errorStream != infoStream)
 						{
-							*errorStream << "Test [" << name.text8 () << "] ";
+							*errorStream << "Test [" << name << "] ";
 							*errorStream << "Failed\n";
 						}
 						numTestsFailed++;
@@ -578,7 +582,7 @@ void Validator::runTestSuite (TestSuite* suite, FIDString nameFilter)
 							*infoStream << "Failed to teardown test!\n";
 						if (errorStream && errorStream != infoStream)
 						{
-							*errorStream << "[" << name.text8 () << "] ";
+							*errorStream << "[" << name << "] ";
 							*errorStream << "Failed to teardown test!\n";
 						}
 					}
@@ -590,7 +594,7 @@ void Validator::runTestSuite (TestSuite* suite, FIDString nameFilter)
 						*infoStream << "Failed to setup test!\n";
 					if (errorStream && errorStream != infoStream)
 					{
-						*errorStream << "[" << name.text8 () << "] ";
+						*errorStream << "[" << name << "] ";
 						*errorStream << "Failed to setup test!\n";
 					}
 				}
@@ -601,7 +605,7 @@ void Validator::runTestSuite (TestSuite* suite, FIDString nameFilter)
 	}
 	// next run sub suites
 	int32 subTestSuiteIndex = 0;
-	ITestSuite* subSuite = 0;
+    ITestSuite* subSuite = nullptr;
 	while (suite->getTestSuite (subTestSuiteIndex++, subSuite, name) == kResultTrue)
 	{
 		TestSuite* ts = FCast<TestSuite> (subSuite);
@@ -610,7 +614,7 @@ void Validator::runTestSuite (TestSuite* suite, FIDString nameFilter)
 			if (infoStream)
 			{
 				*infoStream << SEPARATOR;
-				*infoStream << "TestSuite : " << ts->getName ().text8 () << "\n";
+				*infoStream << "TestSuite : " << ts->getName ().data () << "\n";
 				*infoStream << SEPARATOR << "\n";
 			}
 			runTestSuite (ts, nameFilter);
@@ -618,240 +622,5 @@ void Validator::runTestSuite (TestSuite* suite, FIDString nameFilter)
 	}
 }
 
-//------------------------------------------------------------------------
-// VstModule
-//------------------------------------------------------------------------
-VstModule::VstModule (const char* path)
-: libHandle (0)
-, factory (0)
-{
-	GetFactoryProc entryProc = 0;
-
-	// load library
-#if WINDOWS
-	libHandle = ::LoadLibraryA (path);
-	if (libHandle)
-	{
-		InitModuleProc initProc = (InitModuleProc)::GetProcAddress ((HMODULE)libHandle, kInitModuleProcName);
-		if (initProc)
-		{
-			if (initProc () == false)
-			{
-				FreeLibrary ((HMODULE)libHandle);
-				libHandle = 0;	
-			}
-		}
-	}
-	if (libHandle)		
-		entryProc = (GetFactoryProc)::GetProcAddress ((HMODULE)libHandle, "GetPluginFactory");
-
-#elif MAC
-	CFURLRef url = path ? CFURLCreateFromFileSystemRepresentation (0, (const UInt8*)path, strlen (path), true) : 0;
-	if (url)
-	{
-		libHandle = (void*)CFBundleCreate (0, url);
-		if (libHandle)
-		{
-			CFErrorRef errorRef = 0;
-			if (CFBundleLoadExecutableAndReturnError ((CFBundleRef)libHandle, &errorRef))
-			{
-				bundleEntryPtr bundleEntry = (bundleEntryPtr)CFBundleGetFunctionPointerForName ((CFBundleRef)libHandle, CFSTR("bundleEntry"));
-				if (bundleEntry)
-				{
-					if (bundleEntry ((CFBundleRef)libHandle) == false)
-					{
-						CFRelease ((CFBundleRef)libHandle);
-						libHandle = 0;
-					}
-				}
-				if (libHandle)
-					entryProc = (GetFactoryProc)CFBundleGetFunctionPointerForName ((CFBundleRef)libHandle, CFSTR("GetPluginFactory"));
-			}
-			else if (errorRef)
-			{
-				CFStringRef failureString = CFErrorCopyFailureReason (errorRef);
-				if (failureString)
-				{
-					CFShow (failureString);
-					CFRelease (failureString);
-				}
-				CFRelease (errorRef);
-			}
-		}
-		CFRelease (url);
-	}
-#endif
-
-	// create factory
-	if (entryProc)
-		factory = entryProc ();
-}
-
-//------------------------------------------------------------------------
-VstModule::~VstModule ()
-{
-	// release factory
-	if (factory)
-		factory->release ();
-
-	// free library
-	if (libHandle)
-	{
-	#if WINDOWS
-		ExitModuleProc exitProc = (ExitModuleProc)::GetProcAddress ((HMODULE)libHandle, kExitModuleProcName);
-		if (exitProc)
-			exitProc ();
-
-		::FreeLibrary ((HMODULE)libHandle);
-	
-	#elif MAC
-		bundleExitPtr bundleExit = (bundleExitPtr)CFBundleGetFunctionPointerForName ((CFBundleRef)libHandle, CFSTR("bundleExit"));
-		if (bundleExit)
-			bundleExit ();
-		CFRelease ((CFBundleRef)libHandle);
-	#endif
-	}
-}
-
-//------------------------------------------------------------------------
-bool VstModule::isValid () const
-{
-	return libHandle != 0 && factory != 0;
-}
-
-
-//------------------------------------------------------------------------
-// PlugProvider
-//------------------------------------------------------------------------
-PlugProvider::PlugProvider (IPluginFactory* factory, PClassInfo2 classInfo, bool plugIsGlobal)
-: factory (factory)
-, classInfo (classInfo)
-, plugIsGlobal (plugIsGlobal)
-, component (0)
-, controller (0)
-{
-	if (plugIsGlobal)
-	{
-		setupPlugin ();
-	}
-}
-
-//------------------------------------------------------------------------
-PlugProvider::~PlugProvider ()
-{
-	terminatePlugin ();
-}
-
-//------------------------------------------------------------------------
-IComponent* PlugProvider::getComponent ()
-{
-	if (!plugIsGlobal)
-		setupPlugin ();
-
-	if (component)
-		component->addRef ();
-
-	return component; 
-}
-
-//------------------------------------------------------------------------
-IEditController* PlugProvider::getController ()
-{
-	if (controller)
-		controller->addRef ();
-
-	// 'iController == 0' is allowed! In this case the plug has no controller
-	return controller;
-}
-
-//------------------------------------------------------------------------
-tresult PlugProvider::getPluginUID (FUID& uid) const
-{
-	uid = classInfo.cid;
-	return kResultOk;
-}
-
-//------------------------------------------------------------------------
-tresult PlugProvider::releasePlugIn (IComponent* iComponent, IEditController* iController)
-{
-	if (iComponent)
-		iComponent->release ();
-
-	if (iController)
-		iController->release ();
-
-	if (!plugIsGlobal)
-	{
-		terminatePlugin ();
-	}
-
-	return kResultOk;
-}
-
-//------------------------------------------------------------------------
-bool PlugProvider::setupPlugin ()
-{
-	bool res = false;
-	
-	//---create Plug-in here!--------------
-	// create its component part
-	tresult result = factory->createInstance (classInfo.cid, IComponent::iid, (void**)&component);
-	if (component && (result == kResultOk))
-	{
-		// initialize the component with our context
-		res = (component->initialize (gStandardPluginContext) == kResultOk);
-
-		// try to create the controller part from the component 
-		// (for Plug-ins which did not succeed to separate component from controller) 
-		if (component->queryInterface (IEditController::iid, (void**)&controller) != kResultTrue)
-		{
-			FUID controllerCID;
-
-			// ask for the associated controller class ID
-			if (component->getControllerClassId (controllerCID) == kResultTrue && controllerCID.isValid ())
-			{		
-				// create its controller part created from the factory
-				result = factory->createInstance (controllerCID, IEditController::iid, (void**)&controller);
-				if (controller && (result == kResultOk))
-				{
-					// initialize the component with our context
-					res = (controller->initialize (gStandardPluginContext) == kResultOk);
-				}
-			}
-		}
-	}
-	else if (errorStream)
-	{
-		*errorStream << "Failed to create instance of " << classInfo.name << "!\n";
-	}
-
-	return res;
-}
-
-//------------------------------------------------------------------------
-void PlugProvider::terminatePlugin ()
-{
-	bool controllerIsComponent = false;		
-	if (component)
-	{
-		controllerIsComponent = FUnknownPtr<IEditController> (component).getInterface () != 0;
-		component->terminate ();	
-	}
-
-	if (controller && controllerIsComponent == false)
-		controller->terminate ();
-
-	if (component)
-	{
-		component->release ();
-		component = 0;
-	}
-
-	if (controller)
-	{
-		controller->release ();
-		controller = 0;
-	}
-}
 
 }} // namespaces

@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/hostchecker/source/hostcheckerprocessor.h
@@ -55,15 +54,15 @@ class HostCheckerProcessor : public AudioEffect,
 public:
 	HostCheckerProcessor ();
 
-	tresult PLUGIN_API initialize (FUnknown* context) override;
-	tresult PLUGIN_API process (ProcessData& data) override;
-	tresult PLUGIN_API setupProcessing (ProcessSetup& setup) override;
-	tresult PLUGIN_API setActive (TBool state) override;
-	tresult PLUGIN_API notify (IMessage* message) override;
-	uint32 PLUGIN_API getTailSamples () override { return mLatency; }
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API process (ProcessData& data) SMTG_OVERRIDE;
+	tresult PLUGIN_API setupProcessing (ProcessSetup& setup) SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
+	tresult PLUGIN_API notify (IMessage* message) SMTG_OVERRIDE;
+	uint32 PLUGIN_API getTailSamples () SMTG_OVERRIDE { return mLatency; }
 
-	tresult PLUGIN_API setState (IBStream* state) override;
-	tresult PLUGIN_API getState (IBStream* state) override;
+	tresult PLUGIN_API setState (IBStream* state) SMTG_OVERRIDE;
+	tresult PLUGIN_API getState (IBStream* state) SMTG_OVERRIDE;
 
 	static FUnknown* createInstance (void*)
 	{
@@ -73,11 +72,11 @@ public:
 
 	//---IAudioPresentationLatency------------
 	virtual tresult PLUGIN_API setAudioPresentationLatencySamples (
-	    BusDirection dir, int32 busIndex, uint32 latencyInSamples) override;
+	    BusDirection dir, int32 busIndex, uint32 latencyInSamples) SMTG_OVERRIDE;
 
 	//---IPrefetchableSupport------------------------------
 	virtual tresult PLUGIN_API getPrefetchableSupport (
-	    PrefetchableSupport& prefetchable /*out*/) override;
+	    PrefetchableSupport& prefetchable /*out*/) SMTG_OVERRIDE;
 
 	DEFINE_INTERFACES
 		DEF_INTERFACE (IAudioPresentationLatency)

@@ -66,6 +66,7 @@ FUID DX10Processor::uid (0xF8713648, 0xE2444174, 0x8AAA3B62, 0xA77F9E2D);
 
 //-----------------------------------------------------------------------------
 DX10Processor::DX10Processor ()
+: currentProgram (0)
 {
 	setControllerClass (DX10Controller::uid);
 	allocParameters (NPARAMS);
@@ -134,8 +135,8 @@ void DX10Processor::setParameter (ParamID index, ParamValue newValue, int32 samp
 		BaseProcessor::setParameter (index, newValue, sampleOffset);
 	else if (index == BaseController::kPresetParam) // program change
 	{
-		int32 program = std::min<int32> (NPROGS, (int32)(newValue * (NPROGS+1)));
-		const float* newParams = programParams[program];
+		currentProgram = std::min<int32> (kNumPrograms - 1, (int32)(newValue * kNumPrograms));
+		const float* newParams = programParams[currentProgram];
 		if (newParams)
 		{
 			for (int32 i = 0; i < NPARAMS; i++)
@@ -156,6 +157,18 @@ void DX10Processor::setParameter (ParamID index, ParamValue newValue, int32 samp
         if (pbend>0.0f) pbend = 1.0f + 0.000014951f * pbend; 
                   else pbend = 1.0f + 0.000013318f * pbend; 
 	}
+}
+
+//-----------------------------------------------------------------------------
+void DX10Processor::setCurrentProgram (Steinberg::uint32 val)
+{
+	currentProgram = val;
+}
+
+//-----------------------------------------------------------------------------
+void DX10Processor::setCurrentProgramNormalized (ParamValue val) 
+{
+	setCurrentProgram (std::min<int32> (kNumPrograms - 1, (int32)(val * kNumPrograms)));
 }
 
 //-----------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/pitchnames/source/pitchnamesdatabrowsersource.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -46,6 +45,7 @@ namespace VSTGUI {
 //-----------------------------------------------------------------------------
 PitchNamesDataBrowserSource::PitchNamesDataBrowserSource (EditControllerEx1* editController,
                                                           Steinberg::Vst::UnitID unitID)
+: pitchnames (nullptr)
 {
 	UnitInfo info;
 	int32_t unitCount = editController->getUnitCount ();
@@ -138,7 +138,10 @@ void PitchNamesDataBrowserSource::getPitchName (int16_t pitch, Steinberg::String
 {
 	String128 pitchName;
 	if (pitchnames->getPitchName (0, pitch, pitchName) == kResultTrue)
+	{
 		name = pitchName;
+		name.toMultiByte (kCP_Utf8);
+	}
 }
 
 //-----------------------------------------------------------------------------

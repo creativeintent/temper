@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/channelcontext/source/PlugController.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -258,7 +257,7 @@ tresult PLUGIN_API PlugController::setChannelContextInfos (IAttributeList* list)
 			param->replaceString (0, undefinedStr);
 	}
 
-	// get Plugin Channel Location
+	// get Plug-in Channel Location
 	param = static_cast<StringListParameter*> (parameters.getParameter (kChannelPluginLocationId));
 	if (param)
 	{

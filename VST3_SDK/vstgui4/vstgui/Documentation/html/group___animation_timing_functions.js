@@ -3,33 +3,23 @@ var group___animation_timing_functions =
     [ "TimingFunctionBase", "class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html", [
       [ "TimingFunctionBase", "class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html#a6350fd82f9f7202082c368f9391cbd1d", null ],
       [ "getLength", "class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html#a67cd323fecc35d2cd8895e08f9e242e6", null ],
-      [ "getPosition", "class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html#a678aa35298058e30f16bc85a8c16b22b", null ],
       [ "isDone", "class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html#a3c815030b4d284253841ec42cb2a1c95", null ],
       [ "length", "class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html#aebb70c2aab3407a9f05334c47131a43b", null ]
     ] ],
     [ "LinearTimingFunction", "class_v_s_t_g_u_i_1_1_animation_1_1_linear_timing_function.html", [
       [ "LinearTimingFunction", "class_v_s_t_g_u_i_1_1_animation_1_1_linear_timing_function.html#a2a3cab8766a452a364fd32584aa258a3", null ],
-      [ "getLength", "class_v_s_t_g_u_i_1_1_animation_1_1_linear_timing_function.html#a67cd323fecc35d2cd8895e08f9e242e6", null ],
-      [ "getPosition", "class_v_s_t_g_u_i_1_1_animation_1_1_linear_timing_function.html#a3d235c8a1a2e265ec71892dd977b174c", null ],
-      [ "isDone", "class_v_s_t_g_u_i_1_1_animation_1_1_linear_timing_function.html#a3c815030b4d284253841ec42cb2a1c95", null ],
-      [ "length", "class_v_s_t_g_u_i_1_1_animation_1_1_linear_timing_function.html#aebb70c2aab3407a9f05334c47131a43b", null ]
+      [ "getPosition", "class_v_s_t_g_u_i_1_1_animation_1_1_linear_timing_function.html#a3d235c8a1a2e265ec71892dd977b174c", null ]
     ] ],
     [ "PowerTimingFunction", "class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html", [
       [ "PowerTimingFunction", "class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html#a094cc4b4b98d8a3556e808190117bb95", null ],
-      [ "getLength", "class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html#a67cd323fecc35d2cd8895e08f9e242e6", null ],
       [ "getPosition", "class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html#a3d235c8a1a2e265ec71892dd977b174c", null ],
-      [ "isDone", "class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html#a3c815030b4d284253841ec42cb2a1c95", null ],
-      [ "factor", "class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html#a323c112c11500270be91b7cb353826bd", null ],
-      [ "length", "class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html#aebb70c2aab3407a9f05334c47131a43b", null ]
+      [ "factor", "class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html#a323c112c11500270be91b7cb353826bd", null ]
     ] ],
     [ "InterpolationTimingFunction", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html", [
       [ "PointMap", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#ab92d3cd4d45ddcd6500c918fe79ac22a", null ],
       [ "InterpolationTimingFunction", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#a7f52ed4a5729ae7adedd41db806e5859", null ],
       [ "addPoint", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#a110935fdba8346f35d530ba0a82419e6", null ],
-      [ "getLength", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#a67cd323fecc35d2cd8895e08f9e242e6", null ],
       [ "getPosition", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#a3d235c8a1a2e265ec71892dd977b174c", null ],
-      [ "isDone", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#a3c815030b4d284253841ec42cb2a1c95", null ],
-      [ "length", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#aebb70c2aab3407a9f05334c47131a43b", null ],
       [ "points", "class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html#ab6593cca7256329c11f68dc890378faf", null ]
     ] ],
     [ "RepeatTimingFunction", "class_v_s_t_g_u_i_1_1_animation_1_1_repeat_timing_function.html", [

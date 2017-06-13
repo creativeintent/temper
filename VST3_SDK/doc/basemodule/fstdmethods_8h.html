@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Base Module
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -132,9 +132,15 @@ Macros</h2></td></tr>
 <tr class="memitem:a3aa7211bde6c894d83fb000e32667c45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fstdmethods_8h.html#a3aa7211bde6c894d83fb000e32667c45">DEFINE_STATE</a>(flagVar, methodName, value)</td></tr>
 <tr class="memdesc:a3aa7211bde6c894d83fb000e32667c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create Methods with <code>get</code> and <code>set</code> prefix.  <a href="#a3aa7211bde6c894d83fb000e32667c45">More...</a><br /></td></tr>
 <tr class="separator:a3aa7211bde6c894d83fb000e32667c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eaa236016023ebe7fc553a03529d4b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fstdmethods_8h.html#a8eaa236016023ebe7fc553a03529d4b9">DEFINE_GETSTATE</a>(flagVar, methodName, value)&#160;&#160;&#160;bool get##methodName ()const { return (flagVar &amp; (value)) != 0; }</td></tr>
+<tr class="memdesc:a8eaa236016023ebe7fc553a03529d4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create Methods with <code>get</code> prefix.  <a href="#a8eaa236016023ebe7fc553a03529d4b9">More...</a><br /></td></tr>
+<tr class="separator:a8eaa236016023ebe7fc553a03529d4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2fa6d3fa7d143009198b5b4d744c2dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fstdmethods_8h.html#ad2fa6d3fa7d143009198b5b4d744c2dc">DEFINE_FLAG</a>(flagVar, methodName, value)</td></tr>
 <tr class="memdesc:ad2fa6d3fa7d143009198b5b4d744c2dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create Methods.  <a href="#ad2fa6d3fa7d143009198b5b4d744c2dc">More...</a><br /></td></tr>
 <tr class="separator:ad2fa6d3fa7d143009198b5b4d744c2dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8095ab68981a9e2ab6e471a6f1b515f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fstdmethods_8h.html#a8095ab68981a9e2ab6e471a6f1b515f6">DEFINE_GETFLAG</a>(flagVar, methodName, value)&#160;&#160;&#160;bool methodName ()const { return (flagVar &amp; (value)) != 0; }</td></tr>
+<tr class="memdesc:a8095ab68981a9e2ab6e471a6f1b515f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create Methods.  <a href="#a8095ab68981a9e2ab6e471a6f1b515f6">More...</a><br /></td></tr>
+<tr class="separator:a8095ab68981a9e2ab6e471a6f1b515f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d0a2bb91ac8f0fc96153c610f872a92"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fstdmethods_8h.html#a5d0a2bb91ac8f0fc96153c610f872a92">DEFINE_FLAG_STATIC</a>(flagVar, methodName, value)</td></tr>
 <tr class="memdesc:a5d0a2bb91ac8f0fc96153c610f872a92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create <code>static</code> Methods.  <a href="#a5d0a2bb91ac8f0fc96153c610f872a92">More...</a><br /></td></tr>
 <tr class="separator:a5d0a2bb91ac8f0fc96153c610f872a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,6 +223,41 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a8eaa236016023ebe7fc553a03529d4b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFINE_GETSTATE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">flagVar, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">methodName, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">value&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;bool get##methodName ()const { return (flagVar &amp; (value)) != 0; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create Methods with <code>get</code> prefix. </p>
+<p>There is only a 'get' method. </p>
+
+</div>
+</div>
 <a class="anchor" id="ad2fa6d3fa7d143009198b5b4d744c2dc"></a>
 <div class="memitem">
 <div class="memproto">
@@ -251,6 +292,41 @@ Macros</h2></td></tr>
 </div><!-- fragment -->
 <p>Create Methods. </p>
 <p>Same name for the getter and setter. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8095ab68981a9e2ab6e471a6f1b515f6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFINE_GETFLAG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">flagVar, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">methodName, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">value&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;bool methodName ()const { return (flagVar &amp; (value)) != 0; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create Methods. </p>
+<p>There is only a 'get' method. </p>
 
 </div>
 </div>
@@ -725,18 +801,18 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code" href="namespaceSteinberg.html#adfd0944abddbf6bf17c4194bde712469">operator == </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName == other.memberName);} \</div>
-<div class="line">    bool <a class="code" href="namespaceSteinberg.html#af1d581514e75e4ec77e2b0825698adde">operator != </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName != other.memberName);} \</div>
-<div class="line">    bool <a class="code" href="namespaceSteinberg.html#a5a4e69c52d9dd5bc464f4a9dc81b3205">operator &lt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName &lt; other.memberName);} \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code" href="namespaceSteinberg.html#af65b89110f91b435a658a09cde45ee6b">operator == </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName == other.memberName);} \</div>
+<div class="line">    bool <a class="code" href="namespaceSteinberg.html#aaad28d7939d8454ba62e2ed43e6b6a07">operator != </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName != other.memberName);} \</div>
+<div class="line">    bool <a class="code" href="namespaceSteinberg.html#ad5ce23c4f9cca43a9f66ef23d9325159">operator &lt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName &lt; other.memberName);} \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">operator &gt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName &gt; other.memberName);} \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">operator &lt;= </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName &lt;= other.memberName);} \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">operator &gt;= </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> (memberName &gt;= other.memberName);}</div>
-<div class="ttc" id="namespaceSteinberg_html_afc04c8ac4717595b641a119f8e1f4c08"><div class="ttname"><a href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">Steinberg::operator&lt;=</a></div><div class="ttdeci">bool operator&lt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:679</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a98082cddf36f42dae42928aab7b7d704"><div class="ttname"><a href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">Steinberg::operator&gt;=</a></div><div class="ttdeci">bool operator&gt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:681</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a5a4e69c52d9dd5bc464f4a9dc81b3205"><div class="ttname"><a href="namespaceSteinberg.html#a5a4e69c52d9dd5bc464f4a9dc81b3205">Steinberg::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const Point &amp;p1, const Point &amp;p2)</div><div class="ttdef"><b>Definition:</b> fpoint.h:111</div></div>
-<div class="ttc" id="namespaceSteinberg_html_af1d581514e75e4ec77e2b0825698adde"><div class="ttname"><a href="namespaceSteinberg.html#af1d581514e75e4ec77e2b0825698adde">Steinberg::operator!=</a></div><div class="ttdeci">bool operator!=(const Rect &amp;r1, const Rect &amp;r2)</div><div class="ttdef"><b>Definition:</b> frect.h:165</div></div>
-<div class="ttc" id="namespaceSteinberg_html_ac98deb5a1f36329c44edeee647d46431"><div class="ttname"><a href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">Steinberg::operator&gt;</a></div><div class="ttdeci">bool operator&gt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:680</div></div>
-<div class="ttc" id="namespaceSteinberg_html_adfd0944abddbf6bf17c4194bde712469"><div class="ttname"><a href="namespaceSteinberg.html#adfd0944abddbf6bf17c4194bde712469">Steinberg::operator==</a></div><div class="ttdeci">bool operator==(const Point &amp;p1, const Point &amp;p2)</div><div class="ttdef"><b>Definition:</b> fpoint.h:106</div></div>
+<div class="ttc" id="namespaceSteinberg_html_aaad28d7939d8454ba62e2ed43e6b6a07"><div class="ttname"><a href="namespaceSteinberg.html#aaad28d7939d8454ba62e2ed43e6b6a07">Steinberg::operator!=</a></div><div class="ttdeci">bool operator!=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:665</div></div>
+<div class="ttc" id="namespaceSteinberg_html_afc04c8ac4717595b641a119f8e1f4c08"><div class="ttname"><a href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">Steinberg::operator&lt;=</a></div><div class="ttdeci">bool operator&lt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:661</div></div>
+<div class="ttc" id="namespaceSteinberg_html_ad5ce23c4f9cca43a9f66ef23d9325159"><div class="ttname"><a href="namespaceSteinberg.html#ad5ce23c4f9cca43a9f66ef23d9325159">Steinberg::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:660</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a98082cddf36f42dae42928aab7b7d704"><div class="ttname"><a href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">Steinberg::operator&gt;=</a></div><div class="ttdeci">bool operator&gt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:663</div></div>
+<div class="ttc" id="namespaceSteinberg_html_af65b89110f91b435a658a09cde45ee6b"><div class="ttname"><a href="namespaceSteinberg.html#af65b89110f91b435a658a09cde45ee6b">Steinberg::operator==</a></div><div class="ttdeci">bool operator==(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:664</div></div>
+<div class="ttc" id="namespaceSteinberg_html_ac98deb5a1f36329c44edeee647d46431"><div class="ttname"><a href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">Steinberg::operator&gt;</a></div><div class="ttdeci">bool operator&gt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:662</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -753,18 +829,18 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code" href="namespaceSteinberg.html#adfd0944abddbf6bf17c4194bde712469">operator == </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) == 0;} \</div>
-<div class="line">    bool <a class="code" href="namespaceSteinberg.html#af1d581514e75e4ec77e2b0825698adde">operator != </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) != 0;} \</div>
-<div class="line">    bool <a class="code" href="namespaceSteinberg.html#a5a4e69c52d9dd5bc464f4a9dc81b3205">operator &lt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) &lt; 0;} \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code" href="namespaceSteinberg.html#af65b89110f91b435a658a09cde45ee6b">operator == </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) == 0;} \</div>
+<div class="line">    bool <a class="code" href="namespaceSteinberg.html#aaad28d7939d8454ba62e2ed43e6b6a07">operator != </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) != 0;} \</div>
+<div class="line">    bool <a class="code" href="namespaceSteinberg.html#ad5ce23c4f9cca43a9f66ef23d9325159">operator &lt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) &lt; 0;} \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">operator &gt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) &gt; 0;} \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">operator &lt;= </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) &lt;= 0;} \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">operator &gt;= </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> memcmp (<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span> (className)) &gt;= 0;}</div>
-<div class="ttc" id="namespaceSteinberg_html_afc04c8ac4717595b641a119f8e1f4c08"><div class="ttname"><a href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">Steinberg::operator&lt;=</a></div><div class="ttdeci">bool operator&lt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:679</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a98082cddf36f42dae42928aab7b7d704"><div class="ttname"><a href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">Steinberg::operator&gt;=</a></div><div class="ttdeci">bool operator&gt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:681</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a5a4e69c52d9dd5bc464f4a9dc81b3205"><div class="ttname"><a href="namespaceSteinberg.html#a5a4e69c52d9dd5bc464f4a9dc81b3205">Steinberg::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const Point &amp;p1, const Point &amp;p2)</div><div class="ttdef"><b>Definition:</b> fpoint.h:111</div></div>
-<div class="ttc" id="namespaceSteinberg_html_af1d581514e75e4ec77e2b0825698adde"><div class="ttname"><a href="namespaceSteinberg.html#af1d581514e75e4ec77e2b0825698adde">Steinberg::operator!=</a></div><div class="ttdeci">bool operator!=(const Rect &amp;r1, const Rect &amp;r2)</div><div class="ttdef"><b>Definition:</b> frect.h:165</div></div>
-<div class="ttc" id="namespaceSteinberg_html_ac98deb5a1f36329c44edeee647d46431"><div class="ttname"><a href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">Steinberg::operator&gt;</a></div><div class="ttdeci">bool operator&gt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:680</div></div>
-<div class="ttc" id="namespaceSteinberg_html_adfd0944abddbf6bf17c4194bde712469"><div class="ttname"><a href="namespaceSteinberg.html#adfd0944abddbf6bf17c4194bde712469">Steinberg::operator==</a></div><div class="ttdeci">bool operator==(const Point &amp;p1, const Point &amp;p2)</div><div class="ttdef"><b>Definition:</b> fpoint.h:106</div></div>
+<div class="ttc" id="namespaceSteinberg_html_aaad28d7939d8454ba62e2ed43e6b6a07"><div class="ttname"><a href="namespaceSteinberg.html#aaad28d7939d8454ba62e2ed43e6b6a07">Steinberg::operator!=</a></div><div class="ttdeci">bool operator!=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:665</div></div>
+<div class="ttc" id="namespaceSteinberg_html_afc04c8ac4717595b641a119f8e1f4c08"><div class="ttname"><a href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">Steinberg::operator&lt;=</a></div><div class="ttdeci">bool operator&lt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:661</div></div>
+<div class="ttc" id="namespaceSteinberg_html_ad5ce23c4f9cca43a9f66ef23d9325159"><div class="ttname"><a href="namespaceSteinberg.html#ad5ce23c4f9cca43a9f66ef23d9325159">Steinberg::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:660</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a98082cddf36f42dae42928aab7b7d704"><div class="ttname"><a href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">Steinberg::operator&gt;=</a></div><div class="ttdeci">bool operator&gt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:663</div></div>
+<div class="ttc" id="namespaceSteinberg_html_af65b89110f91b435a658a09cde45ee6b"><div class="ttname"><a href="namespaceSteinberg.html#af65b89110f91b435a658a09cde45ee6b">Steinberg::operator==</a></div><div class="ttdeci">bool operator==(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:664</div></div>
+<div class="ttc" id="namespaceSteinberg_html_ac98deb5a1f36329c44edeee647d46431"><div class="ttname"><a href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">Steinberg::operator&gt;</a></div><div class="ttdeci">bool operator&gt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:662</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -791,34 +867,34 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code" href="namespaceSteinberg.html#adfd0944abddbf6bf17c4194bde712469">operator == </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) == 0;} \</div>
-<div class="line">    bool <a class="code" href="namespaceSteinberg.html#af1d581514e75e4ec77e2b0825698adde">operator != </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) != 0;} \</div>
-<div class="line">    bool <a class="code" href="namespaceSteinberg.html#a5a4e69c52d9dd5bc464f4a9dc81b3205">operator &lt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) &lt; 0;} \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code" href="namespaceSteinberg.html#af65b89110f91b435a658a09cde45ee6b">operator == </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) == 0;} \</div>
+<div class="line">    bool <a class="code" href="namespaceSteinberg.html#aaad28d7939d8454ba62e2ed43e6b6a07">operator != </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) != 0;} \</div>
+<div class="line">    bool <a class="code" href="namespaceSteinberg.html#ad5ce23c4f9cca43a9f66ef23d9325159">operator &lt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) &lt; 0;} \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">operator &gt; </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) &gt; 0;} \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">operator &lt;= </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) &lt;= 0; } \</div>
 <div class="line">    bool <a class="code" href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">operator &gt;= </a>(<span class="keyword">const</span> className&amp; other)<span class="keyword"> const </span>{<span class="keywordflow">return</span> methodName (other) &gt;= 0; }</div>
-<div class="ttc" id="namespaceSteinberg_html_afc04c8ac4717595b641a119f8e1f4c08"><div class="ttname"><a href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">Steinberg::operator&lt;=</a></div><div class="ttdeci">bool operator&lt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:679</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a98082cddf36f42dae42928aab7b7d704"><div class="ttname"><a href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">Steinberg::operator&gt;=</a></div><div class="ttdeci">bool operator&gt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:681</div></div>
-<div class="ttc" id="namespaceSteinberg_html_a5a4e69c52d9dd5bc464f4a9dc81b3205"><div class="ttname"><a href="namespaceSteinberg.html#a5a4e69c52d9dd5bc464f4a9dc81b3205">Steinberg::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const Point &amp;p1, const Point &amp;p2)</div><div class="ttdef"><b>Definition:</b> fpoint.h:111</div></div>
-<div class="ttc" id="namespaceSteinberg_html_af1d581514e75e4ec77e2b0825698adde"><div class="ttname"><a href="namespaceSteinberg.html#af1d581514e75e4ec77e2b0825698adde">Steinberg::operator!=</a></div><div class="ttdeci">bool operator!=(const Rect &amp;r1, const Rect &amp;r2)</div><div class="ttdef"><b>Definition:</b> frect.h:165</div></div>
-<div class="ttc" id="namespaceSteinberg_html_ac98deb5a1f36329c44edeee647d46431"><div class="ttname"><a href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">Steinberg::operator&gt;</a></div><div class="ttdeci">bool operator&gt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:680</div></div>
-<div class="ttc" id="namespaceSteinberg_html_adfd0944abddbf6bf17c4194bde712469"><div class="ttname"><a href="namespaceSteinberg.html#adfd0944abddbf6bf17c4194bde712469">Steinberg::operator==</a></div><div class="ttdeci">bool operator==(const Point &amp;p1, const Point &amp;p2)</div><div class="ttdef"><b>Definition:</b> fpoint.h:106</div></div>
+<div class="ttc" id="namespaceSteinberg_html_aaad28d7939d8454ba62e2ed43e6b6a07"><div class="ttname"><a href="namespaceSteinberg.html#aaad28d7939d8454ba62e2ed43e6b6a07">Steinberg::operator!=</a></div><div class="ttdeci">bool operator!=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:665</div></div>
+<div class="ttc" id="namespaceSteinberg_html_afc04c8ac4717595b641a119f8e1f4c08"><div class="ttname"><a href="namespaceSteinberg.html#afc04c8ac4717595b641a119f8e1f4c08">Steinberg::operator&lt;=</a></div><div class="ttdeci">bool operator&lt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:661</div></div>
+<div class="ttc" id="namespaceSteinberg_html_ad5ce23c4f9cca43a9f66ef23d9325159"><div class="ttname"><a href="namespaceSteinberg.html#ad5ce23c4f9cca43a9f66ef23d9325159">Steinberg::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:660</div></div>
+<div class="ttc" id="namespaceSteinberg_html_a98082cddf36f42dae42928aab7b7d704"><div class="ttname"><a href="namespaceSteinberg.html#a98082cddf36f42dae42928aab7b7d704">Steinberg::operator&gt;=</a></div><div class="ttdeci">bool operator&gt;=(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:663</div></div>
+<div class="ttc" id="namespaceSteinberg_html_af65b89110f91b435a658a09cde45ee6b"><div class="ttname"><a href="namespaceSteinberg.html#af65b89110f91b435a658a09cde45ee6b">Steinberg::operator==</a></div><div class="ttdeci">bool operator==(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:664</div></div>
+<div class="ttc" id="namespaceSteinberg_html_ac98deb5a1f36329c44edeee647d46431"><div class="ttname"><a href="namespaceSteinberg.html#ac98deb5a1f36329c44edeee647d46431">Steinberg::operator&gt;</a></div><div class="ttdeci">bool operator&gt;(const ConstString &amp;s1, const ConstString &amp;s2)</div><div class="ttdef"><b>Definition:</b> fstring.h:662</div></div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

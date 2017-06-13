@@ -14,6 +14,8 @@ var searchData=
   ['pclassinfo2',['PClassInfo2',['../../base/structSteinberg_1_1PClassInfo2.html',1,'Steinberg']]],
   ['pclassinfow',['PClassInfoW',['../../base/structSteinberg_1_1PClassInfoW.html',1,'Steinberg']]],
   ['pfactoryinfo',['PFactoryInfo',['../../base/structSteinberg_1_1PFactoryInfo.html',1,'Steinberg']]],
+  ['pluginfactory',['PluginFactory',['../../vstsdk/classVST3_1_1Hosting_1_1PluginFactory.html',1,'VST3::Hosting']]],
+  ['plugprovider',['PlugProvider',['../../vstsdk/classSteinberg_1_1Vst_1_1PlugProvider.html',1,'Steinberg::Vst']]],
   ['polypressureevent',['PolyPressureEvent',['../structSteinberg_1_1Vst_1_1PolyPressureEvent.html',1,'Steinberg::Vst']]],
   ['presetfile',['PresetFile',['../../vstsdk/classSteinberg_1_1Vst_1_1PresetFile.html',1,'Steinberg::Vst']]],
   ['presetmanager',['PresetManager',['../../vstsdk/classSteinberg_1_1Vst_1_1InterAppAudio_1_1PresetManager.html',1,'Steinberg::Vst::InterAppAudio']]],

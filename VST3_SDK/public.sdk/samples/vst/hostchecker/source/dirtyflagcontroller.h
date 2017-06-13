@@ -1,15 +1,14 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
-// Filename    : public.sdk/samples/vst/hostchecker/source/hostchecker.h
+// Filename    : public.sdk/samples/vst/hostchecker/source/dirtyflagcontroller.h
 // Created by  : Steinberg, 04/2012
 // Description :
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -57,9 +56,9 @@ public:
 	virtual ~DirtyFlagController ();
 
 	virtual VSTGUI::CView* verifyView (VSTGUI::CView* view, const VSTGUI::UIAttributes& attributes,
-									   VSTGUI::IUIDescription* description);
-	virtual void valueChanged (VSTGUI::CControl* pControl) {}
-	virtual void controlBeginEdit (VSTGUI::CControl* pControl);
+									   const VSTGUI::IUIDescription* description) VSTGUI_OVERRIDE_VMETHOD;
+	virtual void valueChanged (VSTGUI::CControl* pControl) VSTGUI_OVERRIDE_VMETHOD {}
+	virtual void controlBeginEdit (VSTGUI::CControl* pControl) VSTGUI_OVERRIDE_VMETHOD;
 //-----------------------------------------------------------------------------
 private:
 	HostCheckerController* mController;

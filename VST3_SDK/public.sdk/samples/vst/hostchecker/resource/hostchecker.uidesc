@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vstgui-ui-description version="1">
+	<fonts>
+	</fonts>
+	<colors>
+		<color name="Background" rgba="#414a4eff"/>
+		<color name="Focus" rgba="#6565ffff"/>
+	</colors>
+	<template autosize="left right top bottom " background-color="Background" background-color-draw-style="filled and stroked" class="CViewContainer" maxSize="700, 10000" minSize="200, 300" mouse-enabled="true" name="HostCheckerEditor" opacity="1" origin="0, 0" size="697, 704" transparent="false">
+		<view auto-drag-scrolling="false" auto-hide-scrollbars="false" autosize="left right top bottom " background-color="~ WhiteCColor" background-color-draw-style="filled and stroked" bordered="false" class="CScrollView" container-size="680, 912" custom-view-name="HostCheckerDataBrowser" follow-focus-view="false" horizontal-scrollbar="false" mouse-enabled="true" opacity="1" origin="10, 40" overlay-scrollbars="false" scrollbar-background-color="~ TransparentCColor" scrollbar-frame-color="~ BlackCColor" scrollbar-scroller-color="Background" scrollbar-width="16" size="677, 654" transparent="false" vertical-scrollbar="true"/>
+		<view autosize="left right top " back-color="~ BlackCColor" background-offset="0, 0" class="CTextLabel" default-value="0.5" font="~ NormalFontBig" font-antialias="true" font-color="~ WhiteCColor" frame-color="~ BlackCColor" frame-width="1" max-value="1" min-value="0" mouse-enabled="true" opacity="1" origin="30, 10" round-rect-radius="6" shadow-color="~ RedCColor" size="657, 20" style-3D-in="false" style-3D-out="false" style-no-draw="false" style-no-frame="false" style-no-text="false" style-round-rect="false" style-shadow-text="false" text-alignment="center" text-inset="0, 0" text-rotation="0" title="VST3 HostChecker Example" transparent="true" value-precision="2" wheel-inc-value="0.1"/>
+		<view angle-range="270" angle-start="135" background-offset="0, 0" bitmap="knob" circle-drawing="false" class="CAnimKnob" control-tag="Param1" corona-color="~ WhiteCColor" corona-dash-dot="false" corona-drawing="false" corona-from-center="false" corona-inset="0" corona-inverted="false" corona-outline="false" default-value="0" handle-color="~ WhiteCColor" handle-line-width="1" handle-shadow-color="~ GreyCColor" height-of-one-image="20" max-value="1" min-value="0" mouse-enabled="true" opacity="1" origin="5, 5" size="20, 20" sub-pixmaps="80" tooltip="Test ContextMenu (right-click on it should open Host ContextMenu (if supported))" transparent="false" value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"/>
+		<view angle-range="270" angle-start="135" background-offset="0, 0" bitmap="knob" circle-drawing="false" class="CAnimKnob" control-tag="Param2" corona-color="~ WhiteCColor" corona-dash-dot="false" corona-drawing="false" corona-from-center="false" corona-inset="0" corona-inverted="false" corona-outline="false" default-value="0" handle-color="~ WhiteCColor" handle-line-width="1" handle-shadow-color="~ GreyCColor" height-of-one-image="20" max-value="1" min-value="0" mouse-enabled="true" opacity="1" origin="35, 5" size="20, 20" sub-pixmaps="80" tooltip="Enable Peaks Generation" transparent="false" value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"/>
+		<view angle-range="270" angle-start="135" background-offset="0, 0" bitmap="knob" circle-drawing="false" class="CAnimKnob" control-tag="latency" corona-color="~ WhiteCColor" corona-dash-dot="false" corona-drawing="false" corona-from-center="false" corona-inset="0" corona-inverted="false" corona-outline="false" default-value="0" handle-color="~ WhiteCColor" handle-line-width="1" handle-shadow-color="~ GreyCColor" height-of-one-image="20" max-value="1" min-value="0" mouse-enabled="true" opacity="1" origin="65, 5" size="20, 20" sub-pixmaps="80" tooltip="Test Latency Change (check the Bypass Processor)" transparent="false" value-inset="0" wheel-inc-value="0.1" zoom-factor="1.5"/>
+		<view autosize="right top " background-offset="0, 0" bitmap="bypass" class="COnOffButton" control-tag="Bypass" default-value="0" max-value="1" min-value="0" mouse-enabled="true" opacity="1" origin="650, 10" size="21, 19" tooltip="Bypass" transparent="true" wheel-inc-value="0.1"/>
+	</template>
+	<custom>
+		<attributes name="UIViewInspector" windowSize="116, 251, 607, 836"/>
+		<attributes gridsize="10" name="UIEditFrame" uidescPath="/Volumes/maintrunk/maintrunk/public.sdk/samples/vst/hostchecker/resource/hostchecker.uidesc"/>
+		<attributes color="Focus" enabled="true" name="FocusDrawing" width="2"/>
+		<attributes name="UIGridController"/>
+		<attributes SelectedTemplate="HostCheckerEditor" name="UITemplateController"/>
+		<attributes EditViewScale="1" EditorSize="0, 0, 792, 735" SplitViewSize_0_0="0.8179271708683473196543900485266931355" SplitViewSize_0_1="0.1540616246498599517522620772069785743952" SplitViewSize_1_0="0.4831932773109243739462215216917684301734" SplitViewSize_1_1="0.5098039215686274161498658941127359867096" SplitViewSize_2_0="0.7727272727272727070868540977244265377522" SplitViewSize_2_1="0.2209595959595959668853026869328459724784" TabSwitchValue="0" Version="1" name="UIEditController"/>
+		<attributes name="UIAttributesController"/>
+		<attributes SelectedRow="11" name="UIViewCreatorDataSource"/>
+		<attributes SelectedRow="-1" name="UITagsDataSource"/>
+		<attributes SelectedRow="-1" name="UIColorsDataSource"/>
+		<attributes SelectedRow="-1" name="UIGradientsDataSource"/>
+		<attributes SelectedRow="0" name="UIBitmapsDataSource"/>
+		<attributes SelectedRow="-1" name="UIFontsDataSource"/>
+	</custom>
+	<bitmaps>
+		<bitmap name="bypass" path="bypass.png"/>
+		<bitmap name="knob" path="knob.png"/>
+	</bitmaps>
+	<control-tags>
+		<control-tag name="Param1" tag="1000"/>
+		<control-tag name="Param2" tag="1001"/>
+		<control-tag name="latency" tag="1002"/>
+		<control-tag name="Bypass" tag="1003"/>
+	</control-tags>
+	<variables/>
+	<gradients/>
+</vstgui-ui-description>

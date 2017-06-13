@@ -15,6 +15,7 @@
  */
 
 #include "mdaParameter.h"
+#include "pluginterfaces/base/futils.h"
 
 namespace Steinberg {
 namespace Vst {
@@ -75,19 +76,19 @@ IndexedParameter::IndexedParameter (const TChar* title, const TChar* units, int3
 //-----------------------------------------------------------------------------
 IndexedParameter::~IndexedParameter ()
 {
-	delete [] indexString;
+	delete[] indexString;
 }
 
 //-----------------------------------------------------------------------------
 ParamValue IndexedParameter::toPlain (ParamValue _valueNormalized) const
 {
-	return std::min<ParamValue> (info.stepCount, _valueNormalized * (info.stepCount + 1));
+	return (ParamValue) (FromNormalized<ParamValue> (_valueNormalized, info.stepCount));
 }
 
 //-----------------------------------------------------------------------------
 ParamValue IndexedParameter::toNormalized (ParamValue plainValue) const
 {
-	return plainValue / (double)info.stepCount;
+	return ToNormalized<ParamValue> (plainValue, info.stepCount);
 }
 
 //-----------------------------------------------------------------------------

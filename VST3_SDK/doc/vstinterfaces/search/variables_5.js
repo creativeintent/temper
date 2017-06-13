@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['factory',['factory',['../../vstsdk/classSteinberg_1_1Vst_1_1PlugProvider.html#a7ddbf523610d9a2456ef7b40f1ef488e',1,'Steinberg::Vst::PlugProvider::factory()'],['../../vstsdk/classVST3_1_1Hosting_1_1Module.html#a7ddbf523610d9a2456ef7b40f1ef488e',1,'VST3::Hosting::Module::factory()']]],
   ['factoryinfo',['factoryInfo',['../../vstsdk/classSteinberg_1_1CPluginFactory.html#a5048a618e5819f448694d729e8d0ae22',1,'Steinberg::CPluginFactory']]],
   ['file',['file',['../../vstsdk/classSteinberg_1_1Vst_1_1FileStream.html#a702945180aa732857b380a007a7e2a21',1,'Steinberg::Vst::FileStream']]],
   ['fillcount',['fillCount',['../../vstsdk/classSteinberg_1_1Vst_1_1EventList.html#ae719cb1fce98d2f22058ae277db25c57',1,'Steinberg::Vst::EventList']]],

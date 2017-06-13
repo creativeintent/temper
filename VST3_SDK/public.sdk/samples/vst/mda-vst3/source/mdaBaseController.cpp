@@ -18,17 +18,14 @@
 #include "mdaParameter.h"
 #include "helpers.h"
 #include "pluginterfaces/base/ibstream.h"
-
 namespace Steinberg {
 namespace Vst {
 namespace mda {
 
-const TChar BaseController::kMicroSecondsString[] = { 0x00b5, 0x0073, 0x0 };
+const TChar BaseController::kMicroSecondsString[] = {0x00b5, 0x0073, 0x0};
 
 //-----------------------------------------------------------------------------
-BaseController::BaseController ()
-: sampleRate (44100)
-, addBypassParameter (true)
+BaseController::BaseController () : sampleRate (44100), addBypassParameter (true)
 {
 	for (int32 i = 0; i < kCountCtrlNumber; i++)
 		midiCCParamID[i] = -1;
@@ -45,12 +42,14 @@ tresult PLUGIN_API BaseController::initialize (FUnknown* context)
 		uinfo.parentUnitId = kNoParentUnitId;
 		uinfo.programListId = kPresetParam;
 		UString name (uinfo.name, 128);
-		name.fromAscii("Root");
+		name.fromAscii ("Root");
 		addUnit (new Unit (uinfo));
 
 		if (addBypassParameter)
 		{
-			IndexedParameter* bypassParam = new IndexedParameter (USTRING("Bypass"), 0, 1, 0, ParameterInfo::kIsBypass | ParameterInfo::kCanAutomate, kBypassParam);
+			IndexedParameter* bypassParam = new IndexedParameter (
+			    USTRING ("Bypass"), 0, 1, 0, ParameterInfo::kIsBypass | ParameterInfo::kCanAutomate,
+			    kBypassParam);
 			bypassParam->setIndexString (0, UString128 ("off"));
 			bypassParam->setIndexString (1, UString128 ("on"));
 			parameters.addParameter (bypassParam);
@@ -68,7 +67,8 @@ int32 PLUGIN_API BaseController::getProgramListCount ()
 }
 
 //-----------------------------------------------------------------------------
-tresult PLUGIN_API BaseController::getProgramListInfo (int32 listIndex, ProgramListInfo& info /*out*/)
+tresult PLUGIN_API BaseController::getProgramListInfo (int32 listIndex,
+                                                       ProgramListInfo& info /*out*/)
 {
 	Parameter* param = parameters.getParameter (kPresetParam);
 	if (param && listIndex == 0)
@@ -76,14 +76,15 @@ tresult PLUGIN_API BaseController::getProgramListInfo (int32 listIndex, ProgramL
 		info.id = kPresetParam;
 		info.programCount = (int32)param->toPlain (1) + 1;
 		UString name (info.name, 128);
-		name.fromAscii("Presets");
+		name.fromAscii ("Presets");
 		return kResultTrue;
 	}
 	return kResultFalse;
 }
 
 //-----------------------------------------------------------------------------
-tresult PLUGIN_API BaseController::getProgramName (ProgramListID listId, int32 programIndex, String128 name /*out*/)
+tresult PLUGIN_API BaseController::getProgramName (ProgramListID listId, int32 programIndex,
+                                                   String128 name /*out*/)
 {
 	if (listId == kPresetParam)
 	{
@@ -101,9 +102,9 @@ tresult PLUGIN_API BaseController::getProgramName (ProgramListID listId, int32 p
 //-----------------------------------------------------------------------------
 tresult PLUGIN_API BaseController::notify (IMessage* message)
 {
-	if (strcmp (message->getMessageID(), "activated") == 0)
+	if (strcmp (message->getMessageID (), "activated") == 0)
 	{
-		message->getAttributes()->getFloat ("SampleRate", sampleRate);
+		message->getAttributes ()->getFloat ("SampleRate", sampleRate);
 		return kResultTrue;
 	}
 	return EditControllerEx1::notify (message);
@@ -112,15 +113,31 @@ tresult PLUGIN_API BaseController::notify (IMessage* message)
 //-----------------------------------------------------------------------------
 tresult PLUGIN_API BaseController::setComponentState (IBStream* state)
 {
-	int32 temp;
-	state->read (&temp, sizeof (int32));
-	SWAP32_BE(temp);
-	for (int32 i = 0; i < temp; i++)
+	uint32 temp;
+	state->read (&temp, sizeof (uint32)); // numParams or Header
+	SWAP32_BE (temp);
+
+	if (temp == BaseController::kMagicNumber)
+	{
+		// read current Program
+		state->read (&temp, sizeof (uint32));
+		SWAP32_BE (temp);
+		Parameter* param = parameters.getParameter (kPresetParam);
+		if (param)
+		{
+			param->setNormalized(param->toNormalized (temp));
+		}
+
+		state->read (&temp, sizeof (uint32)); // numParams
+		SWAP32_BE (temp);
+	}
+
+	for (uint32 i = 0; i < temp; i++)
 	{
 		ParamValue value;
 		if (state->read (&value, sizeof (ParamValue)) == kResultTrue)
 		{
-			SWAP64_BE(value);
+			SWAP64_BE (value);
 			setParamNormalized (i, value);
 		}
 	}
@@ -130,18 +147,20 @@ tresult PLUGIN_API BaseController::setComponentState (IBStream* state)
 		Parameter* bypassParam = parameters.getParameter (kBypassParam);
 		if (bypassParam)
 		{
-			SWAP32_BE(bypassState);
+			SWAP32_BE (bypassState);
 			bypassParam->setNormalized (bypassState);
 		}
 	}
-	
+
 	return kResultTrue;
 }
 
 //------------------------------------------------------------------------
-tresult PLUGIN_API BaseController::getMidiControllerAssignment (int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& tag/*out*/)
+tresult PLUGIN_API BaseController::getMidiControllerAssignment (int32 busIndex, int16 channel,
+                                                                CtrlNumber midiControllerNumber,
+                                                                ParamID& tag /*out*/)
 {
-	if (busIndex == 0 && midiCCParamID[midiControllerNumber] != -1)
+	if (busIndex == 0 && midiControllerNumber < kCountCtrlNumber && midiCCParamID[midiControllerNumber] != -1)
 	{
 		tag = midiCCParamID[midiControllerNumber];
 		return kResultTrue;
@@ -155,5 +174,6 @@ tresult PLUGIN_API BaseController::queryInterface (const char* iid, void** obj)
 	QUERY_INTERFACE (iid, obj, IMidiMapping::iid, IMidiMapping)
 	return EditControllerEx1::queryInterface (iid, obj);
 }
-
-}}} // namespaces
+}
+}
+} // namespaces

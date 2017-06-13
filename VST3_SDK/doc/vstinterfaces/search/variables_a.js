@@ -21,5 +21,6 @@ var searchData=
   ['minputpinlookup',['mInputPinLookup',['../../vstsdk/classSteinberg_1_1Vst_1_1BypassProcessor.html#ae53e2a9daae0aa62f5797ed0d4dbdcb0',1,'Steinberg::Vst::BypassProcessor']]],
   ['mmainiobypass',['mMainIOBypass',['../../vstsdk/classSteinberg_1_1Vst_1_1BypassProcessor.html#a691325367c431ca1b7de7e4ee9a5c12f',1,'Steinberg::Vst::BypassProcessor']]],
   ['mmaxsamples',['mMaxSamples',['../../vstsdk/classSteinberg_1_1Vst_1_1AudioBuffer.html#ab2841cac1a12b91be43d0bf07ab9607b',1,'Steinberg::Vst::AudioBuffer']]],
+  ['modifier',['modifier',['../../base/structSteinberg_1_1KeyCode.html#abd7634cbb7389a3980e3b6b1b27c95a3',1,'Steinberg::KeyCode']]],
   ['moutpos',['mOutPos',['../../vstsdk/structSteinberg_1_1Vst_1_1BypassProcessor_1_1Delay.html#a9f84222a3b328f760149aceee1e45124',1,'Steinberg::Vst::BypassProcessor::Delay']]]
 ];

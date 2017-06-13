@@ -20,7 +20,8 @@
 #include "pluginterfaces/vst/ivstparameterchanges.h"
 #include "pluginterfaces/base/ibstream.h"
 
-#include <math.h>
+#include <cmath>
+#include <cstdlib>
 
 namespace Steinberg {
 namespace Vst {
@@ -30,10 +31,10 @@ namespace mda {
 BaseProcessor::BaseProcessor ()
 : params (0)
 , numParams (0)
-, bypassState (false)
+, bypassRamp (0)
 , bypassBuffer0 (0)
 , bypassBuffer1 (0)
-, bypassRamp (0)
+, bypassState (false)
 {
 }
 
@@ -41,9 +42,9 @@ BaseProcessor::BaseProcessor ()
 BaseProcessor::~BaseProcessor ()
 {
 	if (bypassBuffer0)
-		free (bypassBuffer0);
+		std::free (bypassBuffer0);
 	if (bypassBuffer1)
-		free (bypassBuffer1);
+		std::free (bypassBuffer1);
 	if (params)
 		delete [] params;
 }
@@ -68,12 +69,12 @@ tresult PLUGIN_API BaseProcessor::process (ProcessData& data)
 tresult PLUGIN_API BaseProcessor::setupProcessing (ProcessSetup& setup)
 {
 	if (bypassBuffer0)
-		free (bypassBuffer0);
-	bypassBuffer0 = (float*)malloc (setup.maxSamplesPerBlock * sizeof (float));
+		std::free (bypassBuffer0);
+	bypassBuffer0 = (float*)std::malloc (setup.maxSamplesPerBlock * sizeof (float));
 
 	if (bypassBuffer1)
-		free (bypassBuffer1);
-	bypassBuffer1 = (float*)malloc (setup.maxSamplesPerBlock * sizeof (float));
+		std::free (bypassBuffer1);
+	bypassBuffer1 = (float*)std::malloc (setup.maxSamplesPerBlock * sizeof (float));
 	
 	return AudioEffect::setupProcessing (setup);
 }
@@ -213,6 +214,8 @@ bool BaseProcessor::processParameterChanges (IParameterChanges* changes)
 				queue->getPoint (pointCount - 1, sampleOffset, value);
 				if (paramId == BaseController::kBypassParam)
 					setBypass (value >= 0.5, sampleOffset);
+				else if (paramId == BaseController::kPresetParam)
+					setCurrentProgramNormalized (value);
 				else
 					setParameter (paramId, value, sampleOffset);
 			}
@@ -288,8 +291,20 @@ tresult PLUGIN_API BaseProcessor::setActive (TBool state)
 tresult PLUGIN_API BaseProcessor::setState (IBStream* state)
 {
 	uint32 temp;
-	state->read (&temp, sizeof (uint32)); // numParams
-	
+	state->read (&temp, sizeof (uint32)); // numParams or Header
+	SWAP32_BE (temp);
+
+	if (temp == BaseController::kMagicNumber)
+	{
+		// read current Program
+		state->read (&temp, sizeof (uint32));
+		SWAP32_BE (temp);
+		setCurrentProgram (temp);
+
+		state->read (&temp, sizeof (uint32)); // numParams
+		SWAP32_BE (temp);
+	}
+
 	// read each parameter
 	for (uint32 i = 0; i < temp, i < numParams; i++)
 	{
@@ -310,8 +325,23 @@ tresult PLUGIN_API BaseProcessor::setState (IBStream* state)
 //-----------------------------------------------------------------------------
 tresult PLUGIN_API BaseProcessor::getState (IBStream* state)
 {
+	uint32 temp;
+
+	if (hasProgram ())
+	{
+		// save header key
+		temp = BaseController::kMagicNumber;
+		SWAP32_BE (temp);
+		state->write (&temp, sizeof (uint32));
+
+		// save program
+		temp = getCurrentProgram ();
+		SWAP32_BE (temp);
+		state->write (&temp, sizeof (uint32));
+	}
+
 	// save number of parameter
-	uint32 temp = numParams;
+	temp = numParams;
 	SWAP32_BE(temp);
 	state->write (&temp, sizeof (uint32));
 	

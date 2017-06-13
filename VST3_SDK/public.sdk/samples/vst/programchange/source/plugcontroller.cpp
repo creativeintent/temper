@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/XX/source/plugcontroller.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,11 +34,11 @@
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
-
 #include "plugcontroller.h"
 #include "plugparamids.h"
 
 #include "pluginterfaces/base/ibstream.h"
+#include "pluginterfaces/base/futils.h"
 
 namespace Steinberg {
 namespace Vst {
@@ -66,11 +65,11 @@ tresult PLUGIN_API PlugController::initialize (FUnknown* context)
 
 	// create top root unit with kProgramId as id for the programList
 	addUnit (new Unit (String ("Root"), kRootUnitId, kNoParentUnitId, kProgramId));
-	
-	// create the program list: here 100 entries
+
+	// create the program list: here kNumProgs entries
 	ProgramList* prgList = new ProgramList (String ("Bank"), kProgramId, kRootUnitId);
 	addProgramList (prgList);
-	for (int32 i = 0; i < 100; i++)
+	for (int32 i = 0; i < kNumProgs; i++)
 	{
 		String title;
 		title.printf ("Prog %d", i + 1);
@@ -79,13 +78,30 @@ tresult PLUGIN_API PlugController::initialize (FUnknown* context)
 
 	//---Program Change parameter---
 	Parameter* prgParam = prgList->getParameter ();
-	
+
 	// by default this program change parameter if automatable we can overwrite this:
 	prgParam->getInfo ().flags &= ~ParameterInfo::kCanAutomate;
 
 	parameters.addParameter (prgParam);
 
+	//---Gain parameter---
+	parameters.addParameter (STR16 ("Gain"), 0, 0, 1.f, ParameterInfo::kCanAutomate, kGainId);
+
 	return result;
+}
+
+//-----------------------------------------------------------------------------
+tresult PLUGIN_API PlugController::setParamNormalized (ParamID tag, ParamValue value)
+{
+	tresult res = EditControllerEx1::setParamNormalized (tag, value);
+	if (res == kResultOk && tag == kProgramId) // program change
+	{
+		// here we use the 1-program as gain...just an example
+		EditControllerEx1::setParamNormalized (kGainId, value);
+
+		componentHandler->restartComponent (kParamValuesChanged);
+	}
+	return res;
 }
 
 //------------------------------------------------------------------------
@@ -112,7 +128,18 @@ tresult PLUGIN_API PlugController::setComponentState (IBStream* state)
 #if BYTEORDER == kBigEndian
 			SWAP_32 (programState)
 #endif
-			setParamNormalized (kProgramId, programState);
+			EditControllerEx1::setParamNormalized (
+			    kProgramId, ToNormalized<ParamValue> (programState, kNumProgs - 1));
+		}
+
+		// read the Gain param
+		float val;
+		if (state->read (&val, sizeof (val)) == kResultTrue)
+		{
+#if BYTEORDER == kBigEndian
+			SWAP_32 (val)
+#endif
+			setParamNormalized (kGainId, val);
 		}
 	}
 

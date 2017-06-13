@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mbcodepage',['MBCodePage',['../namespaceSteinberg.html#a879b9da0475eafb05527d00a3e87e198',1,'Steinberg']]]
+  ['unicodenormalization',['UnicodeNormalization',['../namespaceSteinberg.html#ade9b236510365125beb73ce8c7347fd5',1,'Steinberg']]]
 ];

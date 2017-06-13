@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Interface Technology Basics
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -154,10 +154,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4199134d0669bfa92b7419dac14c01a7 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FUnknown.html#a4199134d0669bfa92b7419dac14c01a7">queryInterface</a> (const <a class="el" href="namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a> _iid, void **obj)=0</td></tr>
 <tr class="memdesc:a4199134d0669bfa92b7419dac14c01a7 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query for a pointer to the specified interface.  <a href="#a4199134d0669bfa92b7419dac14c01a7">More...</a><br /></td></tr>
 <tr class="separator:a4199134d0669bfa92b7419dac14c01a7 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa3c5a2a5410d41153d7f5e3f4e0a635 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">uint32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FUnknown.html#aaa3c5a2a5410d41153d7f5e3f4e0a635">addRef</a> ()=0</td></tr>
+<tr class="memitem:aaa3c5a2a5410d41153d7f5e3f4e0a635 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">uint32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FUnknown.html#aaa3c5a2a5410d41153d7f5e3f4e0a635">addRef</a> ()=0</td></tr>
 <tr class="memdesc:aaa3c5a2a5410d41153d7f5e3f4e0a635 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a reference and return the new reference count.  <a href="#aaa3c5a2a5410d41153d7f5e3f4e0a635">More...</a><br /></td></tr>
 <tr class="separator:aaa3c5a2a5410d41153d7f5e3f4e0a635 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58847c78bf6142f01ce214c2802cb146 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceSteinberg.html#a4b435a49c74bb91f284f075e63416cb6">uint32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FUnknown.html#a58847c78bf6142f01ce214c2802cb146">release</a> ()=0</td></tr>
+<tr class="memitem:a58847c78bf6142f01ce214c2802cb146 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceSteinberg.html#a1134b580f8da4de94ca6b1de4d37975e">uint32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FUnknown.html#a58847c78bf6142f01ce214c2802cb146">release</a> ()=0</td></tr>
 <tr class="memdesc:a58847c78bf6142f01ce214c2802cb146 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases a reference and return the new reference count.  <a href="#a58847c78bf6142f01ce214c2802cb146">More...</a><br /></td></tr>
 <tr class="separator:a58847c78bf6142f01ce214c2802cb146 inherit pub_methods_classSteinberg_1_1FUnknown"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -176,14 +176,14 @@ Static Public Attributes</h2></td></tr>
 </ul>
 <dl class="section user"><dt>Sizing of a view</dt><dd>Usually the size of a Plug-in view is fixed. But both the host and the Plug-in can cause a view to be resized: <br />
 <ul>
-<li><b> Host </b> : If <a class="el" href="classSteinberg_1_1IPlugView.html#a07d7a22ae1ef493c4bb22c9411ae7ddf" title="Is view sizable by user. ">IPlugView::canResize()</a> returns kResultTrue the host will setup the window so that the user can resize it. While the user resizes the window <a class="el" href="classSteinberg_1_1IPlugView.html#adc868253b8260f20a6764e338fecb7e1" title="On live resize this is called to check if the view can be resized to the given rect, if not adjust the rect to the allowed size. ">IPlugView::checkSizeConstraint</a> () is called, allowing the Plug-in to change the size to a valid rect. The host then resizes the window to this rect and calls <a class="el" href="classSteinberg_1_1IPlugView.html#a3e741e55c2c047a4cc10f102661f5654" title="Resizes the platform representation of the view to the given rect. ">IPlugView::onSize()</a>. <br />
- <br />
-</li>
-<li><b> Plug-in </b> : The Plug-in can call <a class="el" href="classSteinberg_1_1IPlugFrame.html#a94f218315acd695606fff41166294d56" title="Called to inform the host about the resize of a given view. ">IPlugFrame::resizeView</a> () and cause the host to resize the window. Afterwards <a class="el" href="classSteinberg_1_1IPlugView.html#a3e741e55c2c047a4cc10f102661f5654" title="Resizes the platform representation of the view to the given rect. ">IPlugView::onSize()</a> is called.</li>
-</ul>
+<li><b> Host </b> : If <a class="el" href="classSteinberg_1_1IPlugView.html#a07d7a22ae1ef493c4bb22c9411ae7ddf" title="Is view sizable by user. ">IPlugView::canResize</a> () returns kResultTrue the host will setup the window so that the user can resize it. While the user resizes the window <a class="el" href="classSteinberg_1_1IPlugView.html#adc868253b8260f20a6764e338fecb7e1" title="On live resize this is called to check if the view can be resized to the given rect, if not adjust the rect to the allowed size. ">IPlugView::checkSizeConstraint</a> () is called, allowing the Plug-in to change the size to a valid rect. The host then resizes the window to this rect and has to call <a class="el" href="classSteinberg_1_1IPlugView.html#a3e741e55c2c047a4cc10f102661f5654" title="Resizes the platform representation of the view to the given rect. ">IPlugView::onSize</a> (). <br />
 <br />
-Please only resize the platform representation of the view when <a class="el" href="classSteinberg_1_1IPlugView.html#a3e741e55c2c047a4cc10f102661f5654" title="Resizes the platform representation of the view to the given rect. ">IPlugView::onSize()</a> is called.</dd></dl>
-<dl class="section user"><dt>Keyboard handling</dt><dd>The Plug-in view receives keyboard events from the host. A view implementation must not handle keyboard events by the means of platform callbacks, but let the host pass them to the view. The host depends on a proper return value when <a class="el" href="classSteinberg_1_1IPlugView.html#a759b576f046e699c84dc07d579600b1b" title="Handling of keyboard events : Key Down. ">IPlugView::onKeyDown</a> is called, otherwise the Plug-in view may cause a disfunction of the host's key command handling!</dd></dl>
+</li>
+<li><b> Plug-in </b> : The Plug-in can call <a class="el" href="classSteinberg_1_1IPlugFrame.html#a94f218315acd695606fff41166294d56" title="Called to inform the host about the resize of a given view. ">IPlugFrame::resizeView</a> () and cause the host to resize the window. Afterwards the host has to call <a class="el" href="classSteinberg_1_1IPlugView.html#a3e741e55c2c047a4cc10f102661f5654" title="Resizes the platform representation of the view to the given rect. ">IPlugView::onSize</a> () if a resize is needed (size was changed). Note that if the host calls <a class="el" href="classSteinberg_1_1IPlugView.html#ae4f7f751a5b75837f47ba19b29c53917" title="Returns the size of the platform representation of the view. ">IPlugView::getSize</a> () before calling <a class="el" href="classSteinberg_1_1IPlugView.html#a3e741e55c2c047a4cc10f102661f5654" title="Resizes the platform representation of the view to the given rect. ">IPlugView::onSize</a> () (if needed), it will get the current (old) size not the wanted one!! Here the calling sequence: plug-in-&gt;host: <a class="el" href="classSteinberg_1_1IPlugFrame.html#a94f218315acd695606fff41166294d56" title="Called to inform the host about the resize of a given view. ">IPlugFrame::resizeView</a> (newSize) host-&gt;plug-in (optional): <a class="el" href="classSteinberg_1_1IPlugView.html#ae4f7f751a5b75837f47ba19b29c53917" title="Returns the size of the platform representation of the view. ">IPlugView::getSize</a> () returns the currentSize (not the wanted newSize)! host-&gt;plug-in: if newSize is different than its actual current size: <a class="el" href="classSteinberg_1_1IPlugView.html#a3e741e55c2c047a4cc10f102661f5654" title="Resizes the platform representation of the view to the given rect. ">IPlugView::onSize</a> (newSize) host-&gt;plug-in (optional): <a class="el" href="classSteinberg_1_1IPlugView.html#ae4f7f751a5b75837f47ba19b29c53917" title="Returns the size of the platform representation of the view. ">IPlugView::getSize</a> () returns the newSize <br />
+Please only resize the platform representation of the view when <a class="el" href="classSteinberg_1_1IPlugView.html#a3e741e55c2c047a4cc10f102661f5654" title="Resizes the platform representation of the view to the given rect. ">IPlugView::onSize</a> () is called.</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Keyboard handling</dt><dd>The Plug-in view receives keyboard events from the host. A view implementation must not handle keyboard events by the means of platform callbacks, but let the host pass them to the view. The host depends on a proper return value when <a class="el" href="classSteinberg_1_1IPlugView.html#a759b576f046e699c84dc07d579600b1b" title="Handling of keyboard events : Key Down. ">IPlugView::onKeyDown</a> is called, otherwise the Plug-in view may cause a malfunction of the host's key command handling!</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classSteinberg_1_1IPlugFrame.html" title="Callback interface passed to IPlugView. ">IPlugFrame</a>, <a class="el" href="group__platformUIType.html">Platform UI Types</a> </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="abcfa60e135807caa316f3915622d9488"></a>
@@ -251,7 +251,7 @@ Please only resize the platform representation of the view when <a class="el" hr
 </div><div class="memdoc">
 
 <p>The parent window of the view has been created, the (platform) representation of the view should now be created as well. </p>
-<p>Note that the parent is owned by the caller and you are not allowed to alter it in any way other than adding your own views. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Note that the parent is owned by the caller and you are not allowed to alter it in any way other than adding your own views. Note that in this call the Plug-in could call a <a class="el" href="classSteinberg_1_1IPlugFrame.html#a94f218315acd695606fff41166294d56" title="Called to inform the host about the resize of a given view. ">IPlugFrame::resizeView</a> ()! </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">parent</td><td>: platform handle of the parent window or view </td></tr>
     <tr><td class="paramname">type</td><td>: <a class="el" href="group__platformUIType.html">Platform UI Types</a> which should be created </td></tr>
@@ -465,6 +465,7 @@ Please only resize the platform representation of the view when <a class="el" hr
 </div><div class="memdoc">
 
 <p>Resizes the platform representation of the view to the given rect. </p>
+<p>Note that if the Plug-in requests a resize (<a class="el" href="classSteinberg_1_1IPlugFrame.html#a94f218315acd695606fff41166294d56" title="Called to inform the host about the resize of a given view. ">IPlugFrame::resizeView</a> ()) onSize has to be called afterward. </p>
 
 </div>
 </div>
@@ -594,17 +595,17 @@ Please only resize the platform representation of the view when <a class="el" hr
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

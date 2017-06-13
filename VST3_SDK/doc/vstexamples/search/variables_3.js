@@ -14,6 +14,7 @@ var searchData=
   ['dclp',['dclp',['../classSteinberg_1_1Vst_1_1mda_1_1LeslieProcessor.html#a3da6b7bb71e273b8871c854e9dfa47ea',1,'Steinberg::Vst::mda::LeslieProcessor']]],
   ['ddphi',['ddphi',['../classSteinberg_1_1Vst_1_1mda_1_1TrackerProcessor.html#a6d41382880a9df6fc357909f3fd95f2b',1,'Steinberg::Vst::mda::TrackerProcessor']]],
   ['dec',['dec',['../structSteinberg_1_1Vst_1_1mda_1_1EPianoProcessor_1_1VOICE.html#ab3b0edc273e86e845c8bce27fad19fdd',1,'Steinberg::Vst::mda::EPianoProcessor::VOICE::dec()'],['../classSteinberg_1_1Vst_1_1mda_1_1JX10Processor.html#ab3b0edc273e86e845c8bce27fad19fdd',1,'Steinberg::Vst::mda::JX10Processor::dec()'],['../structSteinberg_1_1Vst_1_1mda_1_1PianoProcessor_1_1VOICE.html#ab3b0edc273e86e845c8bce27fad19fdd',1,'Steinberg::Vst::mda::PianoProcessor::VOICE::dec()']]],
+  ['defaultcomformat',['defaultComFormat',['../../vstsdk/structVST3_1_1UID.html#ab159e85a88c3e4e39058834c7e52a2c1',1,'VST3::UID']]],
   ['defaultnormalizedvalue',['defaultNormalizedValue',['../../vstinterfaces/structSteinberg_1_1Vst_1_1ParameterInfo.html#a768a5f1990023d227c5162eab6a99376',1,'Steinberg::Vst::ParameterInfo']]],
   ['defaultvalue',['defaultValue',['../../vstinterfaces/structSteinberg_1_1Vst_1_1NoteExpressionValueDescription.html#ab03e603a79dcaa73a796db8b64eb04c8',1,'Steinberg::Vst::NoteExpressionValueDescription']]],
   ['del',['del',['../classSteinberg_1_1Vst_1_1mda_1_1DubDelayProcessor.html#ab3d57ec668d54e2f366640873a1ca270',1,'Steinberg::Vst::mda::DubDelayProcessor']]],

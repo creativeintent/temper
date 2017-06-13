@@ -18,6 +18,7 @@
 #include "mdaRezFilterController.h"
 
 #include <math.h>
+#include <cstdlib>
 
 namespace Steinberg {
 namespace Vst {

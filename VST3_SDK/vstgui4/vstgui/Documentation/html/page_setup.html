@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSTGUI
-   &#160;<span id="projectnumber">4.3</span>
+   &#160;<span id="projectnumber">4.4</span>
    </div>
    <div id="projectbrief">Graphical User Interface Framework not only for VST plugins</div>
   </td>
@@ -102,29 +102,43 @@ $(document).ready(function(){initNavTree('page_setup.html','');});
 <div class="title">Setup </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>To include <a class="el" href="namespace_v_s_t_g_u_i.html">VSTGUI</a> in your projects you only have to add</p>
+<div class="textblock"><dl class="section user"><dt>To include VSTGUI in your projects you only have to add</dt><dd></dd></dl>
 <ul>
 <li>vstgui_win32.cpp (for Windows)</li>
+<li>vstgui_linux.cpp (for Linux)</li>
+<li>vstgui_mac.mm (for macOS)</li>
+<li>vstgui_ios.mm (for iOS)</li>
 </ul>
-<p>or</p>
-<ul>
-<li>vstgui_mac.mm (for Mac OS X)</li>
-</ul>
-<p>to your Visual Studio or Xcode project and add a search path to the parent of the root folder of vstgui.</p>
-<p>On Mac OS X, you need to link to the following Frameworks:</p>
+<p>to your IDE project and add a search path to the parent of the root folder of vstgui.</p>
+<dl class="section user"><dt>On macOS, you need to link to the following Frameworks:</dt><dd></dd></dl>
 <ul>
 <li>Accelerate</li>
 <li>Carbon</li>
 <li>Cocoa</li>
 <li>OpenGL</li>
-<li>QuartzCore </li>
+<li>QuartzCore</li>
 </ul>
-</div></div><!-- contents -->
+<dl class="section user"><dt>On iOS, you need to link to the following Frameworks:</dt><dd></dd></dl>
+<ul>
+<li>UIKit</li>
+<li>CoreGraphics</li>
+<li>ImageIO</li>
+<li>CoreText</li>
+<li>GLKit</li>
+<li>Accelerate</li>
+<li>QuartzCore</li>
+</ul>
+<dl class="section user"><dt>On Linux you have to install gtkmm3 and their dependencies:</dt><dd></dd></dl>
+<p>Ubuntu based distribution:</p><ul>
+<li>libgtkmm-3.0-dev</li>
+</ul>
+<pre class="fragment">sudo apt-get install libgtkmm-3.0-dev
+</pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jun 27 2016 16:32:12 for VSTGUI by
+    <li class="footer">Generated on Fri Mar 3 2017 10:55:27 for VSTGUI by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

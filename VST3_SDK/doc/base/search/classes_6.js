@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['viewrect',['ViewRect',['../structSteinberg_1_1ViewRect.html',1,'Steinberg']]]
+  ['ustring',['UString',['../classSteinberg_1_1UString.html',1,'Steinberg']]],
+  ['ustringbuffer',['UStringBuffer',['../classSteinberg_1_1UStringBuffer.html',1,'Steinberg']]]
 ];

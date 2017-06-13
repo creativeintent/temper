@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Interfaces
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -106,7 +106,7 @@ Example</h1>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    PluginContextMenuTarget () {}</div>
 <div class="line"></div>
-<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API executeMenuItem (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a4ca2d97e571b049be6f4cdcfaa1ab946">int32</a> tag)</div>
+<div class="line">    <span class="keyword">virtual</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a902761e005a6252e538c766de48fc957">tresult</a> PLUGIN_API executeMenuItem (<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a56f1a81c92849566ae864511088eb7e8">int32</a> tag)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">// this will be called if the user has executed one of the menu items of the Plug-in.</span></div>
 <div class="line">        <span class="comment">// It won&#39;t be called for items of the host.</span></div>
@@ -115,7 +115,7 @@ Example</h1>
 <div class="line">            <span class="keywordflow">case</span> 1: <span class="keywordflow">break</span>;</div>
 <div class="line">            <span class="keywordflow">case</span> 2: <span class="keywordflow">break</span>;</div>
 <div class="line">        }</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a06fc87d81c62e9abb8790b6e5713c55ba9e60fad4624bee040985edebe1800372">kResultTrue</a>;</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    OBJ_METHODS(PluginContextMenuTarget, FObject)</div>
@@ -126,7 +126,7 @@ Example</h1>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// The following is the code to create the context menu</span></div>
-<div class="line"><span class="keywordtype">void</span> popupContextMenu (IComponentHandler* componentHandler, IPlugView* view, const <a class="code" href="group__vst3typedef.html#ga1dac5893f4a5c27f986d4e51741b544c">ParamID</a>* paramID, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#abf33a8b245f4634965116e9c25eb702a">UCoord</a> x, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#abf33a8b245f4634965116e9c25eb702a">UCoord</a> y)</div>
+<div class="line"><span class="keywordtype">void</span> popupContextMenu (IComponentHandler* componentHandler, IPlugView* view, const <a class="code" href="group__vst3typedef.html#ga1dac5893f4a5c27f986d4e51741b544c">ParamID</a>* paramID, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#abf33a8b245f4634965116e9c25eb702a">UCoord</a> x, <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#abf33a8b245f4634965116e9c25eb702a">UCoord</a> y)</div>
 <div class="line">{</div>
 <div class="line">    <span class="keywordflow">if</span> (componentHandler == 0 || view == 0)</div>
 <div class="line">        <span class="keywordflow">return</span>;</div>
@@ -140,11 +140,11 @@ Example</h1>
 <div class="line">        PluginContextMenuTarget* target = <span class="keyword">new</span> PluginContextMenuTarget ();</div>
 <div class="line">        </div>
 <div class="line">        IContextMenu::Item item = {0};</div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aa92186fdeda699e7a0cc7ac6c45d07e5">UString128</a> (<span class="stringliteral">&quot;My Item 1&quot;</span>).copyTo (item.name, 128);</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aa92186fdeda699e7a0cc7ac6c45d07e5">UString128</a> (<span class="stringliteral">&quot;My Item 1&quot;</span>).copyTo (item.name, 128);</div>
 <div class="line">        item.tag = 1;</div>
 <div class="line">        menu-&gt;addItem (item, target);</div>
 <div class="line"></div>
-<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aa92186fdeda699e7a0cc7ac6c45d07e5">UString128</a> (<span class="stringliteral">&quot;My Item 2&quot;</span>).copyTo (item.name, 128);</div>
+<div class="line">        <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#aa92186fdeda699e7a0cc7ac6c45d07e5">UString128</a> (<span class="stringliteral">&quot;My Item 2&quot;</span>).copyTo (item.name, 128);</div>
 <div class="line">        item.tag = 2;</div>
 <div class="line">        menu-&gt;addItem (item, target);</div>
 <div class="line">        target-&gt;release ();</div>
@@ -160,17 +160,17 @@ Back to <b><a class="el" href="index.html#vst3Contents">Contents</a></b> <br />
 </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

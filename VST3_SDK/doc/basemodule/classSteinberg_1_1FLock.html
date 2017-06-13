@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Base Module
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -92,14 +92,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FLock Class Reference<div class="ingroups"><a class="el" href="group__baseThread.html">Thread Handling</a></div></div>  </div>
+<div class="title">FLock Class Reference<div class="ingroups"><a class="el" href="group__baseLocks.html">Locks</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><a class="el" href="classSteinberg_1_1FLock.html" title="FLock declaration. ">FLock</a> declaration.  
  <a href="classSteinberg_1_1FLock.html#details">More...</a></p>
 
-<p><code>#include &lt;fthread.h&gt;</code></p>
+<p><code>#include &lt;flock.h&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for FLock:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -107,7 +107,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classSteinberg_1_1FLock__inherit__graph.png" border="0" usemap="#FLock_inherit__map" alt="Inheritance graph"/></div>
 <map name="FLock_inherit__map" id="FLock_inherit__map">
-<area shape="rect" id="node5" href="classSteinberg_1_1FLockObject.html" title="FLockObj declaration. " alt="" coords="5,349,93,424"/><area shape="rect" id="node2" href="structSteinberg_1_1ILock.html" title="Lock interface declaration. " alt="" coords="12,6,87,122"/></map>
+<area shape="rect" id="node5" href="classSteinberg_1_1FLockObject.html" title="FLockObj declaration. " alt="" coords="4,350,109,466"/><area shape="rect" id="node2" href="structSteinberg_1_1ILock.html" title="Lock interface declaration. " alt="" coords="20,6,95,122"/></map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -118,12 +118,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a11c963234a659a3f5b1930c646068a4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FLock.html#a11c963234a659a3f5b1930c646068a4d">~FLock</a> ()</td></tr>
 <tr class="memdesc:a11c963234a659a3f5b1930c646068a4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock destructor.  <a href="#a11c963234a659a3f5b1930c646068a4d">More...</a><br /></td></tr>
 <tr class="separator:a11c963234a659a3f5b1930c646068a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa81aed607133209dade63a226818224d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FLock.html#aa81aed607133209dade63a226818224d">lock</a> ()</td></tr>
-<tr class="separator:aa81aed607133209dade63a226818224d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9278be8203e1c42e2619179882ae4403"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FLock.html#a9278be8203e1c42e2619179882ae4403">unlock</a> ()</td></tr>
-<tr class="separator:a9278be8203e1c42e2619179882ae4403"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79ba6f06a91dbeaa8b6086f7ccec53f7"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FLock.html#a79ba6f06a91dbeaa8b6086f7ccec53f7">trylock</a> ()</td></tr>
-<tr class="separator:a79ba6f06a91dbeaa8b6086f7ccec53f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a487f7450d0bebbe588222de9ed6ac0c6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FLock.html#a487f7450d0bebbe588222de9ed6ac0c6">lock</a> () SMTG_OVERRIDE</td></tr>
+<tr class="separator:a487f7450d0bebbe588222de9ed6ac0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5aed2dfd115e022dbea7a80218db6ab"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FLock.html#ac5aed2dfd115e022dbea7a80218db6ab">unlock</a> () SMTG_OVERRIDE</td></tr>
+<tr class="separator:ac5aed2dfd115e022dbea7a80218db6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf213dd0b111fc7071568486cd804671"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSteinberg_1_1FLock.html#acf213dd0b111fc7071568486cd804671">trylock</a> () SMTG_OVERRIDE</td></tr>
+<tr class="separator:acf213dd0b111fc7071568486cd804671"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structSteinberg_1_1ILock"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structSteinberg_1_1ILock')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structSteinberg_1_1ILock.html">ILock</a></td></tr>
 <tr class="memitem:a0a6a52637f67bba0dc5c1469bdb8ffe3 inherit pub_methods_structSteinberg_1_1ILock"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSteinberg_1_1ILock.html#a0a6a52637f67bba0dc5c1469bdb8ffe3">~ILock</a> ()</td></tr>
 <tr class="separator:a0a6a52637f67bba0dc5c1469bdb8ffe3 inherit pub_methods_structSteinberg_1_1ILock"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,7 +173,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aa81aed607133209dade63a226818224d"></a>
+<a class="anchor" id="a487f7450d0bebbe588222de9ed6ac0c6"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -198,7 +198,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9278be8203e1c42e2619179882ae4403"></a>
+<a class="anchor" id="ac5aed2dfd115e022dbea7a80218db6ab"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -223,7 +223,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a79ba6f06a91dbeaa8b6086f7ccec53f7"></a>
+<a class="anchor" id="acf213dd0b111fc7071568486cd804671"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -250,17 +250,17 @@ Public Member Functions</h2></td></tr>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

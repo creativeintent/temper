@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ptr',['ptr',['../classSteinberg_1_1IPtr.html#a7c145f458643ff993b929f236d4a2ac0',1,'Steinberg::IPtr']]]
+  ['object',['object',['../classSteinberg_1_1FVariant.html#aa9cfc397af28aeb7d10c6e1ecee2c401',1,'Steinberg::FVariant']]]
 ];

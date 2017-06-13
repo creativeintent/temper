@@ -1,5 +1,6 @@
 //-----------------------------------------------------------------------------
 // Project     : SDK Core
+// Version     : 1.0
 //
 // Category    : SDK Core Interfaces
 // Filename    : pluginterfaces/test/itest.h
@@ -7,36 +8,16 @@
 // Description : Test Interface - Availability Depends on HOST  
 //
 //-----------------------------------------------------------------------------
-// LICENSE
-// (c) 2014, Steinberg Media Technologies GmbH, All Rights Reserved
+// This file is part of a Steinberg SDK. It is subject to the license terms
+// in the LICENSE file found in the top-level directory of this distribution
+// and at www.steinberg.net/sdklicenses. 
+// No part of the SDK, including this file, may be copied, modified, propagated,
+// or distributed except according to the terms contained in the LICENSE file.
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
-// 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-// OF THE POSSIBILITY OF SUCH DAMAGE.
-//------------------------------------------------------------------------------
 
-#ifndef __itest__
-#define __itest__
+#pragma once
 
-#ifndef __funknown__
-#include "../base/funknown.h"
-#endif
+#include "pluginterfaces/base/funknown.h"
 
 #ifndef kTestClass
 #define kTestClass "Test Class" ///< A class for automated tests
@@ -52,7 +33,7 @@ class ITestResult;
 class ITest : public FUnknown
 {
 public:
-//------------------------------------------------------------------------
+	//--- ---------------------------------------------------------------------
 	/** called immediately before the test is actually run. 
 		Usually this will be used to setup the test environment.
 		\return true upon success	*/
@@ -75,7 +56,7 @@ public:
 		before executing the test (in case of half-automated tests).
 	\return null terminated string upon success, zero otherwise		*/
 	virtual const tchar* PLUGIN_API getDescription () {return 0;}
-//------------------------------------------------------------------------
+	//--- ---------------------------------------------------------------------
 	static const FUID iid;
 };
 
@@ -97,11 +78,11 @@ test class can output error messages
 class ITestResult : public FUnknown
 {
 public:
-//------------------------------------------------------------------------
+	//--- ---------------------------------------------------------------------
 	/** add an error message */
 	virtual void PLUGIN_API addErrorMessage (const tchar* msg) = 0;
 	virtual void PLUGIN_API addMessage (const tchar* msg) = 0;
-//------------------------------------------------------------------------
+	//--- ---------------------------------------------------------------------
 	static const FUID iid;
 };
 
@@ -121,7 +102,7 @@ DECLARE_CLASS_IID (ITestResult, 0xCE13B461, 0x5334451D, 0xB3943E99, 0x7446885B)
 class ITestSuite : public FUnknown
 {
 public:
-//------------------------------------------------------------------------
+	//--- ---------------------------------------------------------------------
 	/** append a new test */
 	virtual tresult PLUGIN_API addTest (FIDString name, ITest* test) = 0;
 
@@ -130,7 +111,7 @@ public:
 
 	virtual tresult PLUGIN_API setEnvironment (ITest* environment) = 0;
 
-//------------------------------------------------------------------------
+	//--- ---------------------------------------------------------------------
 	static const FUID iid;
 };
 
@@ -151,12 +132,12 @@ that will be executed from the host
 class ITestFactory : public FUnknown
 {
 public:
-//------------------------------------------------------------------------
+	//--- ---------------------------------------------------------------------
 	/** create the tests that this module provides.
 		\param parentSuite : the test suite that the newly created tests
 							shall register with. */
 	virtual tresult PLUGIN_API createTests (FUnknown* context, ITestSuite* parentSuite) = 0;
-//------------------------------------------------------------------------
+	//--- ---------------------------------------------------------------------
 	static const FUID iid;
 };
 
@@ -166,6 +147,5 @@ DECLARE_CLASS_IID (ITestFactory, 0xAB483D3A, 0x15264650, 0xBF86EEF6, 0x9A327A93)
 DECLARE_CLASS_IID (ITestFactory, 0xE77EA913, 0x58AA4838, 0x986A4620, 0x53579080)
 #endif
 
-}
-
-#endif
+//------------------------------------------------------------------------
+} // namespace Steinberg

@@ -6,7 +6,7 @@ var searchData=
   ['adelaytestfactory',['ADelayTestFactory',['../classSteinberg_1_1Vst_1_1ADelayTestFactory.html',1,'Steinberg::Vst']]],
   ['again',['AGain',['../classSteinberg_1_1Vst_1_1AGain.html',1,'Steinberg::Vst']]],
   ['againcontroller',['AGainController',['../classSteinberg_1_1Vst_1_1AGainController.html',1,'Steinberg::Vst']]],
-  ['againeditorview',['AGainEditorView',['../classSteinberg_1_1Vst_1_1AGainEditorView.html',1,'Steinberg::Vst']]],
+  ['againuimessagecontroller',['AGainUIMessageController',['../classSteinberg_1_1Vst_1_1AGainUIMessageController.html',1,'Steinberg::Vst']]],
   ['againwithsidechain',['AGainWithSideChain',['../classSteinberg_1_1Vst_1_1AGainWithSideChain.html',1,'Steinberg::Vst']]],
   ['ambiencecontroller',['AmbienceController',['../classSteinberg_1_1Vst_1_1mda_1_1AmbienceController.html',1,'Steinberg::Vst::mda']]],
   ['ambienceprocessor',['AmbienceProcessor',['../classSteinberg_1_1Vst_1_1mda_1_1AmbienceProcessor.html',1,'Steinberg::Vst::mda']]],

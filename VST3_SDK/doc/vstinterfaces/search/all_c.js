@@ -2,6 +2,7 @@ var searchData=
 [
   ['macros_20for_20defining_20the_20class_20factory',['Macros for defining the class factory',['../../vstsdk/group__classFactoryMacros.html',1,'']]],
   ['mactive',['mActive',['../../vstsdk/classSteinberg_1_1Vst_1_1BypassProcessor.html#ab582c8b862d2c49ab3ad21ac7b036500',1,'Steinberg::Vst::BypassProcessor']]],
+  ['makecolorspec',['MakeColorSpec',['../../base/namespaceSteinberg.html#a09d4d9d1e784a8c828716951dd2dbaed',1,'Steinberg::MakeColorSpec(ColorComponent r, ColorComponent g, ColorComponent b)'],['../../base/namespaceSteinberg.html#a921b4c66c57a500044bf0d277304d6dd',1,'Steinberg::MakeColorSpec(ColorComponent r, ColorComponent g, ColorComponent b, ColorComponent a)']]],
   ['mask',['mask',['../structSteinberg_1_1Vst_1_1ChordEvent.html#a831873f40a39122089d004e06f800d17',1,'Steinberg::Vst::ChordEvent::mask()'],['../structSteinberg_1_1Vst_1_1ScaleEvent.html#a831873f40a39122089d004e06f800d17',1,'Steinberg::Vst::ScaleEvent::mask()']]],
   ['masks',['Masks',['../structSteinberg_1_1Vst_1_1Chord.html#a15c053e1a487c607ed4f57d29a07e117',1,'Steinberg::Vst::Chord']]],
   ['max',['Max',['../../base/namespaceSteinberg.html#a0f480f7384f085c2606eff5f310ad194',1,'Steinberg']]],
@@ -18,8 +19,8 @@ var searchData=
   ['mediatypes',['MediaTypes',['../group__vstBus.html#ga576e5da9bdc49812cf65f803bb303ad5',1,'Steinberg::Vst']]],
   ['memory',['memory',['../../vstsdk/classSteinberg_1_1MemoryStream.html#a2bd6d68918bc5a61a6c59af45597b073',1,'Steinberg::MemoryStream']]],
   ['memorysize',['memorySize',['../../vstsdk/classSteinberg_1_1MemoryStream.html#a231caddff87b860c91232012fa2abf60',1,'Steinberg::MemoryStream']]],
-  ['memorystream',['MemoryStream',['../../vstsdk/classSteinberg_1_1MemoryStream.html#a28d4c334557e9abb58b418e80c709905',1,'Steinberg::MemoryStream::MemoryStream()'],['../../vstsdk/classSteinberg_1_1MemoryStream.html#a6bcbcbec3385623cdb252d1082ae5766',1,'Steinberg::MemoryStream::MemoryStream(void *memory, TSize memorySize)']]],
   ['memorystream',['MemoryStream',['../../vstsdk/classSteinberg_1_1MemoryStream.html',1,'Steinberg']]],
+  ['memorystream',['MemoryStream',['../../vstsdk/classSteinberg_1_1MemoryStream.html#a28d4c334557e9abb58b418e80c709905',1,'Steinberg::MemoryStream::MemoryStream()'],['../../vstsdk/classSteinberg_1_1MemoryStream.html#a6bcbcbec3385623cdb252d1082ae5766',1,'Steinberg::MemoryStream::MemoryStream(void *memory, TSize memorySize)']]],
   ['memorystream_2eh',['memorystream.h',['../../vstsdk/memorystream_8h.html',1,'']]],
   ['messageid',['messageId',['../../vstsdk/classSteinberg_1_1Vst_1_1HostMessage.html#a8abe39cab1a7ce414d4f4458eb57de66',1,'Steinberg::Vst::HostMessage']]],
   ['midiio',['MidiIO',['../../vstsdk/classSteinberg_1_1Vst_1_1InterAppAudio_1_1MidiIO.html',1,'Steinberg::Vst::InterAppAudio']]],
@@ -34,5 +35,12 @@ var searchData=
   ['mix64',['mix64',['../../vstsdk/namespaceSteinberg_1_1Vst_1_1Algo.html#a462ca40a45befc344ea3de34256c067b',1,'Steinberg::Vst::Algo']]],
   ['mmainiobypass',['mMainIOBypass',['../../vstsdk/classSteinberg_1_1Vst_1_1BypassProcessor.html#a691325367c431ca1b7de7e4ee9a5c12f',1,'Steinberg::Vst::BypassProcessor']]],
   ['mmaxsamples',['mMaxSamples',['../../vstsdk/classSteinberg_1_1Vst_1_1AudioBuffer.html#ab2841cac1a12b91be43d0bf07ab9607b',1,'Steinberg::Vst::AudioBuffer']]],
+  ['modifier',['modifier',['../../base/structSteinberg_1_1KeyCode.html#abd7634cbb7389a3980e3b6b1b27c95a3',1,'Steinberg::KeyCode']]],
+  ['module',['Module',['../../vstsdk/classVST3_1_1Hosting_1_1Module.html',1,'VST3::Hosting']]],
+  ['module_2ecpp',['module.cpp',['../../vstsdk/module_8cpp.html',1,'']]],
+  ['module_2eh',['module.h',['../../vstsdk/module_8h.html',1,'']]],
+  ['module_5flinux_2ecpp',['module_linux.cpp',['../../vstsdk/module__linux_8cpp.html',1,'']]],
+  ['module_5fmac_2emm',['module_mac.mm',['../../vstsdk/module__mac_8mm.html',1,'']]],
+  ['module_5fwin32_2ecpp',['module_win32.cpp',['../../vstsdk/module__win32_8cpp.html',1,'']]],
   ['moutpos',['mOutPos',['../../vstsdk/structSteinberg_1_1Vst_1_1BypassProcessor_1_1Delay.html#a9f84222a3b328f760149aceee1e45124',1,'Steinberg::Vst::BypassProcessor::Delay']]]
 ];

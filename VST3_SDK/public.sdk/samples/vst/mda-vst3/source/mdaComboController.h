@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaComboController__
-#define __mdaComboController__
+#pragma once
 
 #include "mdaBaseController.h"
 #include "mdaComboProcessor.h"
@@ -31,8 +30,8 @@ public:
 	ComboController ();
 	~ComboController ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
 
 	//-----------------------------------------------------------------------------
 	enum ParameterIDs {
@@ -52,5 +51,3 @@ public:
 };
 
 }}} // namespaces
-
-#endif

@@ -43,6 +43,7 @@ float PianoProcessor::programParams[][NPARAMS] = {
 
 //-----------------------------------------------------------------------------
 PianoProcessor::PianoProcessor ()
+: currentProgram (0)
 {
 	setControllerClass (PianoController::uid);
 	allocParameters (NPARAMS);
@@ -136,8 +137,8 @@ void PianoProcessor::setParameter (ParamID index, ParamValue newValue, int32 sam
 		BaseProcessor::setParameter (index, newValue, sampleOffset);
 	else if (index == BaseController::kPresetParam) // program change
 	{
-		int32 program = std::min<int32> (NPROGS-1, newValue * NPROGS);
-		const float* newParams = programParams[program];
+		currentProgram = std::min<int32> (kNumPrograms - 1, (int32)(newValue * kNumPrograms));
+		const float* newParams = programParams[currentProgram];
 		if (newParams)
 		{
 			for (int32 i = 0; i < NPARAMS; i++)
@@ -160,6 +161,18 @@ void PianoProcessor::setParameter (ParamID index, ParamValue newValue, int32 sam
 			notes[eventPos++] = EVENTS_DONE;
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------
+void PianoProcessor::setCurrentProgram (Steinberg::uint32 val)
+{
+	currentProgram = val;
+}
+
+//-----------------------------------------------------------------------------
+void PianoProcessor::setCurrentProgramNormalized (ParamValue val)
+{
+	setCurrentProgram (std::min<int32> (kNumPrograms - 1, (int32)(val * kNumPrograms)));
 }
 
 //-----------------------------------------------------------------------------
@@ -206,7 +219,7 @@ void PianoProcessor::doProcessing (ProcessData& data)
 
 				if (!(l > -2.0f) || !(l < 2.0f))
 				{
-					printf ("what is this shit?   %ld,  %f,  %f\n", i, x, V->f0);
+					printf ("what is this shit?   %d,  %f,  %f\n", i, x, V->f0);
 					l = 0.0f;
 				}  
 				if (!(r > -2.0f) || !(r < 2.0f))

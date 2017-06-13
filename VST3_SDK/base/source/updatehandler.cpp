@@ -9,234 +9,316 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
 #include "base/source/updatehandler.h"
-#include "base/source/classfactory.h"
-#include "base/source/tarray.h"
-#include "base/source/tlist.h"
+#include "base/source/classfactoryhelpers.h"
+#include "base/source/fstring.h"
 
-#define NON_EXISTING_DEPENEDENCY_CHECK 0 // not now, mm
+#include <list>
+#include <map>
+#include <algorithm>
 
-namespace Steinberg  {
+#define NON_EXISTING_DEPENDENCY_CHECK 0 // not now, mm
+#define CLASS_NAME_TRACKED DEVELOPMENT
+
+namespace Steinberg {
 
 DEF_CLASS_IID (IUpdateManager)
 
-namespace Update
+namespace Update {
+const uint32 kHashSize = (1 << 8); // must be power of 2 (16 bytes * 256 == 4096)
+const uint32 kMapSize = 1024 * 10;
+
+//------------------------------------------------------------------------
+inline uint32 hashPointer (void* p)
 {
-	const uint32 kHashSize = (1 << 8);    // must be power of 2 (16 bytes * 256 == 4096)
-	const uint32 kMapSize = 1024 * 10;		  
-
-	inline uint32 hashPointer (void* p)
-	{
-		return (uint32)((uint64(p) >> 12) & (kHashSize - 1));
-	}
-
-	inline FUnknown* getUnknownBase (FUnknown* unknown)
-	{
-		FUnknown* result = 0;
-		if (unknown)
-			if (unknown->queryInterface (FUnknown::iid, (void**)&result) == kResultOk)
-				unknown->release ();
-
-		return result;
-	}
-
-	struct Dependency
-	{
-		Dependency (FUnknown* o = 0, IDependent* d = 0)
-		: obj (o)
-		, dep (d) 
-		#if DEVELOPMENT
-		, objClass (0)
-		, depClass (0)
-		#endif
-		{}
-
-		inline bool operator == (const Dependency& d) const { return obj == d.obj; }
-		inline bool operator != (const Dependency& d) const { return obj != d.obj; }
-		inline bool operator < (const Dependency& d) const { return obj < d.obj; }
-		inline bool operator > (const Dependency& d) const { return obj > d.obj; }
-		FUnknown* obj;
-		IDependent* dep;
-
-	#if DEVELOPMENT
-		FClassID objClass;
-		FClassID depClass;
-	#endif
-	};
-
-	struct DeferedChange 
-	{ 
-		DeferedChange (FUnknown* o = 0, int32 m = 0) : obj (o), msg (m) { }
-		~DeferedChange () {}
-		DeferedChange (const DeferedChange& r) : obj (r.obj), msg (r.msg) { }
-		inline bool operator == (const DeferedChange& d) const { return obj == d.obj; }
-		inline bool operator != (const DeferedChange& d) const { return obj != d.obj; }
-		FUnknown* obj; 
-		int32 msg; 
-	};	
-
-	struct UpdateData
-	{
-		UpdateData (FUnknown* o = 0, IDependent** d = 0, uint32 c = 0) : obj (o), dependents (d), count (c) {}
-		FUnknown* obj; 
-		IDependent** dependents;
-		uint32 count;
-		bool operator == (const UpdateData& d) const {return d.obj == obj && d.dependents == dependents;}
-	};
-
-	struct Table
-	{
-		TOrderedArray<Dependency> map[kHashSize];
-		TLinkedList<DeferedChange> defered;
-		TLinkedList<UpdateData> updateData;
-	};
-
-	void updateDone (FUnknown* unknown, int32 message)
-	{
-		if (message != IDependent::kDestroyed)
-		{
-			FObject* obj = FObject::unknownToObject (unknown);
-			if (obj)
-				obj->updateDone (message);
-		}
-	}
+	return (uint32) ((uint64 (p) >> 12) & (kHashSize - 1));
 }
 
-//------------------------------------------------------------------------ 
-SINGLE_CREATE_FUNC (UpdateHandler)
-//_META_CLASS_IFACE (UpdateHandler, IUpdateHandler)
-//_META_CLASS_IFACE (UpdateHandler, IUpdateManager)
+//------------------------------------------------------------------------
+inline IPtr<FUnknown> getUnknownBase (FUnknown* unknown)
+{
+	FUnknown* result = 0;
+	if (unknown)
+		unknown->queryInterface (FUnknown::iid, (void**)&result);
 
-//------------------------------------------------------------------------ 
-UpdateHandler::UpdateHandler ()
-: table (0)
+	return owned (result);
+}
+
+#if CLASS_NAME_TRACKED
+//------------------------------------------------------------------------
+struct Dependency
+{
+	Dependency (FUnknown* o = 0, IDependent* d = 0) : obj (o), dep (d), objClass (0), depClass (0)
+	{
+	}
+
+	inline bool operator== (const Dependency& d) const { return obj == d.obj; }
+	inline bool operator!= (const Dependency& d) const { return obj != d.obj; }
+	inline bool operator< (const Dependency& d) const { return obj < d.obj; }
+	inline bool operator> (const Dependency& d) const { return obj > d.obj; }
+	FUnknown* obj;
+	IDependent* dep;
+
+	FClassID objClass;
+	FClassID depClass;
+};
+#endif
+
+//------------------------------------------------------------------------
+struct DeferedChange
+{
+	DeferedChange (FUnknown* o = 0, int32 m = 0) : obj (o), msg (m) {}
+	~DeferedChange () {}
+	DeferedChange (const DeferedChange& r) : obj (r.obj), msg (r.msg) {}
+	inline bool operator== (const DeferedChange& d) const { return obj == d.obj; }
+	inline bool operator!= (const DeferedChange& d) const { return obj != d.obj; }
+	FUnknown* obj;
+	int32 msg;
+};
+
+//------------------------------------------------------------------------
+struct UpdateData
+{
+	UpdateData (FUnknown* o = 0, IDependent** d = 0, uint32 c = 0)
+	: obj (o), dependents (d), count (c)
+	{
+	}
+	FUnknown* obj;
+	IDependent** dependents;
+	uint32 count;
+	bool operator== (const UpdateData& d) const
+	{
+		return d.obj == obj && d.dependents == dependents;
+	}
+};
+
+//------------------------------------------------------------------------
+typedef std::list<DeferedChange> DeferedChangeList;
+typedef DeferedChangeList::const_iterator DeferedChangeListIterConst;
+
+typedef std::list<UpdateData> UpdateDataList;
+typedef UpdateDataList::const_iterator UpdateDataListIterConst;
+
+#if CLASS_NAME_TRACKED
+typedef std::list<Dependency> DependentList;
+#else
+typedef std::list<IDependent*> DependentList;
+#endif
+typedef DependentList::iterator DependentListIter;
+typedef DependentList::const_iterator DependentListIterConst;
+
+typedef std::map<const FUnknown*, DependentList> DependentMap;
+typedef DependentMap::iterator DependentMapIter;
+typedef DependentMap::const_iterator DependentMapIterConst;
+
+struct Table
+{
+	DependentMap depMap[kHashSize];
+	DeferedChangeList defered;
+	UpdateDataList updateData;
+};
+
+//------------------------------------------------------------------------
+void updateDone (FUnknown* unknown, int32 message)
+{
+	if (message != IDependent::kDestroyed)
+	{
+		FObject* obj = FObject::unknownToObject (unknown);
+		if (obj)
+			obj->updateDone (message);
+	}
+}
+}
+
+//------------------------------------------------------------------------
+SINGLE_CREATE_FUNC (UpdateHandler)
+
+//------------------------------------------------------------------------
+static int32 countEntries (Update::DependentMap& map)
+{
+	int32 total = 0;
+	Update::DependentMapIterConst iterMap = map.begin ();
+	while (iterMap != map.end ())
+	{
+		const Update::DependentList& list = iterMap->second;
+		Update::DependentListIterConst iterList = list.begin ();
+		while (iterList != list.end ())
+		{
+			total++;
+			++iterList;
+		}
+		++iterMap;
+	}
+	return total;
+}
+
+//------------------------------------------------------------------------
+UpdateHandler::UpdateHandler () : table (0)
 {
 	table = NEW Update::Table;
 	if (FObject::getUpdateHandler () == 0)
 		FObject::setUpdateHandler (this);
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 UpdateHandler::~UpdateHandler ()
 {
 	if (FObject::getUpdateHandler () == this)
 		FObject::setUpdateHandler (0);
 	delete table;
+	table = 0;
 }
 
-//------------------------------------------------------------------------ 
-tresult PLUGIN_API UpdateHandler::addDependent (FUnknown* u, IDependent* dependent)
+//------------------------------------------------------------------------
+tresult PLUGIN_API UpdateHandler::addDependent (FUnknown* u, IDependent* _dependent)
 {
-	FUnknown* unknown = Update::getUnknownBase (u);
-	if (!unknown || !dependent)
+	IPtr<FUnknown> unknown = Update::getUnknownBase (u);
+	if (!unknown || !_dependent)
 		return kResultFalse;
 
 	FGuard guard (lock);
-	Update::Dependency d (unknown, dependent);
 
-#if DEVELOPMENT
+#if CLASS_NAME_TRACKED
+	Update::Dependency dependent (unknown, _dependent);
+
 	FObject* obj = FObject::unknownToObject (unknown);
 	if (obj)
-		d.objClass = obj->isA ();
-	obj = FObject::unknownToObject (dependent);
+		dependent.objClass = obj->isA ();
+	obj = FObject::unknownToObject (_dependent);
 	if (obj)
-		d.depClass = obj->isA ();
+		dependent.depClass = obj->isA ();
+#else
+	IDependent* dependent = _dependent;
 #endif
 
-	table->map[Update::hashPointer (unknown)].add (d);
+	Update::DependentMap& map = table->depMap[Update::hashPointer (unknown)];
+	Update::DependentMapIter it = map.find (unknown);
+	if (it == map.end ())
+	{
+		Update::DependentList list;
+		list.push_back (dependent);
+		map[u] = list;
+	}
+	else
+	{
+		(*it).second.push_back (dependent);
+	}
+
 	return kResultTrue;
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 tresult PLUGIN_API UpdateHandler::removeDependent (FUnknown* u, IDependent* dependent)
 {
-	FUnknown* unknown = Update::getUnknownBase (u);
+	IPtr<FUnknown> unknown = Update::getUnknownBase (u);
 	if (unknown == 0 && dependent == 0)
 		return kResultFalse;
 
 	FGuard guard (lock);
 
-	FOREACH_T (Update::UpdateData, data, table->updateData)
-		if (data.obj == unknown || unknown == 0)
+	Update::UpdateDataListIterConst iter = table->updateData.begin ();
+	while (iter != table->updateData.end ())
+	{
+		if ((*iter).obj == unknown || unknown == 0)
 		{
-			for (uint32 count = 0; count < data.count; count++)
+			for (uint32 count = 0; count < (*iter).count; count++)
 			{
-				if (data.dependents [count] == dependent)
-					data.dependents [count] = 0;
+				if ((*iter).dependents[count] == dependent)
+					(*iter).dependents[count] = 0;
 			}
 		}
-	ENDFOR
-
-	if (unknown == 0)            // Remove all objects for dependent
+		++iter;
+	}
+	// Remove all objects for the given dependent
+	if (unknown == 0)
 	{
 		for (uint32 j = 0; j < Update::kHashSize; j++)
 		{
-			for (int32 i = 0; i < table->map[j].total (); i++)
+			Update::DependentMap& map = table->depMap[j];
+			Update::DependentMapIter iterMap = map.begin ();
+			while (iterMap != map.end ())
 			{
-				while (table->map[j].at(i).dep == dependent)
+				Update::DependentList& list = (*iterMap).second;
+				Update::DependentListIter iterList = list.begin ();
+				while (iterList != list.end ())
 				{
-					table->map[j].removeAt (i);
-					i--;
+					if ((*iterList) == dependent)
+						list.erase (iterList++);
+					else
+						++iterList;
 				}
+				++iterMap;
 			}
 		}
 	}
 	else
 	{
-		Update::Dependency d (unknown, dependent);
-		TOrderedArray<Update::Dependency>& m = table->map[Update::hashPointer (unknown)];
-
 		bool mustFlush = true;
 
-		int32 index = m.index (d);
-		
-#if NON_EXISTING_DEPENEDENCY_CHECK
-		ASSERT (index >= 0 && "ERROR: Trying to remove a non existing dependency!") 
+		Update::DependentMap& map = table->depMap[Update::hashPointer (unknown)];
+		Update::DependentMapIter iterList = map.find (unknown);
+
+#if NON_EXISTING_DEPENDENCY_CHECK
+		ASSERT (iterList != map.end () && "ERROR: Trying to remove a non existing dependency!")
 #endif
-		if (index >= 0)
+		if (iterList != map.end ())
 		{
-			if (dependent == 0)    // Remove all dependents of object
+			if (dependent == 0) // Remove all dependents of object
 			{
-				while (m.at (index) == d)
-					m.removeAt (index);			
+				map.erase (iterList);
 			}
 			else // Remove one dependent
 			{
-				for (int32 i = index; i < m.total (); i++)
+				int32 eraseCount = 0;
+				Update::DependentList& dependentlist = (*iterList).second;
+				Update::DependentListIter iterDependentlist = dependentlist.begin ();
+				while (iterDependentlist != dependentlist.end ())
 				{
-					Update::Dependency& dep = m.at (i);
-					if (dep.obj != unknown)
-						break;
-					if (dep.dep == dependent)
+#if CLASS_NAME_TRACKED
+					if ((*iterDependentlist).dep == dependent)
+#else
+					if ((*iterDependentlist) == dependent)
+#endif
 					{
-						m.removeAt (i);
-						i--;
+						dependentlist.erase (iterDependentlist++);
+						eraseCount++;
+						if (dependentlist.empty ())
+						{
+							map.erase (iterList);
+							break;
+						}
 					}
 					else
+					{
+						++iterDependentlist;
 						mustFlush = false;
+					}
 				}
 			}
 		}
@@ -247,44 +329,40 @@ tresult PLUGIN_API UpdateHandler::removeDependent (FUnknown* u, IDependent* depe
 	return kResultTrue;
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 tresult UpdateHandler::doTriggerUpdates (FUnknown* u, int32 message, bool suppressUpdateDone)
 {
-	FUnknown* unknown = Update::getUnknownBase (u);
+	IPtr<FUnknown> unknown = Update::getUnknownBase (u);
 	if (!unknown)
 		return kResultFalse;
 
-#define DYNAMIC_DEPENDENTS_MAPSIZE 1
-#if DYNAMIC_DEPENDENTS_MAPSIZE
-	// to avoid crashes due to stack overflow, we reduce the amount of memory reserved for the dependents
+	// to avoid crashes due to stack overflow, we reduce the amount of memory reserved for the
+	// dependents
 	IDependent* smallDependents[Update::kMapSize / 10]; // 8kB for x64
 	IDependent** dependents = smallDependents;
 	int32 maxDependents = Update::kMapSize / 10;
-#else
-	IDependent* dependents[Update::kMapSize];
-	static const int32 maxDependents = Update::kMapSize;
-#endif
 	int32 count = 0;
- 
-	{	FGuard g (lock); // scope for lock
 
-		TOrderedArray<Update::Dependency>& m = table->map[Update::hashPointer (unknown)];
-		Update::Dependency d (unknown, 0);
+	{
+		FGuard guard (lock); // scope for lock
 
-		int32 index = m.index (d);
-		if (index >= 0)
+		Update::DependentMap& map = table->depMap[Update::hashPointer (unknown)];
+		Update::DependentMapIterConst iterList = map.find (unknown);
+		if (iterList != map.end ())
 		{
-			while (true)
+			const Update::DependentList& dependentlist = (*iterList).second;
+			Update::DependentListIterConst iterDependentlist = dependentlist.begin ();
+			while (iterDependentlist != dependentlist.end ())
 			{
-				dependents[count] = m.at(index).dep;
+#if CLASS_NAME_TRACKED
+				dependents[count] = (*iterDependentlist).dep;
+#else
+				dependents[count] = *iterDependentlist;
+#endif
 				count++;
-				index++;
-				if (m.at (index).obj != unknown)
-					break;
 
 				if (count >= maxDependents)
 				{
-#if DYNAMIC_DEPENDENTS_MAPSIZE
 					if (dependents == smallDependents)
 					{
 						dependents = new IDependent*[Update::kMapSize];
@@ -292,12 +370,12 @@ tresult UpdateHandler::doTriggerUpdates (FUnknown* u, int32 message, bool suppre
 						maxDependents = Update::kMapSize;
 					}
 					else
-#endif
 					{
 						WARNING ("Dependency overflow")
 						break;
 					}
 				}
+				++iterDependentlist;
 			}
 		}
 
@@ -305,9 +383,9 @@ tresult UpdateHandler::doTriggerUpdates (FUnknown* u, int32 message, bool suppre
 		if (count > 0)
 		{
 			Update::UpdateData data (unknown, dependents, count);
-			table->updateData.append (data);
+			table->updateData.push_back (data);
 		}
-	}
+	} // end scope
 
 	int32 i = 0;
 	while (i < count)
@@ -317,16 +395,15 @@ tresult UpdateHandler::doTriggerUpdates (FUnknown* u, int32 message, bool suppre
 		i++;
 	}
 
-#if DYNAMIC_DEPENDENTS_MAPSIZE
 	if (dependents != smallDependents)
-		delete [] dependents;
-#endif
+		delete[] dependents;
 
 	// remove update data from the stack
 	if (count > 0)
 	{
-		FGuard g (lock);
-		table->updateData.removeLast ();
+		FGuard guard (lock);
+
+		table->updateData.pop_back ();
 	}
 
 	// send update done message
@@ -336,25 +413,25 @@ tresult UpdateHandler::doTriggerUpdates (FUnknown* u, int32 message, bool suppre
 	return count > 0 ? kResultTrue : kResultFalse; // Object was found and has been updated
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 tresult PLUGIN_API UpdateHandler::triggerUpdates (FUnknown* u, int32 message)
 {
 	return doTriggerUpdates (u, message, false);
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 tresult PLUGIN_API UpdateHandler::deferUpdates (FUnknown* u, int32 message)
 {
-	FUnknown* unknown = Update::getUnknownBase (u);
+	IPtr<FUnknown> unknown = Update::getUnknownBase (u);
 	if (!unknown)
 		return kResultFalse;
 
-	FGuard g (lock);
+	FGuard guard (lock);
 
-	TOrderedArray<Update::Dependency>& m = table->map[Update::hashPointer (unknown)];
-	Update::Dependency d (unknown, 0);
-	bool hasDependency = m.index (d) >= 0;
+	Update::DependentMap& map = table->depMap[Update::hashPointer (unknown)];
+	Update::DependentMapIterConst iterList = map.find (unknown);
 
+	bool hasDependency = (iterList != map.end ());
 	if (hasDependency == false)
 	{
 		Update::updateDone (unknown, message);
@@ -362,54 +439,55 @@ tresult PLUGIN_API UpdateHandler::deferUpdates (FUnknown* u, int32 message)
 	}
 
 	bool found = false;
-	TLinkedListIterator <Update::DeferedChange> iter (table->defered);
-	while (iter.done () == false)
+	Update::DeferedChangeListIterConst iter = table->defered.begin ();
+	while (iter != table->defered.end ())
 	{
-		const Update::DeferedChange& dc = iter.next ();
-		if (dc.obj == unknown && dc.msg == message)
+		if ((*iter).obj == unknown && (*iter).msg == message)
 		{
 			found = true;
 			break;
 		}
+		++iter;
 	}
 
 	if (!found)
 	{
 		Update::DeferedChange change (unknown, message);
-		table->defered.append (change);
+		table->defered.push_back (change);
 	}
 
 	return kResultTrue;
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 tresult PLUGIN_API UpdateHandler::triggerDeferedUpdates (FUnknown* unknown)
 {
-	TLinkedList<Update::DeferedChange> deferedAgain;
-
+	Update::DeferedChangeList deferedAgain;
 	if (!unknown)
 	{
-		while (table->defered.isEmpty () == false)
+		while (table->defered.empty () == false)
 		{
 			// Remove first from queue
 			lock.lock ();
 
-			FUnknown* obj = table->defered.first ().obj;
-			int32 msg = table->defered.first().msg;
-			table->defered.removeFirst ();
+			FUnknown* obj = table->defered.front ().obj;
+			int32 msg = table->defered.front ().msg;
+			table->defered.pop_front ();
 
 			// check if this object is currently being updated. in this case, defer update again...
 			bool canSignal = true;
-			FOREACH_T (Update::UpdateData, data, table->updateData)
-				if (data.obj == obj)
+			Update::UpdateDataListIterConst iter = table->updateData.begin ();
+			while (iter != table->updateData.end ())
+			{
+				if ((*iter).obj == obj)
 				{
 					canSignal = false;
 					break;
 				}
-			ENDFOR
-
+				++iter;
+			}
 			lock.unlock ();
-		
+
 			if (canSignal)
 			{
 				triggerUpdates (obj, msg);
@@ -417,43 +495,46 @@ tresult PLUGIN_API UpdateHandler::triggerDeferedUpdates (FUnknown* unknown)
 			else
 			{
 				Update::DeferedChange change (obj, msg);
-				deferedAgain.append (change);
+				deferedAgain.push_back (change);
 			}
 		}
-
 	}
 	else
 	{
-		FUnknown* object = Update::getUnknownBase (unknown);
+		IPtr<FUnknown> object = Update::getUnknownBase (unknown);
 		Update::DeferedChange tmp (object);
-	
+
 		while (true)
-		{		
+		{
 			lock.lock ();
-			int32 index = table->defered.index (tmp);
-			if (index < 0)
+			Update::DeferedChangeListIterConst it =
+			    std::find (table->defered.begin (), table->defered.end (), tmp);
+			if (it == table->defered.end ())
 			{
 				lock.unlock ();
 				return kResultTrue;
 			}
-			Update::DeferedChange& def = table->defered.at (index); 
-			if (def.obj != 0)
-			{			
-				int32 msg = def.msg;
-				table->defered.removeAt (index);
-				
-				// check if this object is currently being updated. in this case, defer update again...
+
+			if ((*it).obj != 0)
+			{
+				int32 msg = (*it).msg;
+				table->defered.erase (it);
+
+				// check if this object is currently being updated. in this case, defer update
+				// again...
 				bool canSignal = true;
-				FOREACH_T (Update::UpdateData, data, table->updateData)
-					if (data.obj == object)
+				Update::UpdateDataListIterConst iter = table->updateData.begin ();
+				while (iter != table->updateData.end ())
+				{
+					if ((*iter).obj == object)
 					{
 						canSignal = false;
 						break;
 					}
-				ENDFOR
-
+					++iter;
+				}
 				lock.unlock ();
-				
+
 				if (canSignal)
 				{
 					triggerUpdates (object, msg);
@@ -461,76 +542,79 @@ tresult PLUGIN_API UpdateHandler::triggerDeferedUpdates (FUnknown* unknown)
 				else
 				{
 					Update::DeferedChange change (object, msg);
-					deferedAgain.append (change);
+					deferedAgain.push_back (change);
 				}
-			}	
-		}			
+			}
+		}
 	}
 
-	if (deferedAgain.isEmpty () == false)
+	if (deferedAgain.empty () == false)
 	{
 		FGuard guard (lock);
-		TLinkedListIterator <Update::DeferedChange> iter (deferedAgain);
-		while (!iter.done ())
-			table->defered.append (iter.next ());
+
+		Update::DeferedChangeListIterConst iter = deferedAgain.begin ();
+		while (iter != deferedAgain.end ())
+		{
+			table->defered.push_back (*iter);
+			++iter;
+		}
 	}
 
 	return kResultTrue;
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 tresult PLUGIN_API UpdateHandler::cancelUpdates (FUnknown* u)
 {
-	FUnknown* unknown = Update::getUnknownBase (u);
+	IPtr<FUnknown> unknown = Update::getUnknownBase (u);
 	if (!unknown)
 		return kResultFalse;
 
 	FGuard guard (lock);
 
 	Update::DeferedChange change (unknown, 0);
-	while (table->defered.remove (change)) 
-	{
-	}
+	table->defered.remove (change);
+
 	return kResultTrue;
 }
 
-
 #if DEVELOPMENT
-
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 bool UpdateHandler::checkDeferred (FUnknown* object)
 {
-	FUnknown* unknown = Update::getUnknownBase (object);
-	
+	IPtr<FUnknown> unknown = Update::getUnknownBase (object);
+
 	FGuard guard (lock);
-	TLinkedListIterator <Update::DeferedChange> iter (table->defered);
-	while (iter.done () == false)
-	{
-		if (iter.next ().obj == unknown)
-			return true;
-	}
+
+	Update::DeferedChange tmp (unknown);
+	Update::DeferedChangeListIterConst it =
+	    std::find (table->defered.begin (), table->defered.end (), tmp);
+	if (it != table->defered.end ())
+		return true;
+
 	return false;
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 bool UpdateHandler::hasDependencies (FUnknown* u)
 {
-	FUnknown* unknown = Update::getUnknownBase (u);
+	IPtr<FUnknown> unknown = Update::getUnknownBase (u);
 	if (!unknown)
 		return false;
 
-	FGuard g (lock);
+	FGuard guard (lock);
 
-	TOrderedArray<Update::Dependency>& m = table->map[Update::hashPointer (unknown)];
-	Update::Dependency d (unknown, 0);
-	bool hasDependency = m.index (d) >= 0;
+	Update::DependentMap& map = table->depMap[Update::hashPointer (unknown)];
+	Update::DependentMapIterConst iterList = map.find (unknown);
+	bool hasDependency = (iterList != map.end ());
+
 	return hasDependency;
 }
 
-//------------------------------------------------------------------------ 
+//------------------------------------------------------------------------
 void UpdateHandler::printForObject (FObject* obj) const
 {
-	FUnknown* unknown = Update::getUnknownBase (obj);
+	IPtr<FUnknown> unknown = Update::getUnknownBase (obj);
 	if (!unknown)
 		return;
 
@@ -538,24 +622,46 @@ void UpdateHandler::printForObject (FObject* obj) const
 
 	bool header = false;
 
-	TOrderedArray<Update::Dependency>& m = table->map[Update::hashPointer (unknown)];
-
-	for (int32 i = 0; i < m.total (); i++) 
+	Update::DependentMap& map = table->depMap[Update::hashPointer (unknown)];
+	Update::DependentMapIterConst iterList = map.begin ();
+	while (iterList != map.end ())
 	{
-		const Update::Dependency& d = m.at (i);
-
-		if (d.obj == unknown || d.dep == dep.getInterface ()) 
+		const Update::DependentList& dependentlist = (*iterList).second;
+		Update::DependentListIterConst iterDependentlist = dependentlist.begin ();
+		while (iterDependentlist != dependentlist.end ())
 		{
-			if (!header) 
+#if CLASS_NAME_TRACKED
+			if ((*iterList).first == unknown || (*iterDependentlist).dep == dep.getInterface ())
 			{
-				FDebugPrint ("Dependencies for object %8" FORMAT_INT64A" %s\n", (uint64)obj, obj->isA ());
-				header = true;
+				if (!header)
+				{
+					FDebugPrint ("Dependencies for object %8" FORMAT_INT64A " %s\n", (uint64)obj,
+					             obj->isA ());
+					header = true;
+				}
+				FDebugPrint ("%s %8" FORMAT_INT64A "\n <- %s %8" FORMAT_INT64A "\n",
+				             (*iterDependentlist).depClass, (uint64) (*iterDependentlist).dep,
+				             (*iterDependentlist).objClass, (uint64) ((*iterList).first));
 			}
-			FDebugPrint ("%s %8" FORMAT_INT64A"\n <- %s %8" FORMAT_INT64A"\n", d.depClass, (uint64)d.dep, d.objClass, (uint64)d.obj);
+#else
+			if ((*iterList).first == unknown || (*iterDependentlist) == dep.getInterface ())
+			{
+				if (!header)
+				{
+					FDebugPrint ("Dependencies for object %8" FORMAT_INT64A " %s\n", (uint64)obj,
+					             obj->isA ());
+					header = true;
+				}
+				FDebugPrint ("%8" FORMAT_INT64A "\n <- %8" FORMAT_INT64A "\n",
+				             (uint64) (*iterDependentlist), (uint64) ((*iterList).first));
+			}
+#endif
 		}
+
+		++iterList;
 	}
 }
-
 #endif
 
+//------------------------------------------------------------------------
 } // namespace Steinberg

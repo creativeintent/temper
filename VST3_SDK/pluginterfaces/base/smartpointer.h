@@ -2,34 +2,17 @@
 // Project     : SDK Core
 //
 // Category    : SDK Core Interfaces
-// Filename    : pluginterfaces/base/funknown.h
+// Filename    : pluginterfaces/base/smartpointer.h
 // Created by  : Steinberg, 01/2004
 // Description : Basic Interface
 //
 //-----------------------------------------------------------------------------
-// LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// This file is part of a Steinberg SDK. It is subject to the license terms
+// in the LICENSE file found in the top-level directory of this distribution
+// and at www.steinberg.net/sdklicenses. 
+// No part of the SDK, including this file, may be copied, modified, propagated,
+// or distributed except according to the terms contained in the LICENSE file.
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety
-// without prior written agreement by Steinberg Media Technologies GmbH.
-// This SDK must not be used to re-engineer or manipulate any technology used
-// in any Steinberg or Third-party application or software module,
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
-//
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
-// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
-// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-// OF THE POSSIBILITY OF SUCH DAMAGE.
-//------------------------------------------------------------------------------
 
 #pragma once
 
@@ -51,9 +34,9 @@ namespace Steinberg {
  - handles refCount of the interface
  - Usage example:
  \code
-	IPtr<IPath> path (sharedPath);
-	if (path)
-		path->ascend ();
+    IPtr<IPath> path (sharedPath);
+    if (path)
+        path->ascend ();
  \endcode
  */
 //------------------------------------------------------------------------
@@ -66,8 +49,7 @@ public:
 	inline IPtr (const IPtr&);
 
 	template <class T>
-	inline IPtr (const IPtr<T>& other)
-	: ptr (other.get ())
+	inline IPtr (const IPtr<T>& other) : ptr (other.get ())
 	{
 		if (ptr)
 			ptr->addRef ();
@@ -110,8 +92,7 @@ protected:
 
 //------------------------------------------------------------------------
 template <class I>
-inline IPtr<I>::IPtr (I* _ptr, bool addRef)
-: ptr (_ptr)
+inline IPtr<I>::IPtr (I* _ptr, bool addRef) : ptr (_ptr)
 {
 	if (ptr && addRef)
 		ptr->addRef ();
@@ -119,8 +100,7 @@ inline IPtr<I>::IPtr (I* _ptr, bool addRef)
 
 //------------------------------------------------------------------------
 template <class I>
-inline IPtr<I>::IPtr (const IPtr<I>& other)
-: ptr (other.ptr)
+inline IPtr<I>::IPtr (const IPtr<I>& other) : ptr (other.ptr)
 {
 	if (ptr)
 		ptr->addRef ();
@@ -128,8 +108,7 @@ inline IPtr<I>::IPtr (const IPtr<I>& other)
 
 //------------------------------------------------------------------------
 template <class I>
-inline IPtr<I>::IPtr ()
-: ptr (0)
+inline IPtr<I>::IPtr () : ptr (0)
 {
 }
 
@@ -231,5 +210,142 @@ IPtr<I> owned (I* p)
 	return IPtr<I> (p, false);
 }
 
+/** Assigning shared object to an IPtr.
+ Example:
+ \code
+ IPtr<IPath> path = shared (iface.getXY ());
+ \endcode
+ */
+template <class I>
+IPtr<I> shared (I* p)
+{
+	return IPtr<I> (p, true);
+}
+
+#if SMTG_CPP11_STDLIBSUPPORT
 //------------------------------------------------------------------------
+// Ownership functionality
+//------------------------------------------------------------------------
+namespace SKI {
+namespace Detail {
+struct Adopt;
+} // Detail
+
+/** Strong typedef for shared reference counted objects.
+ *	Use SKI::adopt to unwrap the provided object.
+ * @tparam T Referenced counted type.
+ */
+template <typename T>
+class Shared
+{
+	friend struct Detail::Adopt;
+	T* obj = nullptr;
+};
+
+/** Strong typedef for transferring the ownership of reference counted objects.
+ *	Use SKI::adopt to unwrap the provided object.
+ * After calling adopt the reference in this object is null.
+ * @tparam T Referenced counted type.
+ */
+template <typename T>
+class Owned
+{
+	friend struct Detail::Adopt;
+	T* obj = nullptr;
+};
+
+/** Strong typedef for using reference counted objects.
+ *	Use SKI::adopt to unwrap the provided object.
+ * After calling adopt the reference in this object is null.
+ * @tparam T Referenced counted type.
+ */
+template <typename T>
+class Used
+{
+	friend struct Detail::Adopt;
+	T* obj = nullptr;
+};
+
+namespace Detail {
+
+struct Adopt
+{
+	template <typename T>
+	static IPtr<T> adopt (Shared<T>& ref)
+	{
+		using Steinberg::shared;
+		return shared (ref.obj);
+	}
+
+	template <typename T>
+	static IPtr<T> adopt (Owned<T>& ref)
+	{
+		using Steinberg::owned;
+		IPtr<T> out = owned (ref.obj);
+		ref.obj = nullptr;
+		return out;
+	}
+
+	template <typename T>
+	static T* adopt (Used<T>& ref)
+	{
+		return ref.obj;
+	}
+
+	template <template <typename> class OwnerType, typename T>
+	static OwnerType<T> toOwnerType (T* obj)
+	{
+		OwnerType<T> out;
+		out.obj = obj;
+		return out;
+	}
+};
+
+} // Detail
+
+/** Common function to adopt referenced counted object. 
+  *	@tparam T			Referenced counted type.
+  * @param ref			The reference to be adopted in a smart pointer.
+  */
+template <typename T>
+IPtr<T> adopt (Shared<T>& ref) { return Detail::Adopt::adopt (ref); }
+
+template <typename T>
+IPtr<T> adopt (Shared<T>&& ref) { return Detail::Adopt::adopt (ref); }
+
+/** Common function to adopt referenced counted object. 
+  *	@tparam T			Referenced counted type.
+  * @param ref			The reference to be adopted in a smart pointer.
+  */
+template <typename T>
+IPtr<T> adopt (Owned<T>& ref) { return Detail::Adopt::adopt (ref); }
+
+template <typename T>
+IPtr<T> adopt (Owned<T>&& ref) { return Detail::Adopt::adopt (ref); }
+
+/** Common function to adopt referenced counted object. 
+  *	@tparam T			Referenced counted type.
+  * @param ref			The reference to be adopted in a smart pointer.
+  */
+template <typename T>
+T* adopt (Used<T>& ref) { return Detail::Adopt::adopt (ref); }
+
+template <typename T>
+T* adopt (Used<T>&& ref) { return Detail::Adopt::adopt (ref); }
+
+/** Common function to wrap owned instances. */
+template <typename T>
+Owned<T> toOwned (T* obj) { return Detail::Adopt::toOwnerType<Owned> (obj); }
+
+/** Common function to wrap shared instances. */
+template <typename T>
+Shared<T> toShared (T* obj) { return Detail::Adopt::toOwnerType<Shared> (obj); }
+
+/** Common function to wrap used instances. */
+template <typename T>
+Used<T> toUsed (T* obj) { return Detail::Adopt::toOwnerType<Used> (obj); }
+
+//------------------------------------------------------------------------
+} // SKI
+#endif
 } // Steinberg

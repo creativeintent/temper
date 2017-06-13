@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaSpecMeterController__
-#define __mdaSpecMeterController__
+#pragma once
 
 #include "mdaBaseController.h"
 #include "mdaSpecMeterProcessor.h"
@@ -34,7 +33,7 @@ public:
 	SpecMeterController ();
 	~SpecMeterController ();
 
-	tresult PLUGIN_API initialize (FUnknown* context);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
 
 	enum {
 		kBandParamStart = 100,
@@ -54,5 +53,3 @@ public:
 };
 
 }}} // namespaces
-
-#endif

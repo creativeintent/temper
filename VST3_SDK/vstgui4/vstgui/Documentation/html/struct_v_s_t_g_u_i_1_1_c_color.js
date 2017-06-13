@@ -7,7 +7,7 @@ var struct_v_s_t_g_u_i_1_1_c_color =
     [ "getLightness", "struct_v_s_t_g_u_i_1_1_c_color.html#afbe3398f3c608e9dcca57b1447965fa6", null ],
     [ "getLuma", "struct_v_s_t_g_u_i_1_1_c_color.html#a80457a45716a05e175147bf0140d53ef", null ],
     [ "operator!=", "struct_v_s_t_g_u_i_1_1_c_color.html#ac1cb5c955c506bc4c29887b2aff97f58", null ],
-    [ "operator()", "struct_v_s_t_g_u_i_1_1_c_color.html#af2ef21cceb49526bc357b148e9cbf886", null ],
+    [ "operator()", "struct_v_s_t_g_u_i_1_1_c_color.html#a6f4aea17ced20f64d7655a492a006764", null ],
     [ "operator=", "struct_v_s_t_g_u_i_1_1_c_color.html#a6580cb7fe852ac8da599b496767adb38", null ],
     [ "operator==", "struct_v_s_t_g_u_i_1_1_c_color.html#a968f80c6ac4eb9bbd831a9d7dd1bcfd8", null ],
     [ "operator~", "struct_v_s_t_g_u_i_1_1_c_color.html#aa81e56e4e0c54b02c471c25f7be34965", null ],

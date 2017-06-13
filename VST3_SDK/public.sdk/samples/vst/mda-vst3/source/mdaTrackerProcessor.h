@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __mdaTrackerProcessor__
-#define __mdaTrackerProcessor__
+#pragma once
 
 #include "mdaBaseProcessor.h"
 
@@ -30,11 +29,11 @@ public:
 	TrackerProcessor ();
 	~TrackerProcessor ();
 	
-	tresult PLUGIN_API initialize (FUnknown* context);
-	tresult PLUGIN_API terminate ();
-	tresult PLUGIN_API setActive (TBool state);
+	tresult PLUGIN_API initialize (FUnknown* context) SMTG_OVERRIDE;
+	tresult PLUGIN_API terminate () SMTG_OVERRIDE;
+	tresult PLUGIN_API setActive (TBool state) SMTG_OVERRIDE;
 
-	void doProcessing (ProcessData& data);
+	void doProcessing (ProcessData& data) SMTG_OVERRIDE;
 
 //-----------------------------------------------------------------------------
 	static FUnknown* createInstance (void*) { return (IAudioProcessor*)new TrackerProcessor; }
@@ -42,7 +41,7 @@ public:
 //-----------------------------------------------------------------------------
 protected:
 	float filterFreq(float hz);
-	void recalculate ();
+	void recalculate () SMTG_OVERRIDE;
 
 	float fi, fo, thr, phi, dphi, ddphi, trans;
 	float buf1, buf2, dn, bold, wet, dry;
@@ -52,5 +51,3 @@ protected:
 };
 
 }}} // namespaces
-
-#endif

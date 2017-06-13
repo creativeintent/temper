@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/adelay/source/adelayprocessor.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -41,6 +40,7 @@
 #include "pluginterfaces/base/ibstream.h"
 #include "pluginterfaces/vst/ivstparameterchanges.h"
 #include <algorithm>
+#include <cstdlib>
 
 namespace Steinberg {
 namespace Vst {
@@ -88,12 +88,12 @@ tresult PLUGIN_API ADelayProcessor::setActive (TBool state)
 
 	if (state)
 	{
-		mBuffer = (float**)malloc (numChannels * sizeof (float*));
+		mBuffer = (float**)std::malloc (numChannels * sizeof (float*));
 		
 		size_t size = (size_t)(processSetup.sampleRate * sizeof (float) + 0.5);
 		for (int32 channel = 0; channel < numChannels; channel++)
 		{
-			mBuffer[channel] = (float*)malloc (size);	// 1 second delay max
+			mBuffer[channel] = (float*)std::malloc (size);	// 1 second delay max
 			memset (mBuffer[channel], 0, size);
 		}
 		mBufferPos = 0;
@@ -104,9 +104,9 @@ tresult PLUGIN_API ADelayProcessor::setActive (TBool state)
 		{
 			for (int32 channel = 0; channel < numChannels; channel++)
 			{
-				free (mBuffer[channel]);
+				std::free (mBuffer[channel]);
 			}
-			free (mBuffer);
+			std::free (mBuffer);
 			mBuffer = 0;
 		}
 	}

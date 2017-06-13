@@ -1,15 +1,14 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
-// Filename    : public.sdk/samples/vst/hostchecker/source/hostchecker.h
+// Filename    : public.sdk/samples/vst/hostchecker/source/dirtyflagcontroller.h
 // Created by  : Steinberg, 04/2012
 // Description :
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -36,7 +35,8 @@
 //-----------------------------------------------------------------------------
 
 #include "dirtyflagcontroller.h"
-#include "hostchecker.h"
+#include "hostcheckercontroller.h"
+#include "vstgui/lib/controls/ccontrol.h"
 
 namespace Steinberg {
 namespace Vst {
@@ -45,7 +45,7 @@ namespace Vst {
 //	DirtyFlagController
 //-----------------------------------------------------------------------------
 DirtyFlagController::DirtyFlagController (HostCheckerController* controller)
-: mController (controller), mDirtyButton (0)
+: mController (controller), mDirtyButton (nullptr)
 {
 }
 
@@ -53,13 +53,13 @@ DirtyFlagController::DirtyFlagController (HostCheckerController* controller)
 DirtyFlagController::~DirtyFlagController ()
 {
 	if (mDirtyButton)
-		mDirtyButton->setListener (0);
+		mDirtyButton->setListener (nullptr);
 }
 
 //-----------------------------------------------------------------------------
 VSTGUI::CView* DirtyFlagController::verifyView (VSTGUI::CView* view,
 												const VSTGUI::UIAttributes& attributes,
-												VSTGUI::IUIDescription* description)
+												const VSTGUI::IUIDescription* description)
 {
 	mDirtyButton = dynamic_cast<VSTGUI::CControl*> (view);
 	if (mDirtyButton)
@@ -71,8 +71,8 @@ VSTGUI::CView* DirtyFlagController::verifyView (VSTGUI::CView* view,
 //-----------------------------------------------------------------------------
 void DirtyFlagController::controlBeginEdit (VSTGUI::CControl* pControl)
 {
-	if (mController)
-		mController->triggerDirtyFlag ();
+	/* TODO if (mController)
+		mController->triggerDirtyFlag ();*/
 }
 
 //-----------------------------------------------------------------------------

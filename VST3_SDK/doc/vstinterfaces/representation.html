@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 Interfaces
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -82,10 +82,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Remote Representation of Parameters Support </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Extended IEditController interface for a component.</p>
+<div class="textblock"><p>Extended Plug-in interface IEditController for a component.</p>
 <h1><a class="anchor" id="reintro"></a>
 Introduction</h1>
-<p>Since VST 3.5 a new interface is provided: <a class="el" href="classSteinberg_1_1Vst_1_1IXmlRepresentationController.html" title="Extended IEditController interface for a component. ">Steinberg::Vst::IXmlRepresentationController</a></p>
+<p>Since VST 3.5 a new interface is provided: <a class="el" href="classSteinberg_1_1Vst_1_1IXmlRepresentationController.html" title="Extended Plug-in interface IEditController for a component. ">Steinberg::Vst::IXmlRepresentationController</a></p>
 <ul>
 <li>[plug imp]</li>
 <li>[extends IEditController]</li>
@@ -200,13 +200,13 @@ Graphical overview</h1>
  </p>
 <h1><a class="anchor" id="example"></a>
 Example of implementation using helper class</h1>
-<p>See <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/vstsdk/vstsdk.tag:../vstsdk/" href="../vstsdk/classSteinberg_1_1Vst_1_1XmlRepresentationHelper.html">Steinberg::Vst::XmlRepresentationHelper</a>.</p>
+<p>See <a class="elRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/vstsdk/vstsdk.tag:../vstsdk/" href="../vstsdk/classSteinberg_1_1Vst_1_1XmlRepresentationHelper.html">Steinberg::Vst::XmlRepresentationHelper</a>.</p>
 <p><br />
 <br />
  </p>
 <h1><a class="anchor" id="table"></a>
 Location table for VST XMLs Representation</h1>
-<p>When a host needs to use a VST XMLs Representation (for internal use like Quick-Controls assignment to get the most important parameters sorted per Page of a Plug-in), the host will check the presence in a specific location for a given remote and for this given Plug-in a Representation XML file with the remote name as filename (check below about how the path is defined). If this is not found the host will ask the Plug-in by using <a class="el" href="classSteinberg_1_1Vst_1_1IXmlRepresentationController.html" title="Extended IEditController interface for a component. ">Steinberg::Vst::IXmlRepresentationController</a> (if implemented).</p>
+<p>When a host needs to use a VST XMLs Representation (for internal use like Quick-Controls assignment to get the most important parameters sorted per Page of a Plug-in), the host will check the presence in a specific location for a given remote and for this given Plug-in a Representation XML file with the remote name as filename (check below about how the path is defined). If this is not found the host will ask the Plug-in by using <a class="el" href="classSteinberg_1_1Vst_1_1IXmlRepresentationController.html" title="Extended Plug-in interface IEditController for a component. ">Steinberg::Vst::IXmlRepresentationController</a> (if implemented).</p>
 <p>Explanation:</p><ul>
 <li>priority column:<ul>
 <li>specifies the scan order by the host. Path #1 will be checked first, #3 will be checked last. The first XML found will be used and overrides the others.</li>
@@ -264,17 +264,17 @@ Back to <b><a class="el" href="index.html#vst3Contents">Contents</a></b> <br />
 </p>
 </div></div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>

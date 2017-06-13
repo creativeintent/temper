@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vstrepresentation.cpp
@@ -9,33 +8,36 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
 #include "vstrepresentation.h"
 
 #include "base/source/fstring.h"
-#include "base/source/fstreamer.h"
+#include "pluginterfaces/base/ibstream.h"
 
 namespace Steinberg {
 namespace Vst {
@@ -46,23 +48,38 @@ namespace Vst {
 #define SHORT_TITLE_LIMIT			4
 
 //------------------------------------------------------------------------
+struct StringWriter
+{
+	StringWriter (IBStream* stream) : stream (stream) {}
+
+	void write (const ConstString& str)
+	{
+		stream->write (const_cast<char8*> (str.text8 ()), str.length (), 0);
+	}
+
+	IBStream* stream;
+};
+
+//------------------------------------------------------------------------
 // XmlRepresentationHelper Implementation
 //------------------------------------------------------------------------
-XmlRepresentationHelper::XmlRepresentationHelper (const Vst::RepresentationInfo& info, const FIDString companyName, 
-	const FIDString pluginName, const TUID& pluginUID, IBStream* stream)
+XmlRepresentationHelper::XmlRepresentationHelper (const Vst::RepresentationInfo& info,
+                                                  const FIDString companyName,
+                                                  const FIDString pluginName, const TUID& pluginUID,
+                                                  IBStream* stream)
+: stream (stream)
 {
-	streamer = NEW IBStreamer (stream, kLittleEndian);
-
+	StringWriter writer (stream);
 	String string;
-	streamer->writeString8 ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-	streamer->writeString8 (ENDLINE_A);
+	writer.write ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+	writer.write (ENDLINE_A);
 	string.printf ("<!DOCTYPE %s PUBLIC \"-//Steinberg//DTD VST Remote 1.1//EN\" \"http://dtd.steinberg.net/VST-Remote-1.1.dtd\">", ROOTXML_TAG);
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string.text8 ());
+	writer.write (ENDLINE_A);
 	
 	string.printf ("<%s %s=\"1.0\">", ROOTXML_TAG, ATTR_VERSION);
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string.text8 ());
+	writer.write (ENDLINE_A);
 
 	//---Plug-in Tag----------------
 	FUID uid (pluginUID);
@@ -70,25 +87,25 @@ XmlRepresentationHelper::XmlRepresentationHelper (const Vst::RepresentationInfo&
 	uid.toString (uidText);
 
 	string.printf ("<%s %s=\"%s\" %s=\"%s\" %s=\"%s\"/>", PLUGIN_TAG, ATTR_CLASSID, uidText, ATTR_NAME, pluginName, ATTR_VENDOR, companyName);
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	//---Representation Tag----------------
 	string.printf ("\t<%s", REPRESENTATION_TAG);
-	streamer->writeString8 (string.text8 ());
+	writer.write (string);
 	string.printf (" %s=\"%s\"", ATTR_NAME, info.name);
-	streamer->writeString8 (string.text8 ());
+	writer.write (string);
 	string.printf (" %s=\"%s\"", ATTR_VENDOR, info.vendor);
-	streamer->writeString8 (string.text8 ());
+	writer.write (string);
 	string.printf (" %s=\"%s\"", ATTR_VERSION, info.version);
-	streamer->writeString8 (string.text8 ());
+	writer.write (string);
 	if (strcmp ((char*)info.host, ""))
 	{
 		string.printf (" %s=\"%s\"", ATTR_HOST, info.host);
-		streamer->writeString8 (string.text8 ());
+		writer.write (string);
 	}
-	streamer->writeString8 (">");
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (">");
+	writer.write (ENDLINE_A);
 
 	state = kInRepresentation;
 }
@@ -103,18 +120,17 @@ XmlRepresentationHelper::~XmlRepresentationHelper ()
 	if (state == kInPage)
 		endPage ();
 
+	StringWriter writer (stream);
 	String string;
 	
 	// end representation
 	string.printf ("\t%s", END_TAG_STRING(REPRESENTATION_TAG));
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	// end piper
-	streamer->writeString8 (END_TAG_STRING(ROOTXML_TAG));
-	streamer->writeString8 (ENDLINE_A);
-
-	delete streamer;
+	writer.write (END_TAG_STRING(ROOTXML_TAG));
+	writer.write (ENDLINE_A);
 }
 
 //------------------------------------------------------------------------
@@ -134,13 +150,14 @@ bool XmlRepresentationHelper::startPage (FIDString name, int32 unitID)
 	if (!checkState (kInPage))
 		return false;
 
+	StringWriter writer (stream);
 	String string;
 	if (unitID != -1)
 		string.printf ("<%s %s=\"%s\" %s=\"%d\">", PAGE_TAG, ATTR_NAME, name, ATTR_UNITID, unitID);
 	else
 		string.printf ("<%s %s=\"%s\">", PAGE_TAG, ATTR_NAME, name);
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	return true;
 }
@@ -151,10 +168,11 @@ bool XmlRepresentationHelper::endPage ()
 	if (!checkState (kInRepresentation))
 		return false;
 
+	StringWriter writer (stream);
 	String string;
 	string.printf ("%s", END_TAG_STRING(PAGE_TAG));
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	return true;
 }
@@ -165,10 +183,11 @@ bool XmlRepresentationHelper::startCell ()
 	if (!checkState (kInCell))
 		return false;
 
+	StringWriter writer (stream);
 	String string;
 	string.printf ("%s", START_TAG_STRING(CELL_TAG));
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	return true;
 }
@@ -179,10 +198,11 @@ bool XmlRepresentationHelper::endCell ()
 	if (!checkState (kInPage))
 		return false;
 
+	StringWriter writer (stream);
 	String string;
 	string.printf ("%s", END_TAG_STRING(CELL_TAG));
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	return true;
 }
@@ -193,10 +213,11 @@ bool XmlRepresentationHelper::startEndCell ()
 	if (!checkState (kInCell))
 		return false;
 
+	StringWriter writer (stream);
 	String string;
 	string.printf ("<%s/>", CELL_TAG);
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	if (!checkState (kInPage))
 		return false;
@@ -215,10 +236,11 @@ bool XmlRepresentationHelper::endLayer ()
 	if (!checkState (kInCell))
 		return false;
 
+	StringWriter writer (stream);
 	String string;
 	string.printf ("%s", END_TAG_STRING(LAYER_TAG));
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	return true;
 }
@@ -235,15 +257,16 @@ bool XmlRepresentationHelper::startLayer (int32 type, int32 id, FIDString _funct
 	if (!checkState (kInLayer))
 		return false;
 
+	StringWriter writer (stream);
 	String string;
 
 	string.printf ("<%s %s=\"%s\" %s=\"%d\"", LAYER_TAG, ATTR_TYPE, Vst::LayerType::layerTypeFIDString[type], ATTR_PARAMID, id);
-	streamer->writeString8 (string.text8 ());
+	writer.write (string);
 
 	if (_function)
 	{
 		string.printf (" %s=\"%s\"", Vst::Attributes::kFunction, _function);
-		streamer->writeString8 (string.text8 ());
+		writer.write (string);
 	}
 	if (style)
 	{
@@ -254,18 +277,18 @@ bool XmlRepresentationHelper::startLayer (int32 type, int32 id, FIDString _funct
 			string.printf (" %s=\"%s\"", Vst::Attributes::kLEDStyle, style);
 		else
 			string.printf (" %s=\"%s\"",  Vst::Attributes::kStyle, style);
-		streamer->writeString8 (string.text8 ());
+		writer.write (string);
 	}
 
 	if (ended)
 	{
-		streamer->writeString8 ("/>");
+		writer.write ("/>");
 		if (!checkState (kInCell))
 			return false;
 	}
 	else
-		streamer->writeString8 (">");
-	streamer->writeString8 (ENDLINE_A);
+		writer.write (">");
+	writer.write (ENDLINE_A);
 
 	return true;
 }
@@ -344,25 +367,26 @@ bool XmlRepresentationHelper::startEndTitleDisplay (Vst::ParameterInfo& info)
 	if (!checkState (kInTitleDisplay))
 		return false;
 
+	StringWriter writer (stream);
 	String string;
 
 	string.printf ("<%s>", TITLEDISPLAY_TAG);
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	// start of name scope
 
 	if (!checkState (kInName))
 	{
 		string.printf ("%s", END_TAG_STRING (TITLEDISPLAY_TAG));
-		streamer->writeString8 (string.text8 ());
-		streamer->writeString8 (ENDLINE_A);
+		writer.write (string);
+		writer.write (ENDLINE_A);
 		return false;
 	}
 	
 	string.printf ("<%s>%s</%s>", NAME_TAG, nameString.text8 (), NAME_TAG);
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 	
 	if (nameString.length () > MEDIUM_TITLE_LIMIT)
 	{
@@ -376,8 +400,8 @@ bool XmlRepresentationHelper::startEndTitleDisplay (Vst::ParameterInfo& info)
 				nameString.remove (MEDIUM_TITLE_LIMIT);			// Trimming the rest to get a short string
 
 			string.printf ("<%s>%s</%s>", NAME_TAG, nameString.text8 (), NAME_TAG);
-			streamer->writeString8 (string.text8 ());
-			streamer->writeString8 (ENDLINE_A);
+			writer.write (string);
+			writer.write (ENDLINE_A);
 		}
 	}
 
@@ -386,8 +410,8 @@ bool XmlRepresentationHelper::startEndTitleDisplay (Vst::ParameterInfo& info)
 		nameString.remove (SHORT_TITLE_LIMIT);					// Trimming the rest to get a short string
 
 		string.printf ("<%s>%s</%s>", NAME_TAG, nameString.text8 (), NAME_TAG);
-		streamer->writeString8 (string.text8 ());
-		streamer->writeString8 (ENDLINE_A);
+		writer.write (string);
+		writer.write (ENDLINE_A);
 	}
 
 	if (!checkState (kInTitleDisplay))
@@ -396,8 +420,8 @@ bool XmlRepresentationHelper::startEndTitleDisplay (Vst::ParameterInfo& info)
 	// end of name scope
 
 	string.printf ("%s", END_TAG_STRING (TITLEDISPLAY_TAG));
-	streamer->writeString8 (string.text8 ());
-	streamer->writeString8 (ENDLINE_A);
+	writer.write (string);
+	writer.write (ENDLINE_A);
 
 	if (!checkState (kInLayer))
 		return false;

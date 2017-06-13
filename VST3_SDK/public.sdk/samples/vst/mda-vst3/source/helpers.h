@@ -14,8 +14,7 @@
  *
  */
 
-#ifndef __helpers__
-#define __helpers__
+#pragma once
 
 #include "pluginterfaces/base/ftypes.h"
 
@@ -29,6 +28,4 @@
 #define SWAP64_BE(x)
 #define SWAP32_LE(x)	SWAP_32(x)
 #define SWAP32_BE(x)
-#endif
-
 #endif

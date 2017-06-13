@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/note_expression_synth/source/note_expression_synth_controller.cpp
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -59,7 +58,7 @@ public:
 	{
 	}
 
-	tresult getStringByValue (NoteExpressionValue valueNormalized /*in*/, String128 string /*out*/)
+	tresult getStringByValue (NoteExpressionValue valueNormalized /*in*/, String128 string /*out*/) SMTG_OVERRIDE
 	{
 		if (valueNormalized == 0.5)
 			UString128 ("C").copyTo (string, 128);
@@ -72,7 +71,7 @@ public:
 		return kResultTrue;
 	}
 	
-	tresult getValueByString (const TChar* string /*in*/, NoteExpressionValue& valueNormalized /*out*/)
+	tresult getValueByString (const TChar* string /*in*/, NoteExpressionValue& valueNormalized /*out*/) SMTG_OVERRIDE
 	{
 		String str (string);
 		if (str == "C")
@@ -107,7 +106,7 @@ public:
 	{
 	}
 	
-	tresult getStringByValue (NoteExpressionValue valueNormalized /*in*/, String128 string /*out*/)
+	tresult getStringByValue (NoteExpressionValue valueNormalized /*in*/, String128 string /*out*/) SMTG_OVERRIDE
 	{
 		UString128 wrapper;
 		double timeFactor = pow (100., 2 * (valueNormalized - 0.5));
@@ -116,7 +115,7 @@ public:
 		return kResultTrue;
 	}
 	
-	tresult getValueByString (const TChar* string /*in*/, NoteExpressionValue& valueNormalized /*out*/)
+	tresult getValueByString (const TChar* string /*in*/, NoteExpressionValue& valueNormalized /*out*/) SMTG_OVERRIDE
 	{
 		String wrapper ((TChar*)string);
 		ParamValue tmp;

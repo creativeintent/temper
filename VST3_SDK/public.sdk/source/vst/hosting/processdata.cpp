@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/hosting/processdata.cpp
@@ -9,28 +8,31 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 #include "processdata.h"
 
@@ -47,7 +49,8 @@ HostProcessData::~HostProcessData ()
 }
 
 //------------------------------------------------------------------------
-bool HostProcessData::prepare (IComponent& component, int32 bufferSamples, int32 _symbolicSampleSize)
+bool HostProcessData::prepare (IComponent& component, int32 bufferSamples,
+                               int32 _symbolicSampleSize)
 {
 	if (checkIfReallocationNeeded (component, bufferSamples, _symbolicSampleSize))
 	{
@@ -85,7 +88,8 @@ void HostProcessData::unprepare ()
 }
 
 //------------------------------------------------------------------------
-bool HostProcessData::checkIfReallocationNeeded (IComponent& component, int32 bufferSamples, int32 _symbolicSampleSize)
+bool HostProcessData::checkIfReallocationNeeded (IComponent& component, int32 bufferSamples,
+                                                 int32 _symbolicSampleSize)
 {
 	if (channelBufferOwner != (bufferSamples > 0))
 		return true;
@@ -95,13 +99,13 @@ bool HostProcessData::checkIfReallocationNeeded (IComponent& component, int32 bu
 	int32 inBusCount = component.getBusCount (kAudio, kInput);
 	if (inBusCount != numInputs)
 		return true;
-	
+
 	int32 outBusCount = component.getBusCount (kAudio, kOutput);
 	if (outBusCount != numOutputs)
 		return true;
 
 	for (int32 i = 0; i < inBusCount; i++)
-	{	
+	{
 		BusInfo busInfo = {0};
 
 		if (component.getBusInfo (kAudio, kInput, i, busInfo) == kResultTrue)
@@ -111,7 +115,7 @@ bool HostProcessData::checkIfReallocationNeeded (IComponent& component, int32 bu
 		}
 	}
 	for (int32 i = 0; i < outBusCount; i++)
-	{	
+	{
 		BusInfo busInfo = {0};
 
 		if (component.getBusInfo (kAudio, kOutput, i, busInfo) == kResultTrue)
@@ -123,56 +127,56 @@ bool HostProcessData::checkIfReallocationNeeded (IComponent& component, int32 bu
 	return false;
 }
 
-//--------------------------------------------------------------------------------------------------------------
-int32 HostProcessData::createBuffers (IComponent& component, AudioBusBuffers*& buffers, BusDirection dir, 
-										int32 bufferSamples)
+//-----------------------------------------------------------------------------
+int32 HostProcessData::createBuffers (IComponent& component, AudioBusBuffers*& buffers,
+                                      BusDirection dir, int32 bufferSamples)
 {
 	int32 busCount = component.getBusCount (kAudio, dir);
 	if (busCount > 0)
 	{
 		buffers = new AudioBusBuffers[busCount];
-	
+
 		for (int32 i = 0; i < busCount; i++)
-		{	
+		{
 			BusInfo busInfo = {0};
 
 			if (component.getBusInfo (kAudio, dir, i, busInfo) == kResultTrue)
 			{
 				buffers[i].numChannels = busInfo.channelCount;
-				
+
 				// allocate for each channel
 				if (busInfo.channelCount > 0)
 				{
 					if (symbolicSampleSize == kSample64)
-						buffers[i].channelBuffers64 = new Sample64* [busInfo.channelCount];
+						buffers[i].channelBuffers64 = new Sample64*[busInfo.channelCount];
 					else
-						buffers[i].channelBuffers32 = new Sample32* [busInfo.channelCount];
+						buffers[i].channelBuffers32 = new Sample32*[busInfo.channelCount];
 
 					for (int32 j = 0; j < busInfo.channelCount; j++)
 					{
 						if (symbolicSampleSize == kSample64)
 						{
 							if (bufferSamples > 0)
-								buffers[i].channelBuffers64[j] = new Sample64 [bufferSamples];
+								buffers[i].channelBuffers64[j] = new Sample64[bufferSamples];
 							else
 								buffers[i].channelBuffers64[j] = 0;
 						}
 						else
 						{
 							if (bufferSamples > 0)
-								buffers[i].channelBuffers32[j] = new Sample32 [bufferSamples];
+								buffers[i].channelBuffers32[j] = new Sample32[bufferSamples];
 							else
 								buffers[i].channelBuffers32[j] = 0;
 						}
 					}
 				}
-			}	
+			}
 		}
 	}
 	return busCount;
 }
 
-//--------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 void HostProcessData::destroyBuffers (AudioBusBuffers*& buffers, int32& busCount)
 {
 	if (buffers)
@@ -207,7 +211,7 @@ void HostProcessData::destroyBuffers (AudioBusBuffers*& buffers, int32& busCount
 					delete[] buffers[i].channelBuffers32;
 			}
 		}
-		
+
 		delete[] buffers;
 		buffers = 0;
 	}

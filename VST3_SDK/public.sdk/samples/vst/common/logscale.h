@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Examples
 // Filename    : public.sdk/samples/vst/common/logscale.h
@@ -9,7 +8,7 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -205,14 +204,14 @@ public:
 	{
 	}
 	
-	virtual void toString (ParamValue _valueNormalized, String128 string) const
+	virtual void toString (ParamValue _valueNormalized, String128 string) const SMTG_OVERRIDE
 	{
 		UString128 wrapper;
 		wrapper.printFloat (toPlain (_valueNormalized), precision);
 		wrapper.copyTo (string, 128);
 	}
 	
-	virtual bool fromString (const TChar* string, ParamValue& _valueNormalized) const
+	virtual bool fromString (const TChar* string, ParamValue& _valueNormalized) const SMTG_OVERRIDE
 	{
 		UString wrapper ((TChar*)string, strlen16 (string));
 		if (wrapper.scanFloat (_valueNormalized))
@@ -223,12 +222,12 @@ public:
 		return false;
 	}
 	
-	virtual ParamValue toPlain (ParamValue _valueNormalized) const
+	virtual ParamValue toPlain (ParamValue _valueNormalized) const SMTG_OVERRIDE
 	{
 		return logScale.scale (_valueNormalized);
 	}
 	
-	virtual ParamValue toNormalized (ParamValue plainValue) const
+	virtual ParamValue toNormalized (ParamValue plainValue) const SMTG_OVERRIDE
 	{
 		return logScale.invscale (plainValue);
 	}

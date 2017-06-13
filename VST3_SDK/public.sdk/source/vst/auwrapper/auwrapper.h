@@ -1,6 +1,5 @@
 //------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/auwrapper/auwrapper.h
@@ -9,28 +8,31 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 /**
 ***************************
@@ -84,12 +86,12 @@ For the release version, you must place a copy or an alias of your VST 3 Plug-in
 #include "public.sdk/source/vst/hosting/processdata.h"
 #include "public.sdk/source/vst/hosting/eventlist.h"
 #include "base/source/timer.h"
-#include "base/source/tdictionary.h"
-#include "base/source/tarray.h"
 #include "base/source/fstring.h"
-#include "base/source/fthread.h"
+#include "base/source/flock.h"
 #include <Cocoa/Cocoa.h>
 #include <AudioToolbox/AudioToolbox.h>
+#include <vector>
+#include <map>
 
 namespace Steinberg {
 namespace Vst {
@@ -163,7 +165,7 @@ public:
 			if (result != noErr)
 				printf ("error calling output callback: %d", (int) result);
 
-				mMIDIMessageList.clear ();
+			mMIDIMessageList.clear ();
 		}
 	}
 
@@ -191,48 +193,48 @@ public:
 	~AUWrapper ();
 
 	//---ComponentBase---------------------
-	ComponentResult	Version ();
-	void PostConstructor ();
+	ComponentResult	Version () SMTG_OVERRIDE;
+	void PostConstructor () SMTG_OVERRIDE;
 
 	//---AUBase-----------------------------
-	void Cleanup ();
-	ComponentResult Initialize ();
-	AUElement* CreateElement (AudioUnitScope scope, AudioUnitElement element);
-	UInt32 SupportedNumChannels (const AUChannelInfo** outInfo);
-	bool StreamFormatWritable (AudioUnitScope scope, AudioUnitElement element);
-	ComponentResult ChangeStreamFormat (AudioUnitScope inScope, AudioUnitElement inElement, const CAStreamBasicDescription& inPrevFormat, const CAStreamBasicDescription& inNewFormat);
-	ComponentResult SetConnection (const AudioUnitConnection& inConnection);
-	ComponentResult GetParameterInfo (AudioUnitScope inScope, AudioUnitParameterID inParameterID, AudioUnitParameterInfo& outParameterInfo);
-	ComponentResult SetParameter (AudioUnitParameterID inID, AudioUnitScope inScope, AudioUnitElement inElement, AudioUnitParameterValue inValue, UInt32 inBufferOffsetInFrames);
+	void Cleanup () SMTG_OVERRIDE;
+	ComponentResult Initialize () SMTG_OVERRIDE;
+	AUElement* CreateElement (AudioUnitScope scope, AudioUnitElement element) SMTG_OVERRIDE;
+	UInt32 SupportedNumChannels (const AUChannelInfo** outInfo) SMTG_OVERRIDE;
+	bool StreamFormatWritable (AudioUnitScope scope, AudioUnitElement element) SMTG_OVERRIDE;
+	ComponentResult ChangeStreamFormat (AudioUnitScope inScope, AudioUnitElement inElement, const CAStreamBasicDescription& inPrevFormat, const CAStreamBasicDescription& inNewFormat) SMTG_OVERRIDE;
+	ComponentResult SetConnection (const AudioUnitConnection& inConnection) SMTG_OVERRIDE;
+	ComponentResult GetParameterInfo (AudioUnitScope inScope, AudioUnitParameterID inParameterID, AudioUnitParameterInfo& outParameterInfo) SMTG_OVERRIDE;
+	ComponentResult SetParameter (AudioUnitParameterID inID, AudioUnitScope inScope, AudioUnitElement inElement, AudioUnitParameterValue inValue, UInt32 inBufferOffsetInFrames) SMTG_OVERRIDE;
 
-	ComponentResult SaveState (CFPropertyListRef* outData);
-	ComponentResult RestoreState (CFPropertyListRef inData);
+	ComponentResult SaveState (CFPropertyListRef* outData) SMTG_OVERRIDE;
+	ComponentResult RestoreState (CFPropertyListRef inData) SMTG_OVERRIDE;
 
-	ComponentResult Render (AudioUnitRenderActionFlags &ioActionFlags, const AudioTimeStamp &inTimeStamp, UInt32 inNumberFrames);
+	ComponentResult Render (AudioUnitRenderActionFlags &ioActionFlags, const AudioTimeStamp &inTimeStamp, UInt32 inNumberFrames) SMTG_OVERRIDE;
 	void processOutputEvents (const AudioTimeStamp &inTimeStamp);
 
-	int GetNumCustomUIComponents ();
-	void GetUIComponentDescs (ComponentDescription* inDescArray);
+	int GetNumCustomUIComponents () SMTG_OVERRIDE;
+	void GetUIComponentDescs (ComponentDescription* inDescArray) SMTG_OVERRIDE;
 
-	ComponentResult GetPropertyInfo (AudioUnitPropertyID inID, AudioUnitScope inScope, AudioUnitElement inElement, UInt32 &outDataSize, Boolean &outWritable);
-	ComponentResult GetProperty (AudioUnitPropertyID inID, AudioUnitScope inScope, AudioUnitElement inElement, void* outData);
-	ComponentResult SetProperty (AudioUnitPropertyID inID, AudioUnitScope inScope, AudioUnitElement inElement, const void* inData, UInt32 inDataSize);
-    bool CanScheduleParameters() const;
+	ComponentResult GetPropertyInfo (AudioUnitPropertyID inID, AudioUnitScope inScope, AudioUnitElement inElement, UInt32 &outDataSize, Boolean &outWritable) SMTG_OVERRIDE;
+	ComponentResult GetProperty (AudioUnitPropertyID inID, AudioUnitScope inScope, AudioUnitElement inElement, void* outData) SMTG_OVERRIDE;
+	ComponentResult SetProperty (AudioUnitPropertyID inID, AudioUnitScope inScope, AudioUnitElement inElement, const void* inData, UInt32 inDataSize) SMTG_OVERRIDE;
+	bool CanScheduleParameters() const; // Not in the base class anymore in newer CoreAudio SDKs
 
-	Float64 GetLatency ();
-	Float64 GetTailTime ();
+	Float64 GetLatency () SMTG_OVERRIDE;
+	Float64 GetTailTime () SMTG_OVERRIDE;
 
 	//---Factory presets
-	OSStatus GetPresets (CFArrayRef* outData) const;
-	OSStatus NewFactoryPresetSet (const AUPreset& inNewFactoryPreset);
+	OSStatus GetPresets (CFArrayRef* outData) const SMTG_OVERRIDE;
+	OSStatus NewFactoryPresetSet (const AUPreset& inNewFactoryPreset) SMTG_OVERRIDE;
 
 	//---MusicDeviceBase-------------------------
-	ComponentResult StartNote (MusicDeviceInstrumentID inInstrument, MusicDeviceGroupID inGroupID, NoteInstanceID* outNoteInstanceID, UInt32 inOffsetSampleFrame, const MusicDeviceNoteParams &inParams);
-	ComponentResult StopNote (MusicDeviceGroupID inGroupID, NoteInstanceID inNoteInstanceID, UInt32 inOffsetSampleFrame);
-	OSStatus GetInstrumentCount (UInt32 &outInstCount) const;
+	ComponentResult StartNote (MusicDeviceInstrumentID inInstrument, MusicDeviceGroupID inGroupID, NoteInstanceID* outNoteInstanceID, UInt32 inOffsetSampleFrame, const MusicDeviceNoteParams &inParams) SMTG_OVERRIDE;
+	ComponentResult StopNote (MusicDeviceGroupID inGroupID, NoteInstanceID inNoteInstanceID, UInt32 inOffsetSampleFrame) SMTG_OVERRIDE;
+	OSStatus GetInstrumentCount (UInt32 &outInstCount) const SMTG_OVERRIDE;
 
 	//---AUMIDIBase------------------------------
-	OSStatus HandleNonNoteEvent (UInt8 status, UInt8 channel, UInt8	data1, UInt8 data2, UInt32 inStartFrame);
+	OSStatus HandleNonNoteEvent (UInt8 status, UInt8 channel, UInt8	data1, UInt8 data2, UInt32 inStartFrame) SMTG_OVERRIDE;
 	
 	//---custom----------------------------------
 	void setControllerParameter (ParamID pid, ParamValue value);
@@ -254,13 +256,13 @@ public:
 
 protected:
 	//---from IComponentHandler-------------------
-	tresult PLUGIN_API beginEdit (ParamID tag);
-	tresult PLUGIN_API performEdit (ParamID tag, ParamValue valueNormalized);
-	tresult PLUGIN_API endEdit (ParamID tag);
-	tresult PLUGIN_API restartComponent (int32 flags);
+	tresult PLUGIN_API beginEdit (ParamID tag) SMTG_OVERRIDE;
+	tresult PLUGIN_API performEdit (ParamID tag, ParamValue valueNormalized) SMTG_OVERRIDE;
+	tresult PLUGIN_API endEdit (ParamID tag) SMTG_OVERRIDE;
+	tresult PLUGIN_API restartComponent (int32 flags) SMTG_OVERRIDE;
 
 	//---from ITimerCallback----------------------
-	void onTimer (Timer* timer);
+	void onTimer (Timer* timer) SMTG_OVERRIDE;
 
 	// internal helpers
 	double getSampleRate () const { return sampleRate; }
@@ -289,9 +291,13 @@ protected:
 	ProcessContext processContext;
 	EventList eventList;
 
-	TDictionary<UnitID, UnitInfo> unitInfos;
-	TArray<String> clumpGroups;
-	TDictionary<uint32, AudioUnitParameterInfo> cachedParameterInfos;
+	typedef std::map<uint32, AudioUnitParameterInfo> CachedParameterInfoMap;
+	typedef std::map<UnitID, UnitInfo> UnitInfoMap;
+	typedef std::vector<String> ClumpGroupVector;
+
+	UnitInfoMap unitInfos;
+	ClumpGroupVector clumpGroups;
+	CachedParameterInfoMap cachedParameterInfos;
 	FLock parameterCacheChanging;
 
 	NoteInstanceID noteCounter;
@@ -312,15 +318,17 @@ protected:
 	int32 midiOutCount; // currently only 0 or 1 supported
 	MIDIOutputCallbackHelper mCallbackHelper;
 	EventList outputEvents;
+private:
+	void buildUnitInfos (IUnitInfo* unitInfoController, UnitInfoMap& units) const;
 };
 
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 class AutoreleasePool
 {
 public:
 	AutoreleasePool () { ap = [[NSAutoreleasePool alloc] init]; }
 	~AutoreleasePool () { [ap drain]; }
-//--------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 protected:
 	NSAutoreleasePool* ap;
 };

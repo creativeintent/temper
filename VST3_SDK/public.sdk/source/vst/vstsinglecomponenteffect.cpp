@@ -1,6 +1,5 @@
 //-----------------------------------------------------------------------------
 // Project     : VST SDK
-// Version     : 3.6.6
 //
 // Category    : Helpers
 // Filename    : public.sdk/source/vst/vstsinglecomponenteffect.cpp
@@ -9,26 +8,29 @@
 //
 //-----------------------------------------------------------------------------
 // LICENSE
-// (c) 2016, Steinberg Media Technologies GmbH, All Rights Reserved
+// (c) 2017, Steinberg Media Technologies GmbH, All Rights Reserved
 //-----------------------------------------------------------------------------
-// This Software Development Kit may not be distributed in parts or its entirety  
-// without prior written agreement by Steinberg Media Technologies GmbH. 
-// This SDK must not be used to re-engineer or manipulate any technology used  
-// in any Steinberg or Third-party application or software module, 
-// unless permitted by law.
-// Neither the name of the Steinberg Media Technologies nor the names of its
-// contributors may be used to endorse or promote products derived from this 
-// software without specific prior written permission.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
 // 
-// THIS SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+//   * Redistributions of source code must retain the above copyright notice, 
+//     this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation 
+//     and/or other materials provided with the distribution.
+//   * Neither the name of the Steinberg Media Technologies nor the names of its
+//     contributors may be used to endorse or promote products derived from this 
+//     software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT, 
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+// IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
 // INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
 // BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
 // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
 // LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
-// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 
@@ -37,7 +39,6 @@
 //-----------------------------------------------------------------------------
 namespace Steinberg {
 namespace Vst {
-
 
 //-----------------------------------------------------------------------------
 // SingleComponentEffect Implementation
@@ -78,26 +79,30 @@ tresult PLUGIN_API SingleComponentEffect::terminate ()
 int32 PLUGIN_API SingleComponentEffect::getBusCount (MediaType type, BusDirection dir)
 {
 	BusList* busList = getBusList (type, dir);
-	return busList ? busList->total () : 0;
+	return busList ? static_cast<int32>(busList->size ()) : 0;
 }
 
 //-----------------------------------------------------------------------------
-tresult PLUGIN_API SingleComponentEffect::getBusInfo (MediaType type, BusDirection dir, int32 index, BusInfo& info)
+tresult PLUGIN_API SingleComponentEffect::getBusInfo (MediaType type, BusDirection dir, int32 index,
+                                                      BusInfo& info)
 {
 	BusList* busList = getBusList (type, dir);
-	Bus* bus = busList ? (Bus*)busList->at (index) : 0;
-	if (bus)
-	{
-		info.mediaType = type;
-		info.direction = dir;
-		if (bus->getInfo (info))
-			return kResultTrue;
-	}
+	if (busList == 0)
+		return kInvalidArgument;
+	if (index >= static_cast<int32> (busList->size ()))
+		return kInvalidArgument;
+
+	Bus* bus = busList->at (index);
+	info.mediaType = type;
+	info.direction = dir;
+	if (bus->getInfo (info))
+		return kResultTrue;
 	return kResultFalse;
 }
 
 //-----------------------------------------------------------------------------
-tresult PLUGIN_API SingleComponentEffect::activateBus (MediaType type, BusDirection dir, int32 index, TBool state)
+tresult PLUGIN_API SingleComponentEffect::activateBus (MediaType type, BusDirection dir,
+                                                       int32 index, TBool state)
 {
 	BusList* busList = getBusList (type, dir);
 	Bus* bus = busList ? (Bus*)busList->at (index) : 0;
@@ -110,46 +115,46 @@ tresult PLUGIN_API SingleComponentEffect::activateBus (MediaType type, BusDirect
 }
 
 //-----------------------------------------------------------------------------
-AudioBus* SingleComponentEffect::addAudioInput (const TChar* name, SpeakerArrangement arr, 
-									  BusType busType, int32 flags)
+AudioBus* SingleComponentEffect::addAudioInput (const TChar* name, SpeakerArrangement arr,
+                                                BusType busType, int32 flags)
 {
 	AudioBus* newBus = new AudioBus (name, busType, flags, arr);
-	audioInputs.append (IPtr<Vst::Bus> (newBus, false));
+	audioInputs.push_back (IPtr<Vst::Bus> (newBus, false));
 	return newBus;
 }
 
 //-----------------------------------------------------------------------------
-AudioBus* SingleComponentEffect::addAudioOutput (const TChar* name, SpeakerArrangement arr, 
-									   BusType busType, int32 flags)
+AudioBus* SingleComponentEffect::addAudioOutput (const TChar* name, SpeakerArrangement arr,
+                                                 BusType busType, int32 flags)
 {
 	AudioBus* newBus = new AudioBus (name, busType, flags, arr);
-	audioOutputs.append (IPtr<Vst::Bus> (newBus, false));
+	audioOutputs.push_back (IPtr<Vst::Bus> (newBus, false));
 	return newBus;
 }
 
 //-----------------------------------------------------------------------------
-EventBus* SingleComponentEffect::addEventInput (const TChar* name, int32 channels, 
-									  BusType busType, int32 flags)
+EventBus* SingleComponentEffect::addEventInput (const TChar* name, int32 channels, BusType busType,
+                                                int32 flags)
 {
 	EventBus* newBus = new EventBus (name, busType, flags, channels);
-	eventInputs.append (IPtr<Vst::Bus> (newBus, false));
+	eventInputs.push_back (IPtr<Vst::Bus> (newBus, false));
 	return newBus;
 }
 
 //-----------------------------------------------------------------------------
-EventBus* SingleComponentEffect::addEventOutput (const TChar* name, int32 channels, 
-									   BusType busType, int32 flags)
+EventBus* SingleComponentEffect::addEventOutput (const TChar* name, int32 channels, BusType busType,
+                                                 int32 flags)
 {
 	EventBus* newBus = new EventBus (name, busType, flags, channels);
-	eventOutputs.append (IPtr<Vst::Bus> (newBus, false));
+	eventOutputs.push_back (IPtr<Vst::Bus> (newBus, false));
 	return newBus;
 }
 
 //-----------------------------------------------------------------------------
 tresult SingleComponentEffect::removeAudioBusses ()
 {
-	audioInputs.removeAll ();
-	audioOutputs.removeAll ();
+	audioInputs.clear ();
+	audioOutputs.clear ();
 
 	return kResultOk;
 }
@@ -157,8 +162,8 @@ tresult SingleComponentEffect::removeAudioBusses ()
 //-----------------------------------------------------------------------------
 tresult SingleComponentEffect::removeEventBusses ()
 {
-	eventInputs.removeAll ();
-	eventOutputs.removeAll ();
+	eventInputs.clear ();
+	eventOutputs.clear ();
 
 	return kResultOk;
 }
@@ -175,28 +180,38 @@ tresult SingleComponentEffect::removeAllBusses ()
 //-----------------------------------------------------------------------------
 // IAudioProcessor
 //-----------------------------------------------------------------------------
-tresult PLUGIN_API SingleComponentEffect::setBusArrangements (SpeakerArrangement* inputs, int32 numIns, 
-													SpeakerArrangement* outputs, int32 numOuts)
+tresult PLUGIN_API SingleComponentEffect::setBusArrangements (SpeakerArrangement* inputs,
+                                                              int32 numIns,
+                                                              SpeakerArrangement* outputs,
+                                                              int32 numOuts)
 {
-	int32 counter = 0;
-	FOREACH_CAST (IPtr<Vst::Bus>, Vst::AudioBus, bus, audioInputs)
-		if (counter < numIns)
-			bus->setArrangement (inputs[counter]);
-		counter++;
-	ENDFOR
+	if (numIns < 0 || numOuts < 0)
+		return kInvalidArgument;
 
-	counter = 0;
-	FOREACH_CAST (IPtr<Vst::Bus>, Vst::AudioBus, bus, audioOutputs)
-		if (counter < numOuts)
-			bus->setArrangement (outputs[counter]);
-		counter++;
-	ENDFOR
+	if (numIns > static_cast<int32> (audioInputs.size ()) ||
+	    numOuts > static_cast<int32> (audioOutputs.size ()))
+		return kResultFalse;
+
+	for (int32 index = 0; index < static_cast<int32>(audioInputs.size ()); ++index)
+	{
+		if (index >= numIns)
+			break;
+		FCast<Vst::AudioBus> (audioInputs[index].get ())->setArrangement (inputs[index]);
+	}
+
+	for (int32 index = 0; index < static_cast<int32>(audioOutputs.size ()); ++index)
+	{
+		if (index >= numOuts)
+			break;
+		FCast<Vst::AudioBus> (audioOutputs[index].get ())->setArrangement (outputs[index]);
+	}
 
 	return kResultTrue;
 }
 
 //-----------------------------------------------------------------------------
-tresult PLUGIN_API SingleComponentEffect::getBusArrangement (BusDirection dir, int32 busIndex, SpeakerArrangement& arr)
+tresult PLUGIN_API SingleComponentEffect::getBusArrangement (BusDirection dir, int32 busIndex,
+                                                             SpeakerArrangement& arr)
 {
 	BusList* busList = getBusList (kAudio, dir);
 	AudioBus* audioBus = busList ? FCast<Vst::AudioBus> (busList->at (busIndex)) : 0;

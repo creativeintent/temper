@@ -25,7 +25,7 @@ var searchData=
   ['seekmode',['SeekMode',['../class_v_s_t_g_u_i_1_1_seekable_stream.html#a84d76d32dd4ef90e5a90cf759b7e563f',1,'VSTGUI::SeekableStream']]],
   ['segment',['Segment',['../struct_v_s_t_g_u_i_1_1_c_segment_button_1_1_segment.html',1,'VSTGUI::CSegmentButton']]],
   ['segments',['Segments',['../class_v_s_t_g_u_i_1_1_c_segment_button.html#aa49a3d73020139b8509a0187f24ac217',1,'VSTGUI::CSegmentButton']]],
-  ['selection',['selection',['../class_v_s_t_g_u_i_1_1_c_data_browser.html#a55dd018797e1741e7cf04557b628f77f',1,'VSTGUI::CDataBrowser::selection()'],['../class_v_s_t_g_u_i_1_1_c_data_browser.html#a0bfbe318cb037a4454b0235402f19345',1,'VSTGUI::CDataBrowser::Selection()']]],
+  ['selection',['Selection',['../class_v_s_t_g_u_i_1_1_c_data_browser.html#a0bfbe318cb037a4454b0235402f19345',1,'VSTGUI::CDataBrowser::Selection()'],['../class_v_s_t_g_u_i_1_1_c_data_browser.html#a55dd018797e1741e7cf04557b628f77f',1,'VSTGUI::CDataBrowser::selection()']]],
   ['selectioncolor',['selectionColor',['../class_v_s_t_g_u_i_1_1_generic_string_list_data_browser_source.html#ab16cb746fc30e62849d78812ace1c2e4',1,'VSTGUI::GenericStringListDataBrowserSource::selectionColor()'],['../struct_v_s_t_g_u_i_1_1_c_font_chooser_u_i_definition.html#ab16cb746fc30e62849d78812ace1c2e4',1,'VSTGUI::CFontChooserUIDefinition::selectionColor()']]],
   ['selectrow',['selectRow',['../class_v_s_t_g_u_i_1_1_c_data_browser.html#a09c4b9d260f2175013dfcbff42c23229',1,'VSTGUI::CDataBrowser']]],
   ['selecttab',['selectTab',['../class_v_s_t_g_u_i_1_1_c_tab_view.html#a8a472d37c66a9e917c1494bf8ef9e06b',1,'VSTGUI::CTabView']]],

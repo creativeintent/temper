@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VST 3 SDK
-   &#160;<span id="projectnumber">VST 3.6.6</span>
+   &#160;<span id="projectnumber">VST 3.6.7</span>
    </div>
    <div id="projectbrief">SDK for developing VST Plug-in</div>
   </td>
@@ -164,13 +164,13 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">using namespace </span>Steinberg; <a class="code" href="pluginfactoryvst3_8h.html#af3a922cb183dcf388438f2d78b3865a0">\</a></div>
-<div class="line"><a class="code" href="pluginfactoryvst3_8h.html#af3a922cb183dcf388438f2d78b3865a0">	EXPORT_FACTORY</a> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IPluginFactory.html">IPluginFactory</a>* PLUGIN_API <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/group__pluginBase.html#ga843ac97a36dfc717dadaa7192c7e8330">GetPluginFactory</a> () { \</div>
+<div class="line"><a class="code" href="pluginfactoryvst3_8h.html#af3a922cb183dcf388438f2d78b3865a0">	EXPORT_FACTORY</a> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1IPluginFactory.html">IPluginFactory</a>* PLUGIN_API <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/group__pluginBase.html#ga843ac97a36dfc717dadaa7192c7e8330">GetPluginFactory</a> () { \</div>
 <div class="line">    if (!gPluginFactory) \</div>
-<div class="line">    {   <span class="keyword">static</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PFactoryInfo.html">PFactoryInfo</a> factoryInfo (vendor,url,email,flags); \</div>
+<div class="line">    {   <span class="keyword">static</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PFactoryInfo.html">PFactoryInfo</a> factoryInfo (vendor,url,email,flags); \</div>
 <div class="line">        gPluginFactory = <span class="keyword">new</span> <a class="code" href="classSteinberg_1_1CPluginFactory.html">CPluginFactory</a> (factoryInfo); \</div>
 <div class="ttc" id="structSteinberg_1_1PFactoryInfo_html"><div class="ttname"><a href="../base/structSteinberg_1_1PFactoryInfo.html">Steinberg::PFactoryInfo</a></div></div>
-<div class="ttc" id="classSteinberg_1_1CPluginFactory_html"><div class="ttname"><a href="classSteinberg_1_1CPluginFactory.html">Steinberg::CPluginFactory</a></div><div class="ttdoc">Default Class Factory implementation. </div><div class="ttdef"><b>Definition:</b> pluginfactoryvst3.h:46</div></div>
-<div class="ttc" id="pluginfactoryvst3_8h_html_af3a922cb183dcf388438f2d78b3865a0"><div class="ttname"><a href="pluginfactoryvst3_8h.html#af3a922cb183dcf388438f2d78b3865a0">EXPORT_FACTORY</a></div><div class="ttdeci">#define EXPORT_FACTORY</div><div class="ttdef"><b>Definition:</b> pluginfactoryvst3.h:122</div></div>
+<div class="ttc" id="classSteinberg_1_1CPluginFactory_html"><div class="ttname"><a href="classSteinberg_1_1CPluginFactory.html">Steinberg::CPluginFactory</a></div><div class="ttdoc">Default Class Factory implementation. </div><div class="ttdef"><b>Definition:</b> pluginfactoryvst3.h:48</div></div>
+<div class="ttc" id="pluginfactoryvst3_8h_html_af3a922cb183dcf388438f2d78b3865a0"><div class="ttname"><a href="pluginfactoryvst3_8h.html#af3a922cb183dcf388438f2d78b3865a0">EXPORT_FACTORY</a></div><div class="ttdeci">#define EXPORT_FACTORY</div><div class="ttdef"><b>Definition:</b> pluginfactoryvst3.h:124</div></div>
 <div class="ttc" id="classSteinberg_1_1IPluginFactory_html"><div class="ttname"><a href="../base/classSteinberg_1_1IPluginFactory.html">Steinberg::IPluginFactory</a></div></div>
 <div class="ttc" id="group__pluginBase_html_ga843ac97a36dfc717dadaa7192c7e8330"><div class="ttname"><a href="../base/group__pluginBase.html#ga843ac97a36dfc717dadaa7192c7e8330">GetPluginFactory</a></div><div class="ttdeci">Steinberg::IPluginFactory * GetPluginFactory()</div></div>
 </div><!-- fragment -->
@@ -217,7 +217,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{ <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a> lcid = cid; <span class="keyword">static</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PClassInfo.html">PClassInfo</a> componentClass (lcid,cardinality,category,name); \</div>
+<b>Value:</b><div class="fragment"><div class="line">{ <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a> lcid = cid; <span class="keyword">static</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PClassInfo.html">PClassInfo</a> componentClass (lcid,cardinality,category,name); \</div>
 <div class="line">    gPluginFactory-&gt;registerClass (&amp;componentClass,createMethod); }</div>
 <div class="ttc" id="structSteinberg_1_1PClassInfo_html"><div class="ttname"><a href="../base/structSteinberg_1_1PClassInfo.html">Steinberg::PClassInfo</a></div></div>
 <div class="ttc" id="namespaceSteinberg_html_a32680add5f0b1c8a81e5b1c4cfe6a30c"><div class="ttname"><a href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a></div><div class="ttdeci">int8 TUID[16]</div></div>
@@ -265,7 +265,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{ <span class="keyword">static</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PClassInfo.html">PClassInfo</a> componentClass (cid,cardinality,category,name); \</div>
+<b>Value:</b><div class="fragment"><div class="line">{ <span class="keyword">static</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PClassInfo.html">PClassInfo</a> componentClass (cid,cardinality,category,name); \</div>
 <div class="line">    gPluginFactory-&gt;registerClass (&amp;componentClass,createMethod); }</div>
 <div class="ttc" id="structSteinberg_1_1PClassInfo_html"><div class="ttname"><a href="../base/structSteinberg_1_1PClassInfo.html">Steinberg::PClassInfo</a></div></div>
 </div><!-- fragment -->
@@ -336,7 +336,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{ <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a> lcid = cid; <span class="keyword">static</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PClassInfo2.html">PClassInfo2</a> componentClass (lcid,cardinality,category,name,classFlags,subCategories, 0 ,version,sdkVersion);\</div>
+<b>Value:</b><div class="fragment"><div class="line">{ <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a> lcid = cid; <span class="keyword">static</span> <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/structSteinberg_1_1PClassInfo2.html">PClassInfo2</a> componentClass (lcid,cardinality,category,name,classFlags,subCategories, 0 ,version,sdkVersion);\</div>
 <div class="line">    gPluginFactory-&gt;registerClass (&amp;componentClass,createMethod); }</div>
 <div class="ttc" id="structSteinberg_1_1PClassInfo2_html"><div class="ttname"><a href="../base/structSteinberg_1_1PClassInfo2.html">Steinberg::PClassInfo2</a></div></div>
 <div class="ttc" id="namespaceSteinberg_html_a32680add5f0b1c8a81e5b1c4cfe6a30c"><div class="ttname"><a href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a></div><div class="ttdeci">int8 TUID[16]</div></div>
@@ -408,7 +408,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{ <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a> lcid = cid; <span class="keyword">static</span> PClassInfoUnicode componentClass (lcid,cardinality,category,name,classFlags,subCategories, 0,version,sdkVersion);\</div>
+<b>Value:</b><div class="fragment"><div class="line">{ <a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a> lcid = cid; <span class="keyword">static</span> PClassInfoUnicode componentClass (lcid,cardinality,category,name,classFlags,subCategories, 0,version,sdkVersion);\</div>
 <div class="line">    gPluginFactory-&gt;registerClass (&amp;componentClass,createMethod); }</div>
 <div class="ttc" id="namespaceSteinberg_html_a32680add5f0b1c8a81e5b1c4cfe6a30c"><div class="ttname"><a href="../base/namespaceSteinberg.html#a32680add5f0b1c8a81e5b1c4cfe6a30c">TUID</a></div><div class="ttdeci">int8 TUID[16]</div></div>
 </div><!-- fragment -->
@@ -423,7 +423,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">} <span class="keywordflow">else</span> gPluginFactory-&gt;<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/130059088/b/VST3 SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1FUnknown.html#aaa3c5a2a5410d41153d7f5e3f4e0a635">addRef</a> (); \</div>
+<b>Value:</b><div class="fragment"><div class="line">} <span class="keywordflow">else</span> gPluginFactory-&gt;<a class="codeRef" doxygen="/Volumes/SSD/Builddata/re/147463379/b/VST_SDK/VST3_SDK/doc/base/base.tag:../base/" href="../base/classSteinberg_1_1FUnknown.html#aaa3c5a2a5410d41153d7f5e3f4e0a635">addRef</a> (); \</div>
 <div class="line">    return gPluginFactory; }</div>
 <div class="ttc" id="classSteinberg_1_1FUnknown_html_aaa3c5a2a5410d41153d7f5e3f4e0a635"><div class="ttname"><a href="../base/classSteinberg_1_1FUnknown.html#aaa3c5a2a5410d41153d7f5e3f4e0a635">Steinberg::FUnknown::addRef</a></div><div class="ttdeci">virtual uint32 addRef()=0</div></div>
 </div><!-- fragment -->
@@ -431,17 +431,17 @@ Macros</h2></td></tr>
 </div>
 </div><!-- contents -->
 <html>
-<head>
-	<title>Empty</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<meta name="Author" content="mario">
-</head>
-<body>
-<br/>
-<hr width="100%" size="2" align="left" />
-<div align=left>
-Copyright &copy;2016 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
-All Rights Reserved.
-</div>
+    <head>
+	    <title>Empty</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	    <meta name="Author" content="Steinberg">
+    </head>
+    <body>
+    <br/>
+    <hr width="100%" size="2" align="left" />
+    <div align=left>
+        Copyright &copy;2017 <a href="http://www.steinberg.net" target="_blank"><u>Steinberg Media Technologies GmbH</u></a>.
+        All Rights Reserved. This documentation is under this <a href="http://www.steinberg.net/sdklicenses" target="_blank"><u>license</u></a>.
+    </div>
 </body>
 </html>
