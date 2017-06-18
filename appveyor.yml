@@ -39,8 +39,8 @@ build:
 #---------------------------------#
 
 artifacts:
-  - path: Builds/VisualStudio2017/$(configuration)/*.dll
-  - path: Builds/VisualStudio2017/$(configuration)/*.vst3
+  - path: Builds/VisualStudio2017/$(configuration)/**/*.dll
+  - path: Builds/VisualStudio2017/$(configuration)/**/*.vst3
 #
 #---------------------------------#
 #      deployment configuration   #
