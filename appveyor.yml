@@ -3,7 +3,7 @@
 #---------------------------------#
 
 # Build worker image (VM template)
-image: Visual Studio 2015
+image: Visual Studio 2017
 
 # Fetch repository as zip archive
 shallow_clone: true 
@@ -18,7 +18,7 @@ configuration:
   - Demo
 
 matrix:
-  fast_finish: true
+  fast_finish: false
 
 #---------------------------------#
 #       build configuration       #
@@ -26,7 +26,7 @@ matrix:
 
 build:
   parallel: true
-  project: ./Builds/VisualStudio2015/Temper.sln
+  project: ./Builds/VisualStudio2017/Temper.sln
   publish_wap: false
   publish_wap_xcopy: false
   publish_azure: false
@@ -39,8 +39,8 @@ build:
 #---------------------------------#
 
 artifacts:
-  - path: Builds/VisualStudio2015/$(configuration)/*.dll
-  - path: Builds/VisualStudio2015/$(configuration)/*.vst3
+  - path: Builds/VisualStudio2017/$(configuration)/*.dll
+  - path: Builds/VisualStudio2017/$(configuration)/*.vst3
 #
 #---------------------------------#
 #      deployment configuration   #
