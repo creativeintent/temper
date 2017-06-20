@@ -4160,10 +4160,25 @@
     <None Include="..\..\Assets\Background.png">
       <Filter>Temper\Assets</Filter>
     </None>
+    <None Include="..\..\Assets\BeeStingPreset.xml">
+      <Filter>Temper\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\DefaultPreset.xml">
+      <Filter>Temper\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\FlyingUnitedPreset.xml">
+      <Filter>Temper\Assets</Filter>
+    </None>
     <None Include="..\..\Assets\GraphBackground.png">
       <Filter>Temper\Assets</Filter>
     </None>
     <None Include="..\..\Assets\Montserrat-Light.otf">
+      <Filter>Temper\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\MorningAtTheDMVPreset.xml">
+      <Filter>Temper\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\StubbedToePreset.xml">
       <Filter>Temper\Assets</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\codecs\flac\Flac Licence.txt">

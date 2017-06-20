@@ -15,10 +15,20 @@
   <MAINGROUP id="NQTBxz" name="Temper">
     <GROUP id="{B07EB401-33C5-FD72-4C14-C86C74D8477E}" name="Assets">
       <FILE id="qQ2cig" name="Background.png" compile="0" resource="1" file="Assets/Background.png"/>
+      <FILE id="ePVyns" name="BeeStingPreset.xml" compile="0" resource="1"
+            file="Assets/BeeStingPreset.xml"/>
+      <FILE id="z8BOs7" name="DefaultPreset.xml" compile="0" resource="1"
+            file="Assets/DefaultPreset.xml"/>
+      <FILE id="EriasK" name="FlyingUnitedPreset.xml" compile="0" resource="1"
+            file="Assets/FlyingUnitedPreset.xml"/>
       <FILE id="iRJMki" name="GraphBackground.png" compile="0" resource="1"
             file="Assets/GraphBackground.png"/>
       <FILE id="Lgyi4M" name="Montserrat-Light.otf" compile="0" resource="1"
             file="Assets/Montserrat-Light.otf"/>
+      <FILE id="o2BAm1" name="MorningAtTheDMVPreset.xml" compile="0" resource="1"
+            file="Assets/MorningAtTheDMVPreset.xml"/>
+      <FILE id="E0s8d8" name="StubbedToePreset.xml" compile="0" resource="1"
+            file="Assets/StubbedToePreset.xml"/>
     </GROUP>
     <GROUP id="{29549935-F76D-270B-CF22-913999456CE7}" name="Source">
       <FILE id="DVaBKb" name="SpectroscopeComponent.cpp" compile="1" resource="0"

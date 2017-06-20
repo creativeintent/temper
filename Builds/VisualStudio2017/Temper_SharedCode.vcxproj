@@ -2678,8 +2678,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Assets\Background.png"/>
+    <None Include="..\..\Assets\BeeStingPreset.xml"/>
+    <None Include="..\..\Assets\DefaultPreset.xml"/>
+    <None Include="..\..\Assets\FlyingUnitedPreset.xml"/>
     <None Include="..\..\Assets\GraphBackground.png"/>
     <None Include="..\..\Assets\Montserrat-Light.otf"/>
+    <None Include="..\..\Assets\MorningAtTheDMVPreset.xml"/>
+    <None Include="..\..\Assets\StubbedToePreset.xml"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt"/>
     <None Include="..\..\JuceLibraryCode\modules\juce_graphics\image_formats\jpglib\changes to libjpeg for JUCE.txt"/>
