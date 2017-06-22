@@ -27,7 +27,7 @@ namespace BinaryData
     const int            MontserratLight_otfSize = 91496;
 
     extern const char*   MorningAtTheDMVPreset_xml;
-    const int            MorningAtTheDMVPreset_xmlSize = 298;
+    const int            MorningAtTheDMVPreset_xmlSize = 254;
 
     extern const char*   StubbedToePreset_xml;
     const int            StubbedToePreset_xmlSize = 252;
