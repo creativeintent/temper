@@ -105,11 +105,11 @@
                        isDebug="0" optimisation="3" targetName="Temper (x64)" binaryPath="Builds/VisualStudio2017/Release/"
                        headerPath="../../Include"/>
         <CONFIGURATION name="Demo" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
-                       isDebug="0" optimisation="3" targetName="Temper (Demo)" binaryPath="Builds/VisualStudio2017/Release/"
+                       isDebug="0" optimisation="3" targetName="Temper (Demo)" binaryPath="Builds/VisualStudio2017/Demo/"
                        headerPath="../../Include" defines="TEMPER_DEMO_BUILD=1"/>
         <CONFIGURATION name="Demo" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="Temper (x64)(Demo)"
-                       binaryPath="Builds/VisualStudio2017/Release/" headerPath="../../Include"
+                       binaryPath="Builds/VisualStudio2017/Demo/" headerPath="../../Include"
                        defines="TEMPER_DEMO_BUILD=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

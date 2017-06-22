@@ -110,16 +110,16 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Temper (x64)</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);.\Release\Shared Code</LibraryPath>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">.\Release\VST\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">.\Demo\VST\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">$(Platform)\$(Configuration)\VST\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">Temper (Demo)</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">$(LibraryPath);.\Release\Shared Code</LibraryPath>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">.\Release\VST\</OutDir>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'">$(LibraryPath);.\Demo\Shared Code</LibraryPath>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">.\Demo\VST\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">$(Platform)\$(Configuration)\VST\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">Temper (x64)(Demo)</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">$(LibraryPath);.\Release\Shared Code</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Demo|x64'">$(LibraryPath);.\Demo\Shared Code</LibraryPath>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
