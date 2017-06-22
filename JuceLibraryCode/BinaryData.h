@@ -15,7 +15,7 @@ namespace BinaryData
     const int            BeeStingPreset_xmlSize = 250;
 
     extern const char*   DefaultPreset_xml;
-    const int            DefaultPreset_xmlSize = 298;
+    const int            DefaultPreset_xmlSize = 249;
 
     extern const char*   FlyingUnitedPreset_xml;
     const int            FlyingUnitedPreset_xmlSize = 252;

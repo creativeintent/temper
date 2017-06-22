@@ -7,7 +7,7 @@ pfilterq = hslider("Resonance", 1.0, 1.0, 8, 0.001) : si.smooth(0.995);
 
 // Distortion parameters
 pdrive = hslider("Drive", 4.0, -10.0, 10.0, 0.001) : si.smooth(0.995);
-psat = hslider("Saturation", 0.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
+psat = hslider("Saturation", 1.0, 0.0, 1.0, 0.001) : si.smooth(0.995);
 pcurve = hslider("Curve", 1.0, 0.1, 4.0, 0.001) : si.smooth(0.995);
 
 // Output parameters
