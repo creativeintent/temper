@@ -12,13 +12,13 @@ namespace BinaryData
     const int            Background_pngSize = 1105568;
 
     extern const char*   BeeStingPreset_xml;
-    const int            BeeStingPreset_xmlSize = 298;
+    const int            BeeStingPreset_xmlSize = 250;
 
     extern const char*   DefaultPreset_xml;
     const int            DefaultPreset_xmlSize = 298;
 
     extern const char*   FlyingUnitedPreset_xml;
-    const int            FlyingUnitedPreset_xmlSize = 298;
+    const int            FlyingUnitedPreset_xmlSize = 252;
 
     extern const char*   GraphBackground_png;
     const int            GraphBackground_pngSize = 179814;
@@ -30,7 +30,7 @@ namespace BinaryData
     const int            MorningAtTheDMVPreset_xmlSize = 298;
 
     extern const char*   StubbedToePreset_xml;
-    const int            StubbedToePreset_xmlSize = 298;
+    const int            StubbedToePreset_xmlSize = 252;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

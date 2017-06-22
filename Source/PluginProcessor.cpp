@@ -33,6 +33,7 @@ m_params (*this, nullptr)
     m_restriction = new RestrictionProcessor();
     m_bridge = new FaustUIBridge(m_params);
     m_lastKnownSampleRate = 0.0;
+    m_currentProgram = -1;
 
     // Initialize the dsp units
     for (int i = 0; i < getTotalNumInputChannels(); ++i)
@@ -82,22 +83,61 @@ double TemperAudioProcessor::getTailLengthSeconds() const
 
 int TemperAudioProcessor::getNumPrograms()
 {
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
+    return 5;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
 }
 
 int TemperAudioProcessor::getCurrentProgram()
 {
-    return 0;
+    return m_currentProgram;
 }
 
 void TemperAudioProcessor::setCurrentProgram (int index)
 {
+    switch (index) {
+        case 0:
+            setStateInformation(BinaryData::DefaultPreset_xml,
+                                BinaryData::DefaultPreset_xmlSize);
+            break;
+        case 1:
+            setStateInformation(BinaryData::StubbedToePreset_xml,
+                                BinaryData::StubbedToePreset_xmlSize);
+            break;
+        case 2:
+            setStateInformation(BinaryData::BeeStingPreset_xml,
+                                BinaryData::BeeStingPreset_xmlSize);
+            break;
+        case 3:
+            setStateInformation(BinaryData::MorningAtTheDMVPreset_xml,
+                                BinaryData::MorningAtTheDMVPreset_xmlSize);
+            break;
+        case 4:
+            setStateInformation(BinaryData::FlyingUnitedPreset_xml,
+                                BinaryData::FlyingUnitedPreset_xmlSize);
+            break;
+        default:
+            break;
+    }
+
+    m_currentProgram = index;
 }
 
 const String TemperAudioProcessor::getProgramName (int index)
 {
-    return String();
+    switch (index) {
+        case 0:
+            return String("Default");
+        case 1:
+            return String("Stubbed Toe");
+        case 2:
+            return String("Bee Sting");
+        case 3:
+            return String("Morning at the DMV");
+        case 4:
+            return String("Flying United");
+        default:
+            return String();
+    }
 }
 
 void TemperAudioProcessor::changeProgramName (int index, const String& newName)

@@ -69,6 +69,7 @@ private:
     ScopedPointer<RestrictionProcessor> m_restriction;
 
     double m_lastKnownSampleRate;
+    int m_currentProgram;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TemperAudioProcessor)
