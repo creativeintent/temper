@@ -17,8 +17,8 @@ release() {
 
     # Copy Windows builds
     mkdir -p "$RELEASEDIR/Win"
-    mv $TMPDIR/Builds/VisualStudio2015/Release/*.dll "$RELEASEDIR/Win"
-    mv $TMPDIR/Builds/VisualStudio2015/Release/*.vst3 "$RELEASEDIR/Win"
+    mv $TMPDIR/Builds/VisualStudio2017/Release/**/*.dll "$RELEASEDIR/Win"
+    mv $TMPDIR/Builds/VisualStudio2017/Release/**/*.vst3 "$RELEASEDIR/Win"
     # Copy OSX Builds
     mkdir -p "$RELEASEDIR/OSX"
     mv $TMPDIR/Builds/MacOSX/Release/*.vst "$RELEASEDIR/OSX"
@@ -27,8 +27,8 @@ release() {
 
     # Copy Windows builds
     mkdir -p "$DEMODIR/Win"
-    mv $TMPDIR/Builds/VisualStudio2015/Demo/*.dll "$DEMODIR/Win"
-    mv $TMPDIR/Builds/VisualStudio2015/Demo/*.vst3 "$DEMODIR/Win"
+    mv $TMPDIR/Builds/VisualStudio2017/Demo/**/*.dll "$DEMODIR/Win"
+    mv $TMPDIR/Builds/VisualStudio2017/Demo/**/*.vst3 "$DEMODIR/Win"
     # Copy OSX Builds
     mkdir -p "$DEMODIR/OSX"
     mv $TMPDIR/Builds/MacOSX/Demo/*.vst "$DEMODIR/OSX"
