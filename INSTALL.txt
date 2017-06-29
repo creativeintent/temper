@@ -3,6 +3,9 @@ Thank you for downloading Temper! We hope you like it.
 For any support inquiries, comments, questions, or general feedback, please
 send an email to nick@creativeintent.co.
 
+To view these instructions in your web browser, visit
+https://github.com/creativeintent/temper/blob/master/INSTALL.txt
+
 Installation Instructions
 ========================================
 
@@ -16,9 +19,13 @@ Windows
 To install Temper on Windows, copy the desired plugin version from
 the Win/ directory here into the appropriate target directory below.
 
-For 64-bit plugins (Win/Temper (x64).dll and Win/Temper (x64).vst3), 
+For 64-bit VST2 plugins (Win/Temper (x64).dll):
 
-- C:\Program Files\VstPlugins\
+- C:\Program Files\Common Files\VST2
+
+For 64-bit VST3 plugins (Win/Temper (x64).vst3):
+
+- C:\Program Files\Common Files\VST3
 
 For 32-bit plugins (Win/Temper.dll and Win/Temper.vst3):
 
