@@ -1,0 +1,48 @@
+Temper Help Manual
+========================================
+
+This file contains a breakdown of all of the parameters and their behavior
+in Temper.
+
+For any issues installing, questions, or general feedback, please
+send an email to nick@creativeintent.co.
+
+To view this file in your web browser, visit
+https://github.com/creativeintent/temper/blob/master/HELP.txt
+
+Stages
+----------------------------------------
+Temper contains four distinct stages that all modify the sound output in different
+ways. The order of each stage is described here:
+
+Input --> Lowpass Filter --> Saturation --> Phase Distortion --> Feedback --> Output
+
+The parameters that follow each control different aspects of one of the four stages.
+
+Parameters
+----------------------------------------
+Cutoff: Sets the cutoff frequency of the resonant lowpass filter in the first stage.
+
+Resonance: Sets the corner resonance of the resonant lowpass filter in the first stage.
+
+Curve: The first of the three parameters that control the distortion unit, Curve sets
+the shape of the waveshaper curve used to saturate the input signal before the
+phase distortion module. At its lowest value, the Curve knob sets a shape that approximates
+the identity transformation: that is, no saturation. At its highest value, the curve shape
+becomes steep and introduces a lot of harmonic content, particularly odd harmonics.
+
+Drive: Like a traditional overdrive, Temper includes a gain step right before the
+waveshaper. Drive determines the gain applied at that step. The negative range of the Drive
+knob enables you to invert the polarity of the signal through the waveshaper, which yields
+a slightly different modulation effect in the phase distortion stage.
+
+Saturation: The Saturation parameter controls the Dry/Wet mix of the waveshaper
+output; at 0.0, the dry input signal goes into the phase distortion module with the
+saturated signal controlling the phase modulation. At 1.0, the wet waveshaper signal goes
+into the phase distortion module which is modulated by the same wet signal.
+
+Feedback: The signal chain includes a feedback loop, taking the output of the
+distortion unit and feeding it back right before the distoriton unit again
+(after the filter). The Feedback knob decides the gain multiplier on that feedback loop.
+
+Level: This simply adjusts the output level.

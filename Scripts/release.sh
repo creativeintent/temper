@@ -39,6 +39,10 @@ release() {
     cp "$SCRIPTDIR/../INSTALL.txt" "$RELEASEDIR"
     cp "$SCRIPTDIR/../INSTALL.txt" "$DEMODIR"
 
+    # Copy manual
+    cp "$SCRIPTDIR/../HELP.txt" "$RELEASEDIR"
+    cp "$SCRIPTDIR/../HELP.txt" "$DEMODIR"
+
     pushd $RELEASEDIR
         zip -rq4 Temper-$1.zip .
         aws s3 cp Temper-$1.zip $S3BUCKET
