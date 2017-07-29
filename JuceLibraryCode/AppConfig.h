@@ -35,12 +35,15 @@
 
 // BEGIN SECTION A
 
+// The Producer will overwrite this section on save because the Producer is not built
+// in its GPL version. This is a note to remind myself to just check these changes
+// back into git when it happens.
 #ifndef JUCE_DISPLAY_SPLASH_SCREEN
- #define JUCE_DISPLAY_SPLASH_SCREEN 1
+ #define JUCE_DISPLAY_SPLASH_SCREEN 0
 #endif
 
 #ifndef JUCE_REPORT_APP_USAGE
- #define JUCE_REPORT_APP_USAGE 1
+ #define JUCE_REPORT_APP_USAGE 0
 #endif
 
 // END SECTION A
