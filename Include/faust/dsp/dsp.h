@@ -145,7 +145,7 @@ class dsp {
  * Generic DSP decorator.
  */
 
-class decorator_dsp : public dsp {
+class decorator_dsp : public ::dsp {
 
     protected:
 

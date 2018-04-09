@@ -64,7 +64,7 @@ private:
     AudioProcessorValueTreeState m_params;
     AudioSampleBuffer m_tempBuffer;
 
-    OwnedArray<dsp> m_dsps;
+    OwnedArray<::dsp> m_dsps;
     ScopedPointer<FaustUIBridge> m_bridge;
     ScopedPointer<RestrictionProcessor> m_restriction;
 

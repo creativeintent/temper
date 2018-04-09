@@ -50,7 +50,7 @@ private:
     unsigned int m_fifoIndex;
     bool m_fftBlockReady;
 
-    FFT m_forwardFFT;
+    juce::dsp::FFT m_forwardFFT;
     Colour m_strokeColour;
     Colour m_fillStartColour;
     Colour m_fillStopColour;

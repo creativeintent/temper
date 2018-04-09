@@ -76,7 +76,7 @@ using std::min;
 #define FAUSTCLASS TemperDsp
 #endif
 
-class TemperDsp : public dsp {
+class TemperDsp : public ::dsp {
   private:
 	FAUSTFLOAT 	fslider0;
 	float 	fRec7[2];

@@ -15,7 +15,7 @@
 SpectroscopeComponent::SpectroscopeComponent()
 :   m_fifoIndex(0),
     m_fftBlockReady(false),
-    m_forwardFFT(kFFTOrder, false),
+    m_forwardFFT(kFFTOrder),
     m_strokeColour(Colours::white),
     m_fillStartColour(Colours::white.withAlpha(0.2f)),
     m_fillStopColour(Colours::white.withAlpha(0.8f))
