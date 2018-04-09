@@ -41,16 +41,12 @@
 // set it then by default we'll just create a simple one as below.
 #if ! JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP
 
-extern AudioProcessor* JUCE_CALLTYPE createPluginFilter();
+extern juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter();
+
+#include "juce_StandaloneFilterWindow.h"
 
 namespace juce
 {
-   #if JucePlugin_Enable_IAA && JUCE_IOS
-    #include "../../juce_audio_devices/native/juce_ios_Audio.h"
-   #endif
-
-    #include "juce_StandaloneFilterWindow.h"
-}
 
 //==============================================================================
 class StandaloneFilterApp  : public JUCEApplication
@@ -81,12 +77,21 @@ public:
 
     virtual StandaloneFilterWindow* createWindow()
     {
+       #ifdef JucePlugin_PreferredChannelConfigurations
+        StandalonePluginHolder::PluginInOuts channels[] = { JucePlugin_PreferredChannelConfigurations };
+       #endif
+
         return new StandaloneFilterWindow (getApplicationName(),
                                            LookAndFeel::getDefaultLookAndFeel().findColour (ResizableWindow::backgroundColourId),
                                            appProperties.getUserSettings(),
                                            false, {}, nullptr
                                           #ifdef JucePlugin_PreferredChannelConfigurations
-                                           , { JucePlugin_PreferredChannelConfigurations }
+                                           , juce::Array<StandalonePluginHolder::PluginInOuts> (channels, juce::numElementsInArray (channels))
+                                          #else
+                                           , {}
+                                          #endif
+                                          #if JUCE_DONT_AUTO_OPEN_MIDI_DEVICES_ON_MOBILE
+                                           , false
                                           #endif
                                            );
     }
@@ -96,7 +101,7 @@ public:
     {
         mainWindow = createWindow();
 
-       #if JUCE_IOS || JUCE_ANDROID
+       #if JUCE_STANDALONE_FILTER_WINDOW_USE_KIOSK_MODE
         Desktop::getInstance().setKioskModeComponent (mainWindow, false);
        #endif
 
@@ -112,7 +117,18 @@ public:
     //==============================================================================
     void systemRequestedQuit() override
     {
-        quit();
+        if (ModalComponentManager::getInstance()->cancelAllModalComponents())
+        {
+            Timer::callAfterDelay (100, []()
+            {
+                if (auto app = JUCEApplicationBase::getInstance())
+                    app->systemRequestedQuit();
+            });
+        }
+        else
+        {
+            quit();
+        }
     }
 
 protected:
@@ -120,7 +136,11 @@ protected:
     ScopedPointer<StandaloneFilterWindow> mainWindow;
 };
 
-#if JucePlugin_Build_STANDALONE && JUCE_IOS
+} // namespace juce
+
+#if JucePlugin_Build_Standalone && JUCE_IOS
+
+using namespace juce;
 
 bool JUCE_CALLTYPE juce_isInterAppAudioConnected()
 {

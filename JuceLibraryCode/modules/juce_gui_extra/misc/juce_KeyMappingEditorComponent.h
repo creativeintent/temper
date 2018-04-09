@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -33,6 +33,8 @@
     object.
 
     @see KeyPressMappingSet
+
+    @tags{GUI}
 */
 class JUCE_API  KeyMappingEditorComponent  : public Component
 {
@@ -130,3 +132,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyMappingEditorComponent)
 };
+
+} // namespace juce

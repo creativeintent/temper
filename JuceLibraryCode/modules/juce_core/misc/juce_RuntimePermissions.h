@@ -20,7 +20,8 @@
   ==============================================================================
 */
 
-#pragma once
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -57,6 +58,8 @@
                  audioDeviceManager.initialise (2, 2, nullptr, true, String(), nullptr);
             }
         );
+
+    @tags{Core}
 */
 class JUCE_API  RuntimePermissions
 {
@@ -75,6 +78,12 @@ public:
             otherwise no devices will be found.
         */
         bluetoothMidi = 2,
+
+        /** Permission to read from external storage such as SD cards */
+        readExternalStorage = 3,
+
+        /** Permission to write to external storage such as SD cards */
+        writeExternalStorage = 4
     };
 
     //==============================================================================
@@ -115,3 +124,5 @@ public:
     */
     static bool isGranted (PermissionID permission);
 };
+
+} // namespace juce

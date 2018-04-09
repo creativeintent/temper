@@ -24,6 +24,9 @@
   ==============================================================================
 */
 
+namespace juce
+{
+
 static uint32 lastUniquePeerID = 1;
 
 //==============================================================================
@@ -340,7 +343,9 @@ void ComponentPeer::handleFocusGain()
 {
     ModifierKeys::updateCurrentModifiers();
 
-    if (component.isParentOf (lastFocusedComponent))
+    if (component.isParentOf (lastFocusedComponent)
+          && lastFocusedComponent->isShowing()
+          && lastFocusedComponent->getWantsKeyboardFocus())
     {
         Component::currentlyFocusedComponent = lastFocusedComponent;
         Desktop::getInstance().triggerFocusCallback();
@@ -421,7 +426,7 @@ namespace DragHelpers
 {
     static bool isFileDrag (const ComponentPeer::DragInfo& info)
     {
-        return info.files.size() > 0;
+        return ! info.files.isEmpty();
     }
 
     static bool isSuitableTarget (const ComponentPeer::DragInfo& info, Component* target)
@@ -436,7 +441,7 @@ namespace DragHelpers
                                  : dynamic_cast<TextDragAndDropTarget*> (target)->isInterestedInTextDrag (info.text);
     }
 
-    static Component* findDragAndDropTarget (Component* c, const ComponentPeer::DragInfo& info, Component* const lastOne)
+    static Component* findDragAndDropTarget (Component* c, const ComponentPeer::DragInfo& info, Component* lastOne)
     {
         for (; c != nullptr; c = c->getParentComponent())
             if (isSuitableTarget (info, c) && (c == lastOne || isInterested (info, c)))
@@ -450,9 +455,8 @@ bool ComponentPeer::handleDragMove (const ComponentPeer::DragInfo& info)
 {
     ModifierKeys::updateCurrentModifiers();
 
-    Component* const compUnderMouse = component.getComponentAt (info.position);
-
-    Component* const lastTarget = dragAndDropTargetComponent;
+    auto* compUnderMouse = component.getComponentAt (info.position);
+    auto* lastTarget = dragAndDropTargetComponent.get();
     Component* newTarget = nullptr;
 
     if (compUnderMouse != lastDragAndDropCompUnderMouse)
@@ -537,7 +541,7 @@ bool ComponentPeer::handleDragDrop (const ComponentPeer::DragInfo& info)
 
             // We'll use an async message to deliver the drop, because if the target decides
             // to run a modal loop, it can gum-up the operating system..
-            MessageManager::callAsync ([=]()
+            MessageManager::callAsync ([=]
             {
                 if (auto* c = targetComp.get())
                 {
@@ -574,3 +578,5 @@ void ComponentPeer::setRepresentedFile (const File&)
 //==============================================================================
 int ComponentPeer::getCurrentRenderingEngine() const            { return 0; }
 void ComponentPeer::setCurrentRenderingEngine (int index)       { jassert (index == 0); ignoreUnused (index); }
+
+} // namespace juce

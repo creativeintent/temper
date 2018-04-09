@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -33,6 +33,8 @@
     about mouse events that happen to that component.
 
     @see Component::addMouseListener, Component::removeMouseListener
+
+    @tags{GUI}
 */
 class JUCE_API  MouseListener
 {
@@ -161,3 +163,5 @@ private:
     virtual int mouseWheelMove (const MouseEvent&, float, float) { return 0; }
    #endif
 };
+
+} // namespace juce

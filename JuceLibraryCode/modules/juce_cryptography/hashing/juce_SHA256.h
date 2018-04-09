@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -36,6 +36,8 @@
 
     You can retrieve the hash as a raw 32-byte block, or as a 64-digit hex string.
     @see MD5
+
+    @tags{Cryptography}
 */
 class JUCE_API  SHA256
 {
@@ -103,3 +105,5 @@ private:
 
     JUCE_LEAK_DETECTOR (SHA256)
 };
+
+} // namespace juce

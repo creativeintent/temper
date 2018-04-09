@@ -28,19 +28,19 @@
   ==============================================================================
 */
 
-#pragma once
-
 namespace std
 {
     /**
         This class provides an alternative to std::function that is compatible
         with OS X 10.6 and earlier. This will only be used in OS X versions 10.6
         and earlier and the Projucer live build.
-    */
 
+        @tags{Core}
+    */
     template <typename>
     class function;
 
+    #ifndef DOXYGEN
     template <typename Result, typename... Arguments>
     class function<Result (Arguments...)>
     {
@@ -124,7 +124,7 @@ namespace std
         template <typename ReturnType, typename... Args>
         struct FunctorHolderBase
         {
-            virtual ~FunctorHolderBase() {};
+            virtual ~FunctorHolderBase() {}
             virtual int getSize() const noexcept = 0;
             virtual void copy (void*) const = 0;
             virtual ReturnType operator()(Args...) = 0;
@@ -156,7 +156,7 @@ namespace std
         FunctorHolderBase<Result, Arguments...>* getFunctorStorage (int size)
         {
             return reinterpret_cast<FunctorHolderBase<Result, Arguments...>*>
-                       (size > functorHolderStackSize ? new char [size]
+                       (size > functorHolderStackSize ? new char [static_cast<unsigned long> (size)]
                                                       : &(stackFunctorStorage[0]));
         }
 
@@ -206,4 +206,5 @@ namespace std
 
         FunctorHolderBase<Result, Arguments...>* functorHolderHelper = nullptr;
     };
+    #endif
 }

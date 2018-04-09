@@ -14,6 +14,7 @@
 		61AD7A33F376FB4318E4F7AF = {isa = PBXBuildFile; fileRef = C65386B81096933FA9436F33; };
 		BF91BC76FFFCCFD8A5A3DB90 = {isa = PBXBuildFile; fileRef = 6D2D628981FCF64C310B884E; };
 		B19EF2739AFA3DDA44EA7526 = {isa = PBXBuildFile; fileRef = C33B7FFCC2442377C56E393D; };
+		C3B45D6C33FC8D2DFFAFD911 = {isa = PBXBuildFile; fileRef = 0A8426AE91646F9776A6C30E; };
 		08B71F44034B3235DC256506 = {isa = PBXBuildFile; fileRef = 43C47DA992C4DBF75FF9D24B; };
 		26DDC2E8A87CED2C233559FF = {isa = PBXBuildFile; fileRef = 0479B2108EC3D3086C664EF5; };
 		5B7726FEB45B778ABED69629 = {isa = PBXBuildFile; fileRef = 0DB16E6AED0AC5A84706C552; };
@@ -59,6 +60,7 @@
 		06F1639F9ACD9530D7553818 = {isa = PBXFileReference; lastKnownFileType = file.xml; name = MorningAtTheDMVPreset.xml; path = ../../Assets/MorningAtTheDMVPreset.xml; sourceTree = "SOURCE_ROOT"; };
 		08FBE4E80406DFC06A801885 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_gui_extra.mm"; path = "../../JuceLibraryCode/include_juce_gui_extra.mm"; sourceTree = "SOURCE_ROOT"; };
 		096DEFCE628676E9EDC08240 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_devices"; path = "../../JuceLibraryCode/modules/juce_audio_devices"; sourceTree = "SOURCE_ROOT"; };
+		0A8426AE91646F9776A6C30E = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		0CD23932791610E5366E2581 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_data_structures"; path = "../../JuceLibraryCode/modules/juce_data_structures"; sourceTree = "SOURCE_ROOT"; };
 		0DB16E6AED0AC5A84706C552 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		0DF7613DEBCCF4E1B2EDC4A8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FaustUIBridge.cpp; path = ../../Source/FaustUIBridge.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -180,7 +182,7 @@
 					85D5F537A586A7233EA46537,
 					F4E576760B96BFC53ADE07E8,
 					3D60425B91F9969B127BDB48,
-					B90EE98DE447E998BF9AC67B, ); name = "Juce Modules"; sourceTree = "<group>"; };
+					B90EE98DE447E998BF9AC67B, ); name = "JUCE Modules"; sourceTree = "<group>"; };
 		7F3BE1629581C7BA6B7F806F = {isa = PBXGroup; children = (
 					F18B8A5D50E29FDAEF2E5581,
 					E7656FD65D0D145C3C20CF7D,
@@ -205,7 +207,7 @@
 					08FBE4E80406DFC06A801885,
 					75A9FD8847C6F1C0FB785025,
 					FB2A68BF92DB5683C7EA4255,
-					DA229717FA82D3728EE12635, ); name = "Juce Library Code"; sourceTree = "<group>"; };
+					DA229717FA82D3728EE12635, ); name = "JUCE Library Code"; sourceTree = "<group>"; };
 		7B6C20AA19B30308B7071BB6 = {isa = PBXGroup; children = (
 					1B6CAB86422500A32B9A2268,
 					16ABFACFA41328E1822C64FC,
@@ -216,6 +218,7 @@
 					C65386B81096933FA9436F33,
 					6D2D628981FCF64C310B884E,
 					C33B7FFCC2442377C56E393D,
+					0A8426AE91646F9776A6C30E,
 					43C47DA992C4DBF75FF9D24B,
 					0479B2108EC3D3086C664EF5,
 					0DB16E6AED0AC5A84706C552,
@@ -239,12 +242,15 @@
 					7B6C20AA19B30308B7071BB6,
 					4EB0C2E5B91B060521668B43,
 					D70C3C34C34A0174F5CCAECB, ); name = Source; sourceTree = "<group>"; };
-		C7002CCFFE56C8F1B385BDA7 = {isa = XCBuildConfiguration; buildSettings = {  }; name = Debug; };
-		D652EDE4F3E5F7F37B76225A = {isa = XCBuildConfiguration; buildSettings = {  }; name = Release; };
-		992799EC591C91E642CD3D65 = {isa = XCBuildConfiguration; buildSettings = {  }; name = Demo; };
+		C7002CCFFE56C8F1B385BDA7 = {isa = XCBuildConfiguration; buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.9; }; name = Debug; };
+		D652EDE4F3E5F7F37B76225A = {isa = XCBuildConfiguration; buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.9; }; name = Release; };
+		992799EC591C91E642CD3D65 = {isa = XCBuildConfiguration; buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.9; }; name = Demo; };
 		037777277548B3E4413ECEF1 = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -270,6 +276,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-VST.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -281,7 +288,7 @@
 				WRAPPER_EXTENSION = vst; }; name = Debug; };
 		149F966C3EF21DFC25242E76 = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -308,8 +315,10 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-VST.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lTemper";
@@ -319,7 +328,7 @@
 				WRAPPER_EXTENSION = vst; }; name = Release; };
 		34EC70CEAF046ADDCB554E68 = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -347,8 +356,10 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-VST.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lTemper\\ (Demo)";
@@ -358,7 +369,7 @@
 				WRAPPER_EXTENSION = vst; }; name = Demo; };
 		BB20A7A862DDF30947CA24ED = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -384,6 +395,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-VST3.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -395,7 +407,7 @@
 				WRAPPER_EXTENSION = vst3; }; name = Debug; };
 		552BE47D98F05E7E2A1BE1E5 = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -422,8 +434,10 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-VST3.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lTemper";
@@ -433,7 +447,7 @@
 				WRAPPER_EXTENSION = vst3; }; name = Release; };
 		48C2A0C89EB5B272FB1A3BE4 = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -461,8 +475,10 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-VST3.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lTemper\\ (Demo)";
@@ -472,7 +488,7 @@
 				WRAPPER_EXTENSION = vst3; }; name = Demo; };
 		51D636E6D50164DCD40BB553 = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -498,6 +514,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-AU.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -510,7 +527,7 @@
 				WRAPPER_EXTENSION = component; }; name = Debug; };
 		EE445B6674AB52157101266D = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -537,8 +554,10 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-AU.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lTemper";
@@ -549,7 +568,7 @@
 				WRAPPER_EXTENSION = component; }; name = Release; };
 		0653AFD32E461E60585D3F41 = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -577,8 +596,10 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INFOPLIST_FILE = Info-AU.plist;
+				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(BUILD_DIR)/$(CONFIGURATION)";
 				LIBRARY_STYLE = Bundle;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				OTHER_LDFLAGS = "-bundle -lTemper\\ (Demo)";
@@ -589,7 +610,7 @@
 				WRAPPER_EXTENSION = component; }; name = Demo; };
 		8F02B3FB70199C61B246690E = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -620,7 +641,7 @@
 				USE_HEADERMAP = NO; }; name = Debug; };
 		B705C6672E96DCA45E3645EA = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -645,6 +666,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.creativeintent.temper;
@@ -652,7 +674,7 @@
 				USE_HEADERMAP = NO; }; name = Release; };
 		BFB4F18F1645324BD3D4A03E = {isa = XCBuildConfiguration; buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -678,6 +700,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = ("../../VST3_SDK", "../../JuceLibraryCode", "../../JuceLibraryCode/modules", "../../Include", "../../JuceLibraryCode/modules/juce_audio_plugin_client", "$(inherited)");
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.creativeintent.temper;
@@ -685,46 +708,109 @@
 				USE_HEADERMAP = NO; }; name = Demo; };
 		DC54FEFECC7EE960E754B824 = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "Temper";
 				WARNING_CFLAGS = -Wreorder;
 				ZERO_LINK = NO; }; name = Debug; };
 		51B52684D34AD98BE008AE8C = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "Temper";
 				WARNING_CFLAGS = -Wreorder;
 				ZERO_LINK = NO; }; name = Release; };
 		729619C61C81AE021832EB20 = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_MISSING_PARENTHESES = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "Temper (Demo)";
 				WARNING_CFLAGS = -Wreorder;
@@ -758,6 +844,7 @@
 					79FECC7AD35E7CD7C30569E3,
 					61AD7A33F376FB4318E4F7AF,
 					B19EF2739AFA3DDA44EA7526,
+					C3B45D6C33FC8D2DFFAFD911,
 					08B71F44034B3235DC256506,
 					26DDC2E8A87CED2C233559FF,
 					5B7726FEB45B778ABED69629,
@@ -784,6 +871,7 @@
 					79FECC7AD35E7CD7C30569E3,
 					61AD7A33F376FB4318E4F7AF,
 					B19EF2739AFA3DDA44EA7526,
+					C3B45D6C33FC8D2DFFAFD911,
 					08B71F44034B3235DC256506,
 					26DDC2E8A87CED2C233559FF,
 					5B7726FEB45B778ABED69629,
@@ -814,6 +902,7 @@
 					61AD7A33F376FB4318E4F7AF,
 					BF91BC76FFFCCFD8A5A3DB90,
 					B19EF2739AFA3DDA44EA7526,
+					C3B45D6C33FC8D2DFFAFD911,
 					08B71F44034B3235DC256506,
 					26DDC2E8A87CED2C233559FF,
 					5B7726FEB45B778ABED69629,
@@ -861,7 +950,7 @@
 					AFB47B9448D55B25E1D20E8F, ); runOnlyForDeploymentPostprocessing = 0; };
 		B7EF72187EFCA6F380E6881C = {isa = PBXNativeTarget; buildConfigurationList = 4BD7DC1DB3BF44FD80C19DF7; buildPhases = (
 					7E7EA50BF37C2E45F7FED2C2, ); buildRules = ( ); dependencies = (  ); name = "Temper - Shared Code"; productName = Temper; productReference = 51985E139AA96A0DF9BDD53F; productType = "com.apple.product-type.library.static"; };
-		161A016FC5B702D86E73B434 = {isa = PBXProject; buildConfigurationList = E3D10272E9BD334B9AC87536; attributes = { LastUpgradeCheck = 0830; TargetAttributes = { 2BEC471FAEF6D07D8826CB28 = { SystemCapabilities = {com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; };EFB06C11706FA2BED72C0177 = { SystemCapabilities = {com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; };C4D91950F59C6AC78BBE99D9 = { SystemCapabilities = {com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; };78A0F1CBC813E0CDBA206E64 = { SystemCapabilities = {com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; };B7EF72187EFCA6F380E6881C = { SystemCapabilities = {com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = 16B7A8795DC462581C0D3409; projectDirPath = ""; projectRoot = ""; targets = (2BEC471FAEF6D07D8826CB28, EFB06C11706FA2BED72C0177, C4D91950F59C6AC78BBE99D9, 78A0F1CBC813E0CDBA206E64, B7EF72187EFCA6F380E6881C); };
+		161A016FC5B702D86E73B434 = {isa = PBXProject; buildConfigurationList = E3D10272E9BD334B9AC87536; attributes = { LastUpgradeCheck = 0830; ORGANIZATIONNAME = "Creative Intent"; TargetAttributes = { 2BEC471FAEF6D07D8826CB28 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; };EFB06C11706FA2BED72C0177 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; };C4D91950F59C6AC78BBE99D9 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; };78A0F1CBC813E0CDBA206E64 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; };B7EF72187EFCA6F380E6881C = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = 16B7A8795DC462581C0D3409; projectDirPath = ""; projectRoot = ""; targets = (2BEC471FAEF6D07D8826CB28, EFB06C11706FA2BED72C0177, C4D91950F59C6AC78BBE99D9, 78A0F1CBC813E0CDBA206E64, B7EF72187EFCA6F380E6881C); };
 	};
 	rootObject = 161A016FC5B702D86E73B434;
 }

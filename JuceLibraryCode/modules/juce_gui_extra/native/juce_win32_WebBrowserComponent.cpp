@@ -24,20 +24,27 @@
   ==============================================================================
 */
 
-JUCE_COMCLASS (DWebBrowserEvents2,        "34A715A0-6587-11D0-924A-0020AFC7AC4D")
-JUCE_COMCLASS (IConnectionPointContainer, "B196B284-BAB4-101A-B69C-00AA00341D07")
-JUCE_COMCLASS (IWebBrowser2,              "D30C1661-CDAF-11D0-8A3E-00C04FC9E26E")
-JUCE_COMCLASS (WebBrowser,                "8856F961-340A-11D0-A96B-00C04FD705A2")
+namespace juce
+{
+
+#if JUCE_MINGW
+ JUCE_DECLARE_UUID_GETTER (IOleClientSite,           "00000118-0000-0000-c000-000000000046")
+ JUCE_DECLARE_UUID_GETTER (IDispatch,                "00020400-0000-0000-c000-000000000046")
+
+ #ifndef WebBrowser
+  class WebBrowser;
+ #endif
+#endif
+
+JUCE_DECLARE_UUID_GETTER (DWebBrowserEvents2,        "34A715A0-6587-11D0-924A-0020AFC7AC4D")
+JUCE_DECLARE_UUID_GETTER (IConnectionPointContainer, "B196B284-BAB4-101A-B69C-00AA00341D07")
+JUCE_DECLARE_UUID_GETTER (IWebBrowser2,              "D30C1661-CDAF-11D0-8A3E-00C04FC9E26E")
+JUCE_DECLARE_UUID_GETTER (WebBrowser,                "8856F961-340A-11D0-A96B-00C04FD705A2")
 
 class WebBrowserComponent::Pimpl   : public ActiveXControlComponent
 {
 public:
-    Pimpl()
-      : browser (nullptr),
-        connectionPoint (nullptr),
-        adviseCookie (0)
-    {
-    }
+    Pimpl() {}
 
     ~Pimpl()
     {
@@ -50,25 +57,24 @@ public:
 
     void createBrowser()
     {
-        CLSID webCLSID = __uuidof (WebBrowser);
+        auto webCLSID = __uuidof (WebBrowser);
         createControl (&webCLSID);
 
-    GUID iidWebBrowser2              = __uuidof (IWebBrowser2);
-    GUID iidConnectionPointContainer = __uuidof (IConnectionPointContainer);
+        auto iidWebBrowser2              = __uuidof (IWebBrowser2);
+        auto iidConnectionPointContainer = __uuidof (IConnectionPointContainer);
 
         browser = (IWebBrowser2*) queryInterface (&iidWebBrowser2);
 
-        if (IConnectionPointContainer* connectionPointContainer
-            = (IConnectionPointContainer*) queryInterface (&iidConnectionPointContainer))
+        if (auto connectionPointContainer = (IConnectionPointContainer*) queryInterface (&iidConnectionPointContainer))
         {
             connectionPointContainer->FindConnectionPoint (__uuidof (DWebBrowserEvents2), &connectionPoint);
 
             if (connectionPoint != nullptr)
             {
-                WebBrowserComponent* const owner = dynamic_cast<WebBrowserComponent*> (getParentComponent());
+                auto* owner = dynamic_cast<WebBrowserComponent*> (getParentComponent());
                 jassert (owner != nullptr);
 
-                EventHandler* handler = new EventHandler (*owner);
+                auto handler = new EventHandler (*owner);
                 connectionPoint->Advise (handler, &adviseCookie);
                 handler->Release();
             }
@@ -120,7 +126,7 @@ public:
                 }
             }
 
-            BSTR urlBSTR = SysAllocString ((const OLECHAR*) url.toWideCharPointer());
+            auto urlBSTR = SysAllocString ((const OLECHAR*) url.toWideCharPointer());
             browser->Navigate (urlBSTR, &headerFlags, &frame, &postDataVar, &headersVar);
             SysFreeString (urlBSTR);
 
@@ -135,11 +141,11 @@ public:
     }
 
     //==============================================================================
-    IWebBrowser2* browser;
+    IWebBrowser2* browser = nullptr;
 
 private:
-    IConnectionPoint* connectionPoint;
-    DWORD adviseCookie;
+    IConnectionPoint* connectionPoint = nullptr;
+    DWORD adviseCookie = 0;
 
     //==============================================================================
     struct EventHandler  : public ComBaseClassHelper<IDispatch>,
@@ -175,7 +181,7 @@ private:
                 return S_OK;
             }
 
-            if (dispIdMember == DISPID_NAVIGATEERROR)
+            if (dispIdMember == 271 /*DISPID_NAVIGATEERROR*/)
             {
                 int statusCode = pDispParams->rgvarg[1].pvarVal->intVal;
                 *pDispParams->rgvarg[0].pboolVal = VARIANT_FALSE;
@@ -185,13 +191,14 @@ private:
                 if (statusCode < 0)
                 {
                     LPTSTR messageBuffer = nullptr;
-                    size_t size = FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-                                                 NULL, statusCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &messageBuffer, 0, NULL);
+                    auto size = FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                                               nullptr, statusCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                                               (LPTSTR) &messageBuffer, 0, nullptr);
 
-                    String message(messageBuffer, size);
-                    LocalFree(messageBuffer);
+                    String message (messageBuffer, size);
+                    LocalFree (messageBuffer);
 
-                    if (!owner.pageLoadHadNetworkError(message))
+                    if (! owner.pageLoadHadNetworkError (message))
                         *pDispParams->rgvarg[0].pboolVal = VARIANT_TRUE;
                 }
 
@@ -234,17 +241,16 @@ private:
 
 //==============================================================================
 WebBrowserComponent::WebBrowserComponent (const bool unloadPageWhenBrowserIsHidden_)
-    : browser (nullptr),
+    : browser (new Pimpl()),
       blankPageShown (false),
       unloadPageWhenBrowserIsHidden (unloadPageWhenBrowserIsHidden_)
 {
     setOpaque (true);
-    addAndMakeVisible (browser = new Pimpl());
+    addAndMakeVisible (browser);
 }
 
 WebBrowserComponent::~WebBrowserComponent()
 {
-    delete browser;
 }
 
 //==============================================================================
@@ -366,12 +372,12 @@ void WebBrowserComponent::visibilityChanged()
 
 void WebBrowserComponent::focusGained (FocusChangeType)
 {
-    GUID iidOleObject = __uuidof (IOleObject);
-    GUID iidOleWindow = __uuidof (IOleWindow);
+    auto iidOleObject = __uuidof (IOleObject);
+    auto iidOleWindow = __uuidof (IOleWindow);
 
-    if (IOleObject* oleObject = (IOleObject*) browser->queryInterface (&iidOleObject))
+    if (auto oleObject = (IOleObject*) browser->queryInterface (&iidOleObject))
     {
-        if (IOleWindow* oleWindow = (IOleWindow*) browser->queryInterface (&iidOleWindow))
+        if (auto oleWindow = (IOleWindow*) browser->queryInterface (&iidOleWindow))
         {
             IOleClientSite* oleClientSite = nullptr;
 
@@ -392,29 +398,29 @@ void WebBrowserComponent::focusGained (FocusChangeType)
 
 void WebBrowserComponent::clearCookies()
 {
-    HeapBlock<::INTERNET_CACHE_ENTRY_INFO> entry;
-    ::DWORD entrySize = sizeof (::INTERNET_CACHE_ENTRY_INFO);
-    ::HANDLE urlCacheHandle = ::FindFirstUrlCacheEntry (TEXT ("cookie:"), entry.getData(), &entrySize);
+    HeapBlock<::INTERNET_CACHE_ENTRY_INFOA> entry;
+    ::DWORD entrySize = sizeof (::INTERNET_CACHE_ENTRY_INFOA);
+    ::HANDLE urlCacheHandle = ::FindFirstUrlCacheEntryA ("cookie:", entry.getData(), &entrySize);
 
     if (urlCacheHandle == nullptr && GetLastError() == ERROR_INSUFFICIENT_BUFFER)
     {
         entry.realloc (1, entrySize);
-        urlCacheHandle = ::FindFirstUrlCacheEntry (TEXT ("cookie:"), entry.getData(), &entrySize);
+        urlCacheHandle = ::FindFirstUrlCacheEntryA ("cookie:", entry.getData(), &entrySize);
     }
 
     if (urlCacheHandle != nullptr)
     {
         for (;;)
         {
-            ::DeleteUrlCacheEntry (entry.getData()->lpszSourceUrlName);
+            ::DeleteUrlCacheEntryA (entry.getData()->lpszSourceUrlName);
 
-            if (::FindNextUrlCacheEntry (urlCacheHandle, entry.getData(), &entrySize) == 0)
+            if (::FindNextUrlCacheEntryA (urlCacheHandle, entry.getData(), &entrySize) == 0)
             {
                 if (GetLastError() == ERROR_INSUFFICIENT_BUFFER)
                 {
                     entry.realloc (1, entrySize);
 
-                    if (::FindNextUrlCacheEntry (urlCacheHandle, entry.getData(), &entrySize) != 0)
+                    if (::FindNextUrlCacheEntryA (urlCacheHandle, entry.getData(), &entrySize) != 0)
                         continue;
                 }
 
@@ -425,3 +431,5 @@ void WebBrowserComponent::clearCookies()
         FindCloseUrlCache (urlCacheHandle);
     }
 }
+
+} // namespace juce

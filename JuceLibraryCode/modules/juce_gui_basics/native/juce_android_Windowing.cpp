@@ -24,12 +24,31 @@
   ==============================================================================
 */
 
-} // (juce namespace)
-
 extern juce::JUCEApplicationBase* juce_CreateApplication(); // (from START_JUCE_APPLICATION)
 
 namespace juce
 {
+
+//==============================================================================
+#if JUCE_PUSH_NOTIFICATIONS && JUCE_MODULE_AVAILABLE_juce_gui_extra
+ // Returns true if the intent was handled.
+ extern bool juce_handleNotificationIntent (void*);
+ extern void juce_firebaseDeviceNotificationsTokenRefreshed (void*);
+ extern void juce_firebaseRemoteNotificationReceived (void*);
+ extern void juce_firebaseRemoteMessagesDeleted();
+ extern void juce_firebaseRemoteMessageSent(void*);
+ extern void juce_firebaseRemoteMessageSendError (void*, void*);
+#endif
+
+#if JUCE_IN_APP_PURCHASES && JUCE_MODULE_AVAILABLE_juce_product_unlocking
+ extern void juce_inAppPurchaseCompleted (void*);
+#endif
+
+#if ! JUCE_DISABLE_NATIVE_FILECHOOSERS
+ extern void juce_fileChooserCompleted (int, void*);
+#endif
+
+extern void juce_contentSharingCompleted (int);
 
 //==============================================================================
 JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, launchApp, void, (JNIEnv* env, jobject activity,
@@ -62,7 +81,7 @@ JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, suspendApp, void, (JNIEnv* e
 {
     setEnv (env);
 
-    if (JUCEApplicationBase* const app = JUCEApplicationBase::getInstance())
+    if (auto* app = JUCEApplicationBase::getInstance())
         app->suspended();
 }
 
@@ -70,7 +89,7 @@ JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, resumeApp, void, (JNIEnv* en
 {
     setEnv (env);
 
-    if (JUCEApplicationBase* const app = JUCEApplicationBase::getInstance())
+    if (auto* app = JUCEApplicationBase::getInstance())
         app->resumed();
 }
 
@@ -81,7 +100,100 @@ JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, quitApp, void, (JNIEnv* env,
     JUCEApplicationBase::appWillTerminateByForce();
 
     android.shutdown (env);
+
+    jclass systemClass = (jclass) env->FindClass ("java/lang/System");
+    jmethodID exitMethod = env->GetStaticMethodID (systemClass, "exit", "(I)V");
+    env->CallStaticVoidMethod (systemClass, exitMethod, 0);
 }
+
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, appActivityResult, void, (JNIEnv* env, jobject, jint requestCode, jint resultCode, jobject intentData))
+{
+    setEnv (env);
+
+   #if JUCE_IN_APP_PURCHASES && JUCE_MODULE_AVAILABLE_juce_product_unlocking
+    if (requestCode == 1001)
+        juce_inAppPurchaseCompleted (intentData);
+   #endif
+
+   #if ! JUCE_DISABLE_NATIVE_FILECHOOSERS
+    if (requestCode == /*READ_REQUEST_CODE*/42)
+        juce_fileChooserCompleted (resultCode, intentData);
+   #endif
+
+    if (requestCode == 1003)
+        juce_contentSharingCompleted (resultCode);
+
+    ignoreUnused (intentData, requestCode);
+}
+
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, appNewIntent, void, (JNIEnv* env, jobject, jobject intentData))
+{
+    setEnv (env);
+
+  #if JUCE_PUSH_NOTIFICATIONS && JUCE_MODULE_AVAILABLE_juce_gui_extra
+    if (juce_handleNotificationIntent ((void *)intentData))
+        return;
+
+    // Add other functions processing intents here as needed.
+  #else
+    ignoreUnused (intentData);
+  #endif
+}
+
+#if defined(JUCE_FIREBASE_MESSAGING_SERVICE_CLASSNAME)
+JUCE_JNI_CALLBACK (JUCE_FIREBASE_INSTANCE_ID_SERVICE_CLASSNAME, firebaseInstanceIdTokenRefreshed, void, (JNIEnv* env, jobject /*activity*/, jstring token))
+{
+    setEnv (env);
+
+  #if JUCE_MODULE_AVAILABLE_juce_gui_extra
+    juce_firebaseDeviceNotificationsTokenRefreshed (token);
+  #else
+    ignoreUnused (token);
+  #endif
+}
+
+JUCE_JNI_CALLBACK (JUCE_FIREBASE_MESSAGING_SERVICE_CLASSNAME, firebaseRemoteMessageReceived, void, (JNIEnv* env, jobject /*activity*/, jobject remoteMessage))
+{
+    setEnv (env);
+
+  #if JUCE_MODULE_AVAILABLE_juce_gui_extra
+    juce_firebaseRemoteNotificationReceived (remoteMessage);
+  #else
+    ignoreUnused (remoteMessage);
+  #endif
+}
+
+JUCE_JNI_CALLBACK (JUCE_FIREBASE_MESSAGING_SERVICE_CLASSNAME, firebaseRemoteMessagesDeleted, void, (JNIEnv* env, jobject /*activity*/))
+{
+    setEnv (env);
+
+  #if JUCE_MODULE_AVAILABLE_juce_gui_extra
+    juce_firebaseRemoteMessagesDeleted();
+  #endif
+}
+
+JUCE_JNI_CALLBACK (JUCE_FIREBASE_MESSAGING_SERVICE_CLASSNAME, firebaseRemoteMessageSent, void, (JNIEnv* env, jobject /*activity*/, jstring messageId))
+{
+    setEnv (env);
+
+  #if JUCE_MODULE_AVAILABLE_juce_gui_extra
+    juce_firebaseRemoteMessageSent (messageId);
+  #else
+    ignoreUnused (messageId);
+  #endif
+}
+
+JUCE_JNI_CALLBACK (JUCE_FIREBASE_MESSAGING_SERVICE_CLASSNAME, firebaseRemoteMessageSendError, void, (JNIEnv* env, jobject /*activity*/, jstring messageId, jstring error))
+{
+    setEnv (env);
+
+  #if JUCE_MODULE_AVAILABLE_juce_gui_extra
+    juce_firebaseRemoteMessageSendError (messageId, error);
+  #else
+    ignoreUnused (messageId, error);
+  #endif
+}
+#endif
 
 //==============================================================================
 #define JNI_CLASS_MEMBERS(METHOD, STATICMETHOD, FIELD, STATICFIELD) \
@@ -93,22 +205,12 @@ DECLARE_JNI_CLASS (CanvasMinimal, "android/graphics/Canvas");
 
 //==============================================================================
 #define JNI_CLASS_MEMBERS(METHOD, STATICMETHOD, FIELD, STATICFIELD) \
- METHOD (setViewName,   "setViewName",      "(Ljava/lang/String;)V") \
- METHOD (layout,        "layout",           "(IIII)V") \
- METHOD (getLeft,       "getLeft",          "()I") \
- METHOD (getTop,        "getTop",           "()I") \
- METHOD (getWidth,      "getWidth",         "()I") \
- METHOD (getHeight,     "getHeight",        "()I") \
- METHOD (getLocationOnScreen, "getLocationOnScreen", "([I)V") \
- METHOD (bringToFront,  "bringToFront",     "()V") \
- METHOD (requestFocus,  "requestFocus",     "()Z") \
- METHOD (setVisible,    "setVisible",       "(Z)V") \
- METHOD (isVisible,     "isVisible",        "()Z") \
- METHOD (hasFocus,      "hasFocus",         "()Z") \
- METHOD (invalidate,    "invalidate",       "(IIII)V") \
- METHOD (containsPoint, "containsPoint",    "(II)Z") \
- METHOD (showKeyboard,  "showKeyboard",     "(Ljava/lang/String;)V") \
- METHOD (setSystemUiVisibility, "setSystemUiVisibilityCompat", "(I)V") \
+ METHOD (setViewName,                 "setViewName",                 "(Ljava/lang/String;)V") \
+ METHOD (setVisible,                  "setVisible",                  "(Z)V") \
+ METHOD (isVisible,                   "isVisible",                   "()Z") \
+ METHOD (containsPoint,               "containsPoint",               "(II)Z") \
+ METHOD (showKeyboard,                "showKeyboard",                "(Ljava/lang/String;)V") \
+ METHOD (setSystemUiVisibilityCompat, "setSystemUiVisibilityCompat", "(I)V") \
 
 DECLARE_JNI_CLASS (ComponentPeerView, JUCE_ANDROID_ACTIVITY_CLASSPATH "$ComponentPeerView");
 #undef JNI_CLASS_MEMBERS
@@ -121,8 +223,8 @@ class AndroidComponentPeer  : public ComponentPeer,
 public:
     AndroidComponentPeer (Component& comp, const int windowStyleFlags)
         : ComponentPeer (comp, windowStyleFlags),
-          usingAndroidGraphics (false),
           fullScreen (false),
+          navBarsHidden (false),
           sizeAllocated (0),
           scale ((float) Desktop::getInstance().getDisplays().getMainDisplay().scale)
     {
@@ -208,7 +310,7 @@ public:
         if (MessageManager::getInstance()->isThisTheMessageThread())
         {
             fullScreen = isNowFullScreen;
-            view.callVoidMethod (ComponentPeerView.layout,
+            view.callVoidMethod (AndroidView.layout,
                                  r.getX(), r.getY(), r.getRight(), r.getBottom());
         }
         else
@@ -220,7 +322,7 @@ public:
 
                 void messageCallback() override
                 {
-                    view.callVoidMethod (ComponentPeerView.layout,
+                    view.callVoidMethod (AndroidView.layout,
                                          bounds.getX(), bounds.getY(), bounds.getRight(), bounds.getBottom());
                 }
 
@@ -235,10 +337,10 @@ public:
 
     Rectangle<int> getBounds() const override
     {
-        return (Rectangle<float> (view.callIntMethod (ComponentPeerView.getLeft),
-                                  view.callIntMethod (ComponentPeerView.getTop),
-                                  view.callIntMethod (ComponentPeerView.getWidth),
-                                  view.callIntMethod (ComponentPeerView.getHeight)) / scale).toNearestInt();
+        return (Rectangle<float> (view.callIntMethod (AndroidView.getLeft),
+                                  view.callIntMethod (AndroidView.getTop),
+                                  view.callIntMethod (AndroidView.getWidth),
+                                  view.callIntMethod (AndroidView.getHeight)) / scale).toNearestInt();
     }
 
     void handleScreenSizeChange() override
@@ -249,20 +351,20 @@ public:
             setFullScreen (true);
     }
 
-    Point<int> getScreenPosition() const
+    Point<float> getScreenPosition() const
     {
-        return Point<int> (view.callIntMethod (ComponentPeerView.getLeft),
-                           view.callIntMethod (ComponentPeerView.getTop)) / scale;
+        return Point<float> (view.callIntMethod (AndroidView.getLeft),
+                             view.callIntMethod (AndroidView.getTop)) / scale;
     }
 
     Point<float> localToGlobal (Point<float> relativePosition) override
     {
-        return relativePosition + getScreenPosition().toFloat();
+        return relativePosition + getScreenPosition();
     }
 
     Point<float> globalToLocal (Point<float> screenPosition) override
     {
-        return screenPosition - getScreenPosition().toFloat();
+        return screenPosition - getScreenPosition();
     }
 
     void setMinimised (bool /*shouldBeMinimised*/) override
@@ -275,9 +377,9 @@ public:
         return false;
     }
 
-    bool shouldNavBarsBeHidden() const
+    bool shouldNavBarsBeHidden (bool shouldBeFullScreen) const
     {
-        if (fullScreen)
+        if (shouldBeFullScreen)
             if (Component* kiosk = Desktop::getInstance().getKioskModeComponent())
                 if (kiosk->getPeer() == this)
                     return true;
@@ -285,7 +387,7 @@ public:
         return false;
     }
 
-    void setNavBarsHidden (bool hidden) const
+    void setNavBarsHidden (bool hidden)
     {
         enum
         {
@@ -299,21 +401,27 @@ public:
             SYSTEM_UI_FLAG_IMMERSIVE_STICKY         = 4096
         };
 
-        view.callVoidMethod (ComponentPeerView.setSystemUiVisibility,
+        view.callVoidMethod (ComponentPeerView.setSystemUiVisibilityCompat,
                              hidden ? (jint) (SYSTEM_UI_FLAG_HIDE_NAVIGATION | SYSTEM_UI_FLAG_FULLSCREEN | SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
                                     : (jint) (SYSTEM_UI_FLAG_VISIBLE));
+
+        navBarsHidden = hidden;
     }
 
     void setFullScreen (bool shouldBeFullScreen) override
     {
         // updating the nav bar visibility is a bit odd on Android - need to wait for
-        if (shouldNavBarsBeHidden())
+        if (shouldNavBarsBeHidden (shouldBeFullScreen))
         {
-            if (! isTimerRunning())
+            if (! navBarsHidden && ! isTimerRunning())
+            {
                 startTimer (500);
+            }
         }
         else
+        {
             setNavBarsHidden (false);
+        }
 
         Rectangle<int> r (shouldBeFullScreen ? Desktop::getInstance().getDisplays().getMainDisplay().userArea
                                              : lastNonFullscreenBounds);
@@ -335,7 +443,7 @@ public:
 
     void timerCallback() override
     {
-        setNavBarsHidden (shouldNavBarsBeHidden());
+        setNavBarsHidden (shouldNavBarsBeHidden (fullScreen));
         setFullScreen (fullScreen);
         stopTimer();
     }
@@ -371,7 +479,7 @@ public:
         // Avoid calling bringToFront excessively: it's very slow
         if (frontWindow != this)
         {
-            view.callVoidMethod (ComponentPeerView.bringToFront);
+            view.callVoidMethod (AndroidView.bringToFront);
 
             frontWindow = this;
         }
@@ -391,7 +499,7 @@ public:
     void handleMouseDownCallback (int index, Point<float> sysPos, int64 time)
     {
         Point<float> pos = sysPos / scale;
-        lastMousePos = pos;
+        lastMousePos = localToGlobal (pos);
 
         // this forces a mouse-enter/up event, in case for some reason we didn't get a mouse-up before.
         handleMouseEvent (MouseInputSource::InputSourceType::touch, pos, currentModifiers.withoutMouseButtons(),
@@ -404,7 +512,7 @@ public:
     void handleMouseDragCallback (int index, Point<float> pos, int64 time)
     {
         pos /= scale;
-        lastMousePos = pos;
+        lastMousePos = localToGlobal (pos);
 
         jassert (index < 64);
         touchesDown = (touchesDown | (1 << (index & 63)));
@@ -416,7 +524,7 @@ public:
     void handleMouseUpCallback (int index, Point<float> pos, int64 time)
     {
         pos /= scale;
-        lastMousePos = pos;
+        lastMousePos = localToGlobal (pos);
 
         jassert (index < 64);
         touchesDown = (touchesDown & ~(1 << (index & 63)));
@@ -437,11 +545,33 @@ public:
     {
     }
 
+    void handleBackButtonCallback()
+    {
+        if (auto* app = JUCEApplicationBase::getInstance())
+            app->backButtonPressed();
+
+        if (Component* kiosk = Desktop::getInstance().getKioskModeComponent())
+            if (kiosk->getPeer() == this)
+                setNavBarsHidden (navBarsHidden);
+    }
+
+    void handleKeyboardHiddenCallback()
+    {
+        Component::unfocusAllComponents();
+    }
+
+    void handleAppResumedCallback()
+    {
+        if (Component* kiosk = Desktop::getInstance().getKioskModeComponent())
+            if (kiosk->getPeer() == this)
+                setNavBarsHidden (navBarsHidden);
+    }
+
     //==============================================================================
     bool isFocused() const override
     {
         if (view != nullptr)
-            return view.callBooleanMethod (ComponentPeerView.hasFocus);
+            return view.callBooleanMethod (AndroidView.hasFocus);
 
         return false;
     }
@@ -449,7 +579,7 @@ public:
     void grabFocus() override
     {
         if (view != nullptr)
-            view.callBooleanMethod (ComponentPeerView.requestFocus);
+            view.callBooleanMethod (AndroidView.requestFocus);
     }
 
     void handleFocusChangeCallback (bool hasFocus)
@@ -485,16 +615,25 @@ public:
     void dismissPendingTextInput() override
     {
         view.callVoidMethod (ComponentPeerView.showKeyboard, javaString ("").get());
+
+        // updating the nav bar visibility is a bit odd on Android - need to wait for
+        if (! isTimerRunning())
+            hideNavBarDelayed();
      }
+
+    void hideNavBarDelayed()
+    {
+        startTimer (500);
+    }
 
     //==============================================================================
     void handlePaintCallback (JNIEnv* env, jobject canvas, jobject paint)
     {
         jobject rect = env->CallObjectMethod (canvas, CanvasMinimal.getClipBounds);
-        const int left   = env->GetIntField (rect, RectClass.left);
-        const int top    = env->GetIntField (rect, RectClass.top);
-        const int right  = env->GetIntField (rect, RectClass.right);
-        const int bottom = env->GetIntField (rect, RectClass.bottom);
+        const int left   = env->GetIntField (rect, AndroidRectClass.left);
+        const int top    = env->GetIntField (rect, AndroidRectClass.top);
+        const int right  = env->GetIntField (rect, AndroidRectClass.right);
+        const int bottom = env->GetIntField (rect, AndroidRectClass.bottom);
         env->DeleteLocalRef (rect);
 
         const Rectangle<int> clip (left, top, right - left, bottom - top);
@@ -505,6 +644,10 @@ public:
             buffer.clear();
             sizeAllocated = sizeNeeded;
             buffer = GlobalRef (env->NewIntArray (sizeNeeded));
+        }
+        else if (sizeNeeded == 0)
+        {
+            return;
         }
 
         if (jint* dest = env->GetIntArrayElements ((jintArray) buffer.get(), 0))
@@ -535,7 +678,7 @@ public:
 
         if (MessageManager::getInstance()->isThisTheMessageThread())
         {
-            view.callVoidMethod (ComponentPeerView.invalidate, area.getX(), area.getY(), area.getRight(), area.getBottom());
+            view.callVoidMethod (AndroidView.invalidate, area.getX(), area.getY(), area.getRight(), area.getBottom());
         }
         else
         {
@@ -546,7 +689,7 @@ public:
 
                 void messageCallback() override
                 {
-                    view.callVoidMethod (ComponentPeerView.invalidate, area.getX(), area.getY(),
+                    view.callVoidMethod (AndroidView.invalidate, area.getX(), area.getY(),
                                          area.getRight(), area.getBottom());
                 }
 
@@ -583,7 +726,8 @@ private:
     //==============================================================================
     GlobalRef view;
     GlobalRef buffer;
-    bool usingAndroidGraphics, fullScreen;
+    bool fullScreen;
+    bool navBarsHidden;
     int sizeAllocated;
     float scale;
     static AndroidComponentPeer* frontWindow;
@@ -656,14 +800,17 @@ AndroidComponentPeer* AndroidComponentPeer::frontWindow = nullptr;
           peer->juceMethodInvocation; \
   }
 
-JUCE_VIEW_CALLBACK (void, handlePaint,      (JNIEnv* env, jobject /*view*/, jlong host, jobject canvas, jobject paint),                          handlePaintCallback (env, canvas, paint))
-JUCE_VIEW_CALLBACK (void, handleMouseDown,  (JNIEnv* env, jobject /*view*/, jlong host, jint i, jfloat x, jfloat y, jlong time),  handleMouseDownCallback (i, Point<float> ((float) x, (float) y), (int64) time))
-JUCE_VIEW_CALLBACK (void, handleMouseDrag,  (JNIEnv* env, jobject /*view*/, jlong host, jint i, jfloat x, jfloat y, jlong time),  handleMouseDragCallback (i, Point<float> ((float) x, (float) y), (int64) time))
-JUCE_VIEW_CALLBACK (void, handleMouseUp,    (JNIEnv* env, jobject /*view*/, jlong host, jint i, jfloat x, jfloat y, jlong time),  handleMouseUpCallback   (i, Point<float> ((float) x, (float) y), (int64) time))
-JUCE_VIEW_CALLBACK (void, viewSizeChanged,  (JNIEnv* env, jobject /*view*/, jlong host),                                          handleMovedOrResized())
-JUCE_VIEW_CALLBACK (void, focusChanged,     (JNIEnv* env, jobject /*view*/, jlong host, jboolean hasFocus),                       handleFocusChangeCallback (hasFocus))
-JUCE_VIEW_CALLBACK (void, handleKeyDown,    (JNIEnv* env, jobject /*view*/, jlong host, jint k, jint kc),                         handleKeyDownCallback ((int) k, (int) kc))
-JUCE_VIEW_CALLBACK (void, handleKeyUp,      (JNIEnv* env, jobject /*view*/, jlong host, jint k, jint kc),                         handleKeyUpCallback ((int) k, (int) kc))
+JUCE_VIEW_CALLBACK (void, handlePaint,          (JNIEnv* env, jobject /*view*/, jlong host, jobject canvas, jobject paint),                          handlePaintCallback (env, canvas, paint))
+JUCE_VIEW_CALLBACK (void, handleMouseDown,      (JNIEnv* env, jobject /*view*/, jlong host, jint i, jfloat x, jfloat y, jlong time),  handleMouseDownCallback (i, Point<float> ((float) x, (float) y), (int64) time))
+JUCE_VIEW_CALLBACK (void, handleMouseDrag,      (JNIEnv* env, jobject /*view*/, jlong host, jint i, jfloat x, jfloat y, jlong time),  handleMouseDragCallback (i, Point<float> ((float) x, (float) y), (int64) time))
+JUCE_VIEW_CALLBACK (void, handleMouseUp,        (JNIEnv* env, jobject /*view*/, jlong host, jint i, jfloat x, jfloat y, jlong time),  handleMouseUpCallback   (i, Point<float> ((float) x, (float) y), (int64) time))
+JUCE_VIEW_CALLBACK (void, viewSizeChanged,      (JNIEnv* env, jobject /*view*/, jlong host),                                          handleMovedOrResized())
+JUCE_VIEW_CALLBACK (void, focusChanged,         (JNIEnv* env, jobject /*view*/, jlong host, jboolean hasFocus),                       handleFocusChangeCallback (hasFocus))
+JUCE_VIEW_CALLBACK (void, handleKeyDown,        (JNIEnv* env, jobject /*view*/, jlong host, jint k, jint kc),                         handleKeyDownCallback ((int) k, (int) kc))
+JUCE_VIEW_CALLBACK (void, handleKeyUp,          (JNIEnv* env, jobject /*view*/, jlong host, jint k, jint kc),                         handleKeyUpCallback ((int) k, (int) kc))
+JUCE_VIEW_CALLBACK (void, handleBackButton,     (JNIEnv* env, jobject /*view*/, jlong host),                                          handleBackButtonCallback())
+JUCE_VIEW_CALLBACK (void, handleKeyboardHidden, (JNIEnv* env, jobject /*view*/, jlong host),                                          handleKeyboardHiddenCallback())
+JUCE_VIEW_CALLBACK (void, handleAppResumed,     (JNIEnv* env, jobject /*view*/, jlong host),                                          handleAppResumedCallback())
 
 //==============================================================================
 ComponentPeer* Component::createNewPeer (int styleFlags, void*)
@@ -672,6 +819,18 @@ ComponentPeer* Component::createNewPeer (int styleFlags, void*)
 }
 
 //==============================================================================
+#define JNI_CLASS_MEMBERS(METHOD, STATICMETHOD, FIELD, STATICFIELD) \
+ METHOD (getRotation, "getRotation", "()I")
+
+DECLARE_JNI_CLASS (Display, "android/view/Display");
+#undef JNI_CLASS_MEMBERS
+
+#define JNI_CLASS_MEMBERS(METHOD, STATICMETHOD, FIELD, STATICFIELD) \
+ METHOD (getDefaultDisplay, "getDefaultDisplay", "()Landroid/view/Display;")
+
+DECLARE_JNI_CLASS (WindowManager, "android/view/WindowManager");
+#undef JNI_CLASS_MEMBERS
+
 bool Desktop::canUseSemiTransparentWindows() noexcept
 {
     return true;
@@ -684,7 +843,37 @@ double Desktop::getDefaultMasterScale()
 
 Desktop::DisplayOrientation Desktop::getCurrentOrientation() const
 {
-    // TODO
+    enum
+    {
+        ROTATION_0   = 0,
+        ROTATION_90  = 1,
+        ROTATION_180 = 2,
+        ROTATION_270 = 3
+    };
+
+    JNIEnv* env = getEnv();
+    LocalRef<jstring> windowServiceString (javaString ("window"));
+    LocalRef<jobject> windowManager = LocalRef<jobject> (env->CallObjectMethod (android.activity, JuceAppActivity.getSystemService, windowServiceString.get()));
+
+    if (windowManager.get() != 0)
+    {
+        LocalRef<jobject> display = LocalRef<jobject> (env->CallObjectMethod (windowManager, WindowManager.getDefaultDisplay));
+
+        if (display.get() != 0)
+        {
+            int rotation = env->CallIntMethod (display, Display.getRotation);
+
+            switch (rotation)
+            {
+                case ROTATION_0:   return upright;
+                case ROTATION_90:  return rotatedAntiClockwise;
+                case ROTATION_180: return upsideDown;
+                case ROTATION_270: return rotatedClockwise;
+            }
+        }
+    }
+
+    jassertfalse;
     return upright;
 }
 
@@ -726,11 +915,24 @@ ModifierKeys ModifierKeys::getCurrentModifiersRealtime() noexcept
     return AndroidComponentPeer::currentModifiers;
 }
 
+JUCE_API void JUCE_CALLTYPE Process::hide()
+{
+    if (android.activity.callBooleanMethod (JuceAppActivity.moveTaskToBack, true) == 0)
+    {
+        auto* env = getEnv();
+
+        GlobalRef intent (env->NewObject (AndroidIntent, AndroidIntent.constructor));
+        env->CallObjectMethod (intent, AndroidIntent.setAction,   javaString ("android.intent.action.MAIN")  .get());
+        env->CallObjectMethod (intent, AndroidIntent.addCategory, javaString ("android.intent.category.HOME").get());
+
+        android.activity.callVoidMethod (JuceAppActivity.startActivity, intent.get());
+    }
+}
+
 //==============================================================================
 // TODO
 JUCE_API bool JUCE_CALLTYPE Process::isForegroundProcess() { return true; }
 JUCE_API void JUCE_CALLTYPE Process::makeForegroundProcess() {}
-JUCE_API void JUCE_CALLTYPE Process::hide() {}
 
 //==============================================================================
 void JUCE_CALLTYPE NativeMessageBox::showMessageBoxAsync (AlertWindow::AlertIconType /*iconType*/,
@@ -895,12 +1097,13 @@ void MouseCursor::showInWindow (ComponentPeer*) const   {}
 void MouseCursor::showInAllWindows() const  {}
 
 //==============================================================================
-bool DragAndDropContainer::performExternalDragDropOfFiles (const StringArray& /*files*/, const bool /*canMove*/)
+bool DragAndDropContainer::performExternalDragDropOfFiles (const StringArray& /*files*/, const bool /*canMove*/,
+                                                           Component* /*srcComp*/)
 {
     return false;
 }
 
-bool DragAndDropContainer::performExternalDragDropOfText (const String& /*text*/)
+bool DragAndDropContainer::performExternalDragDropOfText (const String& /*text*/, Component* /*srcComp*/)
 {
     return false;
 }
@@ -957,6 +1160,25 @@ const int KeyPress::F13Key          = extendedKeyModifier + 23;
 const int KeyPress::F14Key          = extendedKeyModifier + 24;
 const int KeyPress::F15Key          = extendedKeyModifier + 25;
 const int KeyPress::F16Key          = extendedKeyModifier + 26;
+const int KeyPress::F17Key          = extendedKeyModifier + 50;
+const int KeyPress::F18Key          = extendedKeyModifier + 51;
+const int KeyPress::F19Key          = extendedKeyModifier + 52;
+const int KeyPress::F20Key          = extendedKeyModifier + 53;
+const int KeyPress::F21Key          = extendedKeyModifier + 54;
+const int KeyPress::F22Key          = extendedKeyModifier + 55;
+const int KeyPress::F23Key          = extendedKeyModifier + 56;
+const int KeyPress::F24Key          = extendedKeyModifier + 57;
+const int KeyPress::F25Key          = extendedKeyModifier + 58;
+const int KeyPress::F26Key          = extendedKeyModifier + 59;
+const int KeyPress::F27Key          = extendedKeyModifier + 60;
+const int KeyPress::F28Key          = extendedKeyModifier + 61;
+const int KeyPress::F29Key          = extendedKeyModifier + 62;
+const int KeyPress::F30Key          = extendedKeyModifier + 63;
+const int KeyPress::F31Key          = extendedKeyModifier + 64;
+const int KeyPress::F32Key          = extendedKeyModifier + 65;
+const int KeyPress::F33Key          = extendedKeyModifier + 66;
+const int KeyPress::F34Key          = extendedKeyModifier + 67;
+const int KeyPress::F35Key          = extendedKeyModifier + 68;
 const int KeyPress::numberPad0      = extendedKeyModifier + 27;
 const int KeyPress::numberPad1      = extendedKeyModifier + 28;
 const int KeyPress::numberPad2      = extendedKeyModifier + 29;
@@ -979,3 +1201,5 @@ const int KeyPress::playKey         = extendedKeyModifier + 45;
 const int KeyPress::stopKey         = extendedKeyModifier + 46;
 const int KeyPress::fastForwardKey  = extendedKeyModifier + 47;
 const int KeyPress::rewindKey       = extendedKeyModifier + 48;
+
+} // namespace juce

@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -34,6 +34,8 @@
     This class contains static methods for generating and testing prime numbers.
 
     @see BigInteger
+
+    @tags{Cryptography}
 */
 class JUCE_API  Primes
 {
@@ -69,3 +71,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE (Primes)
 };
+
+} // namespace juce

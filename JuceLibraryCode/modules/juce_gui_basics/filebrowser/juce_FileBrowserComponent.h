@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -36,12 +36,11 @@
     be used for loading or saving a file, or for choosing a directory.
 
     @see FileChooserDialogBox, FileChooser, FileListComponent
+
+    @tags{GUI}
 */
 class JUCE_API  FileBrowserComponent  : public Component,
                                         private FileBrowserListener,
-                                        private TextEditorListener,
-                                        private ButtonListener,
-                                        private ComboBoxListener,  // (can't use ComboBox::Listener due to idiotic VC2005 bug)
                                         private FileFilter,
                                         private Timer
 {
@@ -195,6 +194,7 @@ public:
                                                               const String& instructions) = 0;
 
         virtual void drawFileBrowserRow (Graphics&, int width, int height,
+                                         const File& file,
                                          const String& filename,
                                          Image* optionalIcon,
                                          const String& fileSizeDescription,
@@ -214,21 +214,27 @@ public:
                                                  Button* goUpButton) = 0;
     };
 
+    /** A set of colour IDs to use to change the colour of various aspects of the FileBrowserComponent.
+
+        These constants can be used either via the Component::setColour(), or LookAndFeel::setColour()
+        methods.
+
+        @see Component::setColour, Component::findColour, LookAndFeel::setColour, LookAndFeel::findColour
+    */
+    enum ColourIds
+    {
+        currentPathBoxBackgroundColourId    = 0x1000640, /**< The colour to use to fill the background of the current path ComboBox. */
+        currentPathBoxTextColourId          = 0x1000641, /**< The colour to use for the text of the current path ComboBox. */
+        currentPathBoxArrowColourId         = 0x1000642, /**< The colour to use to draw the arrow of the current path ComboBox. */
+        filenameBoxBackgroundColourId       = 0x1000643, /**< The colour to use to fill the background of the filename TextEditor. */
+        filenameBoxTextColourId             = 0x1000644  /**< The colour to use for the text of the filename TextEditor. */
+    };
+
     //==============================================================================
     /** @internal */
     void resized() override;
     /** @internal */
-    void buttonClicked (Button*) override;
-    /** @internal */
-    void comboBoxChanged (ComboBox*) override;
-    /** @internal */
-    void textEditorTextChanged (TextEditor&) override;
-    /** @internal */
-    void textEditorReturnKeyPressed (TextEditor&) override;
-    /** @internal */
-    void textEditorEscapeKeyPressed (TextEditor&) override;
-    /** @internal */
-    void textEditorFocusLost (TextEditor&) override;
+    void lookAndFeelChanged() override;
     /** @internal */
     bool keyPressed (const KeyPress&) override;
     /** @internal */
@@ -281,6 +287,10 @@ private:
     void timerCallback() override;
     void sendListenerChangeMessage();
     bool isFileOrDirSuitable (const File&) const;
+    void updateSelectedPath();
+    void changeFilename();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FileBrowserComponent)
 };
+
+} // namespace juce

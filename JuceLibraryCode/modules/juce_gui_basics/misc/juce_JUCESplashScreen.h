@@ -33,15 +33,19 @@
    under the GPL v3 license.
 
    End User License Agreement: www.juce.com/juce-5-licence
+
   ==============================================================================
 */
 
 // BEGIN SECTION A
 
-#pragma once
+namespace juce
+{
 
 /**
     The standard JUCE splash screen component.
+
+    @tags{GUI}
 */
 class JUCE_API  JUCESplashScreen  : public Component,
                                     private Timer,
@@ -70,3 +74,5 @@ private:
 };
 
 // END SECTION A
+
+} // namespace juce

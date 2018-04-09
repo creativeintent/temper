@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -44,6 +44,8 @@
     ToolbarButton class.
 
     @see ToolbarButton, Toolbar, ToolbarItemFactory
+
+    @tags{GUI}
 */
 class JUCE_API  ToolbarItemComponent  : public Button
 {
@@ -201,3 +203,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ToolbarItemComponent)
 };
+
+} // namespace juce

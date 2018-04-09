@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -41,6 +41,8 @@
     read has been mapped.
 
     @see AudioFormat::createMemoryMappedReader, AudioFormatReader
+
+    @tags{Audio}
 */
 class JUCE_API  MemoryMappedAudioFormatReader  : public AudioFormatReader
 {
@@ -108,3 +110,5 @@ protected:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MemoryMappedAudioFormatReader)
 };
+
+} // namespace juce

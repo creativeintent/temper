@@ -24,7 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
+namespace juce
+{
 
 /** @internal */
 bool juce_handleXEmbedEvent (ComponentPeer*, void*);
@@ -59,6 +60,8 @@ unsigned long juce_getCurrentFocusWindow (ComponentPeer*);
 
     Other toolkits or raw X11 widgets should follow the X11 embed protocol:
     https://specifications.freedesktop.org/xembed-spec/xembed-spec-latest.html
+
+    @tags{GUI}
 */
 class XEmbedComponent : public Component
 {
@@ -109,3 +112,5 @@ private:
 };
 
 #endif
+
+} // namespace juce

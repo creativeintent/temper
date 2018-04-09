@@ -24,6 +24,9 @@
   ==============================================================================
 */
 
+namespace juce
+{
+
 AudioFormatWriter::AudioFormatWriter (OutputStream* const out,
                                       const String& formatName_,
                                       const double rate,
@@ -33,6 +36,22 @@ AudioFormatWriter::AudioFormatWriter (OutputStream* const out,
     numChannels (numChannels_),
     bitsPerSample (bitsPerSample_),
     usesFloatingPointData (false),
+    channelLayout (AudioChannelSet::canonicalChannelSet(static_cast<int> (numChannels_))),
+    output (out),
+    formatName (formatName_)
+{
+}
+
+AudioFormatWriter::AudioFormatWriter (OutputStream* const out,
+                                      const String& formatName_,
+                                      const double rate,
+                                      const AudioChannelSet& channelLayout_,
+                                      const unsigned int bitsPerSample_)
+  : sampleRate (rate),
+    numChannels (static_cast<unsigned int> (channelLayout_.size())),
+    bitsPerSample (bitsPerSample_),
+    usesFloatingPointData (false),
+    channelLayout (channelLayout_),
     output (out),
     formatName (formatName_)
 {
@@ -65,9 +84,9 @@ bool AudioFormatWriter::writeFromAudioReader (AudioFormatReader& reader,
                                               int64 numSamplesToRead)
 {
     const int bufferSize = 16384;
-    AudioSampleBuffer tempBuffer ((int) numChannels, bufferSize);
+    AudioBuffer<float> tempBuffer ((int) numChannels, bufferSize);
 
-    int* buffers [128] = { 0 };
+    int* buffers[128] = { 0 };
 
     for (int i = tempBuffer.getNumChannels(); --i >= 0;)
         buffers[i] = reinterpret_cast<int*> (tempBuffer.getWritePointer (i, 0));
@@ -109,11 +128,11 @@ bool AudioFormatWriter::writeFromAudioReader (AudioFormatReader& reader,
 
 bool AudioFormatWriter::writeFromAudioSource (AudioSource& source, int numSamplesToRead, const int samplesPerBlock)
 {
-    AudioSampleBuffer tempBuffer (getNumChannels(), samplesPerBlock);
+    AudioBuffer<float> tempBuffer (getNumChannels(), samplesPerBlock);
 
     while (numSamplesToRead > 0)
     {
-        const int numToDo = jmin (numSamplesToRead, samplesPerBlock);
+        auto numToDo = jmin (numSamplesToRead, samplesPerBlock);
 
         AudioSourceChannelInfo info (&tempBuffer, 0, numToDo);
         info.clearActiveBufferRegion();
@@ -137,8 +156,8 @@ bool AudioFormatWriter::writeFromFloatArrays (const float* const* channels, int 
     if (isFloatingPoint())
         return write ((const int**) channels, numSamples);
 
-    int* chans [256];
-    int scratch [4096];
+    int* chans[256];
+    int scratch[4096];
 
     jassert (numSourceChannels < numElementsInArray (chans));
     const int maxSamples = (int) (numElementsInArray (scratch) / numSourceChannels);
@@ -166,15 +185,15 @@ bool AudioFormatWriter::writeFromFloatArrays (const float* const* channels, int 
     return true;
 }
 
-bool AudioFormatWriter::writeFromAudioSampleBuffer (const AudioSampleBuffer& source, int startSample, int numSamples)
+bool AudioFormatWriter::writeFromAudioSampleBuffer (const AudioBuffer<float>& source, int startSample, int numSamples)
 {
-    const int numSourceChannels = source.getNumChannels();
+    auto numSourceChannels = source.getNumChannels();
     jassert (startSample >= 0 && startSample + numSamples <= source.getNumSamples() && numSourceChannels > 0);
 
     if (startSample == 0)
         return writeFromFloatArrays (source.getArrayOfReadPointers(), numSourceChannels, numSamples);
 
-    const float* chans [256];
+    const float* chans[256];
     jassert ((int) numChannels < numElementsInArray (chans));
 
     for (int i = 0; i < numSourceChannels; ++i)
@@ -307,7 +326,7 @@ public:
 
 private:
     AbstractFifo fifo;
-    AudioSampleBuffer buffer;
+    AudioBuffer<float> buffer;
     TimeSliceThread& timeSliceThread;
     ScopedPointer<AudioFormatWriter> writer;
     CriticalSection thumbnailLock;
@@ -342,3 +361,5 @@ void AudioFormatWriter::ThreadedWriter::setFlushInterval (int numSamplesPerFlush
 {
     buffer->setFlushInterval (numSamplesPerFlush);
 }
+
+} // namespace juce

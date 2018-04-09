@@ -24,14 +24,16 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
     A base class for components that display a list of the files in a directory.
 
     @see DirectoryContentsList
+
+    @tags{GUI}
 */
 class JUCE_API  DirectoryContentsDisplayComponent
 {
@@ -42,6 +44,10 @@ public:
 
     /** Destructor. */
     virtual ~DirectoryContentsDisplayComponent();
+
+    //==============================================================================
+    /** The list that this component is displaying */
+    DirectoryContentsList& directoryContentsList;
 
     //==============================================================================
     /** Returns the number of files the user has got selected.
@@ -87,23 +93,25 @@ public:
     */
     enum ColourIds
     {
-        highlightColourId      = 0x1000540, /**< The colour to use to fill a highlighted row of the list. */
-        textColourId           = 0x1000541, /**< The colour for the text. */
+        highlightColourId          = 0x1000540, /**< The colour to use to fill a highlighted row of the list. */
+        textColourId               = 0x1000541, /**< The colour for the text. */
+        highlightedTextColourId    = 0x1000542  /**< The colour with which to draw the text in highlighted sections. */
     };
 
     //==============================================================================
     /** @internal */
     void sendSelectionChangeMessage();
     /** @internal */
-    void sendDoubleClickMessage (const File& file);
+    void sendDoubleClickMessage (const File&);
     /** @internal */
-    void sendMouseClickMessage (const File& file, const MouseEvent& e);
+    void sendMouseClickMessage (const File&, const MouseEvent&);
 
 protected:
     //==============================================================================
-    DirectoryContentsList& fileList;
-    ListenerList <FileBrowserListener> listeners;
+    ListenerList<FileBrowserListener> listeners;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DirectoryContentsDisplayComponent)
 };
+
+} // namespace juce

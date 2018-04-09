@@ -24,7 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
+namespace juce
+{
 
 #if JUCE_IOS || DOXYGEN
 
@@ -38,6 +39,8 @@
 
     Of course, since the view is a native object, it'll obliterate any
     juce components that may overlap this component, but that's life.
+
+    @tags{GUI}
 */
 class JUCE_API  UIViewComponent   : public Component
 {
@@ -84,3 +87,5 @@ private:
 };
 
 #endif
+
+} // namespace juce

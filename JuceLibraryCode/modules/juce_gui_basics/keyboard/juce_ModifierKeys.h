@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -35,6 +35,8 @@
     the state of keys such as shift, control, alt, etc.
 
     @see KeyPress, MouseEvent::mods
+
+    @tags{GUI}
 */
 class JUCE_API  ModifierKeys
 {
@@ -219,3 +221,5 @@ private:
     static ModifierKeys currentModifiers;
     static void updateCurrentModifiers() noexcept;
 };
+
+} // namespace juce

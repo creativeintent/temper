@@ -24,14 +24,16 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
     Manages a rectangle and allows geometric operations to be performed on it.
 
     @see RectangleList, Path, Line, Point
+
+    @tags{Graphics}
 */
 template <typename ValueType>
 class Rectangle
@@ -977,3 +979,5 @@ private:
     static int ceilAsInt (float n) noexcept    { return n < (float)  std::numeric_limits<int>::max() ? (int) std::ceil (n) : std::numeric_limits<int>::max(); }
     static int ceilAsInt (double n) noexcept   { return n < (double) std::numeric_limits<int>::max() ? (int) std::ceil (n) : std::numeric_limits<int>::max(); }
 };
+
+} // namespace juce

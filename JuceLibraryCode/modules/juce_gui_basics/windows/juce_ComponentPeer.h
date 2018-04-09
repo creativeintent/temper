@@ -24,8 +24,8 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
@@ -38,6 +38,8 @@
     User-code should very rarely need to have any involvement with this class.
 
     @see Component::createNewPeer
+
+    @tags{GUI}
 */
 class JUCE_API  ComponentPeer
 {
@@ -323,6 +325,7 @@ public:
 
     void handleUserClosingWindow();
 
+    /** Structure to describe drag and drop information */
     struct DragInfo
     {
         StringArray files;
@@ -378,3 +381,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ComponentPeer)
 };
+
+} // namespace juce

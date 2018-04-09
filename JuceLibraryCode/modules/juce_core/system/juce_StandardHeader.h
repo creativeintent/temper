@@ -28,10 +28,10 @@
     See also SystemStats::getJUCEVersion() for a string version.
 */
 #define JUCE_MAJOR_VERSION      5
-#define JUCE_MINOR_VERSION      0
-#define JUCE_BUILDNUMBER        2
+#define JUCE_MINOR_VERSION      3
+#define JUCE_BUILDNUMBER        0
 
-/** Current Juce version number.
+/** Current JUCE version number.
 
     Bits 16 to 32 = major version.
     Bits 8 to 16 = minor version.
@@ -65,6 +65,7 @@
 
 #if JUCE_MAC || JUCE_IOS
  #include <libkern/OSAtomic.h>
+ #include <xlocale.h>
 #endif
 
 #if JUCE_LINUX
@@ -113,6 +114,11 @@
  #include "../misc/juce_StdFunctionCompat.h"
 #endif
 
+// Include std::atomic if it's supported by the compiler
+#if JUCE_ATOMIC_AVAILABLE
+ #include <atomic>
+#endif
+
 //==============================================================================
 // DLL building settings on Windows
 #if JUCE_MSVC
@@ -132,7 +138,7 @@
 
 //==============================================================================
 #ifndef JUCE_API
- #define JUCE_API   /**< This macro is added to all juce public class declarations. */
+ #define JUCE_API   /**< This macro is added to all JUCE public class declarations. */
 #endif
 
 #if JUCE_MSVC && JUCE_DLL_BUILD
@@ -141,7 +147,7 @@
  #define JUCE_PUBLIC_IN_DLL_BUILD(declaration)  declaration;
 #endif
 
-/** This macro is added to all juce public function declarations. */
+/** This macro is added to all JUCE public function declarations. */
 #define JUCE_PUBLIC_FUNCTION        JUCE_API JUCE_CALLTYPE
 
 #if (! defined (JUCE_CATCH_DEPRECATED_CODE_MISUSE)) && JUCE_DEBUG && ! DOXYGEN

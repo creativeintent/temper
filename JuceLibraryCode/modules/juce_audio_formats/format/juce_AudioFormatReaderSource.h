@@ -24,14 +24,16 @@
   ==============================================================================
 */
 
-#pragma once
-
+namespace juce
+{
 
 //==============================================================================
 /**
     A type of AudioSource that will read from an AudioFormatReader.
 
     @see PositionableAudioSource, AudioTransportSource, BufferingAudioSource
+
+    @tags{Audio}
 */
 class JUCE_API  AudioFormatReaderSource  : public PositionableAudioSource
 {
@@ -96,3 +98,5 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioFormatReaderSource)
 };
+
+} // namespace juce
