@@ -94,6 +94,7 @@
         <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_plugin_client" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2017 targetFolder="Builds/VisualStudio2017" vst3Folder="VST3_SDK">
@@ -133,6 +134,7 @@
         <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
@@ -145,6 +147,7 @@
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="1" useGlobalPath="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
