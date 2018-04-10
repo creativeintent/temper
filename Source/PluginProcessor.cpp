@@ -164,6 +164,8 @@ void TemperAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
     m_oversampler->initProcessing(static_cast<size_t> (samplesPerBlock));
     m_restriction->prepareToPlay(samplesPerBlock, sampleRate);
     m_lastKnownSampleRate = sampleRate;
+
+    setLatencySamples(static_cast<int>(m_oversampler->getLatencyInSamples()));
 }
 
 void TemperAudioProcessor::releaseResources()
