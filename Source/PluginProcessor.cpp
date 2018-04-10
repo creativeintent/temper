@@ -12,7 +12,7 @@
 #include "PluginEditor.h"
 #include "TemperDsp.cpp"
 
-const int kOversampleFactor = 2;
+const int kOversampleFactor = 3;
 
 //==============================================================================
 TemperAudioProcessor::TemperAudioProcessor()
@@ -149,17 +149,17 @@ void TemperAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
 {
     auto filterType = juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR;
     m_oversampler = std::make_unique<juce::dsp::Oversampling<float>>(getTotalNumInputChannels(),
-                                                                     1,
+                                                                     kOversampleFactor,
                                                                      filterType,
                                                                      false);
 
     // Re-initialize the dsp modules at the upsampled rate.
     if (m_lastKnownSampleRate == 0.0)
         for (int i = 0; i < m_dsps.size(); ++i)
-            m_dsps.getUnchecked(i)->init(sampleRate * kOversampleFactor);
+            m_dsps.getUnchecked(i)->init(sampleRate * pow(2, kOversampleFactor));
     else
         for (int i = 0; i < m_dsps.size(); ++i)
-            m_dsps.getUnchecked(i)->instanceConstants(sampleRate * kOversampleFactor);
+            m_dsps.getUnchecked(i)->instanceConstants(sampleRate * pow(2, kOversampleFactor));
 
     m_oversampler->initProcessing(static_cast<size_t> (samplesPerBlock));
     m_restriction->prepareToPlay(samplesPerBlock, sampleRate);
