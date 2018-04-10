@@ -1,5 +1,4 @@
 import("stdfaust.lib");
-el = library("./ellip.dsp");
 
 // Pre-filter parameters
 pfilterfc = hslider("Cutoff", 16000, 100, 16000, 1.0);
@@ -98,4 +97,4 @@ main = (+ : modfilter : fi.dcblocker) ~ *(pfeedback) : gain with {
 // harmonics in the same frequency range [sampleRate / 4, sampleRate / 2] which
 // we cut out with the elliptic filter at the end of the chain before we drop
 // sample to return to the original sample rate.
-process = el.ellip : filter : main : el.ellip;
+process = filter : main;
