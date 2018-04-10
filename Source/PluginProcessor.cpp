@@ -147,9 +147,11 @@ void TemperAudioProcessor::changeProgramName (int index, const String& newName)
 //==============================================================================
 void TemperAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Make sure we allocate enough size in the work buffer to compute the maximum-size
-    // input buffer at the oversamplign rate.
-    m_tempBuffer.setSize(getTotalNumInputChannels(), samplesPerBlock * kOversampleFactor);
+    auto filterType = juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR;
+    m_oversampler = std::make_unique<juce::dsp::Oversampling<float>>(getTotalNumInputChannels(),
+                                                                     1,
+                                                                     filterType,
+                                                                     false);
 
     // Re-initialize the dsp modules at the upsampled rate.
     if (m_lastKnownSampleRate == 0.0)
@@ -159,6 +161,7 @@ void TemperAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
         for (int i = 0; i < m_dsps.size(); ++i)
             m_dsps.getUnchecked(i)->instanceConstants(sampleRate * kOversampleFactor);
 
+    m_oversampler->initProcessing(static_cast<size_t> (samplesPerBlock));
     m_restriction->prepareToPlay(samplesPerBlock, sampleRate);
     m_lastKnownSampleRate = sampleRate;
 }
@@ -214,38 +217,27 @@ void TemperAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
         editor->m_vizPre->pushBuffer(buffer);
 
     // Now the guts of the processing; oversampling and applying the Faust dsp module.
-    float** channelData = buffer.getArrayOfWritePointers();
-    float** workData = m_tempBuffer.getArrayOfWritePointers();
     const int numInputChannels = buffer.getNumChannels();
     const int numInputSamples = buffer.getNumSamples();
 
-    // First make sure we can hold the upsampled signal in our temp buffer, otherwise the host
-    // has delivered a buffer larger than it said it would.
-    jassert(numInputSamples * kOversampleFactor <= m_tempBuffer.getNumSamples());
-    jassert(numInputChannels <= m_tempBuffer.getNumChannels());
+    juce::dsp::AudioBlock<float> block (buffer.getArrayOfWritePointers(),
+                                        numInputChannels,
+                                        numInputSamples);
 
+    juce::dsp::AudioBlock<float> oversampledBlock = m_oversampler->processSamplesUp(block);
+
+    // Run the faust processors on each channel of the oversampled block.
     for (int i = 0; i < numInputChannels; ++i)
     {
-        // Before we process the input samples, we zero-pad the input buffer, writing into the
-        // temp buffer. Padding each sample with a single zero doubles the sample rate while
-        // preserving the input signal.
-        for (int j = 0; j < numInputSamples; ++j)
-        {
-            workData[i][j * kOversampleFactor] = channelData[i][j];
-            workData[i][j * kOversampleFactor + 1] = 0.0f;
-        }
+        auto* processor = m_dsps.getUnchecked(i);
+        auto* data = oversampledBlock.getChannelPointer(i);
 
-        // At the new sampling rate we run the Faust dsp module.
-        m_dsps.getUnchecked(i)->compute(numInputSamples * kOversampleFactor, workData + i, workData + i);
+        int len = static_cast<int>(oversampledBlock.getNumSamples());
 
-        // Now we have the processed signal at the new sample rate in our work buffer,
-        // and we can drop every other sample to return to the original sample rate with
-        // the desired output signal.
-        for (int j = 0; j < numInputSamples; ++j)
-        {
-            channelData[i][j] = workData[i][j * kOversampleFactor];
-        }
+        processor->compute(len, &data, &data);
     }
+
+    m_oversampler->processSamplesDown(block);
 
 #ifdef TEMPER_DEMO_BUILD
     // After the Faust processing, add the demo restriction to the output stream

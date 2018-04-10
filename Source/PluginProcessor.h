@@ -62,11 +62,11 @@ public:
 
 private:
     AudioProcessorValueTreeState m_params;
-    AudioSampleBuffer m_tempBuffer;
 
     OwnedArray<::dsp> m_dsps;
     ScopedPointer<FaustUIBridge> m_bridge;
     ScopedPointer<RestrictionProcessor> m_restriction;
+    std::unique_ptr<juce::dsp::Oversampling<float>> m_oversampler;
 
     double m_lastKnownSampleRate;
     int m_currentProgram;
