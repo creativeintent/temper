@@ -41,6 +41,8 @@ private:
     // access the processor object that created it.
     TemperAudioProcessor& processor;
     TemperLookAndFeel laf;
+
+    OpenGLContext m_glContext;
     AudioProcessorValueTreeState& m_vts;
 
     ScopedPointer<MainComponent> m_main;

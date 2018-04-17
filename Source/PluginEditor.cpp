@@ -30,12 +30,16 @@ TemperAudioProcessorEditor::TemperAudioProcessorEditor (TemperAudioProcessor& p,
 
     m_vizPre->toBehind(m_vizPost);
 
+    m_glContext.setComponentPaintingEnabled(true);
+    m_glContext.attachTo(*this);
+
     setSize (744, 476);
     setLookAndFeel(&laf);
 }
 
 TemperAudioProcessorEditor::~TemperAudioProcessorEditor()
 {
+    m_glContext.detach();
 }
 
 //==============================================================================
