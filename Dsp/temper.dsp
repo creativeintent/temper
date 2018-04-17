@@ -1,7 +1,7 @@
 import("stdfaust.lib");
 
 // Pre-filter parameters
-pfilterfc = hslider("Cutoff", 16000, 100, 16000, 1.0);
+pfilterfc = hslider("Cutoff", 20000, 100, 20000, 1.0);
 pfilterq = hslider("Resonance", 1.0, 1.0, 8, 0.001) : si.smooth(0.995);
 
 // Distortion parameters

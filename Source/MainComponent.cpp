@@ -35,7 +35,7 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     //[/Constructor_pre]
 
     addAndMakeVisible (m_cutoffSlider = new Slider ("Cutoff"));
-    m_cutoffSlider->setRange (100, 16000, 0);
+    m_cutoffSlider->setRange (100, 20000, 0);
     m_cutoffSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
     m_cutoffSlider->setTextBoxStyle (Slider::NoTextBox, true, 80, 20);
 
@@ -258,7 +258,7 @@ BEGIN_JUCER_METADATA
   </BACKGROUND>
   <SLIDER name="Cutoff" id="80edd5c38c704dd5" memberName="m_cutoffSlider"
           virtualName="" explicitFocusOrder="0" pos="28 149 72 72" min="100"
-          max="16000" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
+          max="20000" int="0" style="RotaryHorizontalVerticalDrag" textBoxPos="NoTextBox"
           textBoxEditable="0" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="0"/>
   <SLIDER name="Resonance" id="3bb5cf0ab68e9733" memberName="m_resoSlider"
