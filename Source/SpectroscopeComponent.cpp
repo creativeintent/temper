@@ -46,13 +46,13 @@ void SpectroscopeComponent::paint (Graphics& g)
 
     Path p;
 
-    for (int i = 0; i < kOutputSize * kOversampleFactor; ++i)
+    for (int i = 0; i < kOutputSize; ++i)
     {
-        const float outputIndex = (float) i / (float) kOversampleFactor;
+        const float outputIndex = (float) i;
         const float xPos = outputIndex / (float) kOutputSize;
         const float x = std::exp(std::log(xPos) * 0.6f) * width;
 
-        const float yMag = scale * m_outputData[static_cast<int>(outputIndex)];
+        const float yMag = scale * m_outputData[i];
         const float yDecibel = Decibels::gainToDecibels(yMag);
         const float y = jmap(yDecibel, -90.0f, -12.0f, height, 0.0f);
 

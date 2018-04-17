@@ -33,11 +33,9 @@ public:
     void setColours (Colour strokeColour, Colour fillStartColour, Colour fillStopColour);
 
     enum {
-        kFFTOrder = 9,
-        kFFTSize = 512, // 2^9
-        kOutputSize = 256, // 512 / 2
-        kOversampleFactor = 4,
-        kInterpolatorWindowSize = 32,
+        kFFTOrder = 12,
+        kFFTSize = 4096, // 2^12
+        kOutputSize = 2048, // 4096 / 2
     };
 
 private:
