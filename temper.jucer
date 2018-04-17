@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="e0DLq8" name="Temper" projectType="audioplug" version="1.0.0"
+<JUCERPROJECT id="e0DLq8" name="Temper" projectType="audioplug" version="1.0.3"
               bundleIdentifier="com.creativeintent.temper" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="1" buildAU="1" buildAUv3="0" buildRTAS="0"
               buildAAX="0" pluginName="Temper" pluginDesc="Modern digital distortion."
@@ -10,7 +10,7 @@
               pluginAUExportPrefix="TemperAU" pluginRTASCategory="" aaxIdentifier="com.creativeintent.temper"
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="5.3.0"
               companyName="Creative Intent" companyWebsite="http://www.creativeintent.co"
-              displaySplashScreen="1" reportAppUsage="1" splashScreenColour="Dark"
+              displaySplashScreen="0" reportAppUsage="0" splashScreenColour="Dark"
               buildStandalone="1" enableIAA="0">
   <MAINGROUP id="NQTBxz" name="Temper">
     <GROUP id="{B07EB401-33C5-FD72-4C14-C86C74D8477E}" name="Assets">

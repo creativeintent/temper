@@ -35,9 +35,6 @@
 
 // BEGIN SECTION A
 
-// The Producer will overwrite this section on save because the Producer is not built
-// in its GPL version. This is a note to remind myself to just check these changes
-// back into git when it happens.
 #ifndef JUCE_DISPLAY_SPLASH_SCREEN
  #define JUCE_DISPLAY_SPLASH_SCREEN 0
 #endif
@@ -374,13 +371,13 @@
  #define JucePlugin_EditorRequiresKeyboardFocus  0
 #endif
 #ifndef  JucePlugin_Version
- #define JucePlugin_Version                1.0.0
+ #define JucePlugin_Version                1.0.3
 #endif
 #ifndef  JucePlugin_VersionCode
- #define JucePlugin_VersionCode            0x10000
+ #define JucePlugin_VersionCode            0x10003
 #endif
 #ifndef  JucePlugin_VersionString
- #define JucePlugin_VersionString          "1.0.0"
+ #define JucePlugin_VersionString          "1.0.3"
 #endif
 #ifndef  JucePlugin_VSTUniqueID
  #define JucePlugin_VSTUniqueID            JucePlugin_PluginCode
