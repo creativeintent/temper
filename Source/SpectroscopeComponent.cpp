@@ -23,17 +23,22 @@ SpectroscopeComponent::SpectroscopeComponent()
 {
     zeromem(m_outputData, sizeof(m_outputData));
     setSize(700, 200);
-    startTimerHz(60);
+    startTimerHz(30);
 }
 
 SpectroscopeComponent::~SpectroscopeComponent()
 {
+    stopTimer();
 }
 
 void SpectroscopeComponent::paint (Graphics& g)
 {
     const float width = (float) getWidth();
     const float height = (float) getHeight();
+
+    // Clear the drawing target
+    g.setColour(Colours::transparentBlack);
+    g.fillAll();
 
     // The values in the output bins after the FFT have a range that I don't understand
     // and isn't explained in the docs. It seems that if I scale down by the size of the
@@ -44,39 +49,18 @@ void SpectroscopeComponent::paint (Graphics& g)
     Range<float> maxBin = FloatVectorOperations::findMinAndMax(m_outputData, kOutputSize);
     const float scale = 1.0f / jmax((float) kFFTSize, maxBin.getEnd());
 
-    Path p;
+    g.setColour(m_fillStartColour);
 
     for (int i = 0; i < kOutputSize; ++i)
     {
-        const float outputIndex = (float) i;
-        const float xPos = outputIndex / (float) kOutputSize;
-        const float x = std::exp(std::log(xPos) * 0.6f) * width;
+        float x = std::log10 (1 + 39 * ((i + 1.0f) / kOutputSize)) / std::log10 (40.0f) * width;
 
         const float yMag = scale * m_outputData[i];
         const float yDecibel = Decibels::gainToDecibels(yMag);
         const float y = jmap(yDecibel, -90.0f, -12.0f, height, 0.0f);
 
-        if (i == 0)
-            p.startNewSubPath(0.0f, y);
-        else
-            p.lineTo(x, y);
+        g.drawVerticalLine((int) x, y, height);
     }
-
-    // Clear the drawing target
-    g.setColour(Colours::transparentBlack);
-    g.fillAll();
-
-    // Stroke the line
-    g.setColour(m_strokeColour);
-    g.strokePath(p, PathStrokeType(1.0f));
-
-    // Wrap the line around the bottom of the graph before closing the path.
-    p.lineTo(p.getCurrentPosition().getX(), height);
-    p.lineTo(0.0f, height);
-    p.closeSubPath();
-    g.setGradientFill(ColourGradient(m_fillStartColour, 0.0f, height, m_fillStopColour, 0.0f, height * 0.6f, false));
-    g.fillPath(p);
-
 }
 
 void SpectroscopeComponent::resized()
@@ -103,7 +87,7 @@ void SpectroscopeComponent::timerCallback()
 
     // Decay the output bin magnitudes
     for (int i = 0; i < kOutputSize; ++i)
-        m_outputData[i] *= 0.845f; // 0.707f;
+        m_outputData[i] *= 0.707f;
 
     repaint();
 }

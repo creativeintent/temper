@@ -33,9 +33,9 @@ public:
     void setColours (Colour strokeColour, Colour fillStartColour, Colour fillStopColour);
 
     enum {
-        kFFTOrder = 12,
-        kFFTSize = 4096, // 2^12
-        kOutputSize = 2048, // 4096 / 2
+        kFFTOrder = 11,
+        kFFTSize = 2048, // 2^11
+        kOutputSize = 1024, // 2048 / 2
     };
 
 private:
