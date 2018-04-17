@@ -40,6 +40,7 @@ TemperAudioProcessorEditor::TemperAudioProcessorEditor (TemperAudioProcessor& p,
 TemperAudioProcessorEditor::~TemperAudioProcessorEditor()
 {
     m_glContext.detach();
+    setLookAndFeel(nullptr);
 }
 
 //==============================================================================
