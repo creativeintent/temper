@@ -16,6 +16,7 @@ SpectroscopeComponent::SpectroscopeComponent()
 :   m_fifoIndex(0),
     m_fftBlockReady(false),
     m_forwardFFT(kFFTOrder),
+    m_window(kFFTSize, juce::dsp::WindowingFunction<float>::hann),
     m_strokeColour(Colours::white),
     m_fillStartColour(Colours::white.withAlpha(0.2f)),
     m_fillStopColour(Colours::white.withAlpha(0.8f))
@@ -51,7 +52,7 @@ void SpectroscopeComponent::paint (Graphics& g)
         const float xPos = outputIndex / (float) kOutputSize;
         const float x = std::exp(std::log(xPos) * 0.6f) * width;
 
-        const float yMag = getOutputSample(outputIndex) * scale;
+        const float yMag = scale * m_outputData[static_cast<int>(outputIndex)];
         const float yDecibel = Decibels::gainToDecibels(yMag);
         const float y = jmap(yDecibel, -90.0f, -12.0f, height, 0.0f);
 
@@ -87,6 +88,7 @@ void SpectroscopeComponent::timerCallback()
     if (m_fftBlockReady)
     {
         // Compute the frequency transform
+        m_window.multiplyWithWindowingTable(m_fftData, kFFTSize);
         m_forwardFFT.performFrequencyOnlyForwardTransform(m_fftData);
 
         // Copy the frequency bins into the output data buffer, taking
@@ -134,47 +136,7 @@ inline void SpectroscopeComponent::pushSample(float sample)
         m_fifoIndex = 0;
     }
 
-    m_fifo[m_fifoIndex] = sample * window(m_fifoIndex, kFFTSize);
-    m_fifoIndex++;
-}
-
-inline float SpectroscopeComponent::window(int sampleIndex, int windowSize)
-{
-    // A simple Hann window implementation. If the FFT size never changes, it would
-    // be much more efficient here to compute the window once over a buffer of the
-    // same size, then, in `pushSample`, instead of using memcpy to copy the buffer
-    // over, use a FloatVectorOperations function which multiplies each sample in the
-    // source buffer by the corresponding sample in the window buffer and writes the
-    // result to the output buffer.
-    float num = 2.0f * float_Pi * (float) sampleIndex;
-    float denom = (float) (windowSize - 1);
-    return 0.5f * (1.0f - std::cos(num / denom));
-}
-
-inline float SpectroscopeComponent::sinc(float x)
-{
-    return x != 0 ? sinf(x) / x : 1.0f;
-}
-
-inline float SpectroscopeComponent::getOutputSample(float index)
-{
-    const int whole = static_cast<int>(index);
-    const float frac = index - (float) whole;
-
-    // A window of size kInterpolatorWindowSize centered about 0.
-    const int start = -kInterpolatorWindowSize / 2 + 1;
-    const int stop = kInterpolatorWindowSize / 2;
-
-    float out = 0.0f;
-
-    for (int i = start; i < stop; ++i)
-    {
-        const int readIndex = whole + i;
-        float outputSample = m_outputData[readIndex];
-        out += outputSample * sinc(((float) i - frac) * double_Pi) * window(i + stop, kInterpolatorWindowSize);
-    }
-
-    return out;
+    m_fifo[m_fifoIndex++] = sample;
 }
 
 void SpectroscopeComponent::setColours(Colour strokeColour, Colour fillStartColour, Colour fillStopColour)

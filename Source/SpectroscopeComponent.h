@@ -29,9 +29,7 @@ public:
 
     void pushBuffer (AudioSampleBuffer& buffer);
     inline void pushSample (float sample);
-    inline float window (int sampleIndex, int windowSize);
-    inline float sinc (float x);
-    inline float getOutputSample (float index);
+
     void setColours (Colour strokeColour, Colour fillStartColour, Colour fillStopColour);
 
     enum {
@@ -51,6 +49,8 @@ private:
     bool m_fftBlockReady;
 
     juce::dsp::FFT m_forwardFFT;
+    juce::dsp::WindowingFunction<float> m_window;
+
     Colour m_strokeColour;
     Colour m_fillStartColour;
     Colour m_fillStopColour;
