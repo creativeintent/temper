@@ -76,7 +76,7 @@ float TemperDsp_faustpower2_f(float value) {
 #define exp10 __exp10
 #endif
 
-class TemperDsp : public dsp {
+class TemperDsp : public ::dsp {
 	
  private:
 	
