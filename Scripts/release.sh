@@ -43,6 +43,10 @@ release() {
     cp "$SCRIPTDIR/../HELP.txt" "$RELEASEDIR"
     cp "$SCRIPTDIR/../HELP.txt" "$DEMODIR"
 
+    # Copy changelog
+    cp "$SCRIPTDIR/../CHANGELOG.txt" "$RELEASEDIR"
+    cp "$SCRIPTDIR/../CHANGELOG.txt" "$DEMODIR"
+
     # Copy license
     cp "$SCRIPTDIR/../LICENSE" "$RELEASEDIR/LICENSE.txt"
     cp "$SCRIPTDIR/../LICENSE" "$DEMODIR/LICENSE.txt"
