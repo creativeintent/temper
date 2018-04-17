@@ -11,7 +11,7 @@
               pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="5.3.0"
               companyName="Creative Intent" companyWebsite="http://www.creativeintent.co"
               displaySplashScreen="1" reportAppUsage="1" splashScreenColour="Dark"
-              buildStandalone="0" enableIAA="0">
+              buildStandalone="1" enableIAA="0">
   <MAINGROUP id="NQTBxz" name="Temper">
     <GROUP id="{B07EB401-33C5-FD72-4C14-C86C74D8477E}" name="Assets">
       <FILE id="qQ2cig" name="Background.png" compile="0" resource="1" file="Assets/Background.png"/>
