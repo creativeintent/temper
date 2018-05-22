@@ -88,13 +88,5 @@ main = (+ : modfilter : fi.dcblocker) ~ *(pfeedback) : gain with {
 	gain = *(4.0) : *(plevel);
 };
 
-// When this unit processes a block, the block will be a zero-padded input
-// signal at a higher sampling rate. We run the elliptic filter immediately
-// because that step of zero-padding the input buffer introduces an alias of
-// the input signal in the range [sampleRate / 4, sampleRate / 2] which would
-// fold back into the audible range upon downsampling, especially if we run
-// the main filter on it. Similarly, processing our input signal introduces
-// harmonics in the same frequency range [sampleRate / 4, sampleRate / 2] which
-// we cut out with the elliptic filter at the end of the chain before we drop
-// sample to return to the original sample rate.
+// And the overall process declaration.
 process = filter : main;
