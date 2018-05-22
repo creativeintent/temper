@@ -11,7 +11,8 @@ signal processing loop is written with Faust, and compiled with JUCE for the
 various build targets.
 
 ## Dependencies
-* JUCE (v5.0.2)
+* Faust (v2.5.32)
+* JUCE (v5.3.0)
 * VST SDK (v3.6.7)
 
 ## Usage
@@ -46,8 +47,23 @@ bug fixes or compatibility support. We may refuse pull requests or feature sugge
 we would love to hear your ideas so don't be shy.
 
 ### Building
-With Visual Studio 2017, you should be able to just open the file `Builds/VisualStudio2017/Temper.sln` and build one of the three available configurations. Similarly, on OS X, open `Builds/MacOSX/Temper.xcodeproj` with XCode. If you have any trouble
-building, please file an issue.
+This project is built with both JUCE and Faust, but we commit the result of the Faust compilation to enable maintaining
+a repository state that can be built on a new machine with minimal configuration.
+
+Hence, with Visual Studio 2017, you should be able to just open the file `Builds/VisualStudio2017/Temper.sln` and build one
+of the three available configurations. Similarly, on OS X, open `Builds/MacOSX/Temper.xcodeproj` with XCode.
+
+If you're interested in modifying the Faust DSP code, or compiling the DSP again, consult the Makefile for instructions. We
+have unfortunately hard-coded some assumptions into the Makefile, but you will notice the expected compilation command:
+
+```bash
+$ faust -A ../faust/architecture/ -I ../faust/libraries/ -a minimal-effect.cpp -cn TemperDsp -o ./Source/TemperDsp.cpp ./Dsp/temper.dsp
+```
+
+If you have `faust` on your `$PATH`, the above command (corrected for the appropriate paths to the library and architecture
+files) will recompile the `temper.dsp` file to C++.
+
+If you have any trouble building, please file an issue.
 
 ## License
 
