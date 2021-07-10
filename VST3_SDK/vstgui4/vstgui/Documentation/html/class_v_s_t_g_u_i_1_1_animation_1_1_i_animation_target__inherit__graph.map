@@ -1,6 +1,0 @@
-<map id="IAnimationTarget" name="IAnimationTarget">
-<area shape="rect" id="node3" href="$class_v_s_t_g_u_i_1_1_animation_1_1_alpha_value_animation.html" title="animates the alpha value of the view " alt="" coords="4,80,139,106"/>
-<area shape="rect" id="node5" href="$class_v_s_t_g_u_i_1_1_animation_1_1_control_value_animation.html" title="animates the value of a CControl " alt="" coords="163,80,305,106"/>
-<area shape="rect" id="node7" href="$class_v_s_t_g_u_i_1_1_animation_1_1_exchange_view_animation.html" title="exchange a view by another view with an animation " alt="" coords="330,80,483,106"/>
-<area shape="rect" id="node9" href="$class_v_s_t_g_u_i_1_1_animation_1_1_view_size_animation.html" title="animates the view size of the view " alt="" coords="507,80,631,106"/>
-</map>

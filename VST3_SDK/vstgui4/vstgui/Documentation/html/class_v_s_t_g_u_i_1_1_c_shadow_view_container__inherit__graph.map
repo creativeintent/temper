@@ -1,8 +1,0 @@
-<map id="CShadowViewContainer" name="CShadowViewContainer">
-<area shape="rect" id="node2" href="$class_v_s_t_g_u_i_1_1_c_view_container.html" title="Container Class of CView objects. " alt="" coords="5,155,112,181"/>
-<area shape="rect" id="node4" href="$class_v_s_t_g_u_i_1_1_c_view.html" title="Base Class of all view objects. " alt="" coords="31,80,85,106"/>
-<area shape="rect" id="node6" href="$class_v_s_t_g_u_i_1_1_c_base_object.html" title="Base Object with reference counter. " alt="" coords="13,6,104,32"/>
-<area shape="rect" id="node8" href="$class_v_s_t_g_u_i_1_1_i_scale_factor_changed_listener.html" title="IScaleFactorChangedListener" alt="" coords="137,155,316,181"/>
-<area shape="rect" id="node10" href="$class_v_s_t_g_u_i_1_1_i_view_container_listener_adapter.html" title="ViewContainer Listener Interface Adapter. " alt="" coords="341,155,528,181"/>
-<area shape="rect" id="node12" href="$class_v_s_t_g_u_i_1_1_i_view_container_listener.html" title="ViewContainer Listener Interface. " alt="" coords="362,80,507,106"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="CFontChooser" name="CFontChooser">
-<area shape="rect" id="node2" href="$class_v_s_t_g_u_i_1_1_c_view_container.html" title="Container Class of CView objects. " alt="" coords="290,4,398,30"/>
-<area shape="rect" id="node4" href="$class_v_s_t_g_u_i_1_1_c_view.html" title="Base Class of all view objects. " alt="" coords="147,4,203,30"/>
-<area shape="rect" id="node6" href="$class_v_s_t_g_u_i_1_1_c_base_object.html" title="Base Object with reference counter. " alt="" coords="6,4,98,30"/>
-<area shape="rect" id="node8" href="$class_v_s_t_g_u_i_1_1_i_control_listener.html" title="IControlListener" alt="" coords="291,54,397,80"/>
-<area shape="rect" id="node10" href="$class_v_s_t_g_u_i_1_1_i_generic_string_list_data_browser_source_selection_changed.html" title="IGenericStringListDataBrowser\lSourceSelectionChanged" alt="" coords="251,104,437,144"/>
-</map>

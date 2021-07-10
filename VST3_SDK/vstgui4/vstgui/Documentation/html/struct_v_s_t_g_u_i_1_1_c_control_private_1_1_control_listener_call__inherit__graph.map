@@ -1,5 +1,0 @@
-<map id="ControlListenerCall" name="ControlListenerCall">
-<area shape="rect" id="node3" href="$struct_v_s_t_g_u_i_1_1_c_control_private_1_1_control_begin_edit.html" title="ControlBeginEdit" alt="" coords="4,80,115,106"/>
-<area shape="rect" id="node5" href="$struct_v_s_t_g_u_i_1_1_c_control_private_1_1_control_end_edit.html" title="ControlEndEdit" alt="" coords="140,80,241,106"/>
-<area shape="rect" id="node7" href="$struct_v_s_t_g_u_i_1_1_c_control_private_1_1_control_value_changed.html" title="ControlValueChanged" alt="" coords="265,80,403,106"/>
-</map>

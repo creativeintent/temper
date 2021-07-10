@@ -1,7 +1,0 @@
-<map id="FObject" name="FObject">
-<area shape="rect" id="node5" href="$classSteinberg_1_1FDynLibrary.html" title="Platform independent dynamic library loader. " alt="" coords="4,535,149,692"/>
-<area shape="rect" id="node7" href="$classSteinberg_1_1FLockObject.html" title="FLockObj declaration. " alt="" coords="175,555,280,671"/>
-<area shape="rect" id="node9" href="$classSteinberg_1_1StringObject.html" title="StringObject implements IStringResult and IString methods. " alt="" coords="304,486,433,740"/>
-<area shape="rect" id="node11" href="$classSteinberg_1_1Timer.html" title="Timer is a class that allows you to receive triggers at regular intervals. " alt="" coords="458,569,531,658"/>
-<area shape="rect" id="node13" href="$classSteinberg_1_1UpdateHandler.html" title="UpdateHandler implements IUpdateManager and IUpdateHandler to handle dependencies between objects to ..." alt="" coords="555,507,716,720"/>
-</map>

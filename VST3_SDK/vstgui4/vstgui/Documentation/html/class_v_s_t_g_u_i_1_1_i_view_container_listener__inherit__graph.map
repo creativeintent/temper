@@ -1,5 +1,0 @@
-<map id="IViewContainerListener" name="IViewContainerListener">
-<area shape="rect" id="node3" href="$class_v_s_t_g_u_i_1_1_i_view_container_listener_adapter.html" title="ViewContainer Listener Interface Adapter. " alt="" coords="73,80,260,106"/>
-<area shape="rect" id="node5" href="$class_v_s_t_g_u_i_1_1_c_layered_view_container.html" title="a view container which draws into a platform layer on top of a parent layer or the platform viewA CLa..." alt="" coords="4,155,155,181"/>
-<area shape="rect" id="node7" href="$class_v_s_t_g_u_i_1_1_c_shadow_view_container.html" title="a view container which draws a shadow for it&#39;s subviews " alt="" coords="179,155,329,181"/>
-</map>
