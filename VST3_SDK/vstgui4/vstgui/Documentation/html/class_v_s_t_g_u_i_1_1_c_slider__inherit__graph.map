@@ -1,9 +1,0 @@
-<map id="CSlider" name="CSlider">
-<area shape="rect" id="node13" href="$class_v_s_t_g_u_i_1_1_c_horizontal_slider.html" title="a horizontal slider control " alt="" coords="31,304,145,330"/>
-<area shape="rect" id="node15" href="$class_v_s_t_g_u_i_1_1_c_vertical_slider.html" title="a vertical slider control " alt="" coords="170,304,269,330"/>
-<area shape="rect" id="node2" href="$class_v_s_t_g_u_i_1_1_c_control.html" title="base class of all VSTGUI controls " alt="" coords="119,155,187,181"/>
-<area shape="rect" id="node4" href="$class_v_s_t_g_u_i_1_1_c_view.html" title="Base Class of all view objects. " alt="" coords="23,80,77,106"/>
-<area shape="rect" id="node6" href="$class_v_s_t_g_u_i_1_1_c_base_object.html" title="Base Object with reference counter. " alt="" coords="5,6,96,32"/>
-<area shape="rect" id="node8" href="$class_v_s_t_g_u_i_1_1_i_focus_drawing.html" title="Custom focus drawing interface. " alt="" coords="103,80,204,106"/>
-<area shape="rect" id="node10" href="$class_v_s_t_g_u_i_1_1_i_dependency.html" title="simple dependency between objects. " alt="" coords="229,80,320,106"/>
-</map>

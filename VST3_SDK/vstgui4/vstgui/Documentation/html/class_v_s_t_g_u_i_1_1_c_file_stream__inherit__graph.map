@@ -1,6 +1,0 @@
-<map id="CFileStream" name="CFileStream">
-<area shape="rect" id="node2" href="$class_v_s_t_g_u_i_1_1_output_stream.html" title="ByteOrder aware output stream interface. " alt="" coords="5,6,101,32"/>
-<area shape="rect" id="node4" href="$class_v_s_t_g_u_i_1_1_input_stream.html" title="ByteOrder aware input stream interface. " alt="" coords="126,6,212,32"/>
-<area shape="rect" id="node6" href="$class_v_s_t_g_u_i_1_1_seekable_stream.html" title="Seekable stream interface. " alt="" coords="237,6,347,32"/>
-<area shape="rect" id="node8" href="$class_v_s_t_g_u_i_1_1_c_base_object.html" title="Base Object with reference counter. " alt="" coords="371,6,463,32"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="UIDescription" name="UIDescription">
-<area shape="rect" id="node2" href="$class_v_s_t_g_u_i_1_1_c_base_object.html" title="Base Object with reference counter. " alt="" coords="5,6,96,32"/>
-<area shape="rect" id="node4" href="$class_v_s_t_g_u_i_1_1_i_u_i_description.html" title="IUIDescription" alt="" coords="121,6,217,32"/>
-<area shape="rect" id="node6" href="$class_v_s_t_g_u_i_1_1_xml_1_1_i_handler.html" title="IHandler" alt="" coords="241,6,308,32"/>
-<area shape="rect" id="node8" href="$class_v_s_t_g_u_i_1_1_i_dependency.html" title="simple dependency between objects. " alt="" coords="333,6,424,32"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="IController" name="IController">
-<area shape="rect" id="node5" href="$class_v_s_t_g_u_i_1_1_delegation_controller.html" title="DelegationController" alt="" coords="5,155,136,181"/>
-<area shape="rect" id="node9" href="$class_v_s_t_g_u_i_1_1_group_controller.html" title="GroupController" alt="" coords="160,155,267,181"/>
-<area shape="rect" id="node11" href="$class_v_s_t_g_u_i_1_1_v_s_t3_editor.html" title="VST3 Editor with automatic parameter binding. " alt="" coords="291,155,373,181"/>
-<area shape="rect" id="node2" href="$class_v_s_t_g_u_i_1_1_i_control_listener.html" title="IControlListener" alt="" coords="160,6,265,32"/>
-<area shape="rect" id="node7" href="$class_v_s_t_g_u_i_1_1_pad_controller.html" title="PadController" alt="" coords="23,230,117,256"/>
-</map>

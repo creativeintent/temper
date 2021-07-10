@@ -1,7 +1,0 @@
-<map id="ITimingFunction" name="ITimingFunction">
-<area shape="rect" id="node3" href="$class_v_s_t_g_u_i_1_1_animation_1_1_repeat_timing_function.html" title="RepeatTimingFunction" alt="" coords="35,80,176,106"/>
-<area shape="rect" id="node5" href="$class_v_s_t_g_u_i_1_1_animation_1_1_timing_function_base.html" title="TimingFunctionBase" alt="" coords="200,80,329,106"/>
-<area shape="rect" id="node7" href="$class_v_s_t_g_u_i_1_1_animation_1_1_interpolation_timing_function.html" title="InterpolationTimingFunction" alt="" coords="5,155,173,181"/>
-<area shape="rect" id="node9" href="$class_v_s_t_g_u_i_1_1_animation_1_1_linear_timing_function.html" title="LinearTimingFunction" alt="" coords="197,155,333,181"/>
-<area shape="rect" id="node11" href="$class_v_s_t_g_u_i_1_1_animation_1_1_power_timing_function.html" title="PowerTimingFunction" alt="" coords="357,155,493,181"/>
-</map>
