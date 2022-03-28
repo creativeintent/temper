@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -50,6 +49,10 @@ namespace juce
 */
 class JUCE_API  ChoicePropertyComponent    : public PropertyComponent
 {
+private:
+    /** Delegating constructor. */
+    ChoicePropertyComponent (const String&, const StringArray&, const Array<var>&);
+
 protected:
     /** Creates the component.
         Your subclass's constructor must add a list of options to the choices member variable.
@@ -76,33 +79,29 @@ public:
                              const StringArray& choices,
                              const Array<var>& correspondingValues);
 
-    /** Creates the component using a ValueWithDefault object. This will add an item to the ComboBox for the
+    /** Creates the component using a ValueTreePropertyWithDefault object. This will add an item to the ComboBox for the
         default value with an ID of -1.
 
-        @param valueToControl       the ValueWithDefault object that contains the Value object that the combo box will read and control
+        @param valueToControl       the ValueTreePropertyWithDefault object that contains the Value object that the combo box will read and control.
         @param propertyName         the name of the property
         @param choices              the list of possible values that the drop-down list will contain
         @param correspondingValues  a list of values corresponding to each item in the 'choices' StringArray.
                                     These are the values that will be read and written to the
                                     valueToControl value. This array must contain the same number of items
                                     as the choices array
-
     */
-    ChoicePropertyComponent (ValueWithDefault valueToControl,
+    ChoicePropertyComponent (const ValueTreePropertyWithDefault& valueToControl,
                              const String& propertyName,
                              const StringArray& choices,
                              const Array<var>& correspondingValues);
 
-    /** Creates the component using a ValueWithDefault object, adding an item to the ComboBox for the
+    /** Creates the component using a ValueTreePropertyWithDefault object, adding an item to the ComboBox for the
         default value with an ID of -1 as well as adding separate "Enabled" and "Disabled" options.
 
         This is useful for simple on/off choices that also need a default value.
     */
-    ChoicePropertyComponent (ValueWithDefault valueToControl,
+    ChoicePropertyComponent (const ValueTreePropertyWithDefault& valueToControl,
                              const String& propertyName);
-
-    /** Destructor. */
-    ~ChoicePropertyComponent();
 
     //==============================================================================
     /** Called when the user selects an item from the combo box.
@@ -135,20 +134,19 @@ protected:
     StringArray choices;
 
 private:
-    /** Delegating constructor. */
-    ChoicePropertyComponent (const String&, const StringArray&, const Array<var>&);
-
-    ComboBox comboBox;
-    bool isCustomClass = false;
-
-    class RemapperValueSource;
-    class RemapperValueSourceWithDefault;
-
-    void createComboBox();
-    void createComboBoxWithDefault (const String&);
+    //==============================================================================
+    void initialiseComboBox (const Value&);
+    void refreshChoices();
+    void refreshChoices (const String&);
 
     void changeIndex();
 
+    //==============================================================================
+    ValueTreePropertyWithDefault value;
+    ComboBox comboBox;
+    bool isCustomClass = false;
+
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ChoicePropertyComponent)
 };
 

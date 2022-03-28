@@ -77,9 +77,8 @@ private:
     ScopedPointer<Label> m_satLabel;
     ScopedPointer<Label> m_feedbackLabel;
     ScopedPointer<Label> m_gainLabel;
-    ScopedPointer<Drawable> drawable1;
-
-
+    //ScopedPointer<Drawable> drawable1;
+    Image imgBackground;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

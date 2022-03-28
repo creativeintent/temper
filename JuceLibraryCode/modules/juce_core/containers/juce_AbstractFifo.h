@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -38,44 +38,32 @@ namespace juce
 
     e.g.
     @code
-    class MyFifo
+    struct MyFifo
     {
-    public:
-        MyFifo()  : abstractFifo (1024)
-        {
-        }
-
         void addToFifo (const int* someData, int numItems)
         {
-            int start1, size1, start2, size2;
-            abstractFifo.prepareToWrite (numItems, start1, size1, start2, size2);
+            const auto scope = abstractFifo.write (numItems);
 
-            if (size1 > 0)
-                copySomeData (myBuffer + start1, someData, size1);
+            if (scope.blockSize1 > 0)
+                copySomeData (myBuffer + scope.startIndex1, someData, scope.blockSize1);
 
-            if (size2 > 0)
-                copySomeData (myBuffer + start2, someData + size1, size2);
-
-            abstractFifo.finishedWrite (size1 + size2);
+            if (scope.blockSize2 > 0)
+                copySomeData (myBuffer + scope.startIndex2, someData, scope.blockSize2);
         }
 
         void readFromFifo (int* someData, int numItems)
         {
-            int start1, size1, start2, size2;
-            abstractFifo.prepareToRead (numItems, start1, size1, start2, size2);
+            const auto scope = abstractFifo.read (numItems);
 
-            if (size1 > 0)
-                copySomeData (someData, myBuffer + start1, size1);
+            if (scope.blockSize1 > 0)
+                copySomeData (someData, myBuffer + scope.startIndex1, scope.blockSize1);
 
-            if (size2 > 0)
-                copySomeData (someData + size1, myBuffer + start2, size2);
-
-            abstractFifo.finishedRead (size1 + size2);
+            if (scope.blockSize2 > 0)
+                copySomeData (someData + scope.blockSize1, myBuffer + scope.startIndex2, scope.blockSize2);
         }
 
-    private:
-        AbstractFifo abstractFifo;
-        int myBuffer [1024];
+        AbstractFifo abstractFifo { 1024 };
+        int myBuffer[1024];
     };
     @endcode
 
@@ -87,9 +75,6 @@ public:
     //==============================================================================
     /** Creates a FIFO to manage a buffer with the specified capacity. */
     AbstractFifo (int capacity) noexcept;
-
-    /** Destructor */
-    ~AbstractFifo();
 
     //==============================================================================
     /** Returns the total size of the buffer being managed. */
@@ -225,7 +210,10 @@ public:
             This object will hold a pointer back to the fifo, so make sure that
             the fifo outlives this object.
         */
-        ScopedReadWrite (AbstractFifo&, int num) noexcept;
+        ScopedReadWrite (AbstractFifo& f, int num) noexcept  : fifo (&f)
+        {
+            prepare (*fifo, num);
+        }
 
         ScopedReadWrite (const ScopedReadWrite&) = delete;
         ScopedReadWrite (ScopedReadWrite&&) noexcept;
@@ -236,7 +224,11 @@ public:
         /** Calls finishedRead or finishedWrite if this is a non-null scoped
             reader/writer.
         */
-        ~ScopedReadWrite() noexcept;
+        ~ScopedReadWrite() noexcept
+        {
+            if (fifo != nullptr)
+                finish (*fifo, blockSize1 + blockSize2);
+        }
 
         /** Calls the passed function with each index that was deemed valid
             for the current read/write operation.
@@ -281,7 +273,7 @@ public:
         } // readHandle goes out of scope here, finishing the read operation
         @endcode
     */
-    ScopedRead read (int numToRead) noexcept      { return { *this, numToRead }; }
+    ScopedRead read (int numToRead) noexcept;
 
     /** Replaces prepareToWrite/finishedWrite with a single function.
         This function returns an object which contains the start indices and
@@ -303,7 +295,7 @@ public:
         } // writeHandle goes out of scope here, finishing the write operation
         @endcode
     */
-    ScopedWrite write (int numToWrite) noexcept    { return { *this, numToWrite }; }
+    ScopedWrite write (int numToWrite) noexcept;
 
 private:
     //==============================================================================
@@ -312,5 +304,30 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AbstractFifo)
 };
+
+template <>
+inline void AbstractFifo::ScopedReadWrite<AbstractFifo::ReadOrWrite::read>::finish (AbstractFifo& f, int num) noexcept
+{
+    f.finishedRead (num);
+}
+
+template <>
+inline void AbstractFifo::ScopedReadWrite<AbstractFifo::ReadOrWrite::write>::finish (AbstractFifo& f, int num) noexcept
+{
+    f.finishedWrite (num);
+}
+
+template <>
+inline void AbstractFifo::ScopedReadWrite<AbstractFifo::ReadOrWrite::read>::prepare (AbstractFifo& f, int num) noexcept
+{
+    f.prepareToRead (num, startIndex1, blockSize1, startIndex2, blockSize2);
+}
+
+template <>
+inline void AbstractFifo::ScopedReadWrite<AbstractFifo::ReadOrWrite::write>::prepare (AbstractFifo& f, int num) noexcept
+{
+    f.prepareToWrite (num, startIndex1, blockSize1, startIndex2, blockSize2);
+}
+
 
 } // namespace juce

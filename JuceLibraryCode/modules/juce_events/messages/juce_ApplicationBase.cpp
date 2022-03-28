@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -23,7 +23,7 @@
 namespace juce
 {
 
-JUCEApplicationBase::CreateInstanceFunction JUCEApplicationBase::createInstance = 0;
+JUCEApplicationBase::CreateInstanceFunction JUCEApplicationBase::createInstance = nullptr;
 JUCEApplicationBase* JUCEApplicationBase::appInstance = nullptr;
 
 #if JUCE_IOS
@@ -53,7 +53,7 @@ void JUCEApplicationBase::appWillTerminateByForce()
     JUCE_AUTORELEASEPOOL
     {
         {
-            const ScopedPointer<JUCEApplicationBase> app (appInstance);
+            const std::unique_ptr<JUCEApplicationBase> app (appInstance);
 
             if (app != nullptr)
                 app->shutdownApp();
@@ -175,7 +175,7 @@ StringArray JUCE_CALLTYPE JUCEApplicationBase::getCommandLineParameterArray()
 
 #else
 
-#if JUCE_IOS
+#if JUCE_IOS && JUCE_MODULE_AVAILABLE_juce_gui_basics
  extern int juce_iOSMain (int argc, const char* argv[], void* classPtr);
 #endif
 
@@ -183,7 +183,7 @@ StringArray JUCE_CALLTYPE JUCEApplicationBase::getCommandLineParameterArray()
  extern void initialiseNSApplication();
 #endif
 
-#if JUCE_LINUX && JUCE_MODULE_AVAILABLE_juce_gui_extra && (! defined(JUCE_WEB_BROWSER) || JUCE_WEB_BROWSER)
+#if (JUCE_LINUX || JUCE_BSD) && JUCE_MODULE_AVAILABLE_juce_gui_extra && (! defined(JUCE_WEB_BROWSER) || JUCE_WEB_BROWSER)
  extern int juce_gtkWebkitMain (int argc, const char* argv[]);
 #endif
 
@@ -201,7 +201,7 @@ String JUCEApplicationBase::getCommandLineParameters()
 
     for (int i = 1; i < juce_argc; ++i)
     {
-        String arg (juce_argv[i]);
+        String arg { CharPointer_UTF8 (juce_argv[i]) };
 
         if (arg.containsChar (' ') && ! arg.isQuotedString())
             arg = arg.quoted ('"');
@@ -228,12 +228,12 @@ int JUCEApplicationBase::main (int argc, const char* argv[])
         initialiseNSApplication();
        #endif
 
-       #if JUCE_LINUX && JUCE_MODULE_AVAILABLE_juce_gui_extra && (! defined(JUCE_WEB_BROWSER) || JUCE_WEB_BROWSER)
+       #if (JUCE_LINUX || JUCE_BSD) && JUCE_MODULE_AVAILABLE_juce_gui_extra && (! defined(JUCE_WEB_BROWSER) || JUCE_WEB_BROWSER)
         if (argc >= 2 && String (argv[1]) == "--juce-gtkwebkitfork-child")
             return juce_gtkWebkitMain (argc, argv);
        #endif
 
-       #if JUCE_IOS
+       #if JUCE_IOS && JUCE_MODULE_AVAILABLE_juce_gui_basics
         return juce_iOSMain (argc, argv, iOSCustomDelegate);
        #else
 
@@ -250,7 +250,7 @@ int JUCEApplicationBase::main()
     ScopedJuceInitialiser_GUI libraryInitialiser;
     jassert (createInstance != nullptr);
 
-    const ScopedPointer<JUCEApplicationBase> app (createInstance());
+    const std::unique_ptr<JUCEApplicationBase> app (createInstance());
     jassert (app != nullptr);
 
     if (! app->initialiseApp())

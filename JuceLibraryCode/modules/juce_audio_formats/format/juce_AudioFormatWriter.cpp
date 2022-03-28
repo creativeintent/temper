@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -86,7 +85,7 @@ bool AudioFormatWriter::writeFromAudioReader (AudioFormatReader& reader,
     const int bufferSize = 16384;
     AudioBuffer<float> tempBuffer ((int) numChannels, bufferSize);
 
-    int* buffers[128] = { 0 };
+    int* buffers[128] = { nullptr };
 
     for (int i = tempBuffer.getNumChannels(); --i >= 0;)
         buffers[i] = reinterpret_cast<int*> (tempBuffer.getWritePointer (i, 0));
@@ -109,8 +108,10 @@ bool AudioFormatWriter::writeFromAudioReader (AudioFormatReader& reader,
             {
                 void* const b = *bufferChan++;
 
+                constexpr auto scaleFactor = 1.0f / static_cast<float> (0x7fffffff);
+
                 if (isFloatingPoint())
-                    FloatVectorOperations::convertFixedToFloat ((float*) b, (int*) b, 1.0f / 0x7fffffff, numToDo);
+                    FloatVectorOperations::convertFixedToFloat ((float*) b, (int*) b, scaleFactor, numToDo);
                 else
                     convertFloatsToInts ((int*) b, (float*) b, numToDo);
             }
@@ -156,26 +157,26 @@ bool AudioFormatWriter::writeFromFloatArrays (const float* const* channels, int 
     if (isFloatingPoint())
         return write ((const int**) channels, numSamples);
 
-    int* chans[256];
-    int scratch[4096];
+    std::vector<int*> chans (256);
+    std::vector<int> scratch (4096);
 
-    jassert (numSourceChannels < numElementsInArray (chans));
-    const int maxSamples = (int) (numElementsInArray (scratch) / numSourceChannels);
+    jassert (numSourceChannels < (int) chans.size());
+    const int maxSamples = (int) scratch.size() / numSourceChannels;
 
     for (int i = 0; i < numSourceChannels; ++i)
-        chans[i] = scratch + (i * maxSamples);
+        chans[(size_t) i] = scratch.data() + (i * maxSamples);
 
-    chans[numSourceChannels] = nullptr;
+    chans[(size_t) numSourceChannels] = nullptr;
     int startSample = 0;
 
     while (numSamples > 0)
     {
-        const int numToDo = jmin (numSamples, maxSamples);
+        auto numToDo = jmin (numSamples, maxSamples);
 
         for (int i = 0; i < numSourceChannels; ++i)
-            convertFloatsToInts (chans[i], channels[i] + startSample, numToDo);
+            convertFloatsToInts (chans[(size_t) i], channels[(size_t) i] + startSample, numToDo);
 
-        if (! write ((const int**) chans, numToDo))
+        if (! write ((const int**) chans.data(), numToDo))
             return false;
 
         startSample += numToDo;
@@ -217,17 +218,12 @@ public:
         : fifo (numSamples),
           buffer (channels, numSamples),
           timeSliceThread (tst),
-          writer (w),
-          receiver (nullptr),
-          samplesWritten (0),
-          samplesPerFlush (0),
-          flushSampleCounter (0),
-          isRunning (true)
+          writer (w)
     {
         timeSliceThread.addTimeSliceClient (this);
     }
 
-    ~Buffer()
+    ~Buffer() override
     {
         isRunning = false;
         timeSliceThread.removeTimeSliceClient (this);
@@ -267,7 +263,7 @@ public:
 
     int writePendingData()
     {
-        const int numToDo = fifo.getTotalSize() / 4;
+        auto numToDo = fifo.getTotalSize() / 4;
 
         int start1, size1, start2, size2;
         fifo.prepareToRead (numToDo, start1, size1, start2, size2);
@@ -278,6 +274,7 @@ public:
         writer->writeFromAudioSampleBuffer (buffer, start1, size1);
 
         const ScopedLock sl (thumbnailLock);
+
         if (receiver != nullptr)
             receiver->addBlock (samplesWritten, buffer, start1, size1);
 
@@ -328,12 +325,12 @@ private:
     AbstractFifo fifo;
     AudioBuffer<float> buffer;
     TimeSliceThread& timeSliceThread;
-    ScopedPointer<AudioFormatWriter> writer;
+    std::unique_ptr<AudioFormatWriter> writer;
     CriticalSection thumbnailLock;
-    IncomingDataReceiver* receiver;
-    int64 samplesWritten;
-    int samplesPerFlush, flushSampleCounter;
-    volatile bool isRunning;
+    IncomingDataReceiver* receiver = {};
+    int64 samplesWritten = 0;
+    int samplesPerFlush = 0, flushSampleCounter = 0;
+    std::atomic<bool> isRunning { true };
 
     JUCE_DECLARE_NON_COPYABLE (Buffer)
 };

@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -34,10 +33,23 @@ PluginDescription AudioPluginInstance::getPluginDescription() const
     return desc;
 }
 
+void* AudioPluginInstance::getPlatformSpecificData() { return nullptr; }
+
+void AudioPluginInstance::getExtensions (ExtensionsVisitor& visitor) const { visitor.visitUnknown ({}); }
+
 String AudioPluginInstance::getParameterID (int parameterIndex)
 {
     assertOnceOnDeprecatedMethodUse();
 
+    // Currently there is no corresponding method available in the
+    // AudioProcessorParameter class, and the previous behaviour of JUCE's
+    // plug-in hosting code simply returns a string version of the index; to
+    // maintain backwards compatibility you should perform the operation below
+    // this comment. However the caveat is that for plug-ins which change their
+    // number of parameters dynamically at runtime you cannot rely upon the
+    // returned parameter ID mapping to the correct parameter. A comprehensive
+    // solution to this problem requires some additional work in JUCE's hosting
+    // code.
     return String (parameterIndex);
 }
 
@@ -56,7 +68,7 @@ void AudioPluginInstance::setParameter (int parameterIndex, float newValue)
     assertOnceOnDeprecatedMethodUse();
 
     if (auto* param = getParameters()[parameterIndex])
-        return param->setValue (newValue);
+        param->setValue (newValue);
 }
 
 const String AudioPluginInstance::getParameterName (int parameterIndex)
@@ -166,7 +178,7 @@ bool AudioPluginInstance::isMetaParameter (int parameterIndex) const
     if (auto* param = getParameters()[parameterIndex])
         return param->isMetaParameter();
 
-        return false;
+    return false;
 }
 
 AudioProcessorParameter::Category AudioPluginInstance::getParameterCategory (int parameterIndex) const
@@ -209,7 +221,7 @@ AudioPluginInstance::Parameter::Parameter()
     offStrings.add (TRANS("false"));
 }
 
-AudioPluginInstance::Parameter::~Parameter() {}
+AudioPluginInstance::Parameter::~Parameter() = default;
 
 String AudioPluginInstance::Parameter::getText (float value, int maximumStringLength) const
 {
@@ -235,6 +247,46 @@ float AudioPluginInstance::Parameter::getValueForText (const String& text) const
     }
 
     return floatValue;
+}
+
+void AudioPluginInstance::addHostedParameter (std::unique_ptr<HostedParameter> param)
+{
+    addParameter (param.release());
+}
+
+void AudioPluginInstance::addHostedParameterGroup (std::unique_ptr<AudioProcessorParameterGroup> group)
+{
+   #if JUCE_DEBUG
+    // All parameters *must* be HostedParameters, otherwise getHostedParameter will return
+    // garbage and your host will crash and burn
+    for (auto* param : group->getParameters (true))
+    {
+        jassert (dynamic_cast<HostedParameter*> (param) != nullptr);
+    }
+   #endif
+
+    addParameterGroup (std::move (group));
+}
+
+void AudioPluginInstance::setHostedParameterTree (AudioProcessorParameterGroup group)
+{
+   #if JUCE_DEBUG
+    // All parameters *must* be HostedParameters, otherwise getHostedParameter will return
+    // garbage and your host will crash and burn
+    for (auto* param : group.getParameters (true))
+    {
+        jassert (dynamic_cast<HostedParameter*> (param) != nullptr);
+    }
+   #endif
+
+    setParameterTree (std::move (group));
+}
+
+AudioPluginInstance::HostedParameter* AudioPluginInstance::getHostedParameter (int index) const
+{
+    // It's important that all AudioPluginInstance implementations
+    // only ever own HostedParameters!
+    return static_cast<HostedParameter*> (getParameters()[index]);
 }
 
 } // namespace juce

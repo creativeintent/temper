@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -44,46 +44,33 @@ void Logger::outputDebugString (const String& text)
 }
 
 //==============================================================================
-namespace SystemStatsHelpers
-{
-   #if JUCE_INTEL && ! JUCE_NO_INLINE_ASM
-    static void doCPUID (uint32& a, uint32& b, uint32& c, uint32& d, uint32 type)
-    {
-        uint32 la = a, lb = b, lc = c, ld = d;
-
-        asm ("mov %%ebx, %%esi \n\t"
-             "cpuid \n\t"
-             "xchg %%esi, %%ebx"
-               : "=a" (la), "=S" (lb), "=c" (lc), "=d" (ld) : "a" (type)
-           #if JUCE_64BIT
-                  , "b" (lb), "c" (lc), "d" (ld)
-           #endif
-        );
-
-        a = la; b = lb; c = lc; d = ld;
-    }
-   #endif
-}
-
-//==============================================================================
 void CPUInformation::initialise() noexcept
 {
    #if JUCE_INTEL && ! JUCE_NO_INLINE_ASM
-    uint32 a = 0, b = 0, d = 0, c = 0;
-    SystemStatsHelpers::doCPUID (a, b, c, d, 1);
-
-    hasMMX   = (d & (1u << 23)) != 0;
-    hasSSE   = (d & (1u << 25)) != 0;
-    hasSSE2  = (d & (1u << 26)) != 0;
-    has3DNow = (b & (1u << 31)) != 0;
-    hasSSE3  = (c & (1u <<  0)) != 0;
-    hasSSSE3 = (c & (1u <<  9)) != 0;
-    hasSSE41 = (c & (1u << 19)) != 0;
-    hasSSE42 = (c & (1u << 20)) != 0;
-    hasAVX   = (c & (1u << 28)) != 0;
-
-    SystemStatsHelpers::doCPUID (a, b, c, d, 7);
-    hasAVX2  = (b & (1u <<  5)) != 0;
+    SystemStatsHelpers::getCPUInfo (hasMMX,
+                                    hasSSE,
+                                    hasSSE2,
+                                    has3DNow,
+                                    hasSSE3,
+                                    hasSSSE3,
+                                    hasFMA3,
+                                    hasSSE41,
+                                    hasSSE42,
+                                    hasAVX,
+                                    hasFMA4,
+                                    hasAVX2,
+                                    hasAVX512F,
+                                    hasAVX512DQ,
+                                    hasAVX512IFMA,
+                                    hasAVX512PF,
+                                    hasAVX512ER,
+                                    hasAVX512CD,
+                                    hasAVX512BW,
+                                    hasAVX512VL,
+                                    hasAVX512VBMI,
+                                    hasAVX512VPOPCNTDQ);
+   #elif JUCE_ARM && __ARM_ARCH > 7
+    hasNeon = true;
    #endif
 
     numLogicalCPUs = (int) [[NSProcessInfo processInfo] activeProcessorCount];
@@ -104,10 +91,27 @@ static String getOSXVersion()
 {
     JUCE_AUTORELEASEPOOL
     {
-        NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:
-                                    nsStringLiteral ("/System/Library/CoreServices/SystemVersion.plist")];
+        const auto* dict = []
+        {
+            const String systemVersionPlist ("/System/Library/CoreServices/SystemVersion.plist");
 
-        return nsStringToJuce ([dict objectForKey: nsStringLiteral ("ProductVersion")]);
+           #if defined (MAC_OS_X_VERSION_10_13) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_13
+            if (@available (macOS 10.13, *))
+            {
+                NSError* error = nullptr;
+                return [NSDictionary dictionaryWithContentsOfURL: createNSURLFromFile (systemVersionPlist)
+                                                           error: &error];
+            }
+           #endif
+
+            return [NSDictionary dictionaryWithContentsOfFile: juceStringToNS (systemVersionPlist)];
+        }();
+
+        if (dict != nullptr)
+            return nsStringToJuce ([dict objectForKey: nsStringLiteral ("ProductVersion")]);
+
+        jassertfalse;
+        return {};
     }
 }
 #endif
@@ -120,11 +124,22 @@ SystemStats::OperatingSystemType SystemStats::getOperatingSystemType()
     StringArray parts;
     parts.addTokens (getOSXVersion(), ".", StringRef());
 
-    jassert (parts[0].getIntValue() == 10);
-    const int major = parts[1].getIntValue();
-    jassert (major > 2);
+    const auto major = parts[0].getIntValue();
+    const auto minor = parts[1].getIntValue();
 
-    return (OperatingSystemType) (major + MacOSX_10_4 - 4);
+    switch (major)
+    {
+        case 10:
+        {
+            jassert (minor > 2);
+            return (OperatingSystemType) (minor + MacOSX_10_7 - 7);
+        }
+
+        case 11: return MacOS_11;
+        case 12: return MacOS_12;
+    }
+
+    return UnknownOS;
    #endif
 }
 
@@ -140,17 +155,37 @@ String SystemStats::getOperatingSystemName()
 String SystemStats::getDeviceDescription()
 {
    #if JUCE_IOS
-    return nsStringToJuce ([[UIDevice currentDevice] model]);
+    const char* name = "hw.machine";
    #else
+    const char* name = "hw.model";
+   #endif
+
     size_t size;
-    if (sysctlbyname ("hw.model", nullptr, &size, nullptr, 0) >= 0)
+
+    if (sysctlbyname (name, nullptr, &size, nullptr, 0) >= 0)
     {
         HeapBlock<char> model (size);
-        if (sysctlbyname ("hw.model", model,   &size, nullptr, 0) >= 0)
-            return model.get();
+
+        if (sysctlbyname (name, model, &size, nullptr, 0) >= 0)
+        {
+            String description (model.get());
+
+           #if JUCE_IOS
+            if (description == "x86_64") // running in the simulator
+            {
+                if (auto* userInfo = [[NSProcessInfo processInfo] environment])
+                {
+                    if (auto* simDeviceName = [userInfo objectForKey: @"SIMULATOR_DEVICE_NAME"])
+                        return nsStringToJuce (simDeviceName);
+                }
+            }
+          #endif
+
+            return description;
+        }
     }
+
     return {};
-   #endif
 }
 
 String SystemStats::getDeviceManufacturer()
@@ -162,10 +197,8 @@ bool SystemStats::isOperatingSystem64Bit()
 {
    #if JUCE_IOS
     return false;
-   #elif JUCE_64BIT
-    return true;
    #else
-    return getOperatingSystemType() >= MacOSX_10_6;
+    return true;
    #endif
 }
 
@@ -174,7 +207,7 @@ int SystemStats::getMemorySizeInMegabytes()
     uint64 mem = 0;
     size_t memSize = sizeof (mem);
     int mib[] = { CTL_HW, HW_MEMSIZE };
-    sysctl (mib, 2, &mem, &memSize, 0, 0);
+    sysctl (mib, 2, &mem, &memSize, nullptr, 0);
     return (int) (mem / (1024 * 1024));
 }
 
@@ -203,12 +236,12 @@ String SystemStats::getCpuModel()
     return {};
 }
 
-int SystemStats::getCpuSpeedInMegaherz()
+int SystemStats::getCpuSpeedInMegahertz()
 {
     uint64 speedHz = 0;
     size_t speedSize = sizeof (speedHz);
     int mib[] = { CTL_HW, HW_CPU_FREQ };
-    sysctl (mib, 2, &speedHz, &speedSize, 0, 0);
+    sysctl (mib, 2, &speedHz, &speedSize, nullptr, 0);
 
    #if JUCE_BIG_ENDIAN
     if (speedSize == 4)
@@ -240,9 +273,8 @@ String SystemStats::getComputerName()
 
 static String getLocaleValue (CFStringRef key)
 {
-    CFLocaleRef cfLocale = CFLocaleCopyCurrent();
-    const String result (String::fromCFString ((CFStringRef) CFLocaleGetValue (cfLocale, key)));
-    CFRelease (cfLocale);
+    CFUniquePtr<CFLocaleRef> cfLocale (CFLocaleCopyCurrent());
+    const String result (String::fromCFString ((CFStringRef) CFLocaleGetValue (cfLocale.get(), key)));
     return result;
 }
 
@@ -251,9 +283,8 @@ String SystemStats::getUserRegion()     { return getLocaleValue (kCFLocaleCountr
 
 String SystemStats::getDisplayLanguage()
 {
-    CFArrayRef cfPrefLangs = CFLocaleCopyPreferredLanguages();
-    const String result (String::fromCFString ((CFStringRef) CFArrayGetValueAtIndex (cfPrefLangs, 0)));
-    CFRelease (cfPrefLangs);
+    CFUniquePtr<CFArrayRef> cfPrefLangs (CFLocaleCopyPreferredLanguages());
+    const String result (String::fromCFString ((CFStringRef) CFArrayGetValueAtIndex (cfPrefLangs.get(), 0)));
     return result;
 }
 

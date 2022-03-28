@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -60,12 +59,15 @@ namespace FIR
         */
         using NumericType = typename SampleTypeHelpers::ElementType<SampleType>::Type;
 
+        /** A typedef for a ref-counted pointer to the coefficients object */
+        using CoefficientsPtr = typename Coefficients<NumericType>::Ptr;
+
         //==============================================================================
         /** This will create a filter which will produce silence. */
         Filter() : coefficients (new Coefficients<NumericType>)                                     { reset(); }
 
         /** Creates a filter with a given set of coefficients. */
-        Filter (Coefficients<NumericType>* coefficientsToUse)  : coefficients (coefficientsToUse)   { reset(); }
+        Filter (CoefficientsPtr coefficientsToUse)  : coefficients (std::move (coefficientsToUse))   { reset(); }
 
         Filter (const Filter&) = default;
         Filter (Filter&&) = default;
@@ -78,8 +80,7 @@ namespace FIR
         {
             // This class can only process mono signals. Use the ProcessorDuplicator class
             // to apply this filter on a multi-channel audio stream.
-            jassert (spec.numChannels == 1);
-            ignoreUnused (spec);
+            jassertquiet (spec.numChannels == 1);
             reset();
         }
 
@@ -108,7 +109,7 @@ namespace FIR
         }
 
         //==============================================================================
-        /** The coefficients of the FIR filter. It's up to the called to ensure that
+        /** The coefficients of the FIR filter. It's up to the caller to ensure that
             these coefficients are modified in a thread-safe way.
 
             If you change the order of the coefficients then you must call reset after
@@ -117,7 +118,7 @@ namespace FIR
         typename Coefficients<NumericType>::Ptr coefficients;
 
         //==============================================================================
-        /** Processes as a block of samples */
+        /** Processes a block of samples */
         template <typename ProcessContext>
         void process (const ProcessContext& context) noexcept
         {

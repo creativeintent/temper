@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -48,10 +48,6 @@ LocalisedStrings& LocalisedStrings::operator= (const LocalisedStrings& other)
     return *this;
 }
 
-LocalisedStrings::~LocalisedStrings()
-{
-}
-
 //==============================================================================
 String LocalisedStrings::translate (const String& text) const
 {
@@ -81,7 +77,7 @@ namespace
     {
         LeakAvoidanceTrick()
         {
-            const ScopedPointer<LocalisedStrings> dummy (new LocalisedStrings (String(), false));
+            const std::unique_ptr<LocalisedStrings> dummy (new LocalisedStrings (String(), false));
         }
     };
 
@@ -89,7 +85,7 @@ namespace
    #endif
 
     SpinLock currentMappingsLock;
-    ScopedPointer<LocalisedStrings> currentMappings;
+    std::unique_ptr<LocalisedStrings> currentMappings;
 
     static int findCloseQuote (const String& text, int startPos)
     {

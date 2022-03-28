@@ -132,8 +132,8 @@ MainComponent::MainComponent (AudioProcessorValueTreeState& vts)
     m_gainLabel->setColour (TextEditor::textColourId, Colours::black);
     m_gainLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    drawable1 = Drawable::createFromImageData (BinaryData::Background_png, BinaryData::Background_pngSize);
-
+    //drawable1 = Drawable::createFromImageData(BinaryData::Background_png, BinaryData::Background_pngSize);
+    imgBackground = ImageFileFormat::loadFrom(BinaryData::Background_png, BinaryData::Background_pngSize);
     //[UserPreSize]
     //[/UserPreSize]
 
@@ -186,8 +186,7 @@ MainComponent::~MainComponent()
     m_satLabel = nullptr;
     m_feedbackLabel = nullptr;
     m_gainLabel = nullptr;
-    drawable1 = nullptr;
-
+    //drawable1 = nullptr;
 
     //[Destructor]. You can add your own custom destruction code here..
     //[/Destructor]
@@ -200,10 +199,11 @@ void MainComponent::paint (Graphics& g)
     //[/UserPrePaint]
 
     g.setColour (Colours::black);
-    jassert (drawable1 != 0);
+    /*jassert (drawable1 != 0);
     if (drawable1 != 0)
         drawable1->drawWithin (g, Rectangle<float> (0, 0, 744, 476),
-                               RectanglePlacement::stretchToFit, 1.000f);
+                               RectanglePlacement::stretchToFit, 1.000f);*/
+    g.drawImage(imgBackground, getLocalBounds().toFloat());
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]

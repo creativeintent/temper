@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -37,17 +37,14 @@ namespace juce
 class CharPointer_ASCII  final
 {
 public:
-    typedef char CharType;
+    using CharType = char;
 
     inline explicit CharPointer_ASCII (const CharType* rawPointer) noexcept
         : data (const_cast<CharType*> (rawPointer))
     {
     }
 
-    inline CharPointer_ASCII (const CharPointer_ASCII& other) noexcept
-        : data (other.data)
-    {
-    }
+    inline CharPointer_ASCII (const CharPointer_ASCII& other) = default;
 
     inline CharPointer_ASCII operator= (const CharPointer_ASCII other) noexcept
     {
@@ -185,7 +182,7 @@ public:
     /** Returns the number of bytes that would be needed to represent the given
         unicode character in this encoding format.
     */
-    static inline size_t getBytesRequiredFor (const juce_wchar) noexcept
+    static size_t getBytesRequiredFor (const juce_wchar) noexcept
     {
         return 1;
     }
@@ -338,7 +335,7 @@ public:
     /** Parses this string as a 64-bit integer. */
     int64 getIntValue64() const noexcept
     {
-       #if JUCE_LINUX || JUCE_ANDROID || JUCE_MINGW
+       #if JUCE_LINUX || JUCE_BSD || JUCE_ANDROID || JUCE_MINGW
         return atoll (data);
        #elif JUCE_WINDOWS
         return _atoi64 (data);
@@ -352,6 +349,9 @@ public:
 
     /** Returns the first non-whitespace character in the string. */
     CharPointer_ASCII findEndOfWhitespace() const noexcept      { return CharacterFunctions::findEndOfWhitespace (*this); }
+
+    /** Move this pointer to the first non-whitespace character in the string. */
+    void incrementToEndOfWhitespace() noexcept                  { CharacterFunctions::incrementToEndOfWhitespace (*this); }
 
     /** Returns true if the given unicode character can be represented in this encoding. */
     static bool canRepresent (juce_wchar character) noexcept

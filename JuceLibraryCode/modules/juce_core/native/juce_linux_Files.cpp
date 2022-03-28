@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -20,6 +20,10 @@
   ==============================================================================
 */
 
+#if JUCE_BSD
+extern char** environ;
+#endif
+
 namespace juce
 {
 
@@ -36,7 +40,7 @@ bool File::isOnCDRomDrive() const
     struct statfs buf;
 
     return statfs (getFullPathName().toUTF8(), &buf) == 0
-             && buf.f_type == (short) U_ISOFS_SUPER_MAGIC;
+             && buf.f_type == (unsigned int) U_ISOFS_SUPER_MAGIC;
 }
 
 bool File::isOnHardDisk() const
@@ -135,8 +139,9 @@ File File::getSpecialLocation (const SpecialLocationType type)
 
         case invokedExecutableFile:
             if (juce_argv != nullptr && juce_argc > 0)
-                return File (CharPointer_UTF8 (juce_argv[0]));
-            // deliberate fall-through...
+                return File (String (CharPointer_UTF8 (juce_argv[0])));
+            // Falls through
+            JUCE_FALLTHROUGH
 
         case currentExecutableFile:
         case currentApplicationFile:
@@ -144,11 +149,16 @@ File File::getSpecialLocation (const SpecialLocationType type)
             return juce_getExecutableFile();
            #endif
             // deliberate fall-through if this is not a shared-library
+            JUCE_FALLTHROUGH
 
         case hostApplicationPath:
         {
+           #if JUCE_BSD
+            return juce_getExecutableFile();
+           #else
             const File f ("/proc/self/exe");
             return f.isSymbolicLink() ? f.getLinkedTarget() : juce_getExecutableFile();
+           #endif
         }
 
         default:
@@ -189,29 +199,31 @@ static bool isFileExecutable (const String& filename)
 
 bool Process::openDocument (const String& fileName, const String& parameters)
 {
-    String cmdString (fileName.replace (" ", "\\ ",false));
-    cmdString << " " << parameters;
-
-    if (/*URL::isProbablyAWebsiteURL (fileName)
-          ||*/ cmdString.startsWithIgnoreCase ("file:")
-         /*|| URL::isProbablyAnEmailAddress (fileName)*/
-         || File::createFileWithoutCheckingPath (fileName).isDirectory()
-         || ! isFileExecutable (fileName))
+    const auto cmdString = [&]
     {
-        // create a command that tries to launch a bunch of likely browsers
-        static const char* const browserNames[] = { "xdg-open", "/etc/alternatives/x-www-browser", "firefox", "mozilla",
-                                                    "google-chrome", "chromium-browser", "opera", "konqueror" };
-        StringArray cmdLines;
+        if (fileName.startsWithIgnoreCase ("file:")
+            || File::createFileWithoutCheckingPath (fileName).isDirectory()
+            || ! isFileExecutable (fileName))
+        {
+            const auto singleCommand = fileName.trim().quoted();
 
-        for (int i = 0; i < numElementsInArray (browserNames); ++i)
-            cmdLines.add (String (browserNames[i]) + " " + cmdString.trim().quoted());
+            StringArray cmdLines;
 
-        cmdString = cmdLines.joinIntoString (" || ");
-    }
+            for (auto browserName : { "xdg-open", "/etc/alternatives/x-www-browser", "firefox", "mozilla",
+                                      "google-chrome", "chromium-browser", "opera", "konqueror" })
+            {
+                cmdLines.add (String (browserName) + " " + singleCommand);
+            }
 
-    const char* const argv[4] = { "/bin/sh", "-c", cmdString.toUTF8(), 0 };
+            return cmdLines.joinIntoString (" || ");
+        }
 
-    const int cpid = fork();
+        return (fileName.replace (" ", "\\ ", false) + " " + parameters).trim();
+    }();
+
+    const char* const argv[] = { "/bin/sh", "-c", cmdString.toUTF8(), nullptr };
+
+    const auto cpid = fork();
 
     if (cpid == 0)
     {

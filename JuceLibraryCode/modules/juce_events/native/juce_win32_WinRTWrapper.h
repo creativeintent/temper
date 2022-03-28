@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -26,56 +26,29 @@ namespace juce
 class WinRTWrapper :   public DeletedAtShutdown
 {
 public:
+    //==============================================================================
+    ~WinRTWrapper();
+    bool isInitialised() const noexcept  { return initialised; }
+
     JUCE_DECLARE_SINGLETON (WinRTWrapper, true)
 
-    class ScopedHString
+    //==============================================================================
+    template <class ComClass>
+    ComSmartPtr<ComClass> activateInstance (const wchar_t* runtimeClassID, REFCLSID classUUID)
     {
-    public:
-        ScopedHString (String str)
-        {
-            if (WinRTWrapper::getInstance()->isInitialised())
-                WinRTWrapper::getInstance()->createHString (str.toWideCharPointer(),
-                                                            static_cast<uint32_t> (str.length()),
-                                                            &hstr);
-        }
+        ComSmartPtr<ComClass> result;
 
-        ~ScopedHString()
-        {
-            if (WinRTWrapper::getInstance()->isInitialised() && hstr != nullptr)
-                WinRTWrapper::getInstance()->deleteHString (hstr);
-        }
-
-        HSTRING get() const noexcept
-        {
-            return hstr;
-        }
-
-    private:
-        HSTRING hstr = nullptr;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ScopedHString)
-    };
-
-    ~WinRTWrapper()
-    {
-        if (winRTHandle != nullptr)
-            ::FreeLibrary (winRTHandle);
-
-        clearSingletonInstance();
-    }
-
-    String hStringToString (HSTRING hstr)
-    {
         if (isInitialised())
-            if (const wchar_t* str = getHStringRawBuffer (hstr, nullptr))
-                return String (str);
+        {
+            ComSmartPtr<IInspectable> inspectable;
+            ScopedHString runtimeClass (runtimeClassID);
+            auto hr = roActivateInstance (runtimeClass.get(), inspectable.resetAndGetPointerAddress());
 
-        return {};
-    }
+            if (SUCCEEDED (hr))
+                inspectable->QueryInterface (classUUID, (void**) result.resetAndGetPointerAddress());
+        }
 
-    bool isInitialised() const noexcept
-    {
-        return initialised;
+        return result;
     }
 
     template <class ComClass>
@@ -86,6 +59,7 @@ public:
         if (isInitialised())
         {
             ScopedHString classID (runtimeClassID);
+
             if (classID.get() != nullptr)
                 roGetActivationFactory (classID.get(), __uuidof (ComClass), (void**) comPtr.resetAndGetPointerAddress());
         }
@@ -93,27 +67,27 @@ public:
         return comPtr;
     }
 
-private:
-    WinRTWrapper()
+    //==============================================================================
+    class ScopedHString
     {
-        winRTHandle = ::LoadLibraryA ("api-ms-win-core-winrt-l1-1-0");
-        if (winRTHandle == nullptr)
-            return;
+    public:
+        ScopedHString (String);
+        ~ScopedHString();
 
-        roInitialize           = (RoInitializeFuncPtr)              ::GetProcAddress (winRTHandle, "RoInitialize");
-        createHString          = (WindowsCreateStringFuncPtr)       ::GetProcAddress (winRTHandle, "WindowsCreateString");
-        deleteHString          = (WindowsDeleteStringFuncPtr)       ::GetProcAddress (winRTHandle, "WindowsDeleteString");
-        getHStringRawBuffer    = (WindowsGetStringRawBufferFuncPtr) ::GetProcAddress (winRTHandle, "WindowsGetStringRawBuffer");
-        roGetActivationFactory = (RoGetActivationFactoryFuncPtr)    ::GetProcAddress (winRTHandle, "RoGetActivationFactory");
+        HSTRING get() const noexcept          { return hstr; }
 
-        if (roInitialize == nullptr || createHString == nullptr || deleteHString == nullptr
-         || getHStringRawBuffer == nullptr || roGetActivationFactory == nullptr)
-            return;
+    private:
+        HSTRING hstr = nullptr;
 
-        HRESULT status = roInitialize (1);
-        initialised = ! (status != S_OK && status != S_FALSE && status != 0x80010106L);
-    }
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ScopedHString)
+    };
 
+    String hStringToString (HSTRING);
+
+private:
+    WinRTWrapper();
+
+    //==============================================================================
     HMODULE winRTHandle = nullptr;
     bool initialised = false;
 
@@ -121,13 +95,18 @@ private:
     typedef HRESULT (WINAPI* WindowsCreateStringFuncPtr) (LPCWSTR, UINT32, HSTRING*);
     typedef HRESULT (WINAPI* WindowsDeleteStringFuncPtr) (HSTRING);
     typedef PCWSTR  (WINAPI* WindowsGetStringRawBufferFuncPtr) (HSTRING, UINT32*);
+    typedef HRESULT (WINAPI* RoActivateInstanceFuncPtr) (HSTRING, IInspectable**);
     typedef HRESULT (WINAPI* RoGetActivationFactoryFuncPtr) (HSTRING, REFIID, void**);
 
     RoInitializeFuncPtr roInitialize = nullptr;
     WindowsCreateStringFuncPtr createHString = nullptr;
     WindowsDeleteStringFuncPtr deleteHString = nullptr;
     WindowsGetStringRawBufferFuncPtr getHStringRawBuffer = nullptr;
+    RoActivateInstanceFuncPtr roActivateInstance = nullptr;
     RoGetActivationFactoryFuncPtr roGetActivationFactory = nullptr;
+
+    //==============================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WinRTWrapper)
 };
 
 } // namespace juce

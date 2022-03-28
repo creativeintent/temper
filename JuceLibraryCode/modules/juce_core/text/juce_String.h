@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -19,6 +19,20 @@
 
   ==============================================================================
 */
+
+#if ! defined (DOXYGEN) && (JUCE_MAC || JUCE_IOS)
+ // Annoyingly we can only forward-declare a typedef by forward-declaring the
+ // aliased type
+ #if __has_attribute(objc_bridge)
+  #define JUCE_CF_BRIDGED_TYPE(T) __attribute__((objc_bridge(T)))
+ #else
+  #define JUCE_CF_BRIDGED_TYPE(T)
+ #endif
+
+ typedef const struct JUCE_CF_BRIDGED_TYPE(NSString) __CFString * CFStringRef;
+
+ #undef JUCE_CF_BRIDGED_TYPE
+#endif
 
 namespace juce
 {
@@ -153,11 +167,11 @@ public:
         toUTF32() methods let you access the string's content in any of the other formats.
     */
    #if (JUCE_STRING_UTF_TYPE == 32)
-    typedef CharPointer_UTF32 CharPointerType;
+    using CharPointerType = CharPointer_UTF32;
    #elif (JUCE_STRING_UTF_TYPE == 16)
-    typedef CharPointer_UTF16 CharPointerType;
+    using CharPointerType = CharPointer_UTF16;
    #elif (DOXYGEN || JUCE_STRING_UTF_TYPE == 8)
-    typedef CharPointer_UTF8  CharPointerType;
+    using CharPointerType = CharPointer_UTF8;
    #else
     #error "You must set the value of JUCE_STRING_UTF_TYPE to be either 8, 16, or 32!"
    #endif
@@ -293,13 +307,13 @@ public:
         Note that there's also an isNotEmpty() method to help write readable code.
         @see containsNonWhitespaceChars()
     */
-    inline bool isEmpty() const noexcept                    { return text.isEmpty(); }
+    bool isEmpty() const noexcept                           { return text.isEmpty(); }
 
     /** Returns true if the string contains at least one character.
         Note that there's also an isEmpty() method to help write readable code.
         @see containsNonWhitespaceChars()
     */
-    inline bool isNotEmpty() const noexcept                 { return ! text.isEmpty(); }
+    bool isNotEmpty() const noexcept                        { return ! text.isEmpty(); }
 
     /** Resets this string to be empty. */
     void clear() noexcept;
@@ -905,6 +919,35 @@ public:
     template <typename... Args>
     static String formatted (const String& formatStr, Args... args)      { return formattedRaw (formatStr.toRawUTF8(), args...); }
 
+    /** Returns an iterator pointing at the beginning of the string. */
+    CharPointerType begin() const                                        { return getCharPointer(); }
+
+    /** Returns an iterator pointing at the terminating null of the string.
+
+        Note that this has to find the terminating null before returning it, so prefer to
+        call this once before looping and then reuse the result, rather than calling 'end()'
+        each time through the loop.
+
+        @code
+        String str = ...;
+
+        // BEST
+        for (auto c : str)
+            DBG (c);
+
+        // GOOD
+        for (auto ptr = str.begin(), end = str.end(); ptr != end; ++ptr)
+            DBG (*ptr);
+
+        std::for_each (str.begin(), str.end(), [] (juce_wchar c) { DBG (c); });
+
+        // BAD
+        for (auto ptr = str.begin(); ptr != str.end(); ++ptr)
+            DBG (*ptr);
+        @endcode
+    */
+    CharPointerType end() const                                          { return begin().findTerminatingNull(); }
+
     //==============================================================================
     // Numeric conversions..
 
@@ -962,25 +1005,32 @@ public:
 
     /** Creates a string representing this floating-point number.
         @param floatValue               the value to convert to a string
-        @param numberOfDecimalPlaces    if this is > 0, it will format the number using that many
-                                        decimal places, and will not use exponent notation. If 0 or
-                                        less, it will use exponent notation if necessary.
+        @param numberOfDecimalPlaces    if this is > 0 the number will be formatted using that many
+                                        decimal places, adding trailing zeros as required. If 0 or
+                                        less the number will be formatted using the C++ standard
+                                        library default format, which uses scientific notation for
+                                        large and small numbers.
+        @param useScientificNotation    if the number should be formatted using scientific notation
         @see getDoubleValue, getIntValue
     */
-    String (float floatValue, int numberOfDecimalPlaces);
+    String (float floatValue, int numberOfDecimalPlaces, bool useScientificNotation = false);
 
     /** Creates a string representing this floating-point number.
         @param doubleValue              the value to convert to a string
         @param numberOfDecimalPlaces    if this is > 0, it will format the number using that many
-                                        decimal places, and will not use exponent notation. If 0 or
-                                        less, it will use exponent notation if necessary.
+                                        decimal places, adding trailing zeros as required, and
+                                        will not use exponent notation. If 0 or less, it will use
+                                        exponent notation if necessary.
+        @param useScientificNotation    if the number should be formatted using scientific notation
         @see getFloatValue, getIntValue
     */
-    String (double doubleValue, int numberOfDecimalPlaces);
+    String (double doubleValue, int numberOfDecimalPlaces, bool useScientificNotation = false);
 
+   #ifndef DOXYGEN
     // Automatically creating a String from a bool opens up lots of nasty type conversion edge cases.
     // If you want a String representation of a bool you can cast the bool to an int first.
     explicit String (bool) = delete;
+   #endif
 
     /** Reads the value of the string as a decimal number (up to 32 bits in size).
 
@@ -999,7 +1049,8 @@ public:
         This will look for a value at the end of the string.
         e.g. for "321 xyz654" it will return 654; for "2 3 4" it'll return 4.
 
-        Negative numbers are not handled, so "xyz-5" returns 5.
+        If the string ends with a hyphen followed by numeric characters, the
+        return value will be negative.
 
         @see getIntValue
     */
@@ -1056,6 +1107,42 @@ public:
     */
     static String toHexString (const void* data, int size, int groupSize = 1);
 
+    /** Returns a string containing a decimal with a set number of significant figures.
+
+        @param number                         the input number
+        @param numberOfSignificantFigures     the number of significant figures to use
+    */
+    template <typename DecimalType>
+    static String toDecimalStringWithSignificantFigures (DecimalType number, int numberOfSignificantFigures)
+    {
+        jassert (numberOfSignificantFigures > 0);
+
+        if (number == 0)
+        {
+            if (numberOfSignificantFigures > 1)
+            {
+                String result ("0.0");
+
+                for (int i = 2; i < numberOfSignificantFigures; ++i)
+                    result += "0";
+
+                return result;
+            }
+
+            return "0";
+        }
+
+        auto numDigitsBeforePoint = (int) std::ceil (std::log10 (number < 0 ? -number : number));
+
+        auto shift = numberOfSignificantFigures - numDigitsBeforePoint;
+        auto factor = std::pow (10.0, shift);
+        auto rounded = std::round (number * factor) / factor;
+
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision (std::max (shift, 0)) << rounded;
+        return ss.str();
+    }
+
     //==============================================================================
     /** Returns the character pointer currently being used to store this string.
 
@@ -1063,7 +1150,7 @@ public:
         that is returned must not be stored anywhere, as it can be deleted whenever the
         string changes.
     */
-    inline CharPointerType getCharPointer() const noexcept      { return text; }
+    CharPointerType getCharPointer() const noexcept             { return text; }
 
     /** Returns a pointer to a UTF-8 version of this string.
 
@@ -1239,15 +1326,11 @@ public:
     int getReferenceCount() const noexcept;
 
     //==============================================================================
-   #if JUCE_ALLOW_STATIC_NULL_VARIABLES
-    /** This was a static empty string object, but is now deprecated as it's too easy to accidentally
-        use it indirectly during a static constructor, leading to hard-to-find order-of-initialisation
-        problems.
-        @deprecated If you need an empty String object, just use String() or {}.
-        The only time you might miss having String::empty available might be if you need to return an
-        empty string from a function by reference, but if you need to do that, it's easy enough to use
-        a function-local static String object and return that, avoiding any order-of-initialisation issues.
-    */
+   #if JUCE_ALLOW_STATIC_NULL_VARIABLES && ! defined (DOXYGEN)
+    [[deprecated ("This was a static empty string object, but is now deprecated as it's too easy to accidentally "
+                 "use it indirectly during a static constructor, leading to hard-to-find order-of-initialisation "
+                 "problems. If you need an empty String object, just use String() or {}. For returning an empty "
+                 "String from a function by reference, use a function-local static String object and return that.")]]
     static const String empty;
    #endif
 
@@ -1264,7 +1347,6 @@ private:
 
     explicit String (const PreallocationBytes&); // This constructor preallocates a certain amount of memory
     size_t getByteOffsetOfEnd() const noexcept;
-    JUCE_DEPRECATED (String (const String&, size_t));
 
     // This private cast operator should prevent strings being accidentally cast
     // to bools (this is possible because the compiler can add an implicit cast
@@ -1280,7 +1362,7 @@ private:
     static String createHex (uint64);
 
     template <typename Type>
-    static String createHex (Type n)  { return createHex (static_cast<typename TypeHelpers::UnsignedTypeWithSize<sizeof (n)>::type> (n)); }
+    static String createHex (Type n)  { return createHex (static_cast<typename TypeHelpers::UnsignedTypeWithSize<(int) sizeof (n)>::type> (n)); }
 };
 
 //==============================================================================
@@ -1303,6 +1385,8 @@ JUCE_API String JUCE_CALLTYPE operator+ (String string1, const String& string2);
 JUCE_API String JUCE_CALLTYPE operator+ (String string1, const char* string2);
 /** Concatenates two strings. */
 JUCE_API String JUCE_CALLTYPE operator+ (String string1, const wchar_t* string2);
+/** Concatenates two strings. */
+JUCE_API String JUCE_CALLTYPE operator+ (String string1, const std::string& string2);
 /** Concatenates two strings. */
 JUCE_API String JUCE_CALLTYPE operator+ (String string1, char characterToAppend);
 /** Concatenates two strings. */
@@ -1330,6 +1414,8 @@ JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, const wchar_t* strin
 JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, const String& string2);
 /** Appends a string to the end of the first one. */
 JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, StringRef string2);
+/** Appends a string to the end of the first one. */
+JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, const std::string& string2);
 
 /** Appends a decimal number to the end of a string. */
 JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, uint8 number);
@@ -1350,9 +1436,11 @@ JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, float number);
 /** Appends a decimal number to the end of a string. */
 JUCE_API String& JUCE_CALLTYPE operator<< (String& string1, double number);
 
+#ifndef DOXYGEN
 // Automatically creating a String from a bool opens up lots of nasty type conversion edge cases.
 // If you want a String representation of a bool you can cast the bool to an int first.
 String& JUCE_CALLTYPE operator<< (String&, bool) = delete;
+#endif
 
 //==============================================================================
 /** Case-sensitive comparison of two strings. */
@@ -1381,15 +1469,6 @@ JUCE_API bool JUCE_CALLTYPE operator!= (const String& string1, CharPointer_UTF16
 /** Case-sensitive comparison of two strings. */
 JUCE_API bool JUCE_CALLTYPE operator!= (const String& string1, CharPointer_UTF32 string2) noexcept;
 
-/** Case-sensitive comparison of two strings. */
-JUCE_API bool JUCE_CALLTYPE operator>  (const String& string1, const String& string2) noexcept;
-/** Case-sensitive comparison of two strings. */
-JUCE_API bool JUCE_CALLTYPE operator<  (const String& string1, const String& string2) noexcept;
-/** Case-sensitive comparison of two strings. */
-JUCE_API bool JUCE_CALLTYPE operator>= (const String& string1, const String& string2) noexcept;
-/** Case-sensitive comparison of two strings. */
-JUCE_API bool JUCE_CALLTYPE operator<= (const String& string1, const String& string2) noexcept;
-
 //==============================================================================
 /** This operator allows you to write a juce String directly to std output streams.
     This is handy for writing strings to std::cout, std::cerr, etc.
@@ -1417,7 +1496,7 @@ JUCE_API OutputStream& JUCE_CALLTYPE operator<< (OutputStream& stream, StringRef
 
 } // namespace juce
 
-#if JUCE_COMPILER_SUPPORTS_INITIALIZER_LISTS && ! DOXYGEN // just used to avoid compiling this under compilers that lack libc++
+#ifndef DOXYGEN
 namespace std
 {
     template <> struct hash<juce::String>

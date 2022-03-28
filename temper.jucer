@@ -8,10 +8,10 @@
               pluginCode="Tmpr" pluginChannelConfigs="" pluginIsSynth="0" pluginWantsMidiIn="0"
               pluginProducesMidiOut="0" pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0"
               pluginAUExportPrefix="TemperAU" pluginRTASCategory="" aaxIdentifier="com.creativeintent.temper"
-              pluginAAXCategory="AAX_ePlugInCategory_Dynamics" jucerVersion="5.3.0"
-              companyName="Creative Intent" companyWebsite="http://www.creativeintent.co"
+              pluginAAXCategory="2" companyName="Creative Intent" companyWebsite="http://www.creativeintent.co"
               displaySplashScreen="0" reportAppUsage="0" splashScreenColour="Dark"
-              buildStandalone="1" enableIAA="0">
+              buildStandalone="1" enableIAA="0" pluginFormats="buildVST,buildVST3,buildAU,buildStandalone"
+              jucerFormatVersion="1" cppLanguageStandard="20">
   <MAINGROUP id="NQTBxz" name="Temper">
     <GROUP id="{B07EB401-33C5-FD72-4C14-C86C74D8477E}" name="Assets">
       <FILE id="qQ2cig" name="Background.png" compile="0" resource="1" file="Assets/Background.png"/>
@@ -63,21 +63,24 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" vst3Folder="VST3_SDK">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Temper"
-                       osxArchitecture="64BitUniversal" headerPath="../../Include" xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
+                       osxArchitecture="Native" headerPath="../../Include" xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        xcodeVst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" xcodeAudioUnitBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        osxCompatibility="10.9 SDK" vstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
-                       vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"/>
+                       vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(HOME)/Library/Audio/Plug-Ins/Components/"
+                       macOSDeploymentTarget="10.9"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Temper"
                        osxArchitecture="64BitUniversal" headerPath="../../Include" xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        xcodeVst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" xcodeAudioUnitBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        osxCompatibility="10.9 SDK" vstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
-                       vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"/>
+                       vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
+                       macOSDeploymentTarget="10.9"/>
         <CONFIGURATION name="Demo" isDebug="0" optimisation="3" targetName="Temper (Demo)"
                        osxArchitecture="64BitUniversal" headerPath="../../Include" defines="TEMPER_DEMO_BUILD=1"
                        xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" xcodeVst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        xcodeAudioUnitBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        osxCompatibility="10.9 SDK" vstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
-                       vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"/>
+                       vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
+                       macOSDeploymentTarget="10.9"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../JUCE/modules"/>

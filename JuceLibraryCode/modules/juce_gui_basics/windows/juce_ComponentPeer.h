@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -71,9 +70,57 @@ public:
                                                         performAnyPendingRepaintsNow() method is called. */
         windowIgnoresKeyPresses     = (1 << 10),   /**< Tells the window not to catch any keypresses. This can
                                                         be used for things like plugin windows, to stop them interfering
-                                                        with the host's shortcut keys */
-        windowIsSemiTransparent     = (1 << 31)    /**< Not intended for public use - makes a window transparent. */
+                                                        with the host's shortcut keys. This will prevent the window from
+                                                        gaining keyboard focus. */
+        windowIsSemiTransparent     = (1 << 30)    /**< Not intended for public use - makes a window transparent. */
 
+    };
+
+    /** Represents the window borders around a window component.
+
+        You must use operator bool() to evaluate the validity of the object before accessing
+        its value.
+
+        Returned by getFrameSizeIfPresent(). A missing value may be returned on Linux for a
+        short time after window creation.
+    */
+    class JUCE_API  OptionalBorderSize final
+    {
+    public:
+        /** Default constructor. Creates an invalid object. */
+        OptionalBorderSize()                               : valid (false)                               {}
+
+        /** Constructor. Creates a valid object containing the provided BorderSize<int>. */
+        explicit OptionalBorderSize (BorderSize<int> size) : valid (true), borderSize (std::move (size)) {}
+
+        /** Returns true if a valid value has been provided. */
+        explicit operator bool() const noexcept { return valid; }
+
+        /** Returns a reference to the value.
+
+            You must not call this function on an invalid object. Use operator bool() to
+            determine validity.
+        */
+        const auto& operator*() const noexcept
+        {
+            jassert (valid);
+            return borderSize;
+        }
+
+        /** Returns a pointer to the value.
+
+            You must not call this function on an invalid object. Use operator bool() to
+            determine validity.
+        */
+        const auto* operator->() const noexcept
+        {
+            jassert (valid);
+            return &borderSize;
+        }
+
+    private:
+        bool valid;
+        BorderSize<int> borderSize;
     };
 
     //==============================================================================
@@ -168,10 +215,16 @@ public:
     /** Converts a screen area to a position relative to the top-left of this component. */
     virtual Rectangle<int> globalToLocal (const Rectangle<int>& screenPosition);
 
+    /** Converts a rectangle relative to the top-left of this component to screen coordinates. */
+    Rectangle<float> localToGlobal (const Rectangle<float>& relativePosition);
+
+    /** Converts a screen area to a position relative to the top-left of this component. */
+    Rectangle<float> globalToLocal (const Rectangle<float>& screenPosition);
+
     /** Returns the area in peer coordinates that is covered by the given sub-comp (which
         may be at any depth)
     */
-    Rectangle<int> getAreaCoveredBy (Component& subComponent) const;
+    Rectangle<int> getAreaCoveredBy (const Component& subComponent) const;
 
     /** Minimises the window. */
     virtual void setMinimised (bool shouldBeMinimised) = 0;
@@ -214,9 +267,24 @@ public:
     virtual bool contains (Point<int> localPos, bool trueIfInAChildWindow) const = 0;
 
     /** Returns the size of the window frame that's around this window.
+
+        Depending on the platform the border size may be invalid for a short transient
+        after creating a new window. Hence the returned value must be checked using
+        operator bool() and the contained value can be accessed using operator*() only
+        if it is present.
+
         Whether or not the window has a normal window frame depends on the flags
         that were set when the window was created by Component::addToDesktop()
     */
+    virtual OptionalBorderSize getFrameSizeIfPresent() const = 0;
+
+    /** Returns the size of the window frame that's around this window.
+        Whether or not the window has a normal window frame depends on the flags
+        that were set when the window was created by Component::addToDesktop()
+    */
+   #if JUCE_LINUX || JUCE_BSD
+    [[deprecated ("Use getFrameSizeIfPresent instead.")]]
+   #endif
     virtual BorderSize<int> getFrameSize() const = 0;
 
     /** This is called when the window's bounds change.
@@ -241,8 +309,8 @@ public:
     */
     virtual bool setAlwaysOnTop (bool alwaysOnTop) = 0;
 
-    /** Brings the window to the top, optionally also giving it focus. */
-    virtual void toFront (bool makeActive) = 0;
+    /** Brings the window to the top, optionally also giving it keyboard focus. */
+    virtual void toFront (bool takeKeyboardFocus) = 0;
 
     /** Moves the window to be just behind another one. */
     virtual void toBehind (ComponentPeer* other) = 0;
@@ -364,21 +432,106 @@ public:
     virtual int getCurrentRenderingEngine() const;
     virtual void setCurrentRenderingEngine (int index);
 
+    //==============================================================================
+    /** On desktop platforms this method will check all the mouse and key states and return
+        a ModifierKeys object representing them.
+
+        This isn't recommended and is only needed in special circumstances for up-to-date
+        modifier information at times when the app's event loop isn't running normally.
+
+        Another reason to avoid this method is that it's not stateless and calling it may
+        update the ModifierKeys::currentModifiers object, which could cause subtle changes
+        in the behaviour of some components.
+    */
+    static ModifierKeys getCurrentModifiersRealtime() noexcept;
+
+    //==============================================================================
+    /**  Used to receive callbacks when the OS scale factor of this ComponentPeer changes.
+
+         This is used internally by some native JUCE windows on Windows and Linux and you
+         shouldn't need to worry about it in your own code unless you are dealing directly
+         with native windows.
+    */
+    struct JUCE_API  ScaleFactorListener
+    {
+        /** Destructor. */
+        virtual ~ScaleFactorListener() = default;
+
+        /** Called when the scale factor changes. */
+        virtual void nativeScaleFactorChanged (double newScaleFactor) = 0;
+    };
+
+    /** Adds a scale factor listener. */
+    void addScaleFactorListener (ScaleFactorListener* listenerToAdd)          { scaleFactorListeners.add (listenerToAdd); }
+
+    /** Removes a scale factor listener. */
+    void removeScaleFactorListener (ScaleFactorListener* listenerToRemove)    { scaleFactorListeners.remove (listenerToRemove);  }
+
+    //==============================================================================
+    /** On Windows and Linux this will return the OS scaling factor currently being applied
+        to the native window. This is used to convert between physical and logical pixels
+        at the OS API level and you shouldn't need to use it in your own code unless you
+        are dealing directly with the native window.
+    */
+    virtual double getPlatformScaleFactor() const noexcept    { return 1.0; }
+
+    /** On platforms that support it, this will update the window's titlebar in some
+        way to indicate that the window's document needs saving.
+    */
+    virtual void setHasChangedSinceSaved (bool) {}
+
+
+    enum class Style
+    {
+        /** A style that matches the system-wide style. */
+        automatic,
+
+        /** A light style, which will probably use dark text on a light background. */
+        light,
+
+        /** A dark style, which will probably use light text on a dark background. */
+        dark
+    };
+
+    /** On operating systems that support it, this will update the style of this
+        peer as requested.
+
+        Note that this will not update the theme system-wide. This will only
+        update UI elements so that they display appropriately for this peer!
+    */
+    void setAppStyle (Style s)
+    {
+        if (std::exchange (style, s) != style)
+            appStyleChanged();
+    }
+
+    /** Returns the style requested for this app. */
+    Style getAppStyle() const { return style; }
+
 protected:
     //==============================================================================
+    static void forceDisplayUpdate();
+
     Component& component;
     const int styleFlags;
     Rectangle<int> lastNonFullscreenBounds;
     ComponentBoundsConstrainer* constrainer = nullptr;
+    static std::function<ModifierKeys()> getNativeRealtimeModifiers;
+    ListenerList<ScaleFactorListener> scaleFactorListeners;
+    Style style = Style::automatic;
 
 private:
     //==============================================================================
+    virtual void appStyleChanged() {}
+
+    Component* getTargetForKeyPress();
+
     WeakReference<Component> lastFocusedComponent, dragAndDropTargetComponent;
     Component* lastDragAndDropCompUnderMouse = nullptr;
     const uint32 uniqueID;
     bool isWindowMinimised = false;
-    Component* getTargetForKeyPress();
 
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ComponentPeer)
 };
 

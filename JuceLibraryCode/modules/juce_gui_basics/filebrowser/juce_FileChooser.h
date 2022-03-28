@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -31,22 +30,20 @@ namespace juce
 /**
     Creates a dialog box to choose a file or directory to load or save.
 
-    To use a FileChooser:
-    - create one (as a local stack variable is the neatest way)
-    - call one of its browseFor.. methods
-    - if this returns true, the user has selected a file, so you can retrieve it
-      with the getResult() method.
+    @code
+    std::unique_ptr<FileChooser> myChooser;
 
-    e.g. @code
     void loadMooseFile()
     {
-        FileChooser myChooser ("Please select the moose you want to load...",
-                               File::getSpecialLocation (File::userHomeDirectory),
-                               "*.moose");
+        myChooser = std::make_unique<FileChooser> ("Please select the moose you want to load...",
+                                                   File::getSpecialLocation (File::userHomeDirectory),
+                                                   "*.moose");
 
-        if (myChooser.browseForFileToOpen())
+        auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories;
+
+        myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)
         {
-            File mooseFile (myChooser.getResult());
+            File mooseFile (chooser.getResult());
 
             loadMoose (mooseFile);
         }
@@ -75,7 +72,7 @@ public:
                                               initialFileOrDirectory will be used as the initial
                                               directory of the native file chooser.
 
-                                              Note: on iOS when saving a file, a user will not
+                                              Note: On iOS when saving a file, a user will not
                                               be able to change a file name, so it may be a good
                                               idea to include at least a valid file name in
                                               initialFileOrDirectory. When no filename is found,
@@ -107,6 +104,11 @@ public:
                                               selection of files inside packages when
                                               invoked on OS X and when using native dialog
                                               boxes.
+        @param parentComponent                An optional component which should be the parent
+                                              for the file chooser. If this is a nullptr then the
+                                              FileChooser will be a top-level window. AUv3s on iOS
+                                              must specify this parameter as opening a top-level window
+                                              in an AUv3 is forbidden due to sandbox restrictions.
 
         @see browseForFileToOpen, browseForFileToSave, browseForDirectory
     */
@@ -114,12 +116,14 @@ public:
                  const File& initialFileOrDirectory = File(),
                  const String& filePatternsAllowed = String(),
                  bool useOSNativeDialogBox = true,
-                 bool treatFilePackagesAsDirectories = false);
+                 bool treatFilePackagesAsDirectories = false,
+                 Component* parentComponent = nullptr);
 
     /** Destructor. */
     ~FileChooser();
 
     //==============================================================================
+   #if JUCE_MODAL_LOOPS_PERMITTED
     /** Shows a dialog box to choose a file to open.
 
         This will display the dialog box modally, using an "open file" mode, so that
@@ -186,6 +190,7 @@ public:
         @see FileBrowserComponent::FileChooserFlags
     */
     bool showDialog (int flags, FilePreviewComponent* previewComponent);
+   #endif
 
     /** Use this method to launch the file browser window asynchronously.
 
@@ -193,11 +198,8 @@ public:
         structure and will launch it modally, returning immediately.
 
         You must specify a callback which is called when the file browser is
-        canceled or a file is selected. To abort the file selection, simply
+        cancelled or a file is selected. To abort the file selection, simply
         delete the FileChooser object.
-
-        You can use the ModalCallbackFunction::create method to wrap a lambda
-        into a modal Callback object.
 
         You must ensure that the lifetime of the callback object is longer than
         the lifetime of the file-chooser.
@@ -216,7 +218,7 @@ public:
         if the user pressed 'ok' rather than cancelling).
 
         On mobile platforms, the file browser may return a URL instead of a local file.
-        Therefore, om mobile platforms, you should call getURLResult() instead.
+        Therefore, on mobile platforms, you should call getURLResult() instead.
 
         If you're using a multiple-file select, then use the getResults() method instead,
         to obtain the list of all files chosen.
@@ -229,7 +231,7 @@ public:
         browse method.
 
         On mobile platforms, the file browser may return a URL instead of a local file.
-        Therefore, om mobile platforms, you should call getURLResults() instead.
+        Therefore, on mobile platforms, you should call getURLResults() instead.
 
         This array may be empty if no files were chosen, or can contain multiple entries
         if multiple files were chosen.
@@ -245,7 +247,7 @@ public:
         may return a URL to a remote document. If a local file is chosen then you can
         convert this file to a JUCE File class via the URL::getLocalFile method.
 
-        Note: on iOS you must use the returned URL object directly (you are also
+        Note: On iOS you must use the returned URL object directly (you are also
         allowed to copy- or move-construct another URL from the returned URL), rather
         than just storing the path as a String and then creating a new URL from that
         String. This is because the returned URL contains internally a security
@@ -268,7 +270,7 @@ public:
         This array may be empty if no files were chosen, or can contain multiple entries
         if multiple files were chosen.
 
-        Note: on iOS you must use the returned URL object directly (you are also
+        Note: On iOS you must use the returned URL object directly (you are also
         allowed to copy- or move-construct another URL from the returned URL), rather
         than just storing the path as a String and then creating a new URL from that
         String. This is because the returned URL contains internally a security
@@ -287,7 +289,7 @@ public:
         Note: On iOS this will only return true if you have iCloud permissions
         and code-signing enabled in the Projucer and have added iCloud containers
         to your app in Apple's online developer portal. Additionally, the user must
-        have installed the iCloud app on their device and used the app at leat once.
+        have installed the iCloud app on their device and used the app at least once.
     */
     static bool isPlatformDialogAvailable();
 
@@ -300,6 +302,7 @@ private:
     //==============================================================================
     String title, filters;
     File startingFile;
+    Component* parent;
     Array<URL> results;
     const bool useNativeDialogBox;
     const bool treatFilePackagesAsDirs;
@@ -311,18 +314,17 @@ private:
     //==============================================================================
     struct Pimpl
     {
-        virtual ~Pimpl() {}
+        virtual ~Pimpl() = default;
 
         virtual void launch()     = 0;
         virtual void runModally() = 0;
     };
 
-    ScopedPointer<Pimpl> pimpl;
+    std::shared_ptr<Pimpl> pimpl;
 
     //==============================================================================
-    Pimpl* createPimpl (int, FilePreviewComponent*);
-    static Pimpl* showPlatformDialog (FileChooser&, int,
-                                      FilePreviewComponent*);
+    std::shared_ptr<Pimpl> createPimpl (int, FilePreviewComponent*);
+    static std::shared_ptr<Pimpl> showPlatformDialog (FileChooser&, int, FilePreviewComponent*);
 
     class NonNative;
     friend class NonNative;

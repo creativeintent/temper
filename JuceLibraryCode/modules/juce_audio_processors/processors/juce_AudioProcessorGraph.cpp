@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -26,6 +25,14 @@
 
 namespace juce
 {
+
+static void updateOnMessageThread (AsyncUpdater& updater)
+{
+    if (MessageManager::getInstance()->isThisTheMessageThread())
+        updater.handleAsyncUpdate();
+    else
+        updater.triggerAsyncUpdate();
+}
 
 template <typename FloatType>
 struct GraphRenderSequence
@@ -47,18 +54,21 @@ struct GraphRenderSequence
 
         if (numSamples > maxSamples)
         {
-            // being asked to render more samples than our buffers have, so slice things up...
-            tempMIDI.clear();
-            tempMIDI.addEvents (midiMessages, maxSamples, numSamples, -maxSamples);
-
+            // Being asked to render more samples than our buffers have, so divide the buffer into chunks
+            int chunkStartSample = 0;
+            while (chunkStartSample < numSamples)
             {
-                AudioBuffer<FloatType> startAudio (buffer.getArrayOfWritePointers(), buffer.getNumChannels(), maxSamples);
-                midiMessages.clear (maxSamples, numSamples);
-                perform (startAudio, midiMessages, audioPlayHead);
+                auto chunkSize = jmin (maxSamples, numSamples - chunkStartSample);
+
+                AudioBuffer<FloatType> audioChunk (buffer.getArrayOfWritePointers(), buffer.getNumChannels(), chunkStartSample, chunkSize);
+                midiChunk.clear();
+                midiChunk.addEvents (midiMessages, chunkStartSample, chunkSize, -chunkStartSample);
+
+                perform (audioChunk, midiChunk, audioPlayHead);
+
+                chunkStartSample += maxSamples;
             }
 
-            AudioBuffer<FloatType> endAudio (buffer.getArrayOfWritePointers(), buffer.getNumChannels(), maxSamples, numSamples - maxSamples);
-            perform (endAudio, tempMIDI, audioPlayHead);
             return;
         }
 
@@ -145,7 +155,7 @@ struct GraphRenderSequence
 
         const int defaultMIDIBufferSize = 512;
 
-        tempMIDI.ensureSize (defaultMIDIBufferSize);
+        midiChunk.ensureSize (defaultMIDIBufferSize);
 
         for (auto&& m : midiBuffers)
             m.ensureSize (defaultMIDIBufferSize);
@@ -170,7 +180,7 @@ struct GraphRenderSequence
     MidiBuffer currentMidiOutputBuffer;
 
     Array<MidiBuffer> midiBuffers;
-    MidiBuffer tempMIDI;
+    MidiBuffer midiChunk;
 
 private:
     //==============================================================================
@@ -186,18 +196,19 @@ private:
     OwnedArray<RenderingOp> renderOps;
 
     //==============================================================================
-    template <typename LambdaType>
+    template <typename LambdaType,
+              std::enable_if_t<std::is_rvalue_reference<LambdaType&&>::value, int> = 0>
     void createOp (LambdaType&& fn)
     {
         struct LambdaOp  : public RenderingOp
         {
-            LambdaOp (LambdaType&& f) : function (static_cast<LambdaType&&> (f)) {}
+            LambdaOp (LambdaType&& f) : function (std::forward<LambdaType> (f)) {}
             void perform (const Context& c) override    { function (c); }
 
             LambdaType function;
         };
 
-        renderOps.add (new LambdaOp (static_cast<LambdaType&&> (fn)));
+        renderOps.add (new LambdaOp (std::forward<LambdaType> (fn)));
     }
 
     //==============================================================================
@@ -270,12 +281,20 @@ private:
             if (processor.isUsingDoublePrecision())
             {
                 tempBufferDouble.makeCopyOf (buffer, true);
-                processor.processBlock (tempBufferDouble, midiMessages);
+
+                if (node->isBypassed())
+                    node->processBlockBypassed (tempBufferDouble, midiMessages);
+                else
+                    node->processBlock (tempBufferDouble, midiMessages);
+
                 buffer.makeCopyOf (tempBufferDouble, true);
             }
             else
             {
-                processor.processBlock (buffer, midiMessages);
+                if (node->isBypassed())
+                    node->processBlockBypassed (buffer, midiMessages);
+                else
+                    node->processBlock (buffer, midiMessages);
             }
         }
 
@@ -283,12 +302,20 @@ private:
         {
             if (processor.isUsingDoublePrecision())
             {
-                processor.processBlock (buffer, midiMessages);
+                if (node->isBypassed())
+                    node->processBlockBypassed (buffer, midiMessages);
+                else
+                    node->processBlock (buffer, midiMessages);
             }
             else
             {
                 tempBufferFloat.makeCopyOf (buffer, true);
-                processor.processBlock (tempBufferFloat, midiMessages);
+
+                if (node->isBypassed())
+                    node->processBlockBypassed (tempBufferFloat, midiMessages);
+                else
+                    node->processBlock (tempBufferFloat, midiMessages);
+
                 buffer.makeCopyOf (tempBufferFloat, true);
             }
         }
@@ -311,10 +338,8 @@ template <typename RenderSequence>
 struct RenderSequenceBuilder
 {
     RenderSequenceBuilder (AudioProcessorGraph& g, RenderSequence& s)
-        : graph (g), sequence (s)
+        : graph (g), sequence (s), orderedNodes (createOrderedNodeList (graph))
     {
-        createOrderedNodeList();
-
         audioBuffers.add (AssignedBuffer::createReadOnlyEmpty()); // first buffer is read-only zeros
         midiBuffers .add (AssignedBuffer::createReadOnlyEmpty());
 
@@ -332,34 +357,32 @@ struct RenderSequenceBuilder
     }
 
     //==============================================================================
-    typedef AudioProcessorGraph::NodeID NodeID;
+    using Node = AudioProcessorGraph::Node;
+    using NodeID = AudioProcessorGraph::NodeID;
 
     AudioProcessorGraph& graph;
     RenderSequence& sequence;
 
-    Array<AudioProcessorGraph::Node*> orderedNodes;
+    const Array<Node*> orderedNodes;
 
     struct AssignedBuffer
     {
         AudioProcessorGraph::NodeAndChannel channel;
 
-        static AssignedBuffer createReadOnlyEmpty() noexcept    { return { { (NodeID) zeroNodeID, 0 } }; }
-        static AssignedBuffer createFree() noexcept             { return { { (NodeID) freeNodeID, 0 } }; }
+        static AssignedBuffer createReadOnlyEmpty() noexcept    { return { { zeroNodeID(), 0 } }; }
+        static AssignedBuffer createFree() noexcept             { return { { freeNodeID(), 0 } }; }
 
-        bool isReadOnlyEmpty() const noexcept                   { return channel.nodeID == (NodeID) zeroNodeID; }
-        bool isFree() const noexcept                            { return channel.nodeID == (NodeID) freeNodeID; }
+        bool isReadOnlyEmpty() const noexcept                   { return channel.nodeID == zeroNodeID(); }
+        bool isFree() const noexcept                            { return channel.nodeID == freeNodeID(); }
         bool isAssigned() const noexcept                        { return ! (isReadOnlyEmpty() || isFree()); }
 
-        void setFree() noexcept                                 { channel = { (NodeID) freeNodeID, 0 }; }
-        void setAssignedToNonExistentNode() noexcept            { channel = { (NodeID) anonNodeID, 0 }; }
+        void setFree() noexcept                                 { channel = { freeNodeID(), 0 }; }
+        void setAssignedToNonExistentNode() noexcept            { channel = { anonNodeID(), 0 }; }
 
     private:
-        enum
-        {
-            anonNodeID = 0x7ffffffd,
-            zeroNodeID = 0x7ffffffe,
-            freeNodeID = 0x7fffffff
-        };
+        static NodeID anonNodeID() { return NodeID (0x7ffffffd); }
+        static NodeID zeroNodeID() { return NodeID (0x7ffffffe); }
+        static NodeID freeNodeID() { return NodeID (0x7fffffff); }
     };
 
     Array<AssignedBuffer> audioBuffers, midiBuffers;
@@ -372,12 +395,12 @@ struct RenderSequenceBuilder
         int delay;
     };
 
-    HashMap<NodeID, int> delays;
+    HashMap<uint32, int> delays;
     int totalLatency = 0;
 
     int getNodeDelay (NodeID nodeID) const noexcept
     {
-        return delays[nodeID];
+        return delays[nodeID.uid];
     }
 
     int getInputLatencyForNode (NodeID nodeID) const
@@ -392,21 +415,58 @@ struct RenderSequenceBuilder
     }
 
     //==============================================================================
-    void createOrderedNodeList()
+    static void getAllParentsOfNode (const Node* child,
+                                     std::unordered_set<Node*>& parents,
+                                     const std::unordered_map<Node*, std::unordered_set<Node*>>& otherParents)
     {
-        for (auto* node : graph.getNodes())
+        for (auto&& i : child->inputs)
         {
-            int j = 0;
+            auto* parentNode = i.otherNode;
 
-            for (; j < orderedNodes.size(); ++j)
-                if (graph.isAnInputTo (*node, *orderedNodes.getUnchecked(j)))
-                  break;
+            if (parentNode == child)
+                continue;
 
-            orderedNodes.insert (j, node);
+            if (parents.insert (parentNode).second)
+            {
+                auto parentParents = otherParents.find (parentNode);
+
+                if (parentParents != otherParents.end())
+                {
+                    parents.insert (parentParents->second.begin(), parentParents->second.end());
+                    continue;
+                }
+
+                getAllParentsOfNode (i.otherNode, parents, otherParents);
+            }
         }
     }
 
-    int findBufferForInputAudioChannel (AudioProcessorGraph::Node& node, const int inputChan,
+    static auto createOrderedNodeList (const AudioProcessorGraph& graph)
+    {
+        Array<Node*> result;
+
+        std::unordered_map<Node*, std::unordered_set<Node*>> nodeParents;
+
+        for (auto* node : graph.getNodes())
+        {
+            int insertionIndex = 0;
+
+            for (; insertionIndex < result.size(); ++insertionIndex)
+            {
+                auto& parents = nodeParents[result.getUnchecked (insertionIndex)];
+
+                if (parents.find (node) != parents.end())
+                    break;
+            }
+
+            result.insert (insertionIndex, node);
+            getAllParentsOfNode (node, nodeParents[node], nodeParents);
+        }
+
+        return result;
+    }
+
+    int findBufferForInputAudioChannel (Node& node, const int inputChan,
                                         const int ourRenderingIndex, const int maxLatency)
     {
         auto& processor = *node.getProcessor();
@@ -538,7 +598,7 @@ struct RenderSequenceBuilder
         return bufIndex;
     }
 
-    int findBufferForInputMidiChannel (AudioProcessorGraph::Node& node, int ourRenderingIndex)
+    int findBufferForInputMidiChannel (Node& node, int ourRenderingIndex)
     {
         auto& processor = *node.getProcessor();
         auto sources = getSourcesForChannel (node, AudioProcessorGraph::midiChannelIndex);
@@ -629,7 +689,7 @@ struct RenderSequenceBuilder
         return midiBufferToUse;
     }
 
-    void createRenderingOpsForNode (AudioProcessorGraph::Node& node, const int ourRenderingIndex)
+    void createRenderingOpsForNode (Node& node, const int ourRenderingIndex)
     {
         auto& processor = *node.getProcessor();
         auto numIns  = processor.getTotalNumInputChannels();
@@ -665,16 +725,16 @@ struct RenderSequenceBuilder
         if (processor.producesMidi())
             midiBuffers.getReference (midiBufferToUse).channel = { node.nodeID, AudioProcessorGraph::midiChannelIndex };
 
-        delays.set (node.nodeID, maxLatency + processor.getLatencySamples());
+        delays.set (node.nodeID.uid, maxLatency + processor.getLatencySamples());
 
         if (numOuts == 0)
             totalLatency = maxLatency;
 
-        sequence.addProcessOp (&node, audioChannelsToUse, totalChans, midiBufferToUse);
+        sequence.addProcessOp (node, audioChannelsToUse, totalChans, midiBufferToUse);
     }
 
     //==============================================================================
-    Array<AudioProcessorGraph::NodeAndChannel> getSourcesForChannel (AudioProcessorGraph::Node& node, int inputChannelIndex)
+    Array<AudioProcessorGraph::NodeAndChannel> getSourcesForChannel (Node& node, int inputChannelIndex)
     {
         Array<AudioProcessorGraph::NodeAndChannel> results;
         AudioProcessorGraph::NodeAndChannel nc { node.nodeID, inputChannelIndex };
@@ -689,7 +749,7 @@ struct RenderSequenceBuilder
     static int getFreeBuffer (Array<AssignedBuffer>& buffers)
     {
         for (int i = 1; i < buffers.size(); ++i)
-            if (buffers.getReference(i).isFree())
+            if (buffers.getReference (i).isFree())
                 return i;
 
         buffers.add (AssignedBuffer::createFree());
@@ -781,8 +841,8 @@ bool AudioProcessorGraph::Connection::operator< (const Connection& other) const 
 }
 
 //==============================================================================
-AudioProcessorGraph::Node::Node (NodeID n, AudioProcessor* p) noexcept
-    : nodeID (n), processor (p)
+AudioProcessorGraph::Node::Node (NodeID n, std::unique_ptr<AudioProcessor> p) noexcept
+    : nodeID (n), processor (std::move (p))
 {
     jassert (processor != nullptr);
 }
@@ -790,9 +850,10 @@ AudioProcessorGraph::Node::Node (NodeID n, AudioProcessor* p) noexcept
 void AudioProcessorGraph::Node::prepare (double newSampleRate, int newBlockSize,
                                          AudioProcessorGraph* graph, ProcessingPrecision precision)
 {
+    const ScopedLock lock (processorLock);
+
     if (! isPrepared)
     {
-        isPrepared = true;
         setParentGraph (graph);
 
         // try to align the precision of the processor and the graph
@@ -801,11 +862,17 @@ void AudioProcessorGraph::Node::prepare (double newSampleRate, int newBlockSize,
 
         processor->setRateAndBufferSizeDetails (newSampleRate, newBlockSize);
         processor->prepareToPlay (newSampleRate, newBlockSize);
+
+        // This may be checked from other threads that haven't taken the processorLock,
+        // so we need to leave it until the processor has been completely prepared
+        isPrepared = true;
     }
 }
 
 void AudioProcessorGraph::Node::unprepare()
 {
+    const ScopedLock lock (processorLock);
+
     if (isPrepared)
     {
         isPrepared = false;
@@ -815,6 +882,8 @@ void AudioProcessorGraph::Node::unprepare()
 
 void AudioProcessorGraph::Node::setParentGraph (AudioProcessorGraph* const graph) const
 {
+    const ScopedLock lock (processorLock);
+
     if (auto* ioProc = dynamic_cast<AudioProcessorGraph::AudioGraphIOProcessor*> (processor.get()))
         ioProc->setParentGraph (graph);
 }
@@ -824,6 +893,29 @@ bool AudioProcessorGraph::Node::Connection::operator== (const Connection& other)
     return otherNode == other.otherNode
         && thisChannel == other.thisChannel
         && otherChannel == other.otherChannel;
+}
+
+//==============================================================================
+bool AudioProcessorGraph::Node::isBypassed() const noexcept
+{
+    if (processor != nullptr)
+    {
+        if (auto* bypassParam = processor->getBypassParameter())
+            return (bypassParam->getValue() != 0.0f);
+    }
+
+    return bypassed;
+}
+
+void AudioProcessorGraph::Node::setBypassed (bool shouldBeBypassed) noexcept
+{
+    if (processor != nullptr)
+    {
+        if (auto* bypassParam = processor->getBypassParameter())
+            bypassParam->setValueNotifyingHost (shouldBeBypassed ? 1.0f : 0.0f);
+    }
+
+    bypassed = shouldBeBypassed;
 }
 
 //==============================================================================
@@ -837,6 +929,7 @@ AudioProcessorGraph::AudioProcessorGraph()
 
 AudioProcessorGraph::~AudioProcessorGraph()
 {
+    cancelPendingUpdate();
     clearRenderingSequence();
     clear();
 }
@@ -851,12 +944,14 @@ void AudioProcessorGraph::topologyChanged()
 {
     sendChangeMessage();
 
-    if (isPrepared.get() != 0)
-        triggerAsyncUpdate();
+    if (isPrepared)
+        updateOnMessageThread (*this);
 }
 
 void AudioProcessorGraph::clear()
 {
+    const ScopedLock sl (getCallbackLock());
+
     if (nodes.isEmpty())
         return;
 
@@ -873,61 +968,68 @@ AudioProcessorGraph::Node* AudioProcessorGraph::getNodeForId (NodeID nodeID) con
     return {};
 }
 
-AudioProcessorGraph::Node::Ptr AudioProcessorGraph::addNode (AudioProcessor* newProcessor, NodeID nodeID)
+AudioProcessorGraph::Node::Ptr AudioProcessorGraph::addNode (std::unique_ptr<AudioProcessor> newProcessor, NodeID nodeID)
 {
-    if (newProcessor == nullptr || newProcessor == this)
+    if (newProcessor == nullptr || newProcessor.get() == this)
     {
         jassertfalse;
         return {};
     }
 
-    if (nodeID == 0)
-        nodeID = ++lastNodeID;
+    if (nodeID == NodeID())
+        nodeID.uid = ++(lastNodeID.uid);
 
     for (auto* n : nodes)
     {
-        if (n->getProcessor() == newProcessor || n->nodeID == nodeID)
+        if (n->getProcessor() == newProcessor.get() || n->nodeID == nodeID)
         {
             jassertfalse; // Cannot add two copies of the same processor, or duplicate node IDs!
             return {};
         }
     }
 
-    if (nodeID > lastNodeID)
+    if (lastNodeID < nodeID)
         lastNodeID = nodeID;
 
     newProcessor->setPlayHead (getPlayHead());
 
-    Node::Ptr n (new Node (nodeID, newProcessor));
-    nodes.add (n);
+    Node::Ptr n (new Node (nodeID, std::move (newProcessor)));
+
+    {
+        const ScopedLock sl (getCallbackLock());
+        nodes.add (n.get());
+    }
+
     n->setParentGraph (this);
     topologyChanged();
     return n;
 }
 
-bool AudioProcessorGraph::removeNode (NodeID nodeId)
+AudioProcessorGraph::Node::Ptr AudioProcessorGraph::removeNode (NodeID nodeId)
 {
+    const ScopedLock sl (getCallbackLock());
+
     for (int i = nodes.size(); --i >= 0;)
     {
-        if (nodes.getUnchecked(i)->nodeID == nodeId)
+        if (nodes.getUnchecked (i)->nodeID == nodeId)
         {
             disconnectNode (nodeId);
-            nodes.remove (i);
+            auto node = nodes.removeAndReturn (i);
             topologyChanged();
-            return true;
+            return node;
         }
     }
 
-    return false;
+    return {};
 }
 
-bool AudioProcessorGraph::removeNode (Node* node)
+AudioProcessorGraph::Node::Ptr AudioProcessorGraph::removeNode (Node* node)
 {
     if (node != nullptr)
         return removeNode (node->nodeID);
 
     jassertfalse;
-    return false;
+    return {};
 }
 
 //==============================================================================
@@ -1005,7 +1107,6 @@ bool AudioProcessorGraph::isAnInputTo (Node& src, Node& dst, int recursionCheck)
 
     return false;
 }
-
 
 bool AudioProcessorGraph::canConnect (Node* source, int sourceChannel, Node* dest, int destChannel) const noexcept
 {
@@ -1142,8 +1243,8 @@ bool AudioProcessorGraph::removeIllegalConnections()
 //==============================================================================
 void AudioProcessorGraph::clearRenderingSequence()
 {
-    ScopedPointer<RenderSequenceFloat> oldSequenceF;
-    ScopedPointer<RenderSequenceDouble> oldSequenceD;
+    std::unique_ptr<RenderSequenceFloat> oldSequenceF;
+    std::unique_ptr<RenderSequenceDouble> oldSequenceD;
 
     {
         const ScopedLock sl (getCallbackLock());
@@ -1163,54 +1264,65 @@ bool AudioProcessorGraph::anyNodesNeedPreparing() const noexcept
 
 void AudioProcessorGraph::buildRenderingSequence()
 {
-    ScopedPointer<RenderSequenceFloat>  newSequenceF (new RenderSequenceFloat());
-    ScopedPointer<RenderSequenceDouble> newSequenceD (new RenderSequenceDouble());
+    auto newSequenceF = std::make_unique<RenderSequenceFloat>();
+    auto newSequenceD = std::make_unique<RenderSequenceDouble>();
 
-    {
-        MessageManagerLock mml;
-
-        RenderSequenceBuilder<RenderSequenceFloat>  builderF (*this, *newSequenceF);
-        RenderSequenceBuilder<RenderSequenceDouble> builderD (*this, *newSequenceD);
-    }
-
-    newSequenceF->prepareBuffers (getBlockSize());
-    newSequenceD->prepareBuffers (getBlockSize());
-
-    if (anyNodesNeedPreparing())
-    {
-        {
-            const ScopedLock sl (getCallbackLock());
-            renderSequenceFloat.reset();
-            renderSequenceDouble.reset();
-        }
-
-        for (auto* node : nodes)
-            node->prepare (getSampleRate(), getBlockSize(), this, getProcessingPrecision());
-    }
+    RenderSequenceBuilder<RenderSequenceFloat>  builderF (*this, *newSequenceF);
+    RenderSequenceBuilder<RenderSequenceDouble> builderD (*this, *newSequenceD);
 
     const ScopedLock sl (getCallbackLock());
 
-    std::swap (renderSequenceFloat, newSequenceF);
+    const auto currentBlockSize = getBlockSize();
+    newSequenceF->prepareBuffers (currentBlockSize);
+    newSequenceD->prepareBuffers (currentBlockSize);
+
+    if (anyNodesNeedPreparing())
+    {
+        renderSequenceFloat.reset();
+        renderSequenceDouble.reset();
+
+        for (auto* node : nodes)
+            node->prepare (getSampleRate(), currentBlockSize, this, getProcessingPrecision());
+    }
+
+    isPrepared = 1;
+
+    std::swap (renderSequenceFloat,  newSequenceF);
     std::swap (renderSequenceDouble, newSequenceD);
 }
 
 void AudioProcessorGraph::handleAsyncUpdate()
 {
     buildRenderingSequence();
-    isPrepared = 1;
 }
 
 //==============================================================================
-void AudioProcessorGraph::prepareToPlay (double /*sampleRate*/, int estimatedSamplesPerBlock)
+void AudioProcessorGraph::prepareToPlay (double sampleRate, int estimatedSamplesPerBlock)
 {
-    if (renderSequenceFloat != nullptr)
-        renderSequenceFloat->prepareBuffers (estimatedSamplesPerBlock);
+    {
+        const ScopedLock sl (getCallbackLock());
+        setRateAndBufferSizeDetails (sampleRate, estimatedSamplesPerBlock);
 
-    if (renderSequenceDouble != nullptr)
-        renderSequenceDouble->prepareBuffers (estimatedSamplesPerBlock);
+        const auto newPrepareSettings = [&]
+        {
+            PrepareSettings settings;
+            settings.precision  = getProcessingPrecision();
+            settings.sampleRate = sampleRate;
+            settings.blockSize  = estimatedSamplesPerBlock;
+            settings.valid      = true;
+            return settings;
+        }();
+
+        if (prepareSettings != newPrepareSettings)
+        {
+            unprepare();
+            prepareSettings = newPrepareSettings;
+        }
+    }
 
     clearRenderingSequence();
-    triggerAsyncUpdate();
+
+    updateOnMessageThread (*this);
 }
 
 bool AudioProcessorGraph::supportsDoublePrecisionProcessing() const
@@ -1218,12 +1330,23 @@ bool AudioProcessorGraph::supportsDoublePrecisionProcessing() const
     return true;
 }
 
-void AudioProcessorGraph::releaseResources()
+void AudioProcessorGraph::unprepare()
 {
+    prepareSettings.valid = false;
+
     isPrepared = 0;
 
     for (auto* n : nodes)
         n->unprepare();
+}
+
+void AudioProcessorGraph::releaseResources()
+{
+    const ScopedLock sl (getCallbackLock());
+
+    cancelPendingUpdate();
+
+    unprepare();
 
     if (renderSequenceFloat != nullptr)
         renderSequenceFloat->releaseBuffers();
@@ -1253,18 +1376,18 @@ void AudioProcessorGraph::setNonRealtime (bool isProcessingNonRealtime) noexcept
 double AudioProcessorGraph::getTailLengthSeconds() const            { return 0; }
 bool AudioProcessorGraph::acceptsMidi() const                       { return true; }
 bool AudioProcessorGraph::producesMidi() const                      { return true; }
-void AudioProcessorGraph::getStateInformation (juce::MemoryBlock&)  {}
+void AudioProcessorGraph::getStateInformation (MemoryBlock&)        {}
 void AudioProcessorGraph::setStateInformation (const void*, int)    {}
 
-template <typename Type>
-static void processBlockForBuffer (AudioBuffer<Type>& buffer, MidiBuffer& midiMessages,
+template <typename FloatType, typename SequenceType>
+static void processBlockForBuffer (AudioBuffer<FloatType>& buffer, MidiBuffer& midiMessages,
                                    AudioProcessorGraph& graph,
-                                   GraphRenderSequence<Type>* renderSequence,
-                                   Atomic<int>& isPrepared)
+                                   std::unique_ptr<SequenceType>& renderSequence,
+                                   std::atomic<bool>& isPrepared)
 {
     if (graph.isNonRealtime())
     {
-        while (isPrepared.get() == 0)
+        while (! isPrepared)
             Thread::sleep (1);
 
         const ScopedLock sl (graph.getCallbackLock());
@@ -1276,7 +1399,7 @@ static void processBlockForBuffer (AudioBuffer<Type>& buffer, MidiBuffer& midiMe
     {
         const ScopedLock sl (graph.getCallbackLock());
 
-        if (isPrepared.get() == 1)
+        if (isPrepared)
         {
             if (renderSequence != nullptr)
                 renderSequence->perform (buffer, midiMessages, graph.getPlayHead());
@@ -1291,7 +1414,7 @@ static void processBlockForBuffer (AudioBuffer<Type>& buffer, MidiBuffer& midiMe
 
 void AudioProcessorGraph::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    if (isPrepared.get() == 0 && MessageManager::getInstance()->isThisTheMessageThread())
+    if ((! isPrepared) && MessageManager::getInstance()->isThisTheMessageThread())
         handleAsyncUpdate();
 
     processBlockForBuffer<float> (buffer, midiMessages, *this, renderSequenceFloat, isPrepared);
@@ -1299,7 +1422,7 @@ void AudioProcessorGraph::processBlock (AudioBuffer<float>& buffer, MidiBuffer& 
 
 void AudioProcessorGraph::processBlock (AudioBuffer<double>& buffer, MidiBuffer& midiMessages)
 {
-    if (isPrepared.get() == 0 && MessageManager::getInstance()->isThisTheMessageThread())
+    if ((! isPrepared) && MessageManager::getInstance()->isThisTheMessageThread())
         handleAsyncUpdate();
 
     processBlockForBuffer<double> (buffer, midiMessages, *this, renderSequenceDouble, isPrepared);
@@ -1321,8 +1444,8 @@ const String AudioProcessorGraph::AudioGraphIOProcessor::getName() const
     {
         case audioOutputNode:   return "Audio Output";
         case audioInputNode:    return "Audio Input";
-        case midiOutputNode:    return "Midi Output";
-        case midiInputNode:     return "Midi Input";
+        case midiOutputNode:    return "MIDI Output";
+        case midiInputNode:     return "MIDI Input";
         default:                break;
     }
 
@@ -1332,12 +1455,13 @@ const String AudioProcessorGraph::AudioGraphIOProcessor::getName() const
 void AudioProcessorGraph::AudioGraphIOProcessor::fillInPluginDescription (PluginDescription& d) const
 {
     d.name = getName();
-    d.uid = d.name.hashCode();
     d.category = "I/O devices";
     d.pluginFormatName = "Internal";
-    d.manufacturerName = "ROLI Ltd.";
+    d.manufacturerName = "JUCE";
     d.version = "1.0";
     d.isInstrument = false;
+
+    d.deprecatedUid = d.uniqueId = d.name.hashCode();
 
     d.numInputChannels = getTotalNumInputChannels();
 
@@ -1443,7 +1567,7 @@ void AudioProcessorGraph::AudioGraphIOProcessor::setCurrentProgram (int)        
 const String AudioProcessorGraph::AudioGraphIOProcessor::getProgramName (int)       { return {}; }
 void AudioProcessorGraph::AudioGraphIOProcessor::changeProgramName (int, const String&) {}
 
-void AudioProcessorGraph::AudioGraphIOProcessor::getStateInformation (juce::MemoryBlock&) {}
+void AudioProcessorGraph::AudioGraphIOProcessor::getStateInformation (MemoryBlock&)     {}
 void AudioProcessorGraph::AudioGraphIOProcessor::setStateInformation (const void*, int) {}
 
 void AudioProcessorGraph::AudioGraphIOProcessor::setParentGraph (AudioProcessorGraph* const newGraph)
