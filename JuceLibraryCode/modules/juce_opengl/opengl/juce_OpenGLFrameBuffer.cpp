@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -40,7 +39,7 @@ public:
         // context. You'll need to create this object in one of the OpenGLContext's callbacks.
         jassert (OpenGLHelpers::isContextActive());
 
-       #if JUCE_WINDOWS || JUCE_LINUX
+       #if JUCE_WINDOWS || JUCE_LINUX || JUCE_BSD
         if (context.extensions.glGenFramebuffers == nullptr)
             return;
        #endif
@@ -58,7 +57,7 @@ public:
         glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         JUCE_CHECK_OPENGL_ERROR
 
-        glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
         JUCE_CHECK_OPENGL_ERROR
 
         context.extensions.glFramebufferTexture2D (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureID, 0);
@@ -70,11 +69,11 @@ public:
             jassert (context.extensions.glIsRenderbuffer (depthOrStencilBuffer));
 
             context.extensions.glRenderbufferStorage (GL_RENDERBUFFER,
-                                      (wantsDepthBuffer && wantsStencilBuffer) ? GL_DEPTH24_STENCIL8
+                                      (wantsDepthBuffer && wantsStencilBuffer) ? (GLenum) GL_DEPTH24_STENCIL8
                                                                               #if JUCE_OPENGL_ES
-                                                                               : GL_DEPTH_COMPONENT16,
+                                                                               : (GLenum) GL_DEPTH_COMPONENT16,
                                                                               #else
-                                                                               : GL_DEPTH_COMPONENT,
+                                                                               : (GLenum) GL_DEPTH_COMPONENT,
                                                                               #endif
                                       width, height);
 
@@ -251,7 +250,7 @@ bool OpenGLFrameBuffer::reloadSavedCopy (OpenGLContext& context)
 {
     if (savedState != nullptr)
     {
-        ScopedPointer<SavedState> state;
+        std::unique_ptr<SavedState> state;
         std::swap (state, savedState);
 
         if (state->restore (context, *this))
@@ -287,7 +286,7 @@ GLuint OpenGLFrameBuffer::getFrameBufferID() const noexcept
 
 GLuint OpenGLFrameBuffer::getCurrentFrameBufferTarget() noexcept
 {
-    GLint fb;
+    GLint fb = {};
     glGetIntegerv (GL_FRAMEBUFFER_BINDING, &fb);
     return (GLuint) fb;
 }

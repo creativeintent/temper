@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -96,14 +95,15 @@ public:
     {
         if (getText().isEmpty() && ! isBeingEdited())
         {
-            auto textArea = getBorderSize().subtractedFrom (getLocalBounds());
-            auto labelFont = owner.getLookAndFeel().getLabelFont (*this);
+            auto& lf = owner.getLookAndFeel();
+            auto textArea = lf.getLabelBorderSize (*this).subtractedFrom (getLocalBounds());
+            auto labelFont = lf.getLabelFont (*this);
 
             g.setColour (owner.findColour (TextPropertyComponent::textColourId).withAlpha (alphaToUseForEmptyText));
             g.setFont (labelFont);
 
             g.drawFittedText (textToDisplayWhenEmpty, textArea, getJustificationType(),
-                              jmax (1, (int) (textArea.getHeight() / labelFont.getHeight())),
+                              jmax (1, (int) ((float) textArea.getHeight() / labelFont.getHeight())),
                               getMinimumHorizontalScale());
         }
     }
@@ -120,68 +120,75 @@ private:
 };
 
 //==============================================================================
-class TextPropertyComponent::RemapperValueSourceWithDefault    : public Value::ValueSource
+class TextRemapperValueSourceWithDefault  : public Value::ValueSource
 {
 public:
-    RemapperValueSourceWithDefault (const ValueWithDefault& vwd)
-        : valueWithDefault (vwd)
+    TextRemapperValueSourceWithDefault (const ValueTreePropertyWithDefault& v)
+        : value (v)
     {
     }
 
     var getValue() const override
     {
-        return valueWithDefault.isUsingDefault() ? var() : valueWithDefault.get();
+        if (value.isUsingDefault())
+            return {};
+
+        return value.get();
     }
 
     void setValue (const var& newValue) override
     {
         if (newValue.toString().isEmpty())
-            valueWithDefault.resetToDefault();
-        else
-            valueWithDefault = newValue;
+        {
+            value.resetToDefault();
+            return;
+        }
+
+        value = newValue;
     }
 
 private:
-    ValueWithDefault valueWithDefault;
+    ValueTreePropertyWithDefault value;
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RemapperValueSourceWithDefault)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TextRemapperValueSourceWithDefault)
 };
 
 //==============================================================================
 TextPropertyComponent::TextPropertyComponent (const String& name,
                                               int maxNumChars,
-                                              bool isMultiLine,
+                                              bool multiLine,
                                               bool isEditable)
-    : PropertyComponent (name)
+    : PropertyComponent (name),
+      isMultiLine (multiLine)
 {
-    createEditor (maxNumChars, isMultiLine, isEditable);
+    createEditor (maxNumChars, isEditable);
 }
 
-TextPropertyComponent::TextPropertyComponent (const Value& valueToControl,
-                                              const String& name,
-                                              int maxNumChars,
-                                              bool isMultiLine,
-                                              bool isEditable)
-    : TextPropertyComponent (name, maxNumChars, isMultiLine, isEditable)
+TextPropertyComponent::TextPropertyComponent (const Value& valueToControl, const String& name,
+                                              int maxNumChars, bool multiLine, bool isEditable)
+    : TextPropertyComponent (name, maxNumChars, multiLine, isEditable)
 {
     textEditor->getTextValue().referTo (valueToControl);
 }
 
-TextPropertyComponent::TextPropertyComponent (const ValueWithDefault& valueToControl,
-                                              const String& name,
-                                              int maxNumChars,
-                                              bool isMultiLine,
-                                              bool isEditable)
-    : TextPropertyComponent (name, maxNumChars, isMultiLine, isEditable)
+TextPropertyComponent::TextPropertyComponent (const ValueTreePropertyWithDefault& valueToControl, const String& name,
+                                              int maxNumChars, bool multiLine, bool isEditable)
+    : TextPropertyComponent (name, maxNumChars, multiLine, isEditable)
 {
-    textEditor->getTextValue().referTo (Value (new RemapperValueSourceWithDefault (valueToControl)));
-    textEditor->setTextToDisplayWhenEmpty (valueToControl.getDefault(), 0.5f);
+    value = valueToControl;
+
+    textEditor->getTextValue().referTo (Value (new TextRemapperValueSourceWithDefault (value)));
+    textEditor->setTextToDisplayWhenEmpty (value.getDefault(), 0.5f);
+
+    value.onDefaultChange = [this]
+    {
+        textEditor->setTextToDisplayWhenEmpty (value.getDefault(), 0.5f);
+        repaint();
+    };
 }
 
-TextPropertyComponent::~TextPropertyComponent()
-{
-}
+TextPropertyComponent::~TextPropertyComponent()  {}
 
 void TextPropertyComponent::setText (const String& newText)
 {
@@ -198,7 +205,7 @@ Value& TextPropertyComponent::getValue() const
     return textEditor->getTextValue();
 }
 
-void TextPropertyComponent::createEditor (int maxNumChars, bool isMultiLine, bool isEditable)
+void TextPropertyComponent::createEditor (int maxNumChars, bool isEditable)
 {
     textEditor.reset (new LabelComp (*this, maxNumChars, isMultiLine, isEditable));
     addAndMakeVisible (textEditor.get());

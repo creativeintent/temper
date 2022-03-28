@@ -1,3 +1,9 @@
+# In case you dont't want add unnecessary files
+#**/JuceLibraryCOde
+#**/Builds
+
+**/.DS_Store
+
 *.swp
 
 build

@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -24,7 +24,7 @@ namespace juce
 {
 
 //==============================================================================
-#if JUCE_WINDOWS && ! DOXYGEN
+#if JUCE_WINDOWS && ! defined (DOXYGEN)
  #define JUCE_NATIVE_WCHAR_IS_UTF8      0
  #define JUCE_NATIVE_WCHAR_IS_UTF16     1
  #define JUCE_NATIVE_WCHAR_IS_UTF32     0
@@ -39,9 +39,9 @@ namespace juce
 
 #if JUCE_NATIVE_WCHAR_IS_UTF32 || DOXYGEN
  /** A platform-independent 32-bit unicode character type. */
- typedef wchar_t        juce_wchar;
+ using juce_wchar = wchar_t;
 #else
- typedef uint32         juce_wchar;
+ using juce_wchar = uint32;
 #endif
 
 #ifndef DOXYGEN
@@ -60,19 +60,19 @@ namespace juce
  #define T(stringLiteral)   JUCE_T(stringLiteral)
 #endif
 
-#if ! DOXYGEN
+#ifndef DOXYGEN
 
 //==============================================================================
 // GNU libstdc++ does not have std::make_unsigned
 namespace internal
 {
-    template <typename Type> struct make_unsigned               { typedef Type type; };
-    template <> struct make_unsigned<signed char>               { typedef unsigned char      type; };
-    template <> struct make_unsigned<char>                      { typedef unsigned char      type; };
-    template <> struct make_unsigned<short>                     { typedef unsigned short     type; };
-    template <> struct make_unsigned<int>                       { typedef unsigned int       type; };
-    template <> struct make_unsigned<long>                      { typedef unsigned long      type; };
-    template <> struct make_unsigned<long long>                 { typedef unsigned long long type; };
+    template <typename Type> struct make_unsigned               { using type = Type; };
+    template <> struct make_unsigned<signed char>               { using type = unsigned char; };
+    template <> struct make_unsigned<char>                      { using type = unsigned char; };
+    template <> struct make_unsigned<short>                     { using type = unsigned short; };
+    template <> struct make_unsigned<int>                       { using type = unsigned int; };
+    template <> struct make_unsigned<long>                      { using type = unsigned long; };
+    template <> struct make_unsigned<long long>                 { using type = unsigned long long; };
 }
 
 #endif
@@ -146,43 +146,65 @@ public:
     template <typename CharPointerType>
     static double readDoubleValue (CharPointerType& text) noexcept
     {
-       #if JUCE_MINGW
+        constexpr auto inf = std::numeric_limits<double>::infinity();
+
         bool isNegative = false;
-       #else
-        JUCE_CONSTEXPR const int maxSignificantDigits = 17 + 1; // An additional digit for rounding
-        JUCE_CONSTEXPR const int bufferSize = maxSignificantDigits + 7 + 1; // -.E-XXX and a trailing null-terminator
-        char buffer[bufferSize] = {};
-        char* currentCharacter = &(buffer[0]);
+       #if ! JUCE_MINGW
+        constexpr const int maxSignificantDigits = 17 + 1; // An additional digit for rounding
+        constexpr const int bufferSize = maxSignificantDigits + 7 + 1; // -.E-XXX and a trailing null-terminator
+        char buffer[(size_t) bufferSize] = {};
+        char* writePtr = &(buffer[0]);
        #endif
 
-        text = text.findEndOfWhitespace();
+        const auto endOfWhitspace = text.findEndOfWhitespace();
+        text = endOfWhitspace;
+
         auto c = *text;
 
         switch (c)
         {
             case '-':
-               #if JUCE_MINGW
                 isNegative = true;
-               #else
-                *currentCharacter++ = '-';
+               #if ! JUCE_MINGW
+                *writePtr++ = '-';
                #endif
-                // Fall-through..
+                JUCE_FALLTHROUGH
             case '+':
                 c = *++text;
+                break;
+            default:
+                break;
         }
 
         switch (c)
         {
             case 'n':
             case 'N':
+            {
                 if ((text[1] == 'a' || text[1] == 'A') && (text[2] == 'n' || text[2] == 'N'))
+                {
+                    text += 3;
                     return std::numeric_limits<double>::quiet_NaN();
-                break;
+                }
+
+                text = endOfWhitspace;
+                return 0.0;
+            }
 
             case 'i':
             case 'I':
+            {
                 if ((text[1] == 'n' || text[1] == 'N') && (text[2] == 'f' || text[2] == 'F'))
-                    return std::numeric_limits<double>::infinity();
+                {
+                    text += 3;
+                    return isNegative ? -inf : inf;
+                }
+
+                text = endOfWhitspace;
+                return 0.0;
+            }
+
+            default:
                 break;
         }
 
@@ -194,7 +216,7 @@ public:
         int exponent = 0, decPointIndex = 0, digit = 0;
         int lastDigit = 0, numSignificantDigits = 0;
         bool digitsFound = false;
-        JUCE_CONSTEXPR const int maxSignificantDigits = 17 + 1;
+        constexpr const int maxSignificantDigits = 17 + 1;
 
         for (;;)
         {
@@ -274,7 +296,7 @@ public:
 
             switch (*++text)
             {
-                case '-':   negativeExponent = true; // fall-through..
+                case '-':   negativeExponent = true; JUCE_FALLTHROUGH
                 case '+':   ++text;
             }
 
@@ -293,8 +315,8 @@ public:
 
        #else   // ! JUCE_MINGW
 
-        int numSigFigs = 0;
-        bool decimalPointFound = false;
+        int numSigFigs = 0, extraExponent = 0;
+        bool decimalPointFound = false, leadingZeros = false;
 
         for (;;)
         {
@@ -302,17 +324,33 @@ public:
             {
                 auto digit = (int) text.getAndAdvance() - '0';
 
-                if (numSigFigs >= maxSignificantDigits
-                     || ((numSigFigs == 0 && (! decimalPointFound)) && digit == 0))
-                    continue;
+                if (decimalPointFound)
+                {
+                    if (numSigFigs >= maxSignificantDigits)
+                        continue;
+                }
+                else
+                {
+                    if (numSigFigs >= maxSignificantDigits)
+                    {
+                        ++extraExponent;
+                        continue;
+                    }
 
-                *currentCharacter++ = (char) ('0' + (char) digit);
+                    if (numSigFigs == 0 && digit == 0)
+                    {
+                        leadingZeros = true;
+                        continue;
+                    }
+                }
+
+                *writePtr++ = (char) ('0' + (char) digit);
                 numSigFigs++;
             }
             else if ((! decimalPointFound) && *text == '.')
             {
                 ++text;
-                *currentCharacter++ = '.';
+                *writePtr++ = '.';
                 decimalPointFound = true;
             }
             else
@@ -321,39 +359,82 @@ public:
             }
         }
 
+        if ((! leadingZeros) && (numSigFigs == 0))
+        {
+            text = endOfWhitspace;
+            return 0.0;
+        }
+
+        auto writeExponentDigits = [] (int exponent, char* destination)
+        {
+            auto exponentDivisor = 100;
+
+            while (exponentDivisor > 1)
+            {
+                auto digit = exponent / exponentDivisor;
+                *destination++ = (char) ('0' + (char) digit);
+                exponent -= digit * exponentDivisor;
+                exponentDivisor /= 10;
+            }
+
+            *destination++ = (char) ('0' + (char) exponent);
+        };
+
         c = *text;
 
-        if ((c == 'e' || c == 'E') && numSigFigs > 0)
+        if (c == 'e' || c == 'E')
         {
-            *currentCharacter++ = 'e';
+            const auto startOfExponent = text;
+            *writePtr++ = 'e';
+            bool parsedExponentIsPositive = true;
 
             switch (*++text)
             {
-                case '-':   *currentCharacter++ = '-'; // Fall-through..
-                case '+':   ++text;
+                case '-':
+                    parsedExponentIsPositive = false;
+                    JUCE_FALLTHROUGH
+                case '+':
+                    ++text;
+                    break;
+                default:
+                    break;
             }
 
-            int exponentMagnitude = 0;
+            int exponent = 0;
+            const auto startOfExponentDigits = text;
 
             while (text.isDigit())
             {
-                if (currentCharacter == &buffer[bufferSize - 1])
-                    return std::numeric_limits<double>::quiet_NaN();
-
                 auto digit = (int) text.getAndAdvance() - '0';
 
-                if (digit != 0 || exponentMagnitude != 0)
-                {
-                    *currentCharacter++ = (char) ('0' + (char) digit);
-                    exponentMagnitude = (exponentMagnitude * 10) + digit;
-                }
+                if (digit != 0 || exponent != 0)
+                    exponent = (exponent * 10) + digit;
             }
 
-            if (exponentMagnitude > std::numeric_limits<double>::max_exponent10)
-                return std::numeric_limits<double>::quiet_NaN();
+            if (text == startOfExponentDigits)
+                text = startOfExponent;
 
-            if (exponentMagnitude == 0)
-                *currentCharacter++ = '0';
+            exponent = extraExponent + (parsedExponentIsPositive ? exponent : -exponent);
+
+            if (exponent < 0)
+            {
+                if (exponent < std::numeric_limits<double>::min_exponent10 - 1)
+                    return isNegative ? -0.0 : 0.0;
+
+                *writePtr++ = '-';
+                exponent = -exponent;
+            }
+            else if (exponent > std::numeric_limits<double>::max_exponent10 + 1)
+            {
+                return isNegative ? -inf : inf;
+            }
+
+            writeExponentDigits (exponent, writePtr);
+        }
+        else if (extraExponent > 0)
+        {
+            *writePtr++ = 'e';
+            writeExponentDigits (extraExponent, writePtr);
         }
 
        #if JUCE_WINDOWS
@@ -383,7 +464,7 @@ public:
     template <typename IntType, typename CharPointerType>
     static IntType getIntValue (const CharPointerType text) noexcept
     {
-        typedef typename internal::make_unsigned<IntType>::type UIntType;
+        using UIntType = typename internal::make_unsigned<IntType>::type;
 
         UIntType v = 0;
         auto s = text.findEndOfWhitespace();
@@ -409,6 +490,9 @@ public:
     template <typename ResultType>
     struct HexParser
     {
+        static_assert (std::is_unsigned<ResultType>::value, "ResultType must be unsigned because "
+                                                            "left-shifting a negative value is UB");
+
         template <typename CharPointerType>
         static ResultType parse (CharPointerType t) noexcept
         {
@@ -419,7 +503,7 @@ public:
                 auto hexValue = CharacterFunctions::getHexDigitValue (t.getAndAdvance());
 
                 if (hexValue >= 0)
-                    result = (result << 4) | hexValue;
+                    result = static_cast<ResultType> (result << 4) | static_cast<ResultType> (hexValue);
             }
 
             return result;
@@ -470,12 +554,12 @@ public:
     {
         auto startAddress = dest.getAddress();
         auto maxBytes = (ssize_t) maxBytesToWrite;
-        maxBytes -= sizeof (typename DestCharPointerType::CharType); // (allow for a terminating null)
+        maxBytes -= (ssize_t) sizeof (typename DestCharPointerType::CharType); // (allow for a terminating null)
 
         for (;;)
         {
             auto c = src.getAndAdvance();
-            auto bytesNeeded = DestCharPointerType::getBytesRequiredFor (c);
+            auto bytesNeeded = (ssize_t) DestCharPointerType::getBytesRequiredFor (c);
             maxBytes -= bytesNeeded;
 
             if (c == 0 || maxBytes < 0)
@@ -509,7 +593,7 @@ public:
     }
 
     /** Compares two characters. */
-    static inline int compare (juce_wchar char1, juce_wchar char2) noexcept
+    static int compare (juce_wchar char1, juce_wchar char2) noexcept
     {
         if (auto diff = static_cast<int> (char1) - static_cast<int> (char2))
             return diff < 0 ? -1 : 1;
@@ -554,7 +638,7 @@ public:
     }
 
     /** Compares two characters, using a case-independant match. */
-    static inline int compareIgnoreCase (juce_wchar char1, juce_wchar char2) noexcept
+    static int compareIgnoreCase (juce_wchar char1, juce_wchar char2) noexcept
     {
         return char1 != char2 ? compare (toUpperCase (char1), toUpperCase (char2)) : 0;
     }
@@ -713,6 +797,19 @@ public:
         return -1;
     }
 
+    /** Increments a pointer until it points to the first non-whitespace character
+        in a string.
+
+        If the string contains only whitespace, the pointer will point to the
+        string's null terminator.
+    */
+    template <typename Type>
+    static void incrementToEndOfWhitespace (Type& text) noexcept
+    {
+        while (text.isWhitespace())
+            ++text;
+    }
+
     /** Returns a pointer to the first non-whitespace character in a string.
         If the string contains only whitespace, this will return a pointer
         to its null terminator.
@@ -720,9 +817,7 @@ public:
     template <typename Type>
     static Type findEndOfWhitespace (Type text) noexcept
     {
-        while (text.isWhitespace())
-            ++text;
-
+        incrementToEndOfWhitespace (text);
         return text;
     }
 

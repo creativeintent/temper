@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -107,7 +106,7 @@ public:
     {
         notDragging,            /**< Dragging is not active.  */
         absoluteDrag,           /**< The dragging corresponds directly to the value that is displayed.  */
-        velocityDrag            /**< The dragging value change is relative to the velocity of the mouse mouvement.  */
+        velocityDrag            /**< The dragging value change is relative to the velocity of the mouse movement.  */
     };
 
     //==============================================================================
@@ -125,7 +124,7 @@ public:
     Slider (SliderStyle style, TextEntryBoxPosition textBoxPosition);
 
     /** Destructor. */
-    ~Slider();
+    ~Slider() override;
 
     //==============================================================================
     /** Changes the type of slider interface being used.
@@ -558,7 +557,7 @@ public:
     public:
         //==============================================================================
         /** Destructor. */
-        virtual ~Listener() {}
+        virtual ~Listener() = default;
 
         //==============================================================================
         /** Called when the slider's value is changed.
@@ -612,16 +611,19 @@ public:
     std::function<String (double)> textFromValueFunction;
 
     //==============================================================================
-    /** This lets you choose whether double-clicking moves the slider to a given position.
+    /** This lets you choose whether double-clicking or single-clicking with a specified
+        key modifier moves the slider to a given position.
 
-        By default this is turned off, but it's handy if you want a double-click to act
-        as a quick way of resetting a slider. Just pass in the value you want it to
-        go to when double-clicked.
+        By default this is turned off, but it's handy if you want either of these actions
+        to act as a quick way of resetting a slider. Just pass in the value you want it to
+        go to when double-clicked. By default the key modifier is the alt key but you can
+        pass in another key modifier, or none to disable this behaviour.
 
         @see getDoubleClickReturnValue
     */
     void setDoubleClickReturnValue (bool shouldDoubleClickBeEnabled,
-                                    double valueToSetOnDoubleClick);
+                                    double valueToSetOnDoubleClick,
+                                    ModifierKeys singleClickModifiers = ModifierKeys::altModifier);
 
     /** Returns the values last set by setDoubleClickReturnValue() method.
         @see setDoubleClickReturnValue
@@ -698,6 +700,9 @@ public:
         By default it's enabled.
     */
     void setScrollWheelEnabled (bool enabled);
+
+    /** Returns true if the scroll wheel can move the slider. */
+    bool isScrollWheelEnabled() const noexcept;
 
     /** Returns a number to indicate which thumb is currently being dragged by the mouse.
 
@@ -843,6 +848,10 @@ public:
     bool isRotary() const noexcept;
     /** True if the slider is in a linear bar mode. */
     bool isBar() const noexcept;
+    /** True if the slider has two thumbs. */
+    bool isTwoValue() const noexcept;
+    /** True if the slider has three thumbs. */
+    bool isThreeValue() const noexcept;
 
     //==============================================================================
     /** A set of colour IDs to use to change the colour of various aspects of the slider.
@@ -878,12 +887,33 @@ public:
     };
 
     //==============================================================================
+    /** An RAII class for sending slider listener drag messages.
+
+        This is useful if you are programmatically updating the slider's value and want
+        to imitate a mouse event, for example in a custom AccessibilityHandler.
+
+        @see Slider::Listener
+    */
+    class JUCE_API  ScopedDragNotification
+    {
+    public:
+        explicit ScopedDragNotification (Slider&);
+        ~ScopedDragNotification();
+
+    private:
+        Slider& sliderBeingDragged;
+
+        JUCE_DECLARE_NON_MOVEABLE (ScopedDragNotification)
+        JUCE_DECLARE_NON_COPYABLE (ScopedDragNotification)
+    };
+
+    //==============================================================================
     /** This abstract base class is implemented by LookAndFeel classes to provide
         slider drawing functionality.
     */
     struct JUCE_API  LookAndFeelMethods
     {
-        virtual ~LookAndFeelMethods() {}
+        virtual ~LookAndFeelMethods() = default;
 
         //==============================================================================
         virtual void drawLinearSlider (Graphics&,
@@ -928,14 +958,6 @@ public:
         virtual int getSliderPopupPlacement (Slider&) = 0;
 
         virtual SliderLayout getSliderLayout (Slider&) = 0;
-
-       #if JUCE_CATCH_DEPRECATED_CODE_MISUSE
-        // These methods' parameters have changed: see the new method signatures.
-        virtual void createSliderButton (bool) {}
-        virtual void getSliderEffect() {}
-        virtual void getSliderPopupFont() {}
-        virtual void getSliderPopupPlacement() {}
-       #endif
     };
 
     //==============================================================================
@@ -970,29 +992,28 @@ public:
     /** @internal */
     void mouseEnter (const MouseEvent&) override;
 
+    //==============================================================================
+   #ifndef DOXYGEN
+    // These methods' bool parameters have changed: see the new method signature.
+    [[deprecated]] void setValue (double, bool);
+    [[deprecated]] void setValue (double, bool, bool);
+    [[deprecated]] void setMinValue (double, bool, bool, bool);
+    [[deprecated]] void setMinValue (double, bool, bool);
+    [[deprecated]] void setMinValue (double, bool);
+    [[deprecated]] void setMaxValue (double, bool, bool, bool);
+    [[deprecated]] void setMaxValue (double, bool, bool);
+    [[deprecated]] void setMaxValue (double, bool);
+    [[deprecated]] void setMinAndMaxValues (double, double, bool, bool);
+    [[deprecated]] void setMinAndMaxValues (double, double, bool);
+   #endif
+
 private:
     //==============================================================================
     JUCE_PUBLIC_IN_DLL_BUILD (class Pimpl)
-    friend class Pimpl;
-    friend struct ContainerDeletePolicy<Pimpl>;
-    ScopedPointer<Pimpl> pimpl;
+    std::unique_ptr<Pimpl> pimpl;
 
+    std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
     void init (SliderStyle, TextEntryBoxPosition);
-
-   #if JUCE_CATCH_DEPRECATED_CODE_MISUSE
-    // These methods' bool parameters have changed: see the new method signature.
-    JUCE_DEPRECATED (void setValue (double, bool));
-    JUCE_DEPRECATED (void setValue (double, bool, bool));
-    JUCE_DEPRECATED (void setMinValue (double, bool, bool, bool));
-    JUCE_DEPRECATED (void setMinValue (double, bool, bool));
-    JUCE_DEPRECATED (void setMinValue (double, bool));
-    JUCE_DEPRECATED (void setMaxValue (double, bool, bool, bool));
-    JUCE_DEPRECATED (void setMaxValue (double, bool, bool));
-    JUCE_DEPRECATED (void setMaxValue (double, bool));
-    JUCE_DEPRECATED (void setMinAndMaxValues (double, double, bool, bool));
-    JUCE_DEPRECATED (void setMinAndMaxValues (double, double, bool));
-    virtual void snapValue (double, bool) {}
-   #endif
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Slider)
 };

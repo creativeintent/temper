@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -30,6 +30,40 @@ namespace juce
 //==============================================================================
 namespace WindowsFileHelpers
 {
+    //==============================================================================
+   #if JUCE_WINDOWS
+    JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wnested-anon-types")
+
+    typedef struct _REPARSE_DATA_BUFFER {
+      ULONG  ReparseTag;
+      USHORT ReparseDataLength;
+      USHORT Reserved;
+      union {
+        struct {
+          USHORT SubstituteNameOffset;
+          USHORT SubstituteNameLength;
+          USHORT PrintNameOffset;
+          USHORT PrintNameLength;
+          ULONG  Flags;
+          WCHAR  PathBuffer[1];
+        } SymbolicLinkReparseBuffer;
+        struct {
+          USHORT SubstituteNameOffset;
+          USHORT SubstituteNameLength;
+          USHORT PrintNameOffset;
+          USHORT PrintNameLength;
+          WCHAR  PathBuffer[1];
+        } MountPointReparseBuffer;
+        struct {
+          UCHAR DataBuffer[1];
+        } GenericReparseBuffer;
+      } DUMMYUNIONNAME;
+    } *PREPARSE_DATA_BUFFER, REPARSE_DATA_BUFFER;
+
+    JUCE_END_IGNORE_WARNINGS_GCC_LIKE
+   #endif
+
+    //==============================================================================
     DWORD getAtts (const String& path) noexcept
     {
         return GetFileAttributes (path.toWideCharPointer());
@@ -99,9 +133,9 @@ namespace WindowsFileHelpers
 
     File getSpecialFolderPath (int type)
     {
-        WCHAR path [MAX_PATH + 256];
+        WCHAR path[MAX_PATH + 256];
 
-        if (SHGetSpecialFolderPath (0, path, type, FALSE))
+        if (SHGetSpecialFolderPath (nullptr, path, type, FALSE))
             return File (String (path));
 
         return {};
@@ -109,7 +143,7 @@ namespace WindowsFileHelpers
 
     File getModuleFileName (HINSTANCE moduleHandle)
     {
-        WCHAR dest [MAX_PATH + 256];
+        WCHAR dest[MAX_PATH + 256];
         dest[0] = 0;
         GetModuleFileName (moduleHandle, dest, (DWORD) numElementsInArray (dest));
         return File (String (dest));
@@ -117,7 +151,7 @@ namespace WindowsFileHelpers
 
     Result getResultForLastError()
     {
-        TCHAR messageBuffer [256] = { 0 };
+        TCHAR messageBuffer[256] = {};
 
         FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
                        nullptr, GetLastError(), MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT),
@@ -128,9 +162,15 @@ namespace WindowsFileHelpers
 }
 
 //==============================================================================
-#ifndef JUCE_GCC
- const juce_wchar File::separator = '\\';
- const StringRef File::separatorString ("\\");
+#if JUCE_ALLOW_STATIC_NULL_VARIABLES
+
+JUCE_BEGIN_IGNORE_WARNINGS_MSVC (4996)
+
+const juce_wchar File::separator = '\\';
+const StringRef File::separatorString ("\\");
+
+JUCE_END_IGNORE_WARNINGS_MSVC
+
 #endif
 
 juce_wchar File::getSeparatorChar()    { return '\\'; }
@@ -153,7 +193,7 @@ bool File::existsAsFile() const
 
 bool File::isDirectory() const
 {
-    const DWORD attr = WindowsFileHelpers::getAtts (fullPath);
+    auto attr = WindowsFileHelpers::getAtts (fullPath);
     return (attr & FILE_ATTRIBUTE_DIRECTORY) != 0 && attr != INVALID_FILE_ATTRIBUTES;
 }
 
@@ -211,7 +251,7 @@ bool File::moveToTrash() const
     doubleNullTermPath.calloc (numBytes, 1);
     fullPath.copyToUTF16 (doubleNullTermPath, numBytes);
 
-    SHFILEOPSTRUCT fos = { 0 };
+    SHFILEOPSTRUCT fos = {};
     fos.wFunc = FO_DELETE;
     fos.pFrom = doubleNullTermPath;
     fos.fFlags = FOF_ALLOWUNDO | FOF_NOERRORUI | FOF_SILENT | FOF_NOCONFIRMATION
@@ -222,27 +262,28 @@ bool File::moveToTrash() const
 
 bool File::copyInternal (const File& dest) const
 {
-    return CopyFile (fullPath.toWideCharPointer(), dest.getFullPathName().toWideCharPointer(), false) != 0;
+    return CopyFile (fullPath.toWideCharPointer(),
+                     dest.getFullPathName().toWideCharPointer(), false) != 0;
 }
 
 bool File::moveInternal (const File& dest) const
 {
-    return MoveFile (fullPath.toWideCharPointer(), dest.getFullPathName().toWideCharPointer()) != 0;
+    return MoveFile (fullPath.toWideCharPointer(),
+                     dest.getFullPathName().toWideCharPointer()) != 0;
 }
 
 bool File::replaceInternal (const File& dest) const
 {
-    void* lpExclude = 0;
-    void* lpReserved = 0;
-
-    return ReplaceFile (dest.getFullPathName().toWideCharPointer(), fullPath.toWideCharPointer(),
-                        0, REPLACEFILE_IGNORE_MERGE_ERRORS, lpExclude, lpReserved) != 0;
+    return ReplaceFile (dest.getFullPathName().toWideCharPointer(),
+                        fullPath.toWideCharPointer(),
+                        nullptr, REPLACEFILE_IGNORE_MERGE_ERRORS | 4 /*REPLACEFILE_IGNORE_ACL_ERRORS*/,
+                        nullptr, nullptr) != 0;
 }
 
 Result File::createDirectoryInternal (const String& fileName) const
 {
-    return CreateDirectory (fileName.toWideCharPointer(), 0) ? Result::ok()
-                                                             : WindowsFileHelpers::getResultForLastError();
+    return CreateDirectory (fileName.toWideCharPointer(), nullptr) ? Result::ok()
+                                                                   : WindowsFileHelpers::getResultForLastError();
 }
 
 //==============================================================================
@@ -250,14 +291,16 @@ int64 juce_fileSetPosition (void* handle, int64 pos)
 {
     LARGE_INTEGER li;
     li.QuadPart = pos;
-    li.LowPart = SetFilePointer ((HANDLE) handle, (LONG) li.LowPart, &li.HighPart, FILE_BEGIN);  // (returns -1 if it fails)
+    li.LowPart = SetFilePointer ((HANDLE) handle, (LONG) li.LowPart,
+                                 &li.HighPart, FILE_BEGIN);  // (returns -1 if it fails)
     return li.QuadPart;
 }
 
 void FileInputStream::openHandle()
 {
-    HANDLE h = CreateFile (file.getFullPathName().toWideCharPointer(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0,
-                           OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, 0);
+    auto h = CreateFile (file.getFullPathName().toWideCharPointer(),
+                         GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr,
+                         OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, nullptr);
 
     if (h != INVALID_HANDLE_VALUE)
         fileHandle = (void*) h;
@@ -272,10 +315,11 @@ FileInputStream::~FileInputStream()
 
 size_t FileInputStream::readInternal (void* buffer, size_t numBytes)
 {
-    if (fileHandle != 0)
+    if (fileHandle != nullptr)
     {
         DWORD actualNum = 0;
-        if (! ReadFile ((HANDLE) fileHandle, buffer, (DWORD) numBytes, &actualNum, 0))
+
+        if (! ReadFile ((HANDLE) fileHandle, buffer, (DWORD) numBytes, &actualNum, nullptr))
             status = WindowsFileHelpers::getResultForLastError();
 
         return (size_t) actualNum;
@@ -287,8 +331,9 @@ size_t FileInputStream::readInternal (void* buffer, size_t numBytes)
 //==============================================================================
 void FileOutputStream::openHandle()
 {
-    HANDLE h = CreateFile (file.getFullPathName().toWideCharPointer(), GENERIC_WRITE, FILE_SHARE_READ, 0,
-                           OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+    auto h = CreateFile (file.getFullPathName().toWideCharPointer(),
+                         GENERIC_WRITE, FILE_SHARE_READ, nullptr,
+                         OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
     if (h != INVALID_HANDLE_VALUE)
     {
@@ -314,16 +359,13 @@ void FileOutputStream::closeHandle()
 
 ssize_t FileOutputStream::writeInternal (const void* bufferToWrite, size_t numBytes)
 {
+    DWORD actualNum = 0;
+
     if (fileHandle != nullptr)
-    {
-        DWORD actualNum = 0;
-        if (! WriteFile ((HANDLE) fileHandle, bufferToWrite, (DWORD) numBytes, &actualNum, 0))
+        if (! WriteFile ((HANDLE) fileHandle, bufferToWrite, (DWORD) numBytes, &actualNum, nullptr))
             status = WindowsFileHelpers::getResultForLastError();
 
-        return (ssize_t) actualNum;
-    }
-
-    return 0;
+    return (ssize_t) actualNum;
 }
 
 void FileOutputStream::flushInternal()
@@ -367,17 +409,19 @@ void MemoryMappedFile::openInternal (const File& file, AccessMode mode, bool exc
         access = FILE_MAP_ALL_ACCESS;
     }
 
-    HANDLE h = CreateFile (file.getFullPathName().toWideCharPointer(), accessMode,
-                           exclusive ? 0 : (FILE_SHARE_READ | (mode == readWrite ? FILE_SHARE_WRITE : 0)), 0,
-                           createType, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, 0);
+    auto h = CreateFile (file.getFullPathName().toWideCharPointer(), accessMode,
+                         exclusive ? 0 : (FILE_SHARE_READ | FILE_SHARE_DELETE | (mode == readWrite ? FILE_SHARE_WRITE : 0)), nullptr,
+                         createType, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, nullptr);
 
     if (h != INVALID_HANDLE_VALUE)
     {
         fileHandle = (void*) h;
 
-        HANDLE mappingHandle = CreateFileMapping (h, 0, protect, (DWORD) (range.getEnd() >> 32), (DWORD) range.getEnd(), 0);
+        auto mappingHandle = CreateFileMapping (h, nullptr, protect,
+                                                (DWORD) (range.getEnd() >> 32),
+                                                (DWORD) range.getEnd(), nullptr);
 
-        if (mappingHandle != 0)
+        if (mappingHandle != nullptr)
         {
             address = MapViewOfFile (mappingHandle, access, (DWORD) (range.getStart() >> 32),
                                      (DWORD) range.getStart(), (SIZE_T) range.getLength());
@@ -432,8 +476,9 @@ bool File::setFileTimesInternal (int64 modificationTime, int64 accessTime, int64
     using namespace WindowsFileHelpers;
 
     bool ok = false;
-    HANDLE h = CreateFile (fullPath.toWideCharPointer(), GENERIC_WRITE, FILE_SHARE_READ, 0,
-                           OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+    auto h = CreateFile (fullPath.toWideCharPointer(),
+                         GENERIC_WRITE, FILE_SHARE_READ, nullptr,
+                         OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
     if (h != INVALID_HANDLE_VALUE)
     {
@@ -453,7 +498,7 @@ bool File::setFileTimesInternal (int64 modificationTime, int64 accessTime, int64
 //==============================================================================
 void File::findFileSystemRoots (Array<File>& destArray)
 {
-    TCHAR buffer [2048] = { 0 };
+    TCHAR buffer[2048] = {};
     GetLogicalDriveStrings (2048, buffer);
 
     const TCHAR* n = buffer;
@@ -470,15 +515,16 @@ void File::findFileSystemRoots (Array<File>& destArray)
     roots.sort (true);
 
     for (int i = 0; i < roots.size(); ++i)
-        destArray.add (roots [i]);
+        destArray.add (roots[i]);
 }
 
 //==============================================================================
 String File::getVolumeLabel() const
 {
     TCHAR dest[64];
+
     if (! GetVolumeInformation (WindowsFileHelpers::getDriveFromPath (getFullPathName()).toWideCharPointer(), dest,
-                                (DWORD) numElementsInArray (dest), 0, 0, 0, 0, 0))
+                                (DWORD) numElementsInArray (dest), nullptr, nullptr, nullptr, nullptr, 0))
         dest[0] = 0;
 
     return dest;
@@ -490,7 +536,7 @@ int File::getVolumeSerialNumber() const
     DWORD serialNum;
 
     if (! GetVolumeInformation (WindowsFileHelpers::getDriveFromPath (getFullPathName()).toWideCharPointer(), dest,
-                                (DWORD) numElementsInArray (dest), &serialNum, 0, 0, 0, 0))
+                                (DWORD) numElementsInArray (dest), &serialNum, nullptr, nullptr, nullptr, 0))
         return 0;
 
     return (int) serialNum;
@@ -510,9 +556,14 @@ uint64 File::getFileIdentifier() const
 {
     uint64 result = 0;
 
-    HANDLE h = CreateFile (getFullPathName().toWideCharPointer(),
-                           GENERIC_READ, FILE_SHARE_READ, nullptr,
-                           OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
+    String path = getFullPathName();
+
+    if (isRoot())
+        path += "\\";
+
+    auto h = CreateFile (path.toWideCharPointer(),
+                         GENERIC_READ, FILE_SHARE_READ, nullptr,
+                         OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
 
     if (h != INVALID_HANDLE_VALUE)
     {
@@ -539,12 +590,10 @@ bool File::isOnHardDisk() const
     if (fullPath.isEmpty())
         return false;
 
-    const unsigned int n = WindowsFileHelpers::getWindowsDriveType (getFullPathName());
+    auto n = WindowsFileHelpers::getWindowsDriveType (getFullPathName());
 
-    if (fullPath.toLowerCase()[0] <= 'b' && fullPath[1] == ':')
-        return n != DRIVE_REMOVABLE;
-
-    return n != DRIVE_CDROM
+    return n != DRIVE_REMOVABLE
+        && n != DRIVE_CDROM
         && n != DRIVE_REMOTE
         && n != DRIVE_NO_ROOT_DIR;
 }
@@ -554,7 +603,7 @@ bool File::isOnRemovableDrive() const
     if (fullPath.isEmpty())
         return false;
 
-    const unsigned int n = WindowsFileHelpers::getWindowsDriveType (getFullPathName());
+    auto n = WindowsFileHelpers::getWindowsDriveType (getFullPathName());
 
     return n == DRIVE_CDROM
         || n == DRIVE_REMOTE
@@ -569,21 +618,22 @@ File JUCE_CALLTYPE File::getSpecialLocation (const SpecialLocationType type)
 
     switch (type)
     {
-        case userHomeDirectory:                 csidlType = CSIDL_PROFILE; break;
-        case userDocumentsDirectory:            csidlType = CSIDL_PERSONAL; break;
-        case userDesktopDirectory:              csidlType = CSIDL_DESKTOP; break;
-        case userApplicationDataDirectory:      csidlType = CSIDL_APPDATA; break;
-        case commonApplicationDataDirectory:    csidlType = CSIDL_COMMON_APPDATA; break;
-        case commonDocumentsDirectory:          csidlType = CSIDL_COMMON_DOCUMENTS; break;
-        case globalApplicationsDirectory:       csidlType = CSIDL_PROGRAM_FILES; break;
-        case globalApplicationsDirectoryX86:    csidlType = CSIDL_PROGRAM_FILESX86; break;
-        case userMusicDirectory:                csidlType = 0x0d; /*CSIDL_MYMUSIC*/ break;
-        case userMoviesDirectory:               csidlType = 0x0e; /*CSIDL_MYVIDEO*/ break;
-        case userPicturesDirectory:             csidlType = 0x27; /*CSIDL_MYPICTURES*/ break;
+        case userHomeDirectory:                 csidlType = CSIDL_PROFILE;              break;
+        case userDocumentsDirectory:            csidlType = CSIDL_PERSONAL;             break;
+        case userDesktopDirectory:              csidlType = CSIDL_DESKTOP;              break;
+        case userApplicationDataDirectory:      csidlType = CSIDL_APPDATA;              break;
+        case commonApplicationDataDirectory:    csidlType = CSIDL_COMMON_APPDATA;       break;
+        case commonDocumentsDirectory:          csidlType = CSIDL_COMMON_DOCUMENTS;     break;
+        case globalApplicationsDirectory:       csidlType = CSIDL_PROGRAM_FILES;        break;
+        case globalApplicationsDirectoryX86:    csidlType = CSIDL_PROGRAM_FILESX86;     break;
+        case windowsLocalAppData:               csidlType = CSIDL_LOCAL_APPDATA;        break;
+        case userMusicDirectory:                csidlType = 0x0d; /*CSIDL_MYMUSIC*/     break;
+        case userMoviesDirectory:               csidlType = 0x0e; /*CSIDL_MYVIDEO*/     break;
+        case userPicturesDirectory:             csidlType = 0x27; /*CSIDL_MYPICTURES*/  break;
 
         case tempDirectory:
         {
-            WCHAR dest [2048];
+            WCHAR dest[2048];
             dest[0] = 0;
             GetTempPath ((DWORD) numElementsInArray (dest), dest);
             return File (String (dest));
@@ -591,7 +641,7 @@ File JUCE_CALLTYPE File::getSpecialLocation (const SpecialLocationType type)
 
         case windowsSystemDirectory:
         {
-            WCHAR dest [2048];
+            WCHAR dest[2048];
             dest[0] = 0;
             GetSystemDirectoryW (dest, (UINT) numElementsInArray (dest));
             return File (String (dest));
@@ -603,7 +653,7 @@ File JUCE_CALLTYPE File::getSpecialLocation (const SpecialLocationType type)
             return WindowsFileHelpers::getModuleFileName ((HINSTANCE) Process::getCurrentModuleInstanceHandle());
 
         case hostApplicationPath:
-            return WindowsFileHelpers::getModuleFileName (0);
+            return WindowsFileHelpers::getModuleFileName (nullptr);
 
         default:
             jassertfalse; // unknown type?
@@ -616,7 +666,7 @@ File JUCE_CALLTYPE File::getSpecialLocation (const SpecialLocationType type)
 //==============================================================================
 File File::getCurrentWorkingDirectory()
 {
-    WCHAR dest [MAX_PATH + 256];
+    WCHAR dest[MAX_PATH + 256];
     dest[0] = 0;
     GetCurrentDirectory ((DWORD) numElementsInArray (dest), dest);
     return File (String (dest));
@@ -657,7 +707,8 @@ String File::getVersion() const
 //==============================================================================
 bool File::isSymbolicLink() const
 {
-    return (GetFileAttributes (fullPath.toWideCharPointer()) & FILE_ATTRIBUTE_REPARSE_POINT) != 0;
+    const auto attributes = WindowsFileHelpers::getAtts (fullPath);
+    return (attributes != INVALID_FILE_ATTRIBUTES && (attributes & FILE_ATTRIBUTE_REPARSE_POINT) != 0);
 }
 
 bool File::isShortcut() const
@@ -665,9 +716,104 @@ bool File::isShortcut() const
     return hasFileExtension (".lnk");
 }
 
-File File::getLinkedTarget() const
+static String readWindowsLnkFile (File lnkFile, bool wantsAbsolutePath)
+{
+    if (! lnkFile.exists())
+        lnkFile = File (lnkFile.getFullPathName() + ".lnk");
+
+    if (lnkFile.exists())
+    {
+        ComSmartPtr<IShellLink> shellLink;
+        ComSmartPtr<IPersistFile> persistFile;
+
+        if (SUCCEEDED (shellLink.CoCreateInstance (CLSID_ShellLink))
+             && SUCCEEDED (shellLink.QueryInterface (persistFile))
+             && SUCCEEDED (persistFile->Load (lnkFile.getFullPathName().toWideCharPointer(), STGM_READ))
+             && (! wantsAbsolutePath || SUCCEEDED (shellLink->Resolve (nullptr, SLR_ANY_MATCH | SLR_NO_UI))))
+        {
+            WIN32_FIND_DATA winFindData = {};
+            WCHAR resolvedPath[MAX_PATH];
+
+            DWORD flags = SLGP_UNCPRIORITY;
+
+            if (! wantsAbsolutePath)
+                flags |= SLGP_RAWPATH;
+
+            if (SUCCEEDED (shellLink->GetPath (resolvedPath, MAX_PATH, &winFindData, flags)))
+                return resolvedPath;
+        }
+    }
+
+    return {};
+}
+
+static String readWindowsShortcutOrLink (const File& shortcut, bool wantsAbsolutePath)
 {
    #if JUCE_WINDOWS
+    if (! wantsAbsolutePath)
+    {
+        HANDLE h = CreateFile (shortcut.getFullPathName().toWideCharPointer(),
+                               GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
+                               FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
+                               nullptr);
+
+        if (h != INVALID_HANDLE_VALUE)
+        {
+            HeapBlock<WindowsFileHelpers::REPARSE_DATA_BUFFER> reparseData;
+
+            reparseData.calloc (1, MAXIMUM_REPARSE_DATA_BUFFER_SIZE);
+            DWORD bytesReturned = 0;
+
+            bool success = DeviceIoControl (h, FSCTL_GET_REPARSE_POINT, nullptr, 0,
+                                            reparseData.getData(), MAXIMUM_REPARSE_DATA_BUFFER_SIZE,
+                                            &bytesReturned, nullptr) != 0;
+             CloseHandle (h);
+
+            if (success)
+            {
+                if (IsReparseTagMicrosoft (reparseData->ReparseTag))
+                {
+                    String targetPath;
+
+                    switch (reparseData->ReparseTag)
+                    {
+                        case IO_REPARSE_TAG_SYMLINK:
+                        {
+                            auto& symlinkData = reparseData->SymbolicLinkReparseBuffer;
+                            targetPath = {symlinkData.PathBuffer + (symlinkData.SubstituteNameOffset / sizeof (WCHAR)),
+                                          symlinkData.SubstituteNameLength / sizeof (WCHAR)};
+                        }
+                        break;
+
+                        case IO_REPARSE_TAG_MOUNT_POINT:
+                        {
+                            auto& mountData = reparseData->MountPointReparseBuffer;
+                            targetPath = {mountData.PathBuffer + (mountData.SubstituteNameOffset / sizeof (WCHAR)),
+                                          mountData.SubstituteNameLength / sizeof (WCHAR)};
+                        }
+                        break;
+
+                        default:
+                            break;
+                    }
+
+                    if (targetPath.isNotEmpty())
+                    {
+                        const StringRef prefix ("\\??\\");
+
+                        if (targetPath.startsWith (prefix))
+                            targetPath = targetPath.substring (prefix.length());
+
+                        return targetPath;
+                    }
+                }
+            }
+        }
+    }
+
+    if (! wantsAbsolutePath)
+        return readWindowsLnkFile (shortcut, false);
+
     typedef DWORD (WINAPI* GetFinalPathNameByHandleFunc) (HANDLE, LPTSTR, DWORD, DWORD);
 
     static GetFinalPathNameByHandleFunc getFinalPathNameByHandle
@@ -675,9 +821,9 @@ File File::getLinkedTarget() const
 
     if (getFinalPathNameByHandle != nullptr)
     {
-        HANDLE h = CreateFile (getFullPathName().toWideCharPointer(),
+        HANDLE h = CreateFile (shortcut.getFullPathName().toWideCharPointer(),
                                GENERIC_READ, FILE_SHARE_READ, nullptr,
-                               OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
+                               OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
 
         if (h != INVALID_HANDLE_VALUE)
         {
@@ -694,8 +840,7 @@ File File::getLinkedTarget() const
 
                     // It turns out that GetFinalPathNameByHandleW prepends \\?\ to the path.
                     // This is not a bug, it's feature. See MSDN for more information.
-                    return File (path.startsWith (prefix) ? path.substring (prefix.length())
-                                                          : path);
+                    return path.startsWith (prefix) ? path.substring (prefix.length()) : path;
                 }
             }
 
@@ -704,30 +849,23 @@ File File::getLinkedTarget() const
     }
    #endif
 
-    File result (*this);
-    String p (getFullPathName());
+    // as last resort try the resolve method of the ShellLink
+    return readWindowsLnkFile (shortcut, true);
+}
 
-    if (! exists())
-        p += ".lnk";
-    else if (! hasFileExtension (".lnk"))
-        return result;
+String File::getNativeLinkedTarget() const
+{
+    return readWindowsShortcutOrLink (*this, false);
+}
 
-    ComSmartPtr<IShellLink> shellLink;
-    ComSmartPtr<IPersistFile> persistFile;
+File File::getLinkedTarget() const
+{
+    auto target = readWindowsShortcutOrLink (*this, true);
 
-    if (SUCCEEDED (shellLink.CoCreateInstance (CLSID_ShellLink))
-         && SUCCEEDED (shellLink.QueryInterface (persistFile))
-         && SUCCEEDED (persistFile->Load (p.toWideCharPointer(), STGM_READ))
-         && SUCCEEDED (shellLink->Resolve (0, SLR_ANY_MATCH | SLR_NO_UI)))
-    {
-        WIN32_FIND_DATA winFindData;
-        WCHAR resolvedPath [MAX_PATH];
+    if (target.isNotEmpty() && File::isAbsolutePath (target))
+        return File (target);
 
-        if (SUCCEEDED (shellLink->GetPath (resolvedPath, MAX_PATH, &winFindData, SLGP_UNCPRIORITY)))
-            result = File (resolvedPath);
-    }
-
-    return result;
+    return *this;
 }
 
 bool File::createShortcut (const String& description, const File& linkFileToCreate) const
@@ -737,7 +875,7 @@ bool File::createShortcut (const String& description, const File& linkFileToCrea
     ComSmartPtr<IShellLink> shellLink;
     ComSmartPtr<IPersistFile> persistFile;
 
-    CoInitialize (0);
+    ignoreUnused (CoInitialize (nullptr));
 
     return SUCCEEDED (shellLink.CoCreateInstance (CLSID_ShellLink))
         && SUCCEEDED (shellLink->SetPath (getFullPathName().toWideCharPointer()))
@@ -750,8 +888,8 @@ bool File::createShortcut (const String& description, const File& linkFileToCrea
 class DirectoryIterator::NativeIterator::Pimpl
 {
 public:
-    Pimpl (const File& directory, const String& wildCard)
-        : directoryWithWildCard (directory.getFullPathName().isNotEmpty() ? File::addTrailingSeparator (directory.getFullPathName()) + wildCard : String()),
+    Pimpl (const File& directory, const String& wildCardIn)
+        : directoryWithWildCard (directory.getFullPathName().isNotEmpty() ? File::addTrailingSeparator (directory.getFullPathName()) + wildCardIn : String()),
           handle (INVALID_HANDLE_VALUE)
     {
     }
@@ -801,8 +939,8 @@ private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
 };
 
-DirectoryIterator::NativeIterator::NativeIterator (const File& directory, const String& wildCard)
-    : pimpl (new DirectoryIterator::NativeIterator::Pimpl (directory, wildCard))
+DirectoryIterator::NativeIterator::NativeIterator (const File& directory, const String& wildCardIn)
+    : pimpl (new DirectoryIterator::NativeIterator::Pimpl (directory, wildCardIn))
 {
 }
 
@@ -821,8 +959,8 @@ bool DirectoryIterator::NativeIterator::next (String& filenameFound,
 //==============================================================================
 bool JUCE_CALLTYPE Process::openDocument (const String& fileName, const String& parameters)
 {
-    HINSTANCE hInstance = ShellExecute (0, 0, fileName.toWideCharPointer(),
-                                        parameters.toWideCharPointer(), 0, SW_SHOWDEFAULT);
+    HINSTANCE hInstance = ShellExecute (nullptr, nullptr, fileName.toWideCharPointer(),
+                                        parameters.toWideCharPointer(), nullptr, SW_SHOWDEFAULT);
 
     return hInstance > (HINSTANCE) 32;
 }
@@ -851,14 +989,14 @@ public:
     Pimpl (const String& pipeName, const bool createPipe, bool mustNotExist)
         : filename ("\\\\.\\pipe\\" + File::createLegalFileName (pipeName)),
           pipeH (INVALID_HANDLE_VALUE),
-          cancelEvent (CreateEvent (0, FALSE, FALSE, 0)),
+          cancelEvent (CreateEvent (nullptr, TRUE, FALSE, nullptr)),
           connected (false), ownsPipe (createPipe), shouldStop (false)
     {
         if (createPipe)
         {
             pipeH = CreateNamedPipe (filename.toWideCharPointer(),
                                      PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED, 0,
-                                     PIPE_UNLIMITED_INSTANCES, 4096, 4096, 0, 0);
+                                     PIPE_UNLIMITED_INSTANCES, 4096, 4096, 0, nullptr);
 
             if (mustNotExist && GetLastError() == ERROR_ALREADY_EXISTS)
                 closePipeHandle();
@@ -887,8 +1025,8 @@ public:
 
                     if (pipeH == INVALID_HANDLE_VALUE)
                         pipeH = CreateFile (filename.toWideCharPointer(),
-                                            GENERIC_READ | GENERIC_WRITE, 0, 0,
-                                            OPEN_EXISTING, FILE_FLAG_OVERLAPPED, 0);
+                                            GENERIC_READ | GENERIC_WRITE, 0, nullptr,
+                                            OPEN_EXISTING, FILE_FLAG_OVERLAPPED, nullptr);
                 }
 
                 if (pipeH != INVALID_HANDLE_VALUE)
@@ -947,14 +1085,12 @@ public:
                 return 0;
 
             OverlappedEvent over;
-            unsigned long numRead;
+            unsigned long numRead = 0;
 
             if (ReadFile (pipeH, destBuffer, (DWORD) maxBytesToRead, &numRead, &over.over))
                 return (int) numRead;
 
-            const DWORD lastError = GetLastError();
-
-            if (lastError == ERROR_IO_PENDING)
+            if (GetLastError() == ERROR_IO_PENDING)
             {
                 if (! waitForIO (over, timeOutMilliseconds))
                     return -1;
@@ -963,7 +1099,9 @@ public:
                     return (int) numRead;
             }
 
-            if (ownsPipe && (GetLastError() == ERROR_BROKEN_PIPE || GetLastError() == ERROR_PIPE_NOT_CONNECTED))
+            const auto lastError = GetLastError();
+
+            if (ownsPipe && (lastError == ERROR_BROKEN_PIPE || lastError == ERROR_PIPE_NOT_CONNECTED))
                 disconnectPipe();
             else
                 break;
@@ -1003,7 +1141,8 @@ public:
 
     const String filename;
     HANDLE pipeH, cancelEvent;
-    bool connected, ownsPipe, shouldStop;
+    bool connected, ownsPipe;
+    std::atomic<bool> shouldStop;
     CriticalSection createFileLock;
 
 private:
@@ -1012,7 +1151,7 @@ private:
         OverlappedEvent()
         {
             zerostruct (over);
-            over.hEvent = CreateEvent (0, TRUE, FALSE, 0);
+            over.hEvent = CreateEvent (nullptr, TRUE, FALSE, nullptr);
         }
 
         ~OverlappedEvent()
@@ -1026,11 +1165,14 @@ private:
     bool waitForIO (OverlappedEvent& over, int timeOutMilliseconds)
     {
         if (shouldStop)
+        {
+            CancelIo (pipeH);
             return false;
+        }
 
         HANDLE handles[] = { over.over.hEvent, cancelEvent };
-        DWORD waitResult = WaitForMultipleObjects (2, handles, FALSE,
-                                                   timeOutMilliseconds >= 0 ? timeOutMilliseconds
+        DWORD waitResult = WaitForMultipleObjects (numElementsInArray (handles), handles, FALSE,
+                                                   timeOutMilliseconds >= 0 ? (DWORD) timeOutMilliseconds
                                                                             : INFINITE);
 
         if (waitResult == WAIT_OBJECT_0)
@@ -1045,11 +1187,17 @@ private:
 
 void NamedPipe::close()
 {
-    if (pimpl != nullptr)
     {
-        pimpl->shouldStop = true;
-        SetEvent (pimpl->cancelEvent);
+        ScopedReadLock sl (lock);
 
+        if (pimpl != nullptr)
+        {
+            pimpl->shouldStop = true;
+            SetEvent (pimpl->cancelEvent);
+        }
+    }
+
+    {
         ScopedWriteLock sl (lock);
         pimpl.reset();
     }
@@ -1057,14 +1205,19 @@ void NamedPipe::close()
 
 bool NamedPipe::openInternal (const String& pipeName, const bool createPipe, bool mustNotExist)
 {
-    pimpl.reset (new Pimpl (pipeName, createPipe, mustNotExist));
+    auto newPimpl = std::make_unique<Pimpl> (pipeName, createPipe, mustNotExist);
 
-    if (createPipe && pimpl->pipeH == INVALID_HANDLE_VALUE)
+    if (createPipe)
     {
-        pimpl.reset();
+        if (newPimpl->pipeH == INVALID_HANDLE_VALUE)
+            return false;
+    }
+    else if (! newPimpl->connect (200))
+    {
         return false;
     }
 
+    pimpl = std::move (newPimpl);
     return true;
 }
 

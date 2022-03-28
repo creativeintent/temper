@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -24,43 +23,14 @@
   ==============================================================================
 */
 
-interface ISampleGrabberCB  : public IUnknown
-{
-    virtual STDMETHODIMP SampleCB (double, IMediaSample*) = 0;
-    virtual STDMETHODIMP BufferCB (double, BYTE*, long) = 0;
-};
-
-interface ISampleGrabber  : public IUnknown
-{
-    virtual HRESULT STDMETHODCALLTYPE SetOneShot (BOOL) = 0;
-    virtual HRESULT STDMETHODCALLTYPE SetMediaType (const AM_MEDIA_TYPE*) = 0;
-    virtual HRESULT STDMETHODCALLTYPE GetConnectedMediaType (AM_MEDIA_TYPE*) = 0;
-    virtual HRESULT STDMETHODCALLTYPE SetBufferSamples (BOOL) = 0;
-    virtual HRESULT STDMETHODCALLTYPE GetCurrentBuffer (long*, long*) = 0;
-    virtual HRESULT STDMETHODCALLTYPE GetCurrentSample (IMediaSample**) = 0;
-    virtual HRESULT STDMETHODCALLTYPE SetCallback (ISampleGrabberCB*, long) = 0;
-};
-
-static const IID IID_ISampleGrabberCB  = { 0x0579154A, 0x2B53, 0x4994, { 0xB0, 0xD0, 0xE7, 0x73, 0x14, 0x8E, 0xFF, 0x85 } };
-static const IID IID_ISampleGrabber    = { 0x6B652FFF, 0x11FE, 0x4fce, { 0x92, 0xAD, 0x02, 0x66, 0xB5, 0xD7, 0xC7, 0x8F } };
-static const CLSID CLSID_SampleGrabber = { 0xC1F400A0, 0x3F08, 0x11d3, { 0x9F, 0x0B, 0x00, 0x60, 0x08, 0x03, 0x9E, 0x37 } };
-static const CLSID CLSID_NullRenderer  = { 0xC1F400A4, 0x3F08, 0x11d3, { 0x9F, 0x0B, 0x00, 0x60, 0x08, 0x03, 0x9E, 0x37 } };
-
-
 struct CameraDevice::Pimpl  : public ChangeBroadcaster
 {
-    Pimpl (const String&, int index,
-           int minWidth, int minHeight,
-           int maxWidth, int maxHeight, bool /*highQuality*/)
-       : isRecording (false),
-         openedSuccessfully (false),
-         imageNeedsFlipping (false),
-         width (0), height (0),
-         activeUsers (0),
-         recordNextFrameTime (false),
-         previewMaxFPS (60)
+    Pimpl (CameraDevice& ownerToUse, const String&, int index,
+           int minWidth, int minHeight, int maxWidth, int maxHeight,
+           bool /*highQuality*/)
+       : owner (ownerToUse)
     {
-        HRESULT hr = captureGraphBuilder.CoCreateInstance (CLSID_CaptureGraphBuilder2);
+        HRESULT hr = captureGraphBuilder.CoCreateInstance (ComTypes::CLSID_CaptureGraphBuilder2);
         if (FAILED (hr))
             return;
 
@@ -68,7 +38,7 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         if (filter == nullptr)
             return;
 
-        hr = graphBuilder.CoCreateInstance (CLSID_FilterGraph);
+        hr = graphBuilder.CoCreateInstance (ComTypes::CLSID_FilterGraph);
         if (FAILED (hr))
             return;
 
@@ -76,15 +46,17 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         if (FAILED (hr))
             return;
 
-        hr = graphBuilder.QueryInterface (mediaControl);
-        if (FAILED (hr))
+        mediaControl = graphBuilder.getInterface<ComTypes::IMediaControl>();
+        if (mediaControl == nullptr)
             return;
 
         {
-            ComSmartPtr<IAMStreamConfig> streamConfig;
+            ComSmartPtr<ComTypes::IAMStreamConfig> streamConfig;
 
-            hr = captureGraphBuilder->FindInterface (&PIN_CATEGORY_CAPTURE, 0, filter,
-                                                     IID_IAMStreamConfig, (void**) streamConfig.resetAndGetPointerAddress());
+            JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wlanguage-extension-token")
+            hr = captureGraphBuilder->FindInterface (&ComTypes::PIN_CATEGORY_CAPTURE, nullptr, filter,
+                                                     __uuidof (ComTypes::IAMStreamConfig), (void**) streamConfig.resetAndGetPointerAddress());
+            JUCE_END_IGNORE_WARNINGS_GCC_LIKE
 
             if (streamConfig != nullptr)
             {
@@ -99,7 +71,7 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         if (FAILED (hr))
             return;
 
-        hr = smartTee.CoCreateInstance (CLSID_SmartTee);
+        hr = smartTee.CoCreateInstance (ComTypes::CLSID_SmartTee);
         if (FAILED (hr))
             return;
 
@@ -110,20 +82,23 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         if (! connectFilters (filter, smartTee))
             return;
 
-        ComSmartPtr<IBaseFilter> sampleGrabberBase;
-        hr = sampleGrabberBase.CoCreateInstance (CLSID_SampleGrabber);
+        ComSmartPtr<ComTypes::IBaseFilter> sampleGrabberBase;
+        hr = sampleGrabberBase.CoCreateInstance (ComTypes::CLSID_SampleGrabber);
         if (FAILED (hr))
             return;
 
-        hr = sampleGrabberBase.QueryInterface (IID_ISampleGrabber, sampleGrabber);
+        JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wlanguage-extension-token")
+        hr = sampleGrabberBase.QueryInterface (__uuidof (ComTypes::ISampleGrabber), sampleGrabber);
+        JUCE_END_IGNORE_WARNINGS_GCC_LIKE
+
         if (FAILED (hr))
             return;
 
         {
-            AM_MEDIA_TYPE mt = { 0 };
-            mt.majortype = MEDIATYPE_Video;
-            mt.subtype = MEDIASUBTYPE_RGB24;
-            mt.formattype = FORMAT_VideoInfo;
+            ComTypes::AM_MEDIA_TYPE mt = {};
+            mt.majortype = ComTypes::MEDIATYPE_Video;
+            mt.subtype = ComTypes::MEDIASUBTYPE_RGB24;
+            mt.formattype = ComTypes::FORMAT_VideoInfo;
             sampleGrabber->SetMediaType (&mt);
         }
 
@@ -134,24 +109,27 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         if (FAILED (hr))
             return;
 
-        ComSmartPtr<IPin> grabberInputPin;
-        if (! (getPin (smartTee, PINDIR_OUTPUT, smartTeeCaptureOutputPin, "capture")
-                && getPin (smartTee, PINDIR_OUTPUT, smartTeePreviewOutputPin, "preview")
-                && getPin (sampleGrabberBase, PINDIR_INPUT, grabberInputPin)))
+        ComSmartPtr<ComTypes::IPin> grabberInputPin;
+        if (! (getPin (smartTee, ComTypes::PINDIR_OUTPUT, smartTeeCaptureOutputPin, "capture")
+                && getPin (smartTee, ComTypes::PINDIR_OUTPUT, smartTeePreviewOutputPin, "preview")
+                && getPin (sampleGrabberBase, ComTypes::PINDIR_INPUT, grabberInputPin)))
             return;
 
         hr = graphBuilder->Connect (smartTeePreviewOutputPin, grabberInputPin);
         if (FAILED (hr))
             return;
 
-        AM_MEDIA_TYPE mt = { 0 };
+        ComTypes::AM_MEDIA_TYPE mt = {};
         hr = sampleGrabber->GetConnectedMediaType (&mt);
-        VIDEOINFOHEADER* pVih = (VIDEOINFOHEADER*) (mt.pbFormat);
-        width = pVih->bmiHeader.biWidth;
-        height = pVih->bmiHeader.biHeight;
 
-        ComSmartPtr<IBaseFilter> nullFilter;
-        hr = nullFilter.CoCreateInstance (CLSID_NullRenderer);
+        if (auto* pVih = unalignedPointerCast<ComTypes::VIDEOINFOHEADER*> (mt.pbFormat))
+        {
+            width = pVih->bmiHeader.biWidth;
+            height = pVih->bmiHeader.biHeight;
+        }
+
+        ComSmartPtr<ComTypes::IBaseFilter> nullFilter;
+        hr = nullFilter.CoCreateInstance (ComTypes::CLSID_NullRenderer);
         hr = graphBuilder->AddFilter (nullFilter, _T("Null Renderer"));
 
         if (connectFilters (sampleGrabberBase, nullFilter)
@@ -191,6 +169,22 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
 
     bool openedOk() const noexcept       { return openedSuccessfully; }
 
+    void takeStillPicture (std::function<void (const Image&)> pictureTakenCallbackToUse)
+    {
+        {
+            const ScopedLock sl (pictureTakenCallbackLock);
+
+            jassert (pictureTakenCallbackToUse != nullptr);
+
+            if (pictureTakenCallbackToUse == nullptr)
+                return;
+
+            pictureTakenCallback = std::move (pictureTakenCallbackToUse);
+        }
+
+        addUser();
+    }
+
     void startRecordingToFile (const File& file, int quality)
     {
         addUser();
@@ -219,13 +213,13 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         if (listeners.size() == 0)
             addUser();
 
-        listeners.addIfNotAlreadyThere (listenerToAdd);
+        listeners.add (listenerToAdd);
     }
 
     void removeListener (CameraDevice::Listener* listenerToRemove)
     {
         const ScopedLock sl (listenerLock);
-        listeners.removeAllInstancesOf (listenerToRemove);
+        listeners.remove (listenerToRemove);
 
         if (listeners.size() == 0)
             removeUser();
@@ -234,10 +228,28 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
     void callListeners (const Image& image)
     {
         const ScopedLock sl (listenerLock);
+        listeners.call ([=] (Listener& l) { l.imageReceived (image); });
+    }
 
-        for (int i = listeners.size(); --i >= 0;)
-            if (CameraDevice::Listener* const l = listeners[i])
-                l->imageReceived (image);
+    void notifyPictureTakenIfNeeded (const Image& image)
+    {
+        {
+            const ScopedLock sl (pictureTakenCallbackLock);
+
+            if (pictureTakenCallback == nullptr)
+                return;
+        }
+
+        MessageManager::callAsync ([weakRef = WeakReference<Pimpl> { this }, image]() mutable
+                                   {
+                                       if (weakRef == nullptr)
+                                           return;
+
+                                       if (weakRef->pictureTakenCallback != nullptr)
+                                           weakRef->pictureTakenCallback (image);
+
+                                       weakRef->pictureTakenCallback = nullptr;
+                                   });
     }
 
     void addUser()
@@ -261,16 +273,13 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
             firstRecordedTime = Time::getCurrentTime() - RelativeTime (defaultCameraLatency);
             recordNextFrameTime = false;
 
-            ComSmartPtr<IPin> pin;
-            if (getPin (filter, PINDIR_OUTPUT, pin))
+            ComSmartPtr<ComTypes::IPin> pin;
+            if (getPin (filter, ComTypes::PINDIR_OUTPUT, pin))
             {
-                ComSmartPtr<IAMPushSource> pushSource;
-                HRESULT hr = pin.QueryInterface (pushSource);
-
-                if (pushSource != nullptr)
+                if (auto pushSource = pin.getInterface<ComTypes::IAMPushSource>())
                 {
-                    REFERENCE_TIME latency = 0;
-                    hr = pushSource->GetLatency (&latency);
+                    ComTypes::REFERENCE_TIME latency = 0;
+                    pushSource->GetLatency (&latency);
 
                     firstRecordedTime = firstRecordedTime - RelativeTime ((double) latency);
                 }
@@ -288,7 +297,7 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
                 for (int i = 0; i < height; ++i)
                     memcpy (destData.getLinePointer ((height - 1) - i),
                             buffer + lineStride * i,
-                            lineStride);
+                            (size_t) lineStride);
             }
 
             imageNeedsFlipping = true;
@@ -296,6 +305,8 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
 
         if (listeners.size() > 0)
             callListeners (loadingImage);
+
+        notifyPictureTakenIfNeeded (loadingImage);
 
         sendChangeMessage();
     }
@@ -330,16 +341,13 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         recordNextFrameTime = true;
         previewMaxFPS = 60;
 
-        HRESULT hr = asfWriter.CoCreateInstance (CLSID_WMAsfWriter);
+        HRESULT hr = asfWriter.CoCreateInstance (ComTypes::CLSID_WMAsfWriter);
 
         if (SUCCEEDED (hr))
         {
-            ComSmartPtr<IFileSinkFilter> fileSink;
-            hr = asfWriter.QueryInterface (fileSink);
-
-            if (SUCCEEDED (hr))
+            if (auto fileSink = asfWriter.getInterface<ComTypes::IFileSinkFilter>())
             {
-                hr = fileSink->SetFileName (file.getFullPathName().toWideCharPointer(), 0);
+                hr = fileSink->SetFileName (file.getFullPathName().toWideCharPointer(), nullptr);
 
                 if (SUCCEEDED (hr))
                 {
@@ -347,62 +355,71 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
 
                     if (SUCCEEDED (hr))
                     {
-                        ComSmartPtr<IConfigAsfWriter> asfConfig;
-                        hr = asfWriter.QueryInterface (asfConfig);
-                        asfConfig->SetIndexMode (true);
-                        ComSmartPtr<IWMProfileManager> profileManager;
-                        hr = WMCreateProfileManager (profileManager.resetAndGetPointerAddress());
-
-                        // This gibberish is the DirectShow profile for a video-only wmv file.
-                        String prof ("<profile version=\"589824\" storageformat=\"1\" name=\"Quality\" description=\"Quality type for output.\">"
-                                       "<streamconfig majortype=\"{73646976-0000-0010-8000-00AA00389B71}\" streamnumber=\"1\" "
-                                                     "streamname=\"Video Stream\" inputname=\"Video409\" bitrate=\"894960\" "
-                                                     "bufferwindow=\"0\" reliabletransport=\"1\" decodercomplexity=\"AU\" rfc1766langid=\"en-us\">"
-                                         "<videomediaprops maxkeyframespacing=\"50000000\" quality=\"90\"/>"
-                                         "<wmmediatype subtype=\"{33564D57-0000-0010-8000-00AA00389B71}\" bfixedsizesamples=\"0\" "
-                                                      "btemporalcompression=\"1\" lsamplesize=\"0\">"
-                                         "<videoinfoheader dwbitrate=\"894960\" dwbiterrorrate=\"0\" avgtimeperframe=\"$AVGTIMEPERFRAME\">"
-                                             "<rcsource left=\"0\" top=\"0\" right=\"$WIDTH\" bottom=\"$HEIGHT\"/>"
-                                             "<rctarget left=\"0\" top=\"0\" right=\"$WIDTH\" bottom=\"$HEIGHT\"/>"
-                                             "<bitmapinfoheader biwidth=\"$WIDTH\" biheight=\"$HEIGHT\" biplanes=\"1\" bibitcount=\"24\" "
-                                                               "bicompression=\"WMV3\" bisizeimage=\"0\" bixpelspermeter=\"0\" biypelspermeter=\"0\" "
-                                                               "biclrused=\"0\" biclrimportant=\"0\"/>"
-                                           "</videoinfoheader>"
-                                         "</wmmediatype>"
-                                       "</streamconfig>"
-                                     "</profile>");
-
-                        const int fps[] = { 10, 15, 30 };
-                        int maxFramesPerSecond = fps [jlimit (0, numElementsInArray (fps) - 1, quality & 0xff)];
-
-                        if ((quality & 0xff000000) != 0) // (internal hacky way to pass explicit frame rates for testing)
-                            maxFramesPerSecond = (quality >> 24) & 0xff;
-
-                        prof = prof.replace ("$WIDTH", String (width))
-                                   .replace ("$HEIGHT", String (height))
-                                   .replace ("$AVGTIMEPERFRAME", String (10000000 / maxFramesPerSecond));
-
-                        ComSmartPtr<IWMProfile> currentProfile;
-                        hr = profileManager->LoadProfileByData (prof.toWideCharPointer(), currentProfile.resetAndGetPointerAddress());
-                        hr = asfConfig->ConfigureFilterUsingProfile (currentProfile);
-
-                        if (SUCCEEDED (hr))
+                        if (auto asfConfig = asfWriter.getInterface<ComTypes::IConfigAsfWriter>())
                         {
-                            ComSmartPtr<IPin> asfWriterInputPin;
+                            asfConfig->SetIndexMode (true);
+                            ComSmartPtr<IWMProfileManager> profileManager;
 
-                            if (getPin (asfWriter, PINDIR_INPUT, asfWriterInputPin, "Video Input 01"))
+                            using Fn = HRESULT (*) (IWMProfileManager**);
+
+                            // This function is available on Windows 2000 and up, but we load it at runtime anyway
+                            // because some versions of MinGW ship with libraries that don't include this symbol.
+                            if (auto* fn = reinterpret_cast<Fn> (wmvcoreLibrary.getFunction ("WMCreateProfileManager")))
+                                hr = fn (profileManager.resetAndGetPointerAddress());
+                            else
+                                jassertfalse;
+
+                            // This gibberish is the DirectShow profile for a video-only wmv file.
+                            String prof ("<profile version=\"589824\" storageformat=\"1\" name=\"Quality\" description=\"Quality type for output.\">"
+                                           "<streamconfig majortype=\"{73646976-0000-0010-8000-00AA00389B71}\" streamnumber=\"1\" "
+                                                         "streamname=\"Video Stream\" inputname=\"Video409\" bitrate=\"894960\" "
+                                                         "bufferwindow=\"0\" reliabletransport=\"1\" decodercomplexity=\"AU\" rfc1766langid=\"en-us\">"
+                                             "<videomediaprops maxkeyframespacing=\"50000000\" quality=\"90\"/>"
+                                             "<wmmediatype subtype=\"{33564D57-0000-0010-8000-00AA00389B71}\" bfixedsizesamples=\"0\" "
+                                                          "btemporalcompression=\"1\" lsamplesize=\"0\">"
+                                             "<videoinfoheader dwbitrate=\"894960\" dwbiterrorrate=\"0\" avgtimeperframe=\"$AVGTIMEPERFRAME\">"
+                                                 "<rcsource left=\"0\" top=\"0\" right=\"$WIDTH\" bottom=\"$HEIGHT\"/>"
+                                                 "<rctarget left=\"0\" top=\"0\" right=\"$WIDTH\" bottom=\"$HEIGHT\"/>"
+                                                 "<bitmapinfoheader biwidth=\"$WIDTH\" biheight=\"$HEIGHT\" biplanes=\"1\" bibitcount=\"24\" "
+                                                                   "bicompression=\"WMV3\" bisizeimage=\"0\" bixpelspermeter=\"0\" biypelspermeter=\"0\" "
+                                                                   "biclrused=\"0\" biclrimportant=\"0\"/>"
+                                               "</videoinfoheader>"
+                                             "</wmmediatype>"
+                                           "</streamconfig>"
+                                         "</profile>");
+
+                            const int fps[] = { 10, 15, 30 };
+                            int maxFramesPerSecond = fps[jlimit (0, numElementsInArray (fps) - 1, quality & 0xff)];
+
+                            if (((uint32_t) quality & 0xff000000) != 0) // (internal hacky way to pass explicit frame rates for testing)
+                                maxFramesPerSecond = (quality >> 24) & 0xff;
+
+                            prof = prof.replace ("$WIDTH", String (width))
+                                       .replace ("$HEIGHT", String (height))
+                                       .replace ("$AVGTIMEPERFRAME", String (10000000 / maxFramesPerSecond));
+
+                            ComSmartPtr<IWMProfile> currentProfile;
+                            hr = profileManager->LoadProfileByData (prof.toWideCharPointer(), currentProfile.resetAndGetPointerAddress());
+                            hr = asfConfig->ConfigureFilterUsingProfile (currentProfile);
+
+                            if (SUCCEEDED (hr))
                             {
-                                hr = graphBuilder->Connect (smartTeeCaptureOutputPin, asfWriterInputPin);
+                                ComSmartPtr<ComTypes::IPin> asfWriterInputPin;
 
-                                if (SUCCEEDED (hr) && openedSuccessfully && activeUsers > 0
-                                     && SUCCEEDED (mediaControl->Run()))
+                                if (getPin (asfWriter, ComTypes::PINDIR_INPUT, asfWriterInputPin, "Video Input 01"))
                                 {
-                                    previewMaxFPS = (quality < 2) ? 15 : 25; // throttle back the preview comps to try to leave the cpu free for encoding
+                                    hr = graphBuilder->Connect (smartTeeCaptureOutputPin, asfWriterInputPin);
 
-                                    if ((quality & 0x00ff0000) != 0)  // (internal hacky way to pass explicit frame rates for testing)
-                                        previewMaxFPS = (quality >> 16) & 0xff;
+                                    if (SUCCEEDED (hr) && openedSuccessfully && activeUsers > 0
+                                        && SUCCEEDED (mediaControl->Run()))
+                                    {
+                                        previewMaxFPS = (quality < 2) ? 15 : 25; // throttle back the preview comps to try to leave the cpu free for encoding
 
-                                    return true;
+                                        if ((quality & 0x00ff0000) != 0)  // (internal hacky way to pass explicit frame rates for testing)
+                                            previewMaxFPS = (quality >> 16) & 0xff;
+
+                                        return true;
+                                    }
                                 }
                             }
                         }
@@ -435,15 +452,22 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         previewMaxFPS = 60;
     }
 
-    static ComSmartPtr<IBaseFilter> enumerateCameras (StringArray* names, const int deviceIndexToOpen)
+    static ComSmartPtr<ComTypes::IBaseFilter> enumerateCameras (StringArray* names, const int deviceIndexToOpen)
     {
         int index = 0;
-        ComSmartPtr<ICreateDevEnum> pDevEnum;
+        ComSmartPtr<ComTypes::ICreateDevEnum> pDevEnum;
 
-        if (SUCCEEDED (pDevEnum.CoCreateInstance (CLSID_SystemDeviceEnum)))
+        struct Deleter
+        {
+            void operator() (IUnknown* ptr) const noexcept { ptr->Release(); }
+        };
+
+        using ContextPtr = std::unique_ptr<IBindCtx, Deleter>;
+
+        if (SUCCEEDED (pDevEnum.CoCreateInstance (ComTypes::CLSID_SystemDeviceEnum)))
         {
             ComSmartPtr<IEnumMoniker> enumerator;
-            HRESULT hr = pDevEnum->CreateClassEnumerator (CLSID_VideoInputDeviceCategory, enumerator.resetAndGetPointerAddress(), 0);
+            HRESULT hr = pDevEnum->CreateClassEnumerator (ComTypes::CLSID_VideoInputDeviceCategory, enumerator.resetAndGetPointerAddress(), 0);
 
             if (SUCCEEDED (hr) && enumerator != nullptr)
             {
@@ -452,20 +476,29 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
 
                 while (enumerator->Next (1, moniker.resetAndGetPointerAddress(), &fetched) == S_OK)
                 {
-                    ComSmartPtr<IBaseFilter> captureFilter;
-                    hr = moniker->BindToObject (0, 0, IID_IBaseFilter, (void**) captureFilter.resetAndGetPointerAddress());
+                    auto context = []
+                    {
+                        IBindCtx* ptr = nullptr;
+                        ignoreUnused (CreateBindCtx (0, &ptr));
+                        return ContextPtr (ptr);
+                    }();
+
+                    ComSmartPtr<ComTypes::IBaseFilter> captureFilter;
+                    JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wlanguage-extension-token")
+                    hr = moniker->BindToObject (context.get(), nullptr, __uuidof (ComTypes::IBaseFilter), (void**) captureFilter.resetAndGetPointerAddress());
+                    JUCE_END_IGNORE_WARNINGS_GCC_LIKE
 
                     if (SUCCEEDED (hr))
                     {
                         ComSmartPtr<IPropertyBag> propertyBag;
-                        hr = moniker->BindToStorage (0, 0, IID_IPropertyBag, (void**) propertyBag.resetAndGetPointerAddress());
+                        hr = moniker->BindToStorage (context.get(), nullptr, IID_IPropertyBag, (void**) propertyBag.resetAndGetPointerAddress());
 
                         if (SUCCEEDED (hr))
                         {
                             VARIANT var;
                             var.vt = VT_BSTR;
 
-                            hr = propertyBag->Read (_T("FriendlyName"), &var, 0);
+                            hr = propertyBag->Read (_T("FriendlyName"), &var, nullptr);
                             propertyBag = nullptr;
 
                             if (SUCCEEDED (hr))
@@ -494,22 +527,24 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         return devs;
     }
 
-    struct GrabberCallback   : public ComBaseClassHelperBase<ISampleGrabberCB>
+    struct GrabberCallback   : public ComBaseClassHelperBase<ComTypes::ISampleGrabberCB>
     {
         GrabberCallback (Pimpl& p)
-            : ComBaseClassHelperBase<ISampleGrabberCB> (0), owner (p) {}
+            : ComBaseClassHelperBase (0), owner (p) {}
 
         JUCE_COMRESULT QueryInterface (REFIID refId, void** result)
         {
-            if (refId == IID_ISampleGrabberCB)
-                return castToType<ISampleGrabberCB> (result);
+            JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wlanguage-extension-token")
+            if (refId == __uuidof (ComTypes::ISampleGrabberCB))
+                return castToType<ComTypes::ISampleGrabberCB> (result);
+            JUCE_END_IGNORE_WARNINGS_GCC_LIKE
 
-            return ComBaseClassHelperBase<ISampleGrabberCB>::QueryInterface (refId, result);
+            return ComBaseClassHelperBase<ComTypes::ISampleGrabberCB>::QueryInterface (refId, result);
         }
 
-        STDMETHODIMP SampleCB (double, IMediaSample*)  { return E_FAIL; }
+        JUCE_COMRESULT SampleCB (double, ComTypes::IMediaSample*)  { return E_FAIL; }
 
-        STDMETHODIMP BufferCB (double time, BYTE* buffer, long bufferSize)
+        JUCE_COMRESULT BufferCB (double time, BYTE* buffer, long bufferSize)
         {
             owner.handleFrame (time, buffer, bufferSize);
             return S_OK;
@@ -520,35 +555,44 @@ struct CameraDevice::Pimpl  : public ChangeBroadcaster
         JUCE_DECLARE_NON_COPYABLE (GrabberCallback)
     };
 
-    ComSmartPtr<GrabberCallback> callback;
-    Array<CameraDevice::Listener*> listeners;
-    CriticalSection listenerLock;
+    DynamicLibrary wmvcoreLibrary { "wmvcore" };
+    CameraDevice& owner;
 
-    bool isRecording, openedSuccessfully;
-    int width, height;
+    ComSmartPtr<GrabberCallback> callback;
+
+    CriticalSection listenerLock;
+    ListenerList<Listener> listeners;
+
+    CriticalSection pictureTakenCallbackLock;
+    std::function<void (const Image&)> pictureTakenCallback;
+
+    bool isRecording = false, openedSuccessfully = false;
+    int width = 0, height = 0;
     Time firstRecordedTime;
 
     Array<ViewerComponent*> viewerComps;
 
-    ComSmartPtr<ICaptureGraphBuilder2> captureGraphBuilder;
-    ComSmartPtr<IBaseFilter> filter, smartTee, asfWriter;
-    ComSmartPtr<IGraphBuilder> graphBuilder;
-    ComSmartPtr<ISampleGrabber> sampleGrabber;
-    ComSmartPtr<IMediaControl> mediaControl;
-    ComSmartPtr<IPin> smartTeePreviewOutputPin, smartTeeCaptureOutputPin;
-    int activeUsers;
+    ComSmartPtr<ComTypes::ICaptureGraphBuilder2> captureGraphBuilder;
+    ComSmartPtr<ComTypes::IBaseFilter> filter, smartTee, asfWriter;
+    ComSmartPtr<ComTypes::IGraphBuilder> graphBuilder;
+    ComSmartPtr<ComTypes::ISampleGrabber> sampleGrabber;
+    ComSmartPtr<ComTypes::IMediaControl> mediaControl;
+    ComSmartPtr<ComTypes::IPin> smartTeePreviewOutputPin, smartTeeCaptureOutputPin;
+    int activeUsers = 0;
     Array<int> widths, heights;
     DWORD graphRegistrationID;
 
     CriticalSection imageSwapLock;
-    bool imageNeedsFlipping;
+    bool imageNeedsFlipping = false;
     Image loadingImage, activeImage;
 
-    bool recordNextFrameTime;
-    int previewMaxFPS;
+    bool recordNextFrameTime = false;
+    int previewMaxFPS = 60;
+
+    JUCE_DECLARE_WEAK_REFERENCEABLE (Pimpl)
 
 private:
-    void getVideoSizes (IAMStreamConfig* const streamConfig)
+    void getVideoSizes (ComTypes::IAMStreamConfig* const streamConfig)
     {
         widths.clear();
         heights.clear();
@@ -556,12 +600,12 @@ private:
         int count = 0, size = 0;
         streamConfig->GetNumberOfCapabilities (&count, &size);
 
-        if (size == sizeof (VIDEO_STREAM_CONFIG_CAPS))
+        if (size == (int) sizeof (ComTypes::VIDEO_STREAM_CONFIG_CAPS))
         {
             for (int i = 0; i < count; ++i)
             {
-                VIDEO_STREAM_CONFIG_CAPS scc;
-                AM_MEDIA_TYPE* config;
+                ComTypes::VIDEO_STREAM_CONFIG_CAPS scc;
+                ComTypes::AM_MEDIA_TYPE* config;
 
                 HRESULT hr = streamConfig->GetStreamCaps (i, &config, (BYTE*) &scc);
 
@@ -583,7 +627,6 @@ private:
 
                     if (! duplicate)
                     {
-                        DBG ("Camera capture size: " + String (w) + ", " + String (h));
                         widths.add (w);
                         heights.add (h);
                     }
@@ -594,17 +637,17 @@ private:
         }
     }
 
-    bool selectVideoSize (IAMStreamConfig* const streamConfig,
+    bool selectVideoSize (ComTypes::IAMStreamConfig* const streamConfig,
                           const int minWidth, const int minHeight,
                           const int maxWidth, const int maxHeight)
     {
         int count = 0, size = 0, bestArea = 0, bestIndex = -1;
         streamConfig->GetNumberOfCapabilities (&count, &size);
 
-        if (size == sizeof (VIDEO_STREAM_CONFIG_CAPS))
+        if (size == (int) sizeof (ComTypes::VIDEO_STREAM_CONFIG_CAPS))
         {
-            AM_MEDIA_TYPE* config;
-            VIDEO_STREAM_CONFIG_CAPS scc;
+            ComTypes::AM_MEDIA_TYPE* config;
+            ComTypes::VIDEO_STREAM_CONFIG_CAPS scc;
 
             for (int i = 0; i < count; ++i)
             {
@@ -642,22 +685,22 @@ private:
         return false;
     }
 
-    static bool getPin (IBaseFilter* filter, const PIN_DIRECTION wantedDirection,
-                        ComSmartPtr<IPin>& result, const char* pinName = nullptr)
+    static bool getPin (ComTypes::IBaseFilter* filter, const ComTypes::PIN_DIRECTION wantedDirection,
+                        ComSmartPtr<ComTypes::IPin>& result, const char* pinName = nullptr)
     {
-        ComSmartPtr<IEnumPins> enumerator;
-        ComSmartPtr<IPin> pin;
+        ComSmartPtr<ComTypes::IEnumPins> enumerator;
+        ComSmartPtr<ComTypes::IPin> pin;
 
         filter->EnumPins (enumerator.resetAndGetPointerAddress());
 
-        while (enumerator->Next (1, pin.resetAndGetPointerAddress(), 0) == S_OK)
+        while (enumerator->Next (1, pin.resetAndGetPointerAddress(), nullptr) == S_OK)
         {
-            PIN_DIRECTION dir;
+            ComTypes::PIN_DIRECTION dir;
             pin->QueryDirection (&dir);
 
             if (wantedDirection == dir)
             {
-                PIN_INFO info = { 0 };
+                ComTypes::PIN_INFO info = {};
                 pin->QueryPinInfo (&info);
 
                 if (pinName == nullptr || String (pinName).equalsIgnoreCase (String (info.achName)))
@@ -671,12 +714,12 @@ private:
         return false;
     }
 
-    bool connectFilters (IBaseFilter* const first, IBaseFilter* const second) const
+    bool connectFilters (ComTypes::IBaseFilter* const first, ComTypes::IBaseFilter* const second) const
     {
-        ComSmartPtr<IPin> in, out;
+        ComSmartPtr<ComTypes::IPin> in, out;
 
-        return getPin (first, PINDIR_OUTPUT, out)
-                && getPin (second, PINDIR_INPUT, in)
+        return getPin (first, ComTypes::PINDIR_OUTPUT, out)
+                && getPin (second, ComTypes::PINDIR_INPUT, in)
                 && SUCCEEDED (graphBuilder->Connect (out, in));
     }
 
@@ -687,7 +730,7 @@ private:
             return false;
 
         ComSmartPtr<IMoniker> moniker;
-        WCHAR buffer[128];
+        WCHAR buffer[128]{};
         HRESULT hr = CreateItemMoniker (_T("!"), buffer, moniker.resetAndGetPointerAddress());
         if (FAILED (hr))
             return false;
@@ -706,7 +749,7 @@ private:
 
     void disconnectAnyViewers();
 
-    static void deleteMediaType (AM_MEDIA_TYPE* const pmt)
+    static void deleteMediaType (ComTypes::AM_MEDIA_TYPE* const pmt)
     {
         if (pmt->cbFormat != 0)
             CoTaskMemFree ((PVOID) pmt->pbFormat);
@@ -725,7 +768,7 @@ struct CameraDevice::ViewerComponent  : public Component,
                                         public ChangeListener
 {
     ViewerComponent (CameraDevice& d)
-       : owner (d.pimpl), maxFPS (15), lastRepaintTime (0)
+       : owner (d.pimpl.get()), maxFPS (15), lastRepaintTime (0)
     {
         setOpaque (true);
         owner->addChangeListener (this);
@@ -734,7 +777,7 @@ struct CameraDevice::ViewerComponent  : public Component,
         setSize (owner->width, owner->height);
     }
 
-    ~ViewerComponent()
+    ~ViewerComponent() override
     {
         if (owner != nullptr)
         {

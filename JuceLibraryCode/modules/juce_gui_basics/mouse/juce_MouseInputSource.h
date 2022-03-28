@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -35,7 +34,7 @@ namespace juce
     Each MouseEvent object contains a reference to the MouseInputSource that generated
     it. In an environment with a single mouse for input, all events will come from the
     same source, but in a multi-touch system, there may be multiple MouseInputSource
-    obects active, each representing a stream of events coming from a particular finger.
+    objects active, each representing a stream of events coming from a particular finger.
 
     Events coming from a single MouseInputSource are always sent in a fixed and predictable
     order: a mouseMove will never be called without a mouseEnter having been sent beforehand,
@@ -172,10 +171,12 @@ public:
     /** Returns the screen position at which the last mouse-down occurred. */
     Point<float> getLastMouseDownPosition() const noexcept;
 
-    /** Returns true if this mouse is currently down, and if it has been dragged more
-        than a couple of pixels from the place it was pressed.
-    */
-    bool hasMouseMovedSignificantlySincePressed() const noexcept;
+    /** Returns true if this input source represents a long-press or drag interaction i.e. it has been held down for a significant
+        amount of time or it has been dragged more than a couple of pixels from the place it was pressed. */
+    bool isLongPressOrDrag() const noexcept;
+
+    /** Returns true if this input source has been dragged more than a couple of pixels from the place it was pressed. */
+    bool hasMovedSignificantlySincePressed() const noexcept;
 
     /** Returns true if this input source uses a visible mouse cursor. */
     bool hasMouseCursor() const noexcept;
@@ -223,17 +224,65 @@ public:
     /** A default value for pressure, which is used when a device doesn't support it, or for
         mouse-moves, mouse-ups, etc.
     */
-    static const float invalidPressure;
+    static constexpr float defaultPressure = 0.0f;
 
     /** A default value for orientation, which is used when a device doesn't support it */
-    static const float invalidOrientation;
+    static constexpr float defaultOrientation = 0.0f;
 
     /** A default value for rotation, which is used when a device doesn't support it */
-    static const float invalidRotation;
+    static constexpr float defaultRotation = 0.0f;
 
     /** Default values for tilt, which are used when a device doesn't support it */
+    static constexpr float defaultTiltX = 0.0f;
+    static constexpr float defaultTiltY = 0.0f;
+
+    /** A default value for pressure, which is used when a device doesn't support it.
+
+        This is a valid value, returning true when calling isPressureValid() hence the
+        deprecation. Use defaultPressure instead.
+    */
+    [[deprecated ("Use defaultPressure instead.")]]
+    static const float invalidPressure;
+
+    /** A default value for orientation, which is used when a device doesn't support it.
+
+        This is a valid value, returning true when calling isOrientationValid() hence the
+        deprecation. Use defaultOrientation instead.
+    */
+    [[deprecated ("Use defaultOrientation instead.")]]
+    static const float invalidOrientation;
+
+    /** A default value for rotation, which is used when a device doesn't support it.
+
+        This is a valid value, returning true when calling isRotationValid() hence the
+        deprecation. Use defaultRotation instead.
+    */
+    [[deprecated ("Use defaultRotation instead.")]]
+    static const float invalidRotation;
+
+    /** Default values for tilt, which are used when a device doesn't support it
+
+        These are valid values, returning true when calling isTiltValid() hence the
+        deprecation. Use defaultTiltX and defaultTiltY instead.
+    */
+    [[deprecated ("Use defaultTiltX instead.")]]
     static const float invalidTiltX;
+    [[deprecated ("Use defaultTiltY instead.")]]
     static const float invalidTiltY;
+
+    /** An offscreen mouse position used when triggering mouse exits where we don't want to move
+        the cursor over an existing component.
+    */
+    static const Point<float> offscreenMousePos;
+
+    //==============================================================================
+   #ifndef DOXYGEN
+    [[deprecated ("This method has been replaced with the isLongPressOrDrag and hasMovedSignificantlySincePressed "
+                 "methods. If you want the same behaviour you should use isLongPressOrDrag which accounts for the "
+                 "amount of time that the input source has been held down for, but if you only want to know whether "
+                 "it has been moved use hasMovedSignificantlySincePressed instead.")]]
+    bool hasMouseMovedSignificantlySincePressed() const noexcept;
+   #endif
 
 private:
     //==============================================================================

@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -40,7 +39,7 @@ struct JUCE_API  ExtraLookAndFeelBaseClasses
     /** This abstract base class is implemented by LookAndFeel classes. */
     struct JUCE_API  LassoComponentMethods
     {
-        virtual ~LassoComponentMethods() {}
+        virtual ~LassoComponentMethods() = default;
 
         virtual void drawLasso (Graphics&, Component& lassoComp) = 0;
     };
@@ -49,7 +48,7 @@ struct JUCE_API  ExtraLookAndFeelBaseClasses
     /** This abstract base class is implemented by LookAndFeel classes. */
     struct JUCE_API  KeyMappingEditorComponentMethods
     {
-        virtual ~KeyMappingEditorComponentMethods() {}
+        virtual ~KeyMappingEditorComponentMethods() = default;
 
         virtual void drawKeymapChangeButton (Graphics&, int width, int height, Button&, const String& keyDescription) = 0;
     };
@@ -58,7 +57,7 @@ struct JUCE_API  ExtraLookAndFeelBaseClasses
     /** This abstract base class is implemented by LookAndFeel classes. */
     struct JUCE_API  AudioDeviceSelectorComponentMethods
     {
-        virtual ~AudioDeviceSelectorComponentMethods() {}
+        virtual ~AudioDeviceSelectorComponentMethods() = default;
 
         virtual void drawLevelMeter (Graphics&, int width, int height, float level) = 0;
     };
@@ -113,7 +112,7 @@ public:
     LookAndFeel();
 
     /** Destructor. */
-    virtual ~LookAndFeel();
+    ~LookAndFeel() override;
 
     //==============================================================================
     /** Returns the current default look-and-feel for a component to use when it
@@ -154,7 +153,9 @@ public:
     Colour findColour (int colourId) const noexcept;
 
     /** Registers a colour to be used for a particular purpose.
+
         For more details, see the comments for findColour().
+
         @see findColour, Component::findColour, Component::setColour
     */
     void setColour (int colourId, Colour colour) noexcept;
@@ -166,22 +167,27 @@ public:
 
     //==============================================================================
     /** Returns the typeface that should be used for a given font.
+
         The default implementation just does what you'd expect it to, but you can override
         this if you want to intercept fonts and use your own custom typeface object.
+
         @see setDefaultTypeface
     */
     virtual Typeface::Ptr getTypefaceForFont (const Font&);
 
     /** Allows you to supply a default typeface that will be returned as the default
         sans-serif font.
+
         Instead of a typeface object, you can specify a typeface by name using the
         setDefaultSansSerifTypefaceName() method.
+
         You can perform more complex typeface substitutions by overloading
         getTypefaceForFont() but this lets you easily set a global typeface.
     */
     void setDefaultSansSerifTypeface (Typeface::Ptr newDefaultTypeface);
 
     /** Allows you to change the default sans-serif font.
+
         If you need to supply your own Typeface object for any of the default fonts, rather
         than just supplying the name (e.g. if you want to use an embedded font), then
         you can instead call setDefaultSansSerifTypeface() with an object to use.
@@ -189,39 +195,64 @@ public:
     void setDefaultSansSerifTypefaceName (const String& newName);
 
     //==============================================================================
-    /** Override this to get the chance to swap a component's mouse cursor for a
-        customised one.
+    /** Sets whether native alert windows (if available) or standard JUCE AlertWindows
+        drawn with AlertWindow::LookAndFeelMethods will be used.
+
+        @see isUsingNativeAlertWindows
     */
-    virtual MouseCursor getMouseCursorFor (Component&);
-
-    //==============================================================================
-    /** Creates a new graphics context object. */
-    virtual LowLevelGraphicsContext* createGraphicsContext (const Image& imageToRenderOn,
-                                                            const Point<int>& origin,
-                                                            const RectangleList<int>& initialClip);
-
     void setUsingNativeAlertWindows (bool shouldUseNativeAlerts);
+
+    /** Returns true if native alert windows will be used (if available).
+
+        The default setting for this is false.
+
+        @see setUsingNativeAlertWindows
+    */
     bool isUsingNativeAlertWindows();
 
     //==============================================================================
     /** Draws a small image that spins to indicate that something's happening.
+
         This method should use the current time to animate itself, so just keep
         repainting it every so often.
     */
     virtual void drawSpinningWaitAnimation (Graphics&, const Colour& colour,
                                             int x, int y, int w, int h) = 0;
 
-    //==============================================================================
     /** Returns a tick shape for use in yes/no boxes, etc. */
     virtual Path getTickShape (float height) = 0;
+
     /** Returns a cross shape for use in yes/no boxes, etc. */
     virtual Path getCrossShape (float height) = 0;
 
-    //==============================================================================
-    virtual DropShadower* createDropShadowerForComponent (Component*) = 0;
+    /** Creates a drop-shadower for a given component, if required.
+
+        @see DropShadower
+    */
+    virtual std::unique_ptr<DropShadower> createDropShadowerForComponent (Component&) = 0;
+
+    /** Creates a focus outline for a given component, if required.
+
+        @see FocusOutline
+    */
+    virtual std::unique_ptr<FocusOutline> createFocusOutlineForComponent (Component&) = 0;
 
     //==============================================================================
-    /** Plays the system's default 'beep' noise, to alert the user about something very important. */
+    /** Override this to get the chance to swap a component's mouse cursor for a
+        customised one.
+
+        @see MouseCursor
+    */
+    virtual MouseCursor getMouseCursorFor (Component&);
+
+    /** Creates a new graphics context object. */
+    virtual std::unique_ptr<LowLevelGraphicsContext> createGraphicsContext (const Image& imageToRenderOn,
+                                                                            Point<int> origin,
+                                                                            const RectangleList<int>& initialClip);
+
+    /** Plays the system's default 'beep' noise, to alert the user about something
+        very important. This is only supported on some platforms.
+    */
     virtual void playAlertSound();
 
 private:

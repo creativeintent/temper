@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -23,13 +23,13 @@
 namespace juce
 {
 
-#if ! (defined (DOXYGEN) || JUCE_EXCEPTIONS_DISABLED)
+#if ! (DOXYGEN || JUCE_EXCEPTIONS_DISABLED)
 namespace HeapBlockHelper
 {
     template <bool shouldThrow>
     struct ThrowOnFail          { static void checkPointer (void*) {} };
 
-    template<>
+    template <>
     struct ThrowOnFail<true>    { static void checkPointer (void* data) { if (data == nullptr) throw std::bad_alloc(); } };
 }
 #endif
@@ -85,6 +85,11 @@ namespace HeapBlockHelper
 template <class ElementType, bool throwOnFailure = false>
 class HeapBlock
 {
+private:
+    template <class OtherElementType>
+    using AllowConversion = typename std::enable_if<std::is_base_of<typename std::remove_pointer<ElementType>::type,
+                                                                    typename std::remove_pointer<OtherElementType>::type>::value>::type;
+
 public:
     //==============================================================================
     /** Creates a HeapBlock which is initially just a null pointer.
@@ -92,9 +97,7 @@ public:
         After creation, you can resize the array using the malloc(), calloc(),
         or realloc() methods.
     */
-    HeapBlock() noexcept
-    {
-    }
+    HeapBlock() = default;
 
     /** Creates a HeapBlock containing a number of elements.
 
@@ -104,7 +107,7 @@ public:
         If you want an array of zero values, you can use the calloc() method or the
         other constructor that takes an InitialisationState parameter.
     */
-    template <typename SizeType>
+    template <typename SizeType, std::enable_if_t<std::is_convertible<SizeType, int>::value, int> = 0>
     explicit HeapBlock (SizeType numElements)
         : data (static_cast<ElementType*> (std::malloc (static_cast<size_t> (numElements) * sizeof (ElementType))))
     {
@@ -116,7 +119,7 @@ public:
         The initialiseToZero parameter determines whether the new memory should be cleared,
         or left uninitialised.
     */
-    template <typename SizeType>
+    template <typename SizeType, std::enable_if_t<std::is_convertible<SizeType, int>::value, int> = 0>
     HeapBlock (SizeType numElements, bool initialiseToZero)
         : data (static_cast<ElementType*> (initialiseToZero
                                                ? std::calloc (static_cast<size_t> (numElements), sizeof (ElementType))
@@ -144,6 +147,30 @@ public:
     HeapBlock& operator= (HeapBlock&& other) noexcept
     {
         std::swap (data, other.data);
+        return *this;
+    }
+
+    /** Converting move constructor.
+        Only enabled if this is a HeapBlock<Base*> and the other object is a HeapBlock<Derived*>,
+        where std::is_base_of<Base, Derived>::value == true.
+    */
+    template <class OtherElementType, bool otherThrowOnFailure, typename = AllowConversion<OtherElementType>>
+    HeapBlock (HeapBlock<OtherElementType, otherThrowOnFailure>&& other) noexcept
+        : data (reinterpret_cast<ElementType*> (other.data))
+    {
+        other.data = nullptr;
+    }
+
+    /** Converting move assignment operator.
+        Only enabled if this is a HeapBlock<Base*> and the other object is a HeapBlock<Derived*>,
+        where std::is_base_of<Base, Derived>::value == true.
+    */
+    template <class OtherElementType, bool otherThrowOnFailure, typename = AllowConversion<OtherElementType>>
+    HeapBlock& operator= (HeapBlock<OtherElementType, otherThrowOnFailure>&& other) noexcept
+    {
+        free();
+        data = reinterpret_cast<ElementType*> (other.data);
+        other.data = nullptr;
         return *this;
     }
 
@@ -296,7 +323,7 @@ public:
     }
 
     /** This typedef can be used to get the type of the heapblock's elements. */
-    typedef ElementType Type;
+    using Type = ElementType;
 
 private:
     //==============================================================================
@@ -310,6 +337,9 @@ private:
         HeapBlockHelper::ThrowOnFail<throwOnFailure>::checkPointer (data);
        #endif
     }
+
+    template <class OtherElementType, bool otherThrowOnFailure>
+    friend class HeapBlock;
 
    #if ! (defined (JUCE_DLL) || defined (JUCE_DLL_BUILD))
     JUCE_DECLARE_NON_COPYABLE (HeapBlock)

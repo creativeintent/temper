@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -42,7 +41,7 @@ class JUCE_API  FilenameComponentListener
 {
 public:
     /** Destructor. */
-    virtual ~FilenameComponentListener() {}
+    virtual ~FilenameComponentListener() = default;
 
     /** This method is called after the FilenameComponent's file has been changed. */
     virtual void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) = 0;
@@ -74,21 +73,21 @@ public:
     //==============================================================================
     /** Creates a FilenameComponent.
 
-        @param name             the name for this component.
-        @param currentFile      the file to initially show in the box
-        @param canEditFilename  if true, the user can manually edit the filename; if false,
-                                they can only change it by browsing for a new file
-        @param isDirectory      if true, the file will be treated as a directory, and
-                                an appropriate directory browser used
-        @param isForSaving      if true, the file browser will allow non-existent files to
-                                be picked, as the file is assumed to be used for saving rather
-                                than loading
-        @param fileBrowserWildcard  a wildcard pattern to use in the file browser - e.g. "*.txt;*.foo".
-                                If an empty string is passed in, then the pattern is assumed to be "*"
-        @param enforcedSuffix   if this is non-empty, it is treated as a suffix that will be added
-                                to any filenames that are entered or chosen
+        @param name                     the name for this component.
+        @param currentFile              the file to initially show in the box
+        @param canEditFilename          if true, the user can manually edit the filename; if false,
+                                        they can only change it by browsing for a new file
+        @param isDirectory              if true, the file will be treated as a directory, and
+                                        an appropriate directory browser used
+        @param isForSaving              if true, the file browser will allow non-existent files to
+                                        be picked, as the file is assumed to be used for saving rather
+                                        than loading
+        @param fileBrowserWildcard      a wildcard pattern to use in the file browser - e.g. "*.txt;*.foo".
+                                        If an empty string is passed in, then the pattern is assumed to be "*"
+        @param enforcedSuffix           if this is non-empty, it is treated as a suffix that will be added
+                                        to any filenames that are entered or chosen
         @param textWhenNothingSelected  the message to display in the box before any filename is entered. (This
-                                will only appear if the initial file isn't valid)
+                                        will only appear if the initial file isn't valid)
     */
     FilenameComponent (const String& name,
                        const File& currentFile,
@@ -100,7 +99,7 @@ public:
                        const String& textWhenNothingSelected);
 
     /** Destructor. */
-    ~FilenameComponent();
+    ~FilenameComponent() override;
 
     //==============================================================================
     /** Returns the currently displayed filename. */
@@ -191,7 +190,7 @@ public:
     /** This abstract base class is implemented by LookAndFeel classes. */
     struct JUCE_API  LookAndFeelMethods
     {
-        virtual ~LookAndFeelMethods() {}
+        virtual ~LookAndFeelMethods() = default;
 
         virtual Button* createFilenameComponentBrowseButton (const String& text) = 0;
         virtual void layoutFilenameComponent (FilenameComponent&, ComboBox* filenameBox, Button* browseButton) =  0;
@@ -213,21 +212,23 @@ public:
     /** @internal */
     void fileDragExit (const StringArray&) override;
     /** @internal */
-    KeyboardFocusTraverser* createFocusTraverser() override;
+    std::unique_ptr<ComponentTraverser> createKeyboardFocusTraverser() override;
 
 private:
     //==============================================================================
+    void handleAsyncUpdate() override;
+
+    void showChooser();
+
     ComboBox filenameBox;
     String lastFilename;
-    ScopedPointer<Button> browseButton;
+    std::unique_ptr<Button> browseButton;
     int maxRecentFiles = 30;
     bool isDir, isSaving, isFileDragOver = false;
     String wildcard, enforcedSuffix, browseButtonText;
     ListenerList <FilenameComponentListener> listeners;
     File defaultBrowseFile;
-
-    void showChooser();
-    void handleAsyncUpdate() override;
+    std::unique_ptr<FileChooser> chooser;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilenameComponent)
 };

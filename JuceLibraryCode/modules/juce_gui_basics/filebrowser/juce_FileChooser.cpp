@@ -2,17 +2,16 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
 
-   By using JUCE, you agree to the terms of both the JUCE 5 End-User License
-   Agreement and JUCE 5 Privacy Policy (both updated and effective as of the
-   27th April 2017).
+   By using JUCE, you agree to the terms of both the JUCE 6 End-User License
+   Agreement and JUCE Privacy Policy (both effective as of the 16th June 2020).
 
-   End User License Agreement: www.juce.com/juce-5-licence
-   Privacy Policy: www.juce.com/juce-5-privacy-policy
+   End User License Agreement: www.juce.com/juce-6-licence
+   Privacy Policy: www.juce.com/juce-privacy-policy
 
    Or: You may also use this code under the terms of the GPL v3 (see
    www.gnu.org/licenses).
@@ -28,7 +27,8 @@ namespace juce
 {
 
 //==============================================================================
-class FileChooser::NonNative    : public FileChooser::Pimpl
+class FileChooser::NonNative    : public std::enable_shared_from_this<NonNative>,
+                                  public FileChooser::Pimpl
 {
 public:
     NonNative (FileChooser& fileChooser, int flags, FilePreviewComponent* preview)
@@ -39,10 +39,11 @@ public:
 
           filter (selectsFiles ? owner.filters : String(), selectsDirectories ? "*" : String(), {}),
           browserComponent (flags, owner.startingFile, &filter, preview),
-          dialogBox (owner.title, {}, browserComponent, warnAboutOverwrite, browserComponent.findColour (AlertWindow::backgroundColourId))
+          dialogBox (owner.title, {}, browserComponent, warnAboutOverwrite,
+                     browserComponent.findColour (AlertWindow::backgroundColourId), owner.parent)
     {}
 
-    ~NonNative()
+    ~NonNative() override
     {
         dialogBox.exitModalState (0);
     }
@@ -50,7 +51,15 @@ public:
     void launch() override
     {
         dialogBox.centreWithDefaultSize (nullptr);
-        dialogBox.enterModalState (true, ModalCallbackFunction::create ([this] (int r) { modalStateFinished (r); }), true);
+
+        const std::weak_ptr<NonNative> ref (shared_from_this());
+        auto* callback = ModalCallbackFunction::create ([ref] (int r)
+        {
+            if (auto locked = ref.lock())
+                locked->modalStateFinished (r);
+        });
+
+        dialogBox.enterModalState (true, callback, true);
     }
 
     void runModally() override
@@ -92,10 +101,12 @@ FileChooser::FileChooser (const String& chooserBoxTitle,
                           const File& currentFileOrDirectory,
                           const String& fileFilters,
                           const bool useNativeBox,
-                          const bool treatFilePackagesAsDirectories)
+                          const bool treatFilePackagesAsDirectories,
+                          Component* parentComponentToUse)
     : title (chooserBoxTitle),
       filters (fileFilters),
       startingFile (currentFileOrDirectory),
+      parent (parentComponentToUse),
       useNativeDialogBox (useNativeBox && isPlatformDialogAvailable()),
       treatFilePackagesAsDirs (treatFilePackagesAsDirectories)
 {
@@ -156,7 +167,7 @@ bool FileChooser::showDialog (const int flags, FilePreviewComponent* const previ
 {
     FocusRestorer focusRestorer;
 
-    pimpl.reset (createPimpl (flags, previewComp));
+    pimpl = createPimpl (flags, previewComp);
     pimpl->runModally();
 
     // ensure that the finished function was invoked
@@ -175,14 +186,13 @@ void FileChooser::launchAsync (int flags, std::function<void (const FileChooser&
     // you cannot run two file chooser dialog boxes at the same time
     jassert (asyncCallback == nullptr);
 
-    asyncCallback = static_cast<std::function<void (const FileChooser&)>&&> (callback);
+    asyncCallback = std::move (callback);
 
-    pimpl.reset (createPimpl (flags, previewComp));
+    pimpl = createPimpl (flags, previewComp);
     pimpl->launch();
 }
 
-
-FileChooser::Pimpl* FileChooser::createPimpl (int flags, FilePreviewComponent* previewComp)
+std::shared_ptr<FileChooser::Pimpl> FileChooser::createPimpl (int flags, FilePreviewComponent* previewComp)
 {
     results.clear();
 
@@ -212,10 +222,8 @@ FileChooser::Pimpl* FileChooser::createPimpl (int flags, FilePreviewComponent* p
     {
         return showPlatformDialog (*this, flags, previewComp);
     }
-    else
-    {
-        return new NonNative (*this, flags, previewComp);
-    }
+
+    return std::make_unique<NonNative> (*this, flags, previewComp);
 }
 
 Array<File> FileChooser::getResults() const noexcept

@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -48,9 +48,6 @@ public:
     struct JUCE_API  NativeFunctionArgs
     {
         NativeFunctionArgs (const var& thisObject, const var* args, int numArgs) noexcept;
-
-        // Suppress a VS2013 compiler warning
-        NativeFunctionArgs& operator= (const NativeFunctionArgs&) = delete;
 
         const var& thisObject;
         const var* arguments;
@@ -150,6 +147,17 @@ public:
     /** Returns true if this var has the same value as the one supplied.
         Note that this ignores the type, so a string var "123" and an integer var with the
         value 123 are considered to be equal.
+
+        Note that equality checking depends on the "wrapped" type of the object on which
+        equals() is called. That means the following code will convert the right-hand-side
+        argument to a string and compare the string values, because the object on the
+        left-hand-side was initialised from a string:
+        @code var ("123").equals (var (123)) @endcode
+        However, the following code will convert the right-hand-side argument to a double
+        and compare the values as doubles, because the object on the left-hand-side was
+        initialised from a double:
+        @code var (45.6).equals ("45.6000") @endcode
+
         @see equalsWithSameType
     */
     bool equals (const var& other) const noexcept;
@@ -274,32 +282,19 @@ public:
     */
     static var readFromStream (InputStream& input);
 
-   #if JUCE_ALLOW_STATIC_NULL_VARIABLES
-    /** This was a static empty var object, but is now deprecated as it's too easy to accidentally
-        use it indirectly during a static constructor, leading to hard-to-find order-of-initialisation
-        problems.
-        @deprecated If you need a default-constructed var, just use var() or {}.
-        The only time you might miss having var::null available might be if you need to return an
-        empty var from a function by reference, but if you need to do that, it's easy enough to use
-        a function-local static var and return that, avoiding any order-of-initialisation issues.
-    */
+    //==============================================================================
+   #if JUCE_ALLOW_STATIC_NULL_VARIABLES && ! defined (DOXYGEN)
+    [[deprecated ("This was a static empty var object, but is now deprecated as it's too easy to accidentally "
+                 "use it indirectly during a static constructor leading to hard-to-find order-of-initialisation "
+                 "problems. Use var() or {} instead. For returning an empty var from a function by reference, "
+                 "use a function-local static var and return that.")]]
     static const var null;
    #endif
 
 private:
     //==============================================================================
-    class VariantType;            friend class VariantType;
-    class VariantType_Void;       friend class VariantType_Void;
-    class VariantType_Undefined;  friend class VariantType_Undefined;
-    class VariantType_Int;        friend class VariantType_Int;
-    class VariantType_Int64;      friend class VariantType_Int64;
-    class VariantType_Double;     friend class VariantType_Double;
-    class VariantType_Bool;       friend class VariantType_Bool;
-    class VariantType_String;     friend class VariantType_String;
-    class VariantType_Object;     friend class VariantType_Object;
-    class VariantType_Array;      friend class VariantType_Array;
-    class VariantType_Binary;     friend class VariantType_Binary;
-    class VariantType_Method;     friend class VariantType_Method;
+    struct VariantType;
+    struct Instance;
 
     union ValueUnion
     {
@@ -307,23 +302,40 @@ private:
         int64 int64Value;
         bool boolValue;
         double doubleValue;
-        char stringValue [sizeof (String)];
+        char stringValue[sizeof (String)];
         ReferenceCountedObject* objectValue;
         MemoryBlock* binaryValue;
         NativeFunction* methodValue;
     };
+
+    friend bool canCompare (const var&, const var&);
 
     const VariantType* type;
     ValueUnion value;
 
     Array<var>* convertToArray();
     var (const VariantType&) noexcept;
+
+    // This is needed to prevent the wrong constructor/operator being called
+    var (const ReferenceCountedObject*) = delete;
+    var& operator= (const ReferenceCountedObject*) = delete;
+    var (const void*) = delete;
+    var& operator= (const void*) = delete;
 };
 
 /** Compares the values of two var objects, using the var::equals() comparison. */
-JUCE_API bool operator== (const var&, const var&) noexcept;
+JUCE_API bool operator== (const var&, const var&);
 /** Compares the values of two var objects, using the var::equals() comparison. */
-JUCE_API bool operator!= (const var&, const var&) noexcept;
+JUCE_API bool operator!= (const var&, const var&);
+/** Compares the values of two var objects, using the var::equals() comparison. */
+JUCE_API bool operator<  (const var&, const var&);
+/** Compares the values of two var objects, using the var::equals() comparison. */
+JUCE_API bool operator<= (const var&, const var&);
+/** Compares the values of two var objects, using the var::equals() comparison. */
+JUCE_API bool operator>  (const var&, const var&);
+/** Compares the values of two var objects, using the var::equals() comparison. */
+JUCE_API bool operator>= (const var&, const var&);
+
 JUCE_API bool operator== (const var&, const String&);
 JUCE_API bool operator!= (const var&, const String&);
 JUCE_API bool operator== (const var&, const char*);

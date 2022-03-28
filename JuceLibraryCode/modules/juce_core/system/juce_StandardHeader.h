@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2017 - ROLI Ltd.
+   Copyright (c) 2020 - Raw Material Software Limited
 
    JUCE is an open source library subject to commercial or open-source
    licensing.
@@ -27,9 +27,9 @@
 
     See also SystemStats::getJUCEVersion() for a string version.
 */
-#define JUCE_MAJOR_VERSION      5
-#define JUCE_MINOR_VERSION      3
-#define JUCE_BUILDNUMBER        0
+#define JUCE_MAJOR_VERSION      6
+#define JUCE_MINOR_VERSION      1
+#define JUCE_BUILDNUMBER        6
 
 /** Current JUCE version number.
 
@@ -43,32 +43,51 @@
 
 
 //==============================================================================
-#include <memory>
-#include <cmath>
-#include <vector>
-#include <iostream>
-#include <functional>
 #include <algorithm>
+#include <array>
+#include <atomic>
+#include <cmath>
+#include <condition_variable>
+#include <cstddef>
+#include <functional>
+#include <iomanip>
+#include <iostream>
 #include <limits>
+#include <list>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <numeric>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <typeindex>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+#include <set>
 
 //==============================================================================
 #include "juce_CompilerSupport.h"
+#include "juce_CompilerWarnings.h"
 #include "juce_PlatformDefs.h"
 
 //==============================================================================
 // Now we'll include some common OS headers..
+JUCE_BEGIN_IGNORE_WARNINGS_MSVC (4514 4245 4100)
+
 #if JUCE_MSVC
- #pragma warning (push)
- #pragma warning (disable: 4514 4245 4100)
  #include <intrin.h>
 #endif
+
 
 #if JUCE_MAC || JUCE_IOS
  #include <libkern/OSAtomic.h>
  #include <xlocale.h>
+ #include <signal.h>
 #endif
 
-#if JUCE_LINUX
+#if JUCE_LINUX || JUCE_BSD
  #include <cstring>
  #include <signal.h>
 
@@ -85,9 +104,7 @@
  #include <crtdbg.h>
 #endif
 
-#if JUCE_MSVC
- #pragma warning (pop)
-#endif
+JUCE_END_IGNORE_WARNINGS_MSVC
 
 #if JUCE_MINGW
  #include <cstring>
@@ -96,7 +113,6 @@
 
 #if JUCE_ANDROID
  #include <cstring>
- #include <atomic>
  #include <byteswap.h>
 #endif
 
@@ -107,17 +123,6 @@
 #undef major
 #undef minor
 #undef KeyPress
-
-// Include a replacement for std::function on older platforms and the live
-// build
-#if JUCE_PROJUCER_LIVE_BUILD || ! defined (JUCE_STDLIB_HAS_STD_FUNCTION_SUPPORT)
- #include "../misc/juce_StdFunctionCompat.h"
-#endif
-
-// Include std::atomic if it's supported by the compiler
-#if JUCE_ATOMIC_AVAILABLE
- #include <atomic>
-#endif
 
 //==============================================================================
 // DLL building settings on Windows
@@ -149,13 +154,6 @@
 
 /** This macro is added to all JUCE public function declarations. */
 #define JUCE_PUBLIC_FUNCTION        JUCE_API JUCE_CALLTYPE
-
-#if (! defined (JUCE_CATCH_DEPRECATED_CODE_MISUSE)) && JUCE_DEBUG && ! DOXYGEN
- /** This turns on some non-essential bits of code that should prevent old code from compiling
-     in cases where method signatures have changed, etc.
- */
- #define JUCE_CATCH_DEPRECATED_CODE_MISUSE 1
-#endif
 
 #ifndef DOXYGEN
  #define JUCE_NAMESPACE juce  // This old macro is deprecated: you should just use the juce namespace directly.
