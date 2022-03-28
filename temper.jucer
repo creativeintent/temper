@@ -66,10 +66,10 @@
                        osxArchitecture="Native" headerPath="../../Include" xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        xcodeVst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" xcodeAudioUnitBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        osxCompatibility="10.9 SDK" vstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
-                       vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(HOME)/Library/Audio/Plug-Ins/Components/"
+                       vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        macOSDeploymentTarget="10.9"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="Temper"
-                       osxArchitecture="64BitUniversal" headerPath="../../Include" xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
+                       osxArchitecture="Native" headerPath="../../Include" xcodeVstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        xcodeVst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" xcodeAudioUnitBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        osxCompatibility="10.9 SDK" vstBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
                        vst3BinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)" auBinaryLocation="$(BUILD_DIR)/$(CONFIGURATION)"
