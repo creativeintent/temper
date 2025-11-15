@@ -1,73 +1,88 @@
-# Temper
+# 🎛️ Temper
 
-> Modern digital distortion. 
+> **Modern digital distortion.**  
+> A unique phase distortion audio plugin for creative sound design.
 
 ![Temper Plugin](/screenshot.jpg?raw=true "Temper running inside FL Studio 12.")
 
-Temper is a digital distortion audio plugin targeting VST, VST3, and AU
-for OS X and Windows. It builds upon traditional waveshaping techniques using
-modulated filter coefficients to produce a unique phase distortion. The primary
-signal processing loop is written with Faust, and compiled with JUCE for the
-various build targets.
+**Temper** is a **digital distortion plugin** available in **VST, VST3, and AU** formats for **macOS** and **Windows**.  
+It combines **classic waveshaping** with **modulated filter coefficients** to produce expressive and dynamic **phase distortion**.
 
-## Dependencies
-* Faust (v2.5.32)
-* JUCE (v5.3.0)
-* VST SDK (v3.6.7)
+The DSP core is written in **[Faust](https://faust.grame.fr/)**, compiled to C++ and integrated with **[JUCE](https://juce.com/)** for cross-platform plugin support.
 
-## Usage
-Temper can run inside any plugin host that supports VST, VST3, or AU, such as
-[Audacity](http://www.audacityteam.org/) (Free) or [FL Studio](https://www.image-line.com/flstudio/) (Paid).
+---
 
-### Parameters
+## 🔧 Dependencies
 
-**Cutoff**: The signal chain contains a simple resonant lowpass filter before the distortion unit. This parameter sets the
-cutoff frequency of that filter.
+- [Faust](https://github.com/grame-cncm/faust) `v2.5.32`
+- [JUCE](https://github.com/juce-framework/JUCE) `v5.3.0`
+- VST SDK `v3.6.7`
 
-**Resonance**: This parameter sets the corner resonance of the lowpass filter mentioned above.
+---
 
-**Curve**: The first of the three parameters that control the distortion unit, Curve sets the shape of the waveshaper curve
-used to saturate the input signal before the phase distortion module.
+## 🎚️ Plugin Parameters
 
-**Drive**: Like a traditional overdrive, Temper includes a gain step before the waveshaper. Drive determines the gain applied
-at that step.
+| Parameter   | Description |
+|-------------|-------------|
+| **Cutoff**  | Sets the cutoff frequency of the resonant lowpass filter before distortion. |
+| **Resonance** | Adjusts the resonance at the cutoff frequency of the filter. |
+| **Curve**   | Defines the shape of the waveshaper curve used to saturate the signal. |
+| **Drive**   | Applies pre-gain before the waveshaper (traditional overdrive control). |
+| **Saturation** | Blends dry and wet signals into the phase distortion module: `0.0` uses the dry signal for input and modulation, `1.0` uses the wet signal for both. |
+| **Feedback** | Controls the gain of a feedback loop placed after the filter and before the distortion unit. |
+| **Level**   | Adjusts the final output volume. |
 
-**Saturation**: The Saturation parameter controls the Dry/Wet mix of the waveshaper output; at 0.0, the dry input signal goes
-into the phase distortion module with the shaped signal modulating the phase offset. At 1.0, the wet waveshaper signal goes
-into the phase distortion module which is shaped by the same wet signal.
+---
 
-**Feedback**: The signal chain includes a feedback loop, taking the output of the distortion unit and feeding it back right
-before the distoriton unit again (after the filter). Feedback here decides the gain multiplier on that feedback loop.
+## ▶️ Usage
 
-**Level**: This simply adjusts the output level.
+Temper works in any plugin host that supports **VST, VST3, or AU** formats, including:
 
-## Contributing
-If you find any weird or buggy behavior, please open an issue! We will also happily accept pull requests implementing
-bug fixes or compatibility support. We may refuse pull requests or feature suggestions that change product direction, but
-we would love to hear your ideas so don't be shy.
+- 🟢 [Audacity (Free)](https://www.audacityteam.org/)
+- 🔵 [FL Studio (Paid)](https://www.image-line.com/flstudio/)
+- 🟣 [Reaper, Logic Pro, Ableton, etc.]
 
-### Building
-This project is built with both JUCE and Faust, but we commit the result of the Faust compilation to enable maintaining
-a repository state that can be built on a new machine with minimal configuration.
+---
 
-Hence, with Visual Studio 2017, you should be able to just open the file `Builds/VisualStudio2017/Temper.sln` and build one
-of the three available configurations. Similarly, on OS X, open `Builds/MacOSX/Temper.xcodeproj` with XCode.
+## 🛠️ Building from Source
 
-If you're interested in modifying the Faust DSP code, or compiling the DSP again, consult the Makefile for instructions. We
-have unfortunately hard-coded some assumptions into the Makefile, but you will notice the expected compilation command:
+Temper’s build system uses **CMake** with precompiled Faust output. You can build directly:
 
 ```bash
-$ faust -A ../faust/architecture/ -I ../faust/libraries/ -a minimal-effect.cpp -cn TemperDsp -o ./Source/TemperDsp.cpp ./Dsp/temper.dsp
+mkdir build
+cd build
+cmake ..
+cmake --build .
 ```
 
-If you have `faust` on your `$PATH`, the above command (corrected for the appropriate paths to the library and architecture
-files) will recompile the `temper.dsp` file to C++.
+If you'd like to modify the Faust DSP (temper.dsp) and regenerate the C++ source:
+```bash
+faust \
+  -A ../faust/architecture/ \
+  -I ../faust/libraries/ \
+  -a minimal-effect.cpp \
+  -cn TemperDsp \
+  -o ./Source/TemperDsp.cpp \
+  ./Dsp/temper.dsp
+```
+    ⚠️ Some paths in the Makefile are hardcoded; update them if needed.
 
-If you have any trouble building, please file an issue.
+🤝 Contributing
 
-## License
+We welcome contributions!
+Feel free to:
 
-Copyright (C) 2017 Creative Intent, LLC
+    🐞 Report bugs via Issues
+
+    🔧 Submit pull requests for bug fixes or improvements
+
+    💬 Share feature ideas (note: feature direction is selective)
+
+📜 License
+
+Copyright © 2017 Creative Intent, LLC
+
+This project is licensed under the GNU GPLv3.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -80,4 +95,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.

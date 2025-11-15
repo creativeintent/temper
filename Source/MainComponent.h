@@ -77,7 +77,7 @@ private:
     ScopedPointer<Label> m_satLabel;
     ScopedPointer<Label> m_feedbackLabel;
     ScopedPointer<Label> m_gainLabel;
-    ScopedPointer<Drawable> drawable1;
+    std::unique_ptr<Drawable> drawable1;
 
 
     //==============================================================================

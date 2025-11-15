@@ -265,13 +265,14 @@ AudioProcessorEditor* TemperAudioProcessor::createEditor()
 //==============================================================================
 void TemperAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
-    ScopedPointer<XmlElement> xml (m_params.state.createXml());
+    std::unique_ptr<XmlElement> xml (m_params.state.createXml());
     copyXmlToBinary(*xml, destData);
 }
 
 void TemperAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+
     if (xmlState != nullptr)
         if (xmlState->hasTagName (m_params.state.getType()))
             m_params.state = ValueTree::fromXml (*xmlState);

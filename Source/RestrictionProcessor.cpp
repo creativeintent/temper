@@ -35,7 +35,7 @@ void RestrictionProcessor::processBlock(AudioSampleBuffer &buffer)
     const int numChannels = buffer.getNumChannels();
     const int numSamples = buffer.getNumSamples();
 
-    float** channelData = buffer.getArrayOfWritePointers();
+    auto channelData = buffer.getArrayOfWritePointers();
 
     for (int j = 0; j < numSamples; ++j)
     {
